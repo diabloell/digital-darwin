@@ -1,0 +1,10 @@
+
+> digital-darwin@0.1.0 start
+> node scripts/serve.mjs
+
+(node:2260) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+BUILD PASS: 7 files emitted to dist/
+Digital Darwin: http://127.0.0.1:41537 (local only)
+<title>Digital Darwin · Живая лаборатория
+Worker HTTP 200

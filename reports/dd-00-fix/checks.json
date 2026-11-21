@@ -1,0 +1,62 @@
+[
+  {
+    "name": "typecheck",
+    "command": "node node_modules/typescript/bin/tsc --noEmit",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "build",
+    "command": "node scripts/build.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": "node scripts/lint.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "unit",
+    "command": "node --test tests/unit.test.ts",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "integration",
+    "command": "node --test tests/integration.test.ts",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "long-run-a",
+    "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output outputs/verification/long-run-a.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "long-run-b",
+    "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output outputs/verification/long-run-b.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "performance-5000",
+    "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/verification/performance-5000.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "e2e",
+    "command": "node scripts/e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "determinism",
+    "command": "node scripts/check-determinism.mjs outputs/verification/long-run-a.json outputs/verification/long-run-b.json",
+    "status": "PASS",
+    "exitCode": 0
+  }
+]

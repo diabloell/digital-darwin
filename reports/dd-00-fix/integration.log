@@ -1,0 +1,11 @@
+✔ 1000-organism real ecology births, deaths and valid metrics (1562.81009ms)
+✔ without food or regrowth all energy-dependent organisms die (23.540363ms)
+✔ batch size does not affect deterministic outcome (276.171306ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1954.092506
