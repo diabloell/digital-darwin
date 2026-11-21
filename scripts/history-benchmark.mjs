@@ -1,15 +1,16 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
 import { Engine } from '../src/core/engine.ts';
 import { PopulationHistory } from '../src/core/history.ts';
 
 const output = process.env.DD_EVIDENCE_DIR || 'outputs/verification';
 const endurance = process.argv.includes('--endurance');
+const dd02 = JSON.parse(await readFile('reports/dd-02/long-run-a.json', 'utf8'));
 const fixtures = endurance
   ? [{ seed: 'dd04-endurance', width: 40, height: 40, population: 200, ticks: 100000 }]
-  : [{ seed: 'dd00-verification', width: 256, height: 256, population: 1000, ticks: 10000 },
+  : [{ ...dd02.config, ticks: dd02.ticks },
      { seed: 'dd04-density', width: 128, height: 128, population: 5000, ticks: 1000 }];
 const results = [];
 for (const { ticks, ...config } of fixtures) {
@@ -49,8 +50,7 @@ for (const { ticks, ...config } of fixtures) {
   }
   if (!endurance) {
     for (const r of runs.slice(1)) assert.deepEqual(r.checkpoints, runs[0].checkpoints);
-    const reference = config.seed === 'dd00-verification' ? '0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505' : null;
-    if (reference) assert.equal(runs[0].checkpoints.at(-1).hash, reference);
+    if (config.seed === dd02.config.seed) assert.deepEqual(runs[0].checkpoints, dd02.checkpoints.slice(1));
   }
   results.push({ config, ticks, runs });
 }
