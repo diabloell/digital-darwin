@@ -10,11 +10,26 @@ let browser;
 try {
   browser = await chromium.launch({ executablePath, headless: true });
   const runs = [];
-  for (const population of [1000, 5000]) {
+  for (const [population, historyPanel] of [[1000, false], [5000, false], [5000, true]]) {
     const page = await browser.newPage({ viewport: { width: 1366, height: 768 } });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+    await page.addInitScript(() => {
+      const Native = window.Worker;
+      window.Worker = class extends Native {
+        constructor(...args) {
+          super(...args);
+          this.addEventListener('message', ({ data }) => {
+            if (data.kind === 'frame') window.__benchmarkFrame = data;
+            if (data.kind === 'history') {
+              window.__benchmarkHistory = data;
+              window.__benchmarkHistoryPackets = (window.__benchmarkHistoryPackets ?? 0) + 1;
+            }
+          });
+        }
+      };
+    });
     await page.goto(`http://127.0.0.1:${server.address().port}/?benchmark`);
     await page.locator('#play:enabled').waitFor();
     await page.locator('#world-settings summary').click();
@@ -46,6 +61,7 @@ try {
     });
     await page.locator('#trait-color').selectOption('efficiency');
     await page.locator('[data-speed="16"]').click();
+    if (historyPanel) await page.locator('[data-history="events"]').click();
     await page.locator('#play').click();
     await page.waitForFunction(() => Number(document.querySelector('#tps').textContent) > 0);
     const measurement = await page.evaluate(async () => {
@@ -53,6 +69,7 @@ try {
       const render = [], raf = [], heap = [];
       const observe = event => render.push(event.detail.ms);
       window.addEventListener('dd:paint', observe);
+      const beforePackets = window.__benchmarkHistoryPackets ?? 0;
       const start = performance.now(), startTick = numeric('tick'), startPopulation = numeric('population');
       let previous = start;
       await new Promise(resolve => {
@@ -66,15 +83,22 @@ try {
         requestAnimationFrame(measure);
       });
       window.removeEventListener('dd:paint', observe);
-      return { render, raf, heap, elapsedMs: previous - start, startTick, endTick: numeric('tick'),
+      const { positions, ids, generations, founders, traitBins, food, ...metadata } = window.__benchmarkFrame;
+      const frameBufferBytes = [positions, ids, generations, founders, traitBins, food].reduce((sum, a) => sum + a.byteLength, 0);
+      const bytes = data => new TextEncoder().encode(JSON.stringify(data)).byteLength;
+      return { render, raf, heap, frameBufferBytes, frameMetadataJsonBytes: bytes(metadata),
+        historyPackets: (window.__benchmarkHistoryPackets ?? 0) - beforePackets,
+        historyJsonBytes: window.__benchmarkHistory ? bytes(window.__benchmarkHistory) : 0,
+        elapsedMs: previous - start, startTick, endTick: numeric('tick'),
         startPopulation, endPopulation: numeric('population') };
     });
     assert.deepEqual(errors, []);
+    assert.ok(!historyPanel || measurement.historyPackets >= 2);
     assert.ok(measurement.endTick - measurement.startTick >= 100 && measurement.render.length > 10);
     const percentile = (values, fraction) => [...values].sort((a,b) => a-b)[Math.floor(values.length * fraction)];
     const { render, raf, heap, ...interval } = measurement;
     runs.push({
-      initialPopulation: population, ...interval,
+      initialPopulation: population, historyPanel, ...interval,
       engineTps: (interval.endTick - interval.startTick) * 1000 / interval.elapsedMs,
       browserRafFps: raf.length * 1000 / interval.elapsedMs,
       maxRafGapMs: Math.max(...raf),

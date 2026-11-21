@@ -129,3 +129,24 @@ footer { padding: 18px 0; color: var(--muted); font-size: 11px; line-height: 1.5
   .controls { gap: 7px; }
   .controls button { padding-inline: 8px; }
 }
+
+.history-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.history-nav button[aria-pressed="true"] { background: #214344; border-color: #84b8a8; }
+.history-panel h3 { margin: 8px 0; font-size: 14px; }
+.history-panel p, .history-list small, .history-list span, .ancestor-chain span { color: var(--muted); line-height: 1.55; font-size: 12px; }
+#history-body { margin-top: 12px; }
+#history-body button { min-height: 32px; padding: 5px 9px; font-size: 12px; }
+#event-filter-label { display: block; margin-top: 12px; font-size: 12px; }
+#event-filter { max-width: 100%; }
+.history-detail { padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; margin-bottom: 12px; }
+.history-detail button { margin: 8px 5px 0 0; }
+.ancestor-chain, .history-list { list-style: none; margin: 8px 0; padding: 0; }
+.ancestor-chain { border-left: 2px solid #668b87; padding-left: 12px; }
+.ancestor-chain li, .history-list li { display: flex; gap: 7px 10px; flex-wrap: wrap; align-items: center; padding: 5px 0; }
+.history-list li + li { border-top: 1px solid var(--line); }
+.lineage-columns { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+.history-list meter { width: clamp(45px, 10vw, 130px); }
+.event-list { max-height: 360px; overflow-y: auto; }
+.event-list .event-critical { color: #ffbdab; }
+.event-list .event-notice { color: #ffdf9d; }
+@media(max-width: 760px) { .lineage-columns { grid-template-columns: 1fr; } }

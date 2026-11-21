@@ -53,3 +53,7 @@ Engine 0.3 adds versioned genome and expressed phenotype in `src/core/genetics.t
 The settings form sends an explicit typed create command. Worker construction validates it through Engine and replaces the current world only after success. Frames carry world dimensions, generation buffers, and trait histograms. Normal running frames are spaced by at least 100 ms and use acknowledgments. Paused worlds send frames in response to commands. Chart histories retain up to 300 samples.
 
 Canvas sizes change on ResizeObserver. The landscape image is updated once per observed tick and reused during camera motion. The map batches visible organisms by color band and coalesces redraws into requestAnimationFrame. The trail contains up to 32 observed positions. The simulation and existing headless interfaces still use the same core and rules. [Observer controls](docs/observer.md)
+
+## DD-04 history protocol
+
+A completed-tick observer tracks lives, founder lines and aggregate events without mutating Engine or consuming RNG. Frame samples add interval births/deaths, total reserve, mean living generation and lineage counts. Each render frame transfers a parallel Uint32 founder-ID buffer. The UI requests historical packets separately and ignores responses from old worlds or superseded requests. [Retention and protocol](docs/adr/004-dd04-history-retention.md) · [Metrics and thresholds](docs/history-metrics.md)
