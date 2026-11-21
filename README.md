@@ -63,3 +63,7 @@ npm run simulate -- --seed dd02-example --ticks 10000 --evolution --output outpu
 ```
 
 Доступны `--rule selection|neutral|dd01`, `--mutation-rate`, `--mutation-strength` и `--resource-scale`. Методика и единицы описаны в [генетических метриках](docs/genetic-metrics.md). Итоговые проверки и результаты — в [отчёте DD-02](reports/DD-02.md).
+
+## Наблюдатель DD-03
+
+[Управление, настройки и шкалы наблюдателя](docs/observer.md). Для локального браузерного бенчмарка: `DD_BROWSER=/usr/bin/chromium node scripts/browser-benchmark.mjs`. Скрипт отдельно фиксирует скорость Worker, частоту кадров Chromium и перерисовки карты, время от шага до Canvas и доступную статистику JS heap.

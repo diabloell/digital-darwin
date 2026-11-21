@@ -20,14 +20,18 @@ const commands = [
   ['dd01-compatibility', ['scripts/check-dd01-compatibility.mjs']],
   ['experiments', ['apps/experiments.ts', `${output}/experiments.json`]],
   ['e2e', ['scripts/e2e.mjs']],
+  ['browser-benchmark', ['scripts/browser-benchmark.mjs']],
+  ['dd02-regression', ['scripts/check-dd02-regression.mjs', `${output}/experiments.json`]],
+  ['dd02-state', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, 'reports/dd-02/long-run-a.json', '10000']],
   ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`, '10000']]
 ];
+const dependencies = { determinism: ['long-run-a', 'long-run-b'], 'dd02-regression': ['experiments'], 'dd02-state': ['long-run-a'] };
 const checks = [];
 for (const [name, args] of commands) {
   const command = 'node ' + args.map(arg => /\s/.test(arg) ? JSON.stringify(arg) : arg).join(' ');
-  if (name === 'determinism' && !['long-run-a', 'long-run-b'].every(run => checks.some(check => check.name === run && check.status === 'PASS'))) {
+  if ((dependencies[name] ?? []).some(run => !checks.some(check => check.name === run && check.status === 'PASS'))) {
     checks.push({ name, command, status: 'NOT RUN', exitCode: null });
-    console.log(`${name}: NOT RUN (requires two successful runs)`);
+    console.log(`${name}: NOT RUN (dependency failed)`);
     continue;
   }
   const result = spawnSync(process.execPath, args, {

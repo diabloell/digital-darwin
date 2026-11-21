@@ -1,10 +1,91 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Digital Darwin · Живая лаборатория</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/src/style.css"></head>
-<body><div id="app">
-<header><a class="brand" href="/" aria-label="Digital Darwin"><span class="mark">◈</span><span>DIGITAL DARWIN<small>ЛАБОРАТОРИЯ ИСКУССТВЕННОЙ ЖИЗНИ</small></span></a><div class="version">LOCAL LAB <span>●</span> DD-00 / v0.1</div></header>
-<main><section class="intro"><div><div class="eyebrow">ЭКСПЕРИМЕНТ 001 / ЖИВОЙ МИР</div><h1>Маленький мир.<br><em>Настоящие последствия.</em></h1><p>Ограниченные ресурсы. Наследуемые свойства. Жизнь, которая продолжает меняться.</p></div><form id="world-form"><label for="seed">SEED МИРА</label><div class="seed-row"><input id="seed" value="coral-42" maxlength="128" required spellcheck="false"><button type="submit" class="outline">Новый мир ↗</button></div><small>256 × 256 клеток · 1 000 организмов при старте</small></form></section>
-<div id="error" role="alert" hidden></div>
-<section class="workspace"><div class="world-panel"><div class="panel-heading"><span><i id="status-dot"></i> <b id="status">ПОДГОТОВКА МИРА</b></span><span id="world-seed">coral-42</span></div><div id="viewport" tabindex="0" role="application" aria-label="Карта мира: колесо для масштаба, перетаскивание для перемещения, клик для выбора организма"><canvas id="world"></canvas><div class="map-label">ПИЩЕВОЙ ЛАНДШАФТ<span>ТОРОИДАЛЬНЫЙ МИР / 256²</span></div><div class="map-help">Прокрутка - масштаб · Перетаскивание - камера · Клик - организм</div><div class="camera-tools"><button id="zoom-in" aria-label="Приблизить">+</button><button id="zoom-out" aria-label="Отдалить">−</button><button id="fit" aria-label="Показать весь мир">⌖</button></div></div><div class="controls"><div class="play-controls"><button id="play" class="primary" disabled>▶ Запустить</button><button id="step" class="outline" disabled>Шаг +1</button></div><div class="speed-controls" aria-label="Скорость симуляции"><button data-speed="1" class="active">1×</button><button data-speed="4">4×</button><button data-speed="16">16×</button><button data-speed="32">32×</button></div><span class="tps"><b id="tps">0</b> TPS</span></div></div>
-<aside><section class="summary"><div class="eyebrow">ТЕЛЕМЕТРИЯ МИРА</div><div class="population"><span id="population">—</span><label>живых организмов</label></div><div class="metric-grid"><div><label>ТЕКУЩИЙ TICK</label><b id="tick">0</b></div><div><label>ПИЩА / ЕД. ЭНЕРГИИ</label><b id="food">—</b></div><div><label>РОЖДЕНИЯ</label><b id="births">0</b></div><div><label>ГИБЕЛЬ</label><b id="deaths">0</b></div></div></section><section class="inspector"><div class="eyebrow">ИНСПЕКТОР ОРГАНИЗМА</div><div id="inspection"><div class="specimen">◎</div><h3>У каждой точки есть история</h3><p>Выберите организм на карте, чтобы увидеть его энергию, возраст и наследуемые признаки.</p><button id="inspect-first" class="outline">Выбрать организм</button></div></section><div class="legend"><label>Цвет <select id="trait-color"><option value="speed">Скорость</option><option value="sensor">Радиус поиска</option><option value="efficiency">Усвоение</option><option value="threshold">Порог размножения</option></select></label><span><i class="organism-key"></i> Организмы · по признаку</span><span><i class="food-key"></i> Пища / яркость по запасу</span></div></aside></section>
-<section class="chart-panel"><div class="chart-heading"><div><div class="eyebrow">ДИНАМИКА ПОПУЛЯЦИИ</div><h2>След жизни</h2></div><span id="chart-range">tick 0 → 0</span><label>График <select id="chart-metric"><option value="population">Численность</option><option value="speed">Средняя скорость</option><option value="sensor">Средний радиус</option><option value="efficiency">Среднее усвоение</option><option value="threshold">Средний порог</option></select></label></div><canvas id="chart" aria-label="График численности популяции"></canvas><div class="gene-distribution"><label>Распределение скорости (0,25–1,80 клетки/тик)</label><div id="speed-bins" aria-label="Число живых организмов по восьми интервалам скорости"></div></div></section>
-<footer><span>ИСКУССТВЕННАЯ ЖИЗНЬ, А НЕ БИОЛОГИЧЕСКИЙ ПРОГНОЗ</span><span>Движение → питание → метаболизм → размножение</span></footer></main></div><script type="module" src="/src/app.js"></script></body></html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Darwin · Наблюдение за миром</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="/" aria-label="Digital Darwin"><span aria-hidden="true">◈</span> DIGITAL DARWIN</a>
+    <span class="masthead-note">Лаборатория искусственной жизни</span>
+  </header>
+  <main>
+    <div class="page-heading">
+      <div><h1>Наблюдение за миром</h1><p>Ресурсы, наследственность и жизнь цифровой экосистемы.</p></div>
+      <details id="world-settings">
+        <summary>Настройки нового мира</summary>
+        <form id="world-form">
+          <label>Seed мира <input id="seed" name="seed" value="coral-42" maxlength="128" required spellcheck="false"></label>
+          <label>Стартовая популяция <input name="population" type="number" min="0" max="20000" value="1000" required></label>
+          <label>Ширина, клеток <input name="width" type="number" min="8" max="512" value="256" required></label>
+          <label>Высота, клеток <input name="height" type="number" min="8" max="512" value="256" required></label>
+          <label>Вероятность мутации <input name="mutationRate" type="number" min="0" max="1" step="any" value="0.12" required></label>
+          <label>Интенсивность мутации <input name="mutationStrength" type="number" min="0" max="1" step="any" value="0.08" required></label>
+          <label>Правила эволюции <select name="rule"><option value="selection">Отбор</option><option value="neutral">Нейтральные</option><option value="dd01">Совместимые с DD-01</option></select></label>
+          <label class="checkbox"><input name="regrowth" type="checkbox" checked> Восстановление пищи</label>
+          <p>Новый мир заменит текущий и начнётся с тика 0.</p>
+          <button class="primary" type="submit">Новый мир ↗</button>
+        </form>
+      </details>
+    </div>
+    <div id="error" role="alert" hidden></div>
+    <section class="workspace" aria-label="Наблюдательный пост">
+      <section class="world-panel">
+        <div class="panel-heading">
+          <div><span id="status-dot"></span> <b id="status" role="status">ПОДГОТОВКА МИРА</b><span id="world-seed">coral-42</span></div>
+          <label>Окраска <select id="trait-color">
+            <option value="normal">Обычная</option><option value="energy">Энергия</option><option value="generation">Поколение</option>
+            <option value="speed">Скорость</option><option value="sensor">Радиус поиска</option><option value="efficiency">Усвоение</option><option value="threshold">Порог размножения</option>
+          </select></label>
+        </div>
+        <div id="viewport" tabindex="0" role="region" aria-label="Карта мира. Стрелки перемещают камеру, плюс и минус меняют масштаб. Enter выбирает ближайший к центру организм.">
+          <canvas id="world" aria-label="Карта пищи и организмов"></canvas>
+          <div class="map-label">ПИЩЕВОЙ ЛАНДШАФТ <span id="world-size">—</span></div>
+          <div class="map-help" id="camera-readout">Центр — · масштаб —</div>
+          <div class="camera-tools">
+            <button id="zoom-in" aria-label="Приблизить">+</button><button id="zoom-out" aria-label="Отдалить">−</button><button id="fit" aria-label="Показать весь мир">⌖</button>
+          </div>
+        </div>
+        <div class="legend">
+          <span><i class="food-key"></i> Пища · яркость по запасу</span><span id="color-legend"><i class="organism-key"></i> Организмы</span>
+        </div>
+        <div class="controls">
+          <div class="play-controls"><button id="play" class="primary" disabled>▶ Запустить</button><button id="step" disabled>Шаг +1</button></div>
+          <div class="speed-controls" role="group" aria-label="Скорость симуляции"><button data-speed="1" aria-pressed="true">1×</button><button data-speed="4" aria-pressed="false">4×</button><button data-speed="16" aria-pressed="false">16×</button><button data-speed="32" aria-pressed="false">32×</button></div>
+          <span class="tps"><b id="tps">0</b> тиков/с</span>
+        </div>
+      </section>
+      <aside aria-label="Телеметрия и инспектор">
+        <section class="summary">
+          <h2>Телеметрия мира</h2>
+          <div class="population"><span id="population">—</span><span>живых организмов</span></div>
+          <dl class="metric-grid">
+            <div><dt>Текущий тик</dt><dd id="tick">0</dd></div><div><dt>Пища, ед. энергии</dt><dd id="food">—</dd></div>
+            <div><dt>Рождения, всего</dt><dd id="births">0</dd></div><div><dt>Смерти, всего</dt><dd id="deaths">0</dd></div>
+          </dl>
+        </section>
+        <section class="inspector"><h2>Инспектор организма</h2><div id="inspection"><p>Выберите организм на карте.</p><button id="inspect-first">Выбрать организм</button></div></section>
+      </aside>
+    </section>
+    <section class="chart-panel" aria-labelledby="chart-title">
+      <div class="chart-heading"><div><h2 id="chart-title">Численность</h2><p id="chart-unit">Живые организмы</p></div><span id="chart-range">тики 0 → 0</span>
+        <label>Показатель <select id="chart-metric">
+          <optgroup label="Экосистема"><option value="population">Численность</option><option value="food">Пища</option><option value="births">Рождения</option><option value="deaths">Смерти</option><option value="meanEnergy">Средняя энергия</option><option value="variants">Генетическое разнообразие</option><option value="maxGeneration">Максимальное поколение</option></optgroup>
+          <optgroup label="Средние гены живых"><option value="speed">Средняя скорость</option><option value="sensor">Средний радиус</option><option value="efficiency">Среднее усвоение</option><option value="threshold">Средний порог</option></optgroup>
+        </select></label>
+      </div>
+      <canvas id="chart" aria-label="График численности популяции"></canvas>
+      <p id="chart-empty" hidden>Для этого показателя пока нет данных.</p>
+      <div class="gene-distribution">
+        <label>Распределение живых <select id="histogram-trait"><option value="speed">Скорость</option><option value="sensor">Радиус поиска</option><option value="efficiency">Усвоение</option><option value="threshold">Порог размножения</option></select></label>
+        <div id="speed-bins" aria-label="Число живых организмов по восьми интервалам"></div><p id="histogram-range"></p>
+      </div>
+    </section>
+    <footer>Статистика цифровой модели. Изменение признака само по себе не доказывает естественный отбор.</footer>
+  </main>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

@@ -20,7 +20,7 @@ try {
   await page.addInitScript(() => {
     const OriginalWorker = window.Worker;
     window.Worker = class extends OriginalWorker {
-      constructor(...args) { super(...args); this.addEventListener('message', e => { if (e.data.kind === 'frame') { const f = e.data; window.__frame({ tick: f.metrics.tick, population: f.metrics.population, food: f.metrics.food, running: f.running, speed: f.speed, selected: f.selected, births: f.metrics.births, deaths: f.metrics.deaths, seed: f.seed, ids: Array.from(f.ids), positions: Array.from(f.positions) }); } }); }
+      constructor(...args) { super(...args); this.addEventListener('message', e => { if (e.data.kind === 'frame') { const f = e.data; window.__frame({ epoch: f.epoch, width: f.width, height: f.height, sample: f.history.at(-1), foodGrid: f.metrics.tick === 0 ? Array.from(f.food) : null, tick: f.metrics.tick, population: f.metrics.population, food: f.metrics.food, running: f.running, speed: f.speed, selected: f.selected, births: f.metrics.births, deaths: f.metrics.deaths, seed: f.seed, ids: Array.from(f.ids), positions: Array.from(f.positions) }); } }); }
     };
   });
   const response = await page.goto(`http://127.0.0.1:${server.address().port}/`);
@@ -49,7 +49,7 @@ try {
   assert.ok(initial.ids.some((_, i) => movement.positions[i * 4] !== initial.positions[i * 4]
     || movement.positions[i * 4 + 1] !== initial.positions[i * 4 + 1]));
   checks.push('organisms change coordinates while running');
-  await page.locator('[data-speed="4"]').click(); await page.waitForFunction(() => document.querySelector('[data-speed="4"]').classList.contains('active'));
+  await page.locator('[data-speed="4"]').click(); await page.waitForFunction(() => document.querySelector('[data-speed="4"]').getAttribute('aria-pressed') === 'true');
   const acceleratedMs = await advance(16);
   assert.ok(acceleratedMs < normalMs, `16 ticks at 4×: ${acceleratedMs} ms; at 1×: ${normalMs} ms`);
   await page.locator('#play').click(); await page.waitForFunction(() => document.querySelector('#status').textContent === 'НА ПАУЗЕ');
@@ -90,16 +90,96 @@ try {
   await page.locator('#chart-metric').selectOption('efficiency');
   assert.equal(await page.locator('#chart-metric').inputValue(), 'efficiency');
   checks.push('genetic histogram matches real organisms; trait color and mean chart controls work');
+  for (const mode of ['normal', 'energy', 'generation', 'speed', 'sensor', 'efficiency', 'threshold']) {
+    await page.locator('#trait-color').selectOption(mode);
+    await page.waitForFunction(mode => document.querySelector('#color-legend').dataset.mode === mode, mode);
+  }
+  const chartTitles = {
+    population: 'Численность', food: 'Доступная пища', births: 'Рождения', deaths: 'Смерти',
+    meanEnergy: 'Средняя энергия', variants: 'Генетическое разнообразие',
+    maxGeneration: 'Максимальное поколение', speed: 'Скорость', sensor: 'Радиус поиска',
+    efficiency: 'Усвоение', threshold: 'Порог размножения'
+  };
+  for (const [metric, label] of Object.entries(chartTitles)) {
+    await page.locator('#chart-metric').selectOption(metric);
+    await page.waitForFunction(label => document.querySelector('#chart-title').textContent === label, label);
+    const sample = frames.at(-1).sample;
+    const value = sample[metric] ?? sample.genes[metric];
+    assert.ok((await page.locator('#chart').getAttribute('aria-label')).endsWith(value.toLocaleString('ru-RU', { maximumFractionDigits: 3 })));
+  }
+  for (const mode of ['sensor', 'efficiency', 'threshold', 'speed']) {
+    await page.locator('#histogram-trait').selectOption(mode);
+    assert.equal((await page.locator('#speed-bins meter').evaluateAll(meters => meters.map(m => m.value))).reduce((a,b) => a+b), latest.population);
+  }
+  for (const value of ['1', '4', '16', '32']) {
+    const button = page.locator(`[data-speed="${value}"]`);
+    await button.click();
+    await button.and(page.locator('[aria-pressed="true"]')).waitFor();
+  }
+  await page.locator('#step').click();
+  await page.waitForFunction(t => Number(document.querySelector('#tick').textContent.replace(/\D/g, '')) === t + 1, latest.tick);
+  assert.equal(await page.locator('.agent-title').innerText(), title);
+  checks.push('seven palettes, eleven charts, four distributions and speeds; selection survives a new frame');
   const beforeZoom = await page.locator('#world').screenshot();
   await page.locator('#zoom-in').click(); const afterZoom = await page.locator('#world').screenshot(); assert.notDeepEqual(beforeZoom, afterZoom);
   await page.mouse.move(rect.x+rect.width/2,rect.y+rect.height/2); await page.mouse.down(); await page.mouse.move(rect.x+rect.width/2+60,rect.y+rect.height/2+35,{steps:5}); await page.mouse.up();
   const afterPan = await page.locator('#world').screenshot(); assert.notDeepEqual(afterZoom, afterPan); await page.locator('#fit').click(); checks.push('zoom / pan change rendered camera');
   await page.screenshot({ path: `${output}/screenshot-1366x768.png`, fullPage: true }); screenshots.push(`${output}/screenshot-1366x768.png`);
+  await page.locator('#world-settings summary').click();
   await page.locator('#seed').fill('dd00-browser-new-world'); await page.getByRole('button',{name:'Новый мир ↗'}).click(); await page.waitForFunction(() => document.querySelector('#world-seed').textContent === 'dd00-browser-new-world');
   assert.equal(await page.locator('#tick').innerText(), '0'); assert.equal((await page.locator('#population').innerText()).replace(/\D/g,''), '1000'); await page.locator('.agent-title').waitFor({ state: 'detached' }); checks.push('new seed resets world / tick / population / selection');
   await page.locator('#viewport').focus(); await page.keyboard.press('Space'); await page.waitForFunction(() => document.querySelector('#status').textContent === 'МИР ЖИВЁТ'); await page.keyboard.press('Space'); await page.waitForFunction(() => document.querySelector('#status').textContent === 'НА ПАУЗЕ'); checks.push('keyboard Space toggles playback');
   await page.setViewportSize({width:1920,height:1080}); await page.waitForTimeout(150); assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true); await page.screenshot({path:`${output}/screenshot-1920x1080.png`,fullPage:true}); screenshots.push(`${output}/screenshot-1920x1080.png`);
   await page.setViewportSize({width:390,height:844}); await page.waitForTimeout(150); assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true); await page.screenshot({path:`${output}/screenshot-mobile.png`,fullPage:true}); screenshots.push(`${output}/screenshot-mobile.png`); checks.push('responsive 1366 / 1920 / 390 widths without horizontal overflow');
+  const customWorld = async (seed, population) => {
+    await page.locator('#world-settings summary').click();
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.locator('#seed').fill(seed);
+    await page.locator('[name="population"]').fill(String(population));
+    await page.locator('[name="width"]').fill('12');
+    await page.locator('[name="height"]').fill('10');
+    await page.locator('[name="mutationRate"]').fill('0');
+    await page.locator('[name="mutationStrength"]').fill('0.4');
+    await page.locator('[name="rule"]').selectOption('neutral');
+    await page.locator('[name="regrowth"]').uncheck();
+    const epoch = frames.at(-1).epoch;
+    await page.getByRole('button', { name: 'Новый мир ↗' }).click();
+    await page.locator('#world-settings[open]').waitFor({ state: 'detached' });
+    const f = frames.findLast(f => f.epoch > epoch && f.tick === 0);
+    assert.ok(f);
+    assert.equal(f.seed, seed);
+    assert.equal(f.width, 12); assert.equal(f.height, 10);
+    assert.equal(f.population, population);
+    assert.equal(await page.locator('#world-size').innerText(), '12 × 10 кл.');
+    return f;
+  };
+  const first = await customWorld('dd03-configured', 1);
+  await page.locator('#viewport').focus();
+  await page.keyboard.press('Enter');
+  await page.locator('.agent-title').waitFor();
+  assert.equal(frames.at(-1).selected.id, 1);
+  assert.match(await page.locator('#inspection').innerText(), /0\.80 \/ 3\.50/);
+  assert.match(await page.locator('#inspection').innerText(), /85\.0% \/ 44\.0/);
+  const second = await customWorld('dd03-configured', 1);
+  for (const key of ['ids', 'positions', 'foodGrid']) assert.deepEqual(first[key], second[key]);
+  await page.locator('#inspect-first').click();
+  await page.locator('.agent-title').waitFor();
+  await page.locator('[data-speed="32"]').click();
+  await page.locator('#play').click();
+  await page.locator('.deceased').waitFor({ timeout: 30000 });
+  assert.equal(await page.locator('.gene-row').count(), 0);
+  await page.locator('#play').click();
+  checks.push('configuration and seed replay match real buffers; dead selection clears live traits');
+  await customWorld('dd03-empty', 0);
+  await page.locator('#chart-metric').selectOption('meanEnergy');
+  await page.locator('#chart-empty').waitFor();
+  assert.equal(await page.locator('#inspect-first').isDisabled(), true);
+  await page.locator('#world-settings summary').click();
+  await page.locator('[name="width"]').fill('7');
+  await page.getByRole('button', { name: 'Новый мир ↗' }).click();
+  assert.equal(await page.locator('[name="width"]').evaluate(input => input.validity.rangeUnderflow), true);
+  assert.equal(await page.locator('#world-seed').innerText(), 'dd03-empty');
+  checks.push('empty charts are labeled and invalid configuration leaves the current world intact');
   const worldAtTick = async frameDelay => {
     const view = await browser.newPage();
     try {

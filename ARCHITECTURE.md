@@ -47,3 +47,9 @@ The loopback HTTP server serves the build for ordinary startup and browser verif
 ## DD-02 genetic observation
 
 Engine 0.3 adds versioned genome and expressed phenotype in `src/core/genetics.ts`. Observation, movement, feeding and birth thresholds use phenotypes. Reproduction still debits the parent, and assimilation maintenance enters the ordinary energy sink. The default selection model adds a quadratic assimilation cost. `dd01` restores the earlier cost, and `neutral` expresses common traits while retaining heritable genotype variation. The statistical observer uses only current population and latest lifecycle events. The browser receives bounded genetic samples without changing Worker commands or existing frame coordinate layout. See [metrics](docs/genetic-metrics.md) and [ADR-003](docs/adr/003-dd02-evolution-rules.md).
+
+## DD-03 observer
+
+The settings form sends an explicit typed create command. Worker construction validates it through Engine and replaces the current world only after success. Frames carry world dimensions, generation buffers, and trait histograms. Normal running frames are spaced by at least 100 ms and use acknowledgments. Paused worlds send frames in response to commands. Chart histories retain up to 300 samples.
+
+Canvas sizes change on ResizeObserver. The landscape image is updated once per observed tick and reused during camera motion. The map batches visible organisms by color band and coalesces redraws into requestAnimationFrame. The trail contains up to 32 observed positions. The simulation and existing headless interfaces still use the same core and rules. [Observer controls](docs/observer.md)
