@@ -17,18 +17,14 @@ node scripts/serve.mjs
 ## Проверки
 
 ```sh
-node scripts/build.mjs
-node scripts/lint.mjs
-node --test tests/unit.test.ts
-node --test tests/integration.test.ts
-node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-a.json
-node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-b.json
-node scripts/e2e.mjs
+npm ci
+npx --no-install playwright install chromium
+npm run verify
 ```
 
-`node scripts/verify.mjs` выполняет всю матрицу, два длительных прогона и benchmark, сохраняет журналы и обновляет отчёт. Playwright нужен только для E2E; в среде разработки используется установленный runtime-пакет и Chrome. В другой среде установите Playwright отдельно (`npm install --no-save playwright`), используйте установленный Chrome/Edge или задайте `DD_BROWSER` как путь к браузеру. E2E маршрутизирует собранные файлы непосредственно в браузер, поэтому работает без loopback-сокетов; реальный модульный Worker и ядро не подменяются.
+Для проверки по отдельности используйте `npm run typecheck` (TypeScript strict, включая тесты), `npm run build`, `npm run lint`, `npm run test:unit`, `npm run test:integration` и `npm run test:e2e`. Полная матрица включает два прогона по 5 000 тиков со сравнением хешей и замер с 5 000 стартовых организмов. Журналы, JSON и скриншоты сохраняются в `outputs/verification/`; путь можно задать через `DD_EVIDENCE_DIR`. E2E запускает штатный HTTP-сервер на свободном порту и проверяет собранное приложение с реальным Worker. Для заранее установленного Chromium укажите путь в `DD_BROWSER`.
 
-`node scripts/typecheck.mjs` запускает `tsc --noEmit`, если TypeScript установлен. В исходной среде компилятор и npm registry недоступны: это **NOT RUN**, а не пройденная проверка. `tsconfig.json` включает strict, но сборка только удаляет типы. Для полноценной статической проверки в обычной среде: `npm install --no-save typescript @types/node`, затем `node scripts/typecheck.mjs`. Нельзя трактовать успешную сборку как успешную типизацию.
+GitHub Actions повторяет матрицу для pull request и прикладывает артефакт `dd-00-verification`.
 
 ## Структура
 

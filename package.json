@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24.3" },
+  "engines": {
+    "node": ">=24.3"
+  },
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
@@ -13,6 +15,13 @@
     "test:unit": "node --test tests/unit.test.ts",
     "test:integration": "node --test tests/integration.test.ts",
     "simulate": "node apps/cli.ts",
-    "verify": "node scripts/verify.mjs"
+    "verify": "node scripts/verify.mjs",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "node scripts/e2e.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "playwright": "1.61.1",
+    "typescript": "5.9.3"
   }
 }

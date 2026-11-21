@@ -1,23 +1,39 @@
 import { spawnSync } from 'node:child_process';
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
-await mkdir('reports', { recursive: true });
+import { mkdir, writeFile } from 'node:fs/promises';
+
+const output = process.env.DD_EVIDENCE_DIR || 'outputs/verification';
+await mkdir(output, { recursive: true });
+const simulation = (file, seed, ticks, population) => [
+  'apps/cli.ts', '--seed', seed, '--ticks', ticks, '--population', population, '--output', `${output}/${file}.json`
+];
 const commands = [
-  ['build',['scripts/build.mjs']], ['typecheck',['scripts/typecheck.mjs']], ['lint',['scripts/lint.mjs']],
-  ['unit',['--test','tests/unit.test.ts']], ['integration',['--test','tests/integration.test.ts']],
-  ['long-run-a',['apps/cli.ts','--seed','dd00-verification','--ticks','5000','--population','1000','--output','reports/long-run-a.json']],
-  ['long-run-b',['apps/cli.ts','--seed','dd00-verification','--ticks','5000','--population','1000','--output','reports/long-run-b.json']],
-  ['performance-5000',['apps/cli.ts','--seed','dd00-performance','--ticks','1000','--population','5000','--output','reports/performance-5000.json']],
-  ['e2e',['scripts/e2e.mjs']]
+  ['typecheck', ['node_modules/typescript/bin/tsc', '--noEmit']],
+  ['build', ['scripts/build.mjs']],
+  ['lint', ['scripts/lint.mjs']],
+  ['unit', ['--test', 'tests/unit.test.ts']],
+  ['integration', ['--test', 'tests/integration.test.ts']],
+  ['long-run-a', simulation('long-run-a', 'dd00-verification', '5000', '1000')],
+  ['long-run-b', simulation('long-run-b', 'dd00-verification', '5000', '1000')],
+  ['performance-5000', simulation('performance-5000', 'dd00-performance', '1000', '5000')],
+  ['e2e', ['scripts/e2e.mjs']],
+  ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`]]
 ];
 const checks = [];
-for (const [name,args] of commands) {
-  const r = spawnSync(process.execPath, args, { encoding:'utf8',maxBuffer:20*1024*1024 });
-  await writeFile(`reports/${name}.log`, (r.stdout ?? '') + (r.stderr ?? '') + (r.error ? '\n'+String(r.error) : ''));
-  const status = r.status === 0 ? 'PASS' : name === 'typecheck' && r.status === 2 ? 'NOT RUN' : 'FAIL';
-  checks.push({name,command:'node '+args.join(' '),status,exitCode:r.status}); console.log(`${name}: ${status}`);
+for (const [name, args] of commands) {
+  const command = 'node ' + args.map(arg => /\s/.test(arg) ? JSON.stringify(arg) : arg).join(' ');
+  if (name === 'determinism' && !['long-run-a', 'long-run-b'].every(run => checks.some(check => check.name === run && check.status === 'PASS'))) {
+    checks.push({ name, command, status: 'NOT RUN', exitCode: null });
+    console.log(`${name}: NOT RUN (requires two successful runs)`);
+    continue;
+  }
+  const result = spawnSync(process.execPath, args, {
+    encoding: 'utf8', maxBuffer: 20 * 1024 * 1024,
+    env: { ...process.env, DD_EVIDENCE_DIR: output }
+  });
+  await writeFile(`${output}/${name}.log`, (result.stdout ?? '') + (result.stderr ?? '') + (result.error ? '\n' + String(result.error) : ''));
+  const status = result.status === 0 ? 'PASS' : 'FAIL';
+  checks.push({ name, command, status, exitCode: result.status });
+  console.log(`${name}: ${status} (${command})`);
 }
-const a = JSON.parse(await readFile('reports/long-run-a.json','utf8')), b = JSON.parse(await readFile('reports/long-run-b.json','utf8'));
-checks.push({name:'determinism',command:'compare SHA-256 of canonical states from long-run-a and long-run-b',status:a.hash === b.hash ? 'PASS':'FAIL',hashA:a.hash,hashB:b.hash});
-await writeFile('reports/checks.json',JSON.stringify(checks,null,2));
-await import('./report.mjs');
-if (checks.some(c=>c.status === 'FAIL')) process.exitCode = 1;
+await writeFile(`${output}/checks.json`, JSON.stringify(checks, null, 2) + '\n');
+if (checks.some(check => check.status !== 'PASS')) process.exitCode = 1;
