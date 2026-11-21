@@ -173,8 +173,8 @@ export class HistoryPanel {
 
   private events(view: HistoryView) {
     const visible = view.events.filter(e => !this.filter.value || e.kind === this.filter.value);
-    const details = (e: WorldEvent) => e.from !== undefined ? `${fmt(e.from)} → ${fmt(e.to!)} за ${e.window} тиков`
-      : `${fmt(e.count)}${e.window ? ' за ' + e.window + ' тиков' : ''}`;
+    const details = (e: WorldEvent) => e.from !== undefined ? `${fmt(e.from)} → ${fmt(e.to!)} за ${e.intervalTicks} тиков`
+      : `${fmt(e.count)}${e.intervalTicks ? ' за ' + e.intervalTicks + ' тиков' : ''}`;
     return `${view.droppedEvents ? `<p>Старые записи вытеснены: ${fmt(view.droppedEvents)}.</p>` : ''}
       ${visible.length ? '' : '<p>Событий этого типа пока нет.</p>'}
       <ol class="history-list event-list">${visible.map(e => `<li data-event="${e.kind}"><small>Тик ${fmt(e.tick)}</small>

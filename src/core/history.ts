@@ -4,7 +4,7 @@ import type { Genome } from './genetics.ts';
 
 export const HISTORY_LIMITS = { dead: 4096, events: 180, ancestry: 8, maxAncestry: 32, lineages: 12 };
 export type EventKind = 'births' | 'deaths' | 'variation' | 'generation' | 'lineage-extinction' | 'extinction' | 'population-crisis' | 'food-drop' | 'population-growth';
-export type WorldEvent = { id: number; kind: EventKind; tick: number; severity: 'info' | 'notice' | 'critical'; count: number; from?: number; to?: number; window?: number; entity?: number; founder?: number };
+export type WorldEvent = { id: number; kind: EventKind; tick: number; severity: 'info' | 'notice' | 'critical'; count: number; from?: number; to?: number; intervalTicks?: number; entity?: number; founder?: number };
 export type LifeRecord = {
   id: number; parent: number | null; founder: number; generation: number; born: number; genome: Genome;
   children: number; died: number | null;
@@ -30,7 +30,7 @@ export function compareWorld(before: Metrics, after: Metrics) {
   return thresholds.flatMap(t => {
     const count = t.growth ? t.after - t.before : t.before - t.after;
     if (count < t.minimum || count < t.before * t.ratio) return [];
-    return [{ kind: t.kind, from: t.before, to: t.after, count, window: 100 }];
+    return [{ kind: t.kind, from: t.before, to: t.after, count, intervalTicks: 100 }];
   });
 }
 
@@ -158,17 +158,17 @@ export class PopulationHistory {
   }
 
   private flush() {
-    const window = this.tick - this.lastFlush;
+    const intervalTicks = this.tick - this.lastFlush;
     for (const [kind, count, row] of [
       ['births', this.pendingBirths, this.lastBirth], ['deaths', this.pendingDeaths, this.lastDeath], ['variation', this.pendingVariants, this.lastVariant]
-    ] as const) if (count) this.publish(kind, 'info', count, row, undefined, { window });
+    ] as const) if (count) this.publish(kind, 'info', count, row, undefined, { intervalTicks });
     this.pendingBirths = this.pendingDeaths = this.pendingVariants = 0;
     this.lastBirth = this.lastDeath = this.lastVariant = undefined;
     this.lastFlush = this.tick;
   }
 
   private publish(kind: EventKind, severity: WorldEvent['severity'], count: number, row?: LifeRecord, founder?: number,
-    details: Pick<WorldEvent, 'from' | 'to' | 'window'> = {}) {
+    details: Pick<WorldEvent, 'from' | 'to' | 'intervalTicks'> = {}) {
     this.events.push({ id: ++this.eventId, kind, tick: this.tick, severity, count, entity: row?.id, founder: row?.founder ?? founder, ...details });
     if (this.events.length > HISTORY_LIMITS.events) this.events.shift();
   }

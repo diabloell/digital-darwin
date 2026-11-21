@@ -226,6 +226,6 @@ test('food-drop event cooldown suppresses a qualifying repeat then permits a lat
   for (const event of drops) {
     assert.equal(event.from, 32);
     assert.equal(event.to, 6.4);
-    assert.equal(event.window, 100);
+    assert.equal(event.intervalTicks, 100);
   }
 });
