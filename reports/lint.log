@@ -1,0 +1,3 @@
+(node:24112) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+LINT PASS: 16 files; TS syntax, core boundaries, seeded randomness, unfinished-code guard. This is a project guard, not ESLint or typecheck.

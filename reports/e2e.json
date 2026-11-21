@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "transport": "Playwright offline routes serving real dist files; loopback network denied by sandbox",
+  "browser": "157.0.8103.79",
+  "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "checks": [
+    "initial 256x256 world / 1000 real organisms / paused",
+    "single step exactly +1",
+    "play / 4x speed / pause stays stable",
+    "visible tick / population / food equal actual Worker metrics",
+    "map hit selection opens real energy / age / genome",
+    "zoom / pan change rendered camera",
+    "new seed resets world / tick / population / selection",
+    "keyboard Space toggles playback",
+    "responsive 1366 / 1920 / 390 widths without horizontal overflow"
+  ],
+  "errors": [],
+  "screenshots": [
+    "reports/screenshot-1366x768.png",
+    "reports/screenshot-1920x1080.png",
+    "reports/screenshot-mobile.png"
+  ]
+}

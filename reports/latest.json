@@ -1,0 +1,175 @@
+{
+  "stage": "DD-00",
+  "status": "PARTIAL",
+  "sourceCommit": "8587d440c210e204d36995e75b886dd5aa13c007",
+  "checks": [
+    {
+      "name": "build",
+      "command": "node scripts/build.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "typecheck",
+      "command": "node scripts/typecheck.mjs",
+      "status": "NOT RUN",
+      "exitCode": 2
+    },
+    {
+      "name": "lint",
+      "command": "node scripts/lint.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "unit",
+      "command": "node --test tests/unit.test.ts",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "integration",
+      "command": "node --test tests/integration.test.ts",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "long-run-a",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-a.json",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "long-run-b",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-b.json",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "performance-5000",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output reports/performance-5000.json",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "e2e",
+      "command": "node scripts/e2e.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "determinism",
+      "command": "compare SHA-256 of canonical states from long-run-a and long-run-b",
+      "status": "PASS",
+      "hashA": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+      "hashB": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa"
+    }
+  ],
+  "unit": {
+    "passed": 15,
+    "failed": 0
+  },
+  "integration": {
+    "passed": 3,
+    "failed": 0
+  },
+  "e2e": {
+    "status": "PASS",
+    "transport": "Playwright offline routes serving real dist files; loopback network denied by sandbox",
+    "browser": "157.0.8103.79",
+    "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "checks": [
+      "initial 256x256 world / 1000 real organisms / paused",
+      "single step exactly +1",
+      "play / 4x speed / pause stays stable",
+      "visible tick / population / food equal actual Worker metrics",
+      "map hit selection opens real energy / age / genome",
+      "zoom / pan change rendered camera",
+      "new seed resets world / tick / population / selection",
+      "keyboard Space toggles playback",
+      "responsive 1366 / 1920 / 390 widths without horizontal overflow"
+    ],
+    "errors": [],
+    "screenshots": [
+      "reports/screenshot-1366x768.png",
+      "reports/screenshot-1920x1080.png",
+      "reports/screenshot-mobile.png"
+    ]
+  },
+  "longRun": {
+    "seed": "dd00-verification",
+    "ticks": 5000,
+    "initialPopulation": 1000,
+    "finalPopulation": 4346,
+    "births": 11254,
+    "deaths": 7908,
+    "maxGeneration": 31,
+    "errors": []
+  },
+  "determinism": {
+    "status": "PASS",
+    "hashAlgorithm": "SHA-256 canonical complete engine state",
+    "hashA": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+    "hashB": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+    "parameters": {
+      "seed": "dd00-verification",
+      "width": 256,
+      "height": 256,
+      "population": 1000,
+      "mutationRate": 0.12,
+      "regrowth": true
+    },
+    "ticks": 5000
+  },
+  "performance": {
+    "tps": 110.63857865892899,
+    "initialPopulation": 5000,
+    "finalPopulation": 5474,
+    "ticks": 1000,
+    "tickP50Ms": 4.9573999999997795,
+    "tickP95Ms": 8.449500000000171,
+    "environment": {
+      "node": "v24.22.1",
+      "platform": "win32",
+      "arch": "x64",
+      "cpu": "AMD Ryzen 7 4800H with Radeon Graphics         ",
+      "logicalCpus": 16,
+      "memoryBytes": 322359296
+    },
+    "includesPerTickInvariantChecks": true
+  },
+  "evidence": [
+    "reports/build.log",
+    "reports/typecheck.log",
+    "reports/lint.log",
+    "reports/unit.log",
+    "reports/integration.log",
+    "reports/e2e.json",
+    "reports/e2e.log",
+    "reports/e2e-loopback-denied.log",
+    "reports/long-run-a.json",
+    "reports/long-run-b.json",
+    "reports/performance-5000.json",
+    "reports/initial-model-extinction.json",
+    "reports/screenshot-1366x768.png",
+    "reports/screenshot-1920x1080.png",
+    "reports/screenshot-mobile.png",
+    "reports/checks.json",
+    "docs/spec/",
+    "docs/adr/001-dd00.md"
+  ],
+  "limitations": [
+    "Strict typecheck NOT RUN: tsc and @types/node absent; npm registry DNS unavailable. strict tsconfig is present but build only strips types.",
+    "Recommended React/Vite/PixiJS/Vitest/pnpm replaced by dependency-free DOM/Canvas/Node test adapters; see docs/adr/001-dd00.md.",
+    "Browser E2E uses real dist files and real Worker through offline Playwright routes. Direct loopback HTTP navigation is denied by the sandbox; normal TCP browser launch not verified here.",
+    "Determinism verified only in Node v24.22.1 on Windows x64; cross-browser bit identity not established.",
+    "Performance includes invariant checks and natural population changes, not fixed-population throughput, browser FPS or a long-term stability guarantee.",
+    "DD-01+ features, saves, predators, climate, full lineage archives and experiment lab are intentionally not implemented."
+  ],
+  "blockers": [
+    "Strict typecheck unavailable",
+    "Direct HTTP browser transport not verified due sandbox loopback restriction"
+  ],
+  "nextRecommendedStage": "DD-01",
+  "nextStageAuthorized": false
+}

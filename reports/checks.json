@@ -1,0 +1,63 @@
+[
+  {
+    "name": "build",
+    "command": "node scripts/build.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "typecheck",
+    "command": "node scripts/typecheck.mjs",
+    "status": "NOT RUN",
+    "exitCode": 2
+  },
+  {
+    "name": "lint",
+    "command": "node scripts/lint.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "unit",
+    "command": "node --test tests/unit.test.ts",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "integration",
+    "command": "node --test tests/integration.test.ts",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "long-run-a",
+    "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-a.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "long-run-b",
+    "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-b.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "performance-5000",
+    "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output reports/performance-5000.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "e2e",
+    "command": "node scripts/e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "determinism",
+    "command": "compare SHA-256 of canonical states from long-run-a and long-run-b",
+    "status": "PASS",
+    "hashA": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+    "hashB": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa"
+  }
+]

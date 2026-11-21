@@ -16,7 +16,7 @@ const report = `DIGITAL DARWIN - MILESTONE REPORT
 STAGE: DD-00
 STATUS: ${status}
 
-COMMIT: ${sourceCommit} (local source baseline; report/artifact commit follows; see reports/publication.json for GitHub branch/commit)
+COMMIT: ${sourceCommit} (GitHub source baseline; report/artifact commit follows; see reports/publication.json for GitHub branch/commit)
 BUILD: ${c('build')} | actual browser JS emitted to dist
 TYPECHECK: ${c('typecheck')} | compiler unavailable; exit 2; not counted as PASS
 LINT: ${c('lint')} | project syntax/core-boundary guard, not ESLint

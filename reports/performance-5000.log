@@ -1,0 +1,146 @@
+{
+  "engineVersion": "0.1.0",
+  "seed": "dd00-performance",
+  "ticks": 1000,
+  "config": {
+    "seed": "dd00-performance",
+    "width": 256,
+    "height": 256,
+    "population": 5000,
+    "mutationRate": 0.12,
+    "regrowth": true
+  },
+  "initial": {
+    "tick": 0,
+    "population": 5000,
+    "food": 142432.163,
+    "births": 0,
+    "deaths": 0,
+    "meanEnergy": 22.9893296,
+    "maxGeneration": 0
+  },
+  "final": {
+    "tick": 1000,
+    "population": 5474,
+    "food": 98616.742,
+    "births": 5549,
+    "deaths": 5075,
+    "meanEnergy": 20.185284983558642,
+    "maxGeneration": 9
+  },
+  "errors": [],
+  "hash": "599cc079dbac74a6847e49ca2913d9e7b3641c1cdc9223a2f10fb2ad4fa27c09",
+  "elapsedMs": 9038.4386,
+  "tps": 110.63857865892899,
+  "tickP50Ms": 4.9573999999997795,
+  "tickP95Ms": 8.449500000000171,
+  "environment": {
+    "node": "v24.22.1",
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD Ryzen 7 4800H with Radeon Graphics         ",
+    "logicalCpus": 16,
+    "memoryBytes": 322359296
+  },
+  "history": [
+    {
+      "tick": 0,
+      "population": 5000,
+      "food": 142432.163,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 22.9893296,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 100,
+      "population": 6749,
+      "food": 73866.912,
+      "births": 1749,
+      "deaths": 0,
+      "meanEnergy": 25.896981626907692,
+      "maxGeneration": 2
+    },
+    {
+      "tick": 200,
+      "population": 7498,
+      "food": 72959.75,
+      "births": 2632,
+      "deaths": 134,
+      "meanEnergy": 21.423579621232328,
+      "maxGeneration": 3
+    },
+    {
+      "tick": 300,
+      "population": 7081,
+      "food": 74065.015,
+      "births": 3106,
+      "deaths": 1025,
+      "meanEnergy": 20.796868662618277,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 400,
+      "population": 6801,
+      "food": 72113.263,
+      "births": 3524,
+      "deaths": 1723,
+      "meanEnergy": 20.60837817967946,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 500,
+      "population": 6448,
+      "food": 81124.587,
+      "births": 3853,
+      "deaths": 2405,
+      "meanEnergy": 19.648912996277915,
+      "maxGeneration": 5
+    },
+    {
+      "tick": 600,
+      "population": 6163,
+      "food": 84557.338,
+      "births": 4187,
+      "deaths": 3024,
+      "meanEnergy": 19.64889810157391,
+      "maxGeneration": 6
+    },
+    {
+      "tick": 700,
+      "population": 5857,
+      "food": 92341.326,
+      "births": 4478,
+      "deaths": 3621,
+      "meanEnergy": 19.3747534574014,
+      "maxGeneration": 7
+    },
+    {
+      "tick": 800,
+      "population": 5652,
+      "food": 94332.861,
+      "births": 4830,
+      "deaths": 4178,
+      "meanEnergy": 19.85501857749469,
+      "maxGeneration": 8
+    },
+    {
+      "tick": 900,
+      "population": 5537,
+      "food": 96571.942,
+      "births": 5178,
+      "deaths": 4641,
+      "meanEnergy": 20.088550297995305,
+      "maxGeneration": 8
+    },
+    {
+      "tick": 1000,
+      "population": 5474,
+      "food": 98616.742,
+      "births": 5549,
+      "deaths": 5075,
+      "meanEnergy": 20.185284983558642,
+      "maxGeneration": 9
+    }
+  ]
+}
