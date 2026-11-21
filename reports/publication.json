@@ -1,0 +1,10 @@
+{
+  "repository": "diabloell/digital-darwin",
+  "branch": "dd-00-first-working-slice",
+  "sourceCommit": "8587d440c210e204d36995e75b886dd5aa13c007",
+  "artifactCommit": "85faa46764c57bfd5ffe0e90a81dc0f0be943be4",
+  "baseCommit": "83c0e8b4dc17d9f61c6d64b80851a55c8942d6d8",
+  "mainUnchanged": true,
+  "transport": "GitHub connector; shell Git DNS unavailable; local index write denied",
+  "publicDeployment": false
+}

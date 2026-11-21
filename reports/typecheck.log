@@ -1,0 +1,1 @@
+TYPECHECK NOT RUN: TypeScript compiler and @types/node unavailable; npm registry DNS unavailable in original environment. strict tsconfig exists, type stripping is not typechecking.

@@ -1,0 +1,31 @@
+name: DD-00 verification
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.3'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install Playwright Chromium
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Typecheck, build, lint, unit/integration, headless simulation and browser E2E
+        run: npm run verify
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dd-00-verification
+          path: outputs/verification/
+          if-no-files-found: ignore

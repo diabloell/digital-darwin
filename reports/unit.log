@@ -1,0 +1,23 @@
+✔ same seed, configuration and ticks produce identical complete states (5.21ms)
+✔ different seeds produce distinct worlds (49.7019ms)
+✔ food competition never overdraws even in crowded cells (8.5002ms)
+✔ feeding gain matches assimilation minus explicit metabolic cost (0.6019ms)
+✔ reproduction transfers energy and pays cost instead of copying energy (0.7517ms)
+✔ zero mutation offspring inherits a separate exact genome (1.4321ms)
+✔ mutations stay within bounds for 10000 successive genomes (11.3484ms)
+✔ organism dies when energy is exhausted (1.3323ms)
+✔ confirmed dead organism never moves, eats or reproduces (0.3794ms)
+✔ one intent per organism per tick; newborn waits until next tick (0.4978ms)
+✔ integer resource and energy budget closes over birth/death cycles (16.4609ms)
+✔ no NaN or Infinity across multiple seeded worlds (159.3813ms)
+✔ toroidal cell lookup wraps both axes (0.2746ms)
+✔ invalid configs and tick counts are rejected (1.4719ms)
+✔ proportional conflict allocation is independent of iteration order without mutation (1.4999ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 433.8356
