@@ -1,18 +1,18 @@
 {
-  "stage": "DD-02",
+  "stage": "DD-03",
   "status": "PARTIAL",
-  "sourceCommit": "6d94aaa1c7bb41d6f9a7457f7d83b085a791f68e",
-  "baseMain": "aadf740",
-  "branch": "dd-02-heritable-evolution",
+  "sourceCommit": "7ed968cb542e01e3ea1fc4005bc8b0584fbd92fd",
+  "branch": "dd-03-interactive-observer",
+  "baseMain": "26de808",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-02-heritable-evolution"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-03-interactive-observer"
   },
   "ci": {
     "status": "PASS",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44944287881",
-    "sourceCommit": "6d94aaa1c7bb41d6f9a7457f7d83b085a791f68e"
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44946327649",
+    "sourceCommit": "7ed968cb542e01e3ea1fc4005bc8b0584fbd92fd"
   },
   "checks": [
     {
@@ -47,31 +47,31 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd02-final/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd03-final/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd02-final/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd03-final/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd02-final/performance-5000.json --profile",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd03-final/performance-5000.json --profile",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-food",
-      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd02-final/no-food.json --width 32 --height 32 --no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd03-final/no-food.json --width 32 --height 32 --no-food",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-reproduction",
-      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd02-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd03-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
       "status": "PASS",
       "exitCode": 0
     },
@@ -83,7 +83,7 @@
     },
     {
       "name": "experiments",
-      "command": "node apps/experiments.ts outputs/dd02-final/experiments.json",
+      "command": "node apps/experiments.ts outputs/dd03-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -94,8 +94,26 @@
       "exitCode": 0
     },
     {
+      "name": "browser-benchmark",
+      "command": "node scripts/browser-benchmark.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "dd02-regression",
+      "command": "node scripts/check-dd02-regression.mjs outputs/dd03-final/experiments.json",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "dd02-state",
+      "command": "node scripts/check-determinism.mjs outputs/dd03-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/dd02-final/long-run-a.json outputs/dd02-final/long-run-b.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd03-final/long-run-a.json outputs/dd03-final/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
@@ -110,47 +128,83 @@
     "failed": 0,
     "skipped": 0
   },
-  "longRun": {
-    "config": {
-      "seed": "dd00-verification",
-      "width": 256,
-      "height": 256,
-      "population": 1000,
-      "mutationRate": 0.12,
-      "regrowth": true,
-      "reproduction": true,
-      "rule": "selection",
-      "mutationStrength": 0.08,
-      "resourceScale": 1
-    },
-    "initial": {
-      "tick": 0,
-      "population": 1000,
-      "food": 118760.783,
-      "births": 0,
-      "deaths": 0,
-      "meanEnergy": 22.924143,
-      "maxGeneration": 0
-    },
-    "final": {
-      "tick": 10000,
-      "population": 2913,
-      "food": 16785.864,
-      "births": 16597,
-      "deaths": 14684,
-      "meanEnergy": 17.96153381393752,
-      "maxGeneration": 33
-    },
-    "ticks": 10000,
-    "audits": 10000,
-    "environment": {
-      "node": "v24.22.3",
-      "platform": "linux",
-      "arch": "x64",
-      "cpu": "AMD EPYC 9V74 80-Core Processor",
-      "logicalCpus": 5,
-      "memoryBytes": 222330880
+  "e2e": {
+    "status": "PASS",
+    "transport": "Node HTTP server over loopback",
+    "browser": "156.0.8078.79",
+    "executablePath": "/usr/bin/chromium",
+    "checks": [
+      "initial 256x256 world / 1000 real organisms / paused",
+      "single step exactly +1",
+      "organisms change coordinates while running",
+      "play / 4x speed / pause stays stable",
+      "visible tick / population / food equal actual Worker metrics",
+      "map hit selection opens real energy / age / genome",
+      "genetic histogram matches real organisms; trait color and mean chart controls work",
+      "seven palettes, eleven charts, four distributions and speeds; selection survives a new frame",
+      "zoom / pan change rendered camera",
+      "new seed resets world / tick / population / selection",
+      "keyboard Space toggles playback",
+      "responsive 1366 / 1920 / 390 widths without horizontal overflow",
+      "configuration and seed replay match real buffers; dead selection clears live traits",
+      "empty charts are labeled and invalid configuration leaves the current world intact",
+      "same 12 Worker ticks produce identical metrics and buffers with normal and delayed rendering"
+    ],
+    "errors": [],
+    "screenshots": [
+      "reports/dd-03/screenshot-1366x768.png",
+      "reports/dd-03/screenshot-1920x1080.png",
+      "reports/dd-03/screenshot-mobile.png"
+    ],
+    "speedMeasurement": {
+      "ticks": 16,
+      "normalMs": 930.5218479999999,
+      "acceleratedMs": 213.629997
     }
+  },
+  "benchmark": {
+    "status": "PASS",
+    "browser": "156.0.8078.79",
+    "platform": "linux",
+    "viewport": "1366x768",
+    "speed": "16×",
+    "method": "Chromium headless, landscape and organisms on Canvas; map draw wall time inside RAF; browser FPS is RAF cadence; sampled JS heap is approximate and excludes GPU/OS RSS.",
+    "runs": [
+      {
+        "initialPopulation": 1000,
+        "elapsedMs": 8001.199999999906,
+        "startTick": 340,
+        "endTick": 2851,
+        "startPopulation": 2328,
+        "endPopulation": 4025,
+        "engineTps": 313.827925811132,
+        "browserRafFps": 60.115982602610316,
+        "maxRafGapMs": 16.80000000000109,
+        "mapPaintFps": 8.623706444033497,
+        "mapRenderP50Ms": 1,
+        "mapRenderP95Ms": 1.5,
+        "stepToPaintP50Ms": 16.700000000186265,
+        "stepToPaintP95Ms": 22.700000000186265,
+        "peakJsHeapBytes": 16398475
+      },
+      {
+        "initialPopulation": 5000,
+        "elapsedMs": 8004.4999999998145,
+        "startTick": 187,
+        "endTick": 2820,
+        "startPopulation": 6298,
+        "endPopulation": 4914,
+        "engineTps": 328.9399712661704,
+        "browserRafFps": 60.091198700732235,
+        "maxRafGapMs": 16.80000000000109,
+        "mapPaintFps": 8.120432256855707,
+        "mapRenderP50Ms": 1.400000000372529,
+        "mapRenderP95Ms": 2.6000000000931323,
+        "stepToPaintP50Ms": 28.100000000093132,
+        "stepToPaintP95Ms": 41,
+        "peakJsHeapBytes": 19370072
+      }
+    ]
   },
   "determinism": {
     "status": "PASS",
@@ -200,670 +254,41 @@
         "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
       }
     ],
-    "experimentFileSha256": "0af32554d849146d987b6ece874bc4c22a6399664ae4dfeeec4cbdd917614750"
+    "matchesDD02": true
   },
-  "performance": {
-    "initial": {
-      "tick": 0,
-      "population": 5000,
-      "food": 142432.163,
-      "births": 0,
-      "deaths": 0,
-      "meanEnergy": 22.9893296,
-      "maxGeneration": 0
-    },
-    "final": {
-      "tick": 1000,
-      "population": 3177,
-      "food": 141421.943,
-      "births": 4168,
-      "deaths": 5991,
-      "meanEnergy": 20.86454863078376,
-      "maxGeneration": 9
-    },
-    "tps": 189.12609636563548,
-    "tickP50Ms": 3.4931649999998626,
-    "tickP95Ms": 5.879944000000023,
-    "peakSampledRssBytes": 227151872,
-    "phases": {
-      "environment": {
-        "p50Ms": 0.48535100000003695,
-        "p95Ms": 0.5643709999999373,
-        "totalMs": 491.5171380000135
-      },
-      "observations": {
-        "p50Ms": 1.9109109999999419,
-        "p95Ms": 3.35593700000004,
-        "totalMs": 2232.0836240000076
-      },
-      "intents": {
-        "p50Ms": 0.11755700000003344,
-        "p95Ms": 0.22250599999995302,
-        "totalMs": 160.64440699999636
-      },
-      "movement": {
-        "p50Ms": 0.643880000000081,
-        "p95Ms": 1.2122470000001613,
-        "totalMs": 767.1549579999933
-      },
-      "competition": {
-        "p50Ms": 0.057766999999785185,
-        "p95Ms": 0.12883399999998346,
-        "totalMs": 79.6437429999938
-      },
-      "metabolism": {
-        "p50Ms": 0.07010600000012346,
-        "p95Ms": 0.12012099999992643,
-        "totalMs": 93.15014300000925
-      },
-      "death": {
-        "p50Ms": 0.04225399999995716,
-        "p95Ms": 0.08754200000021228,
-        "totalMs": 72.17607699999786
-      },
-      "reproduction": {
-        "p50Ms": 0.05473200000005818,
-        "p95Ms": 0.08134299999983341,
-        "totalMs": 73.04420300000461
-      },
-      "audit": {
-        "p50Ms": 0.0116769999999633,
-        "p95Ms": 0.04014100000006238,
-        "totalMs": 19.110624000003554
-      }
-    }
-  },
-  "e2e": {
+  "dd02Regression": {
     "status": "PASS",
-    "transport": "Node HTTP server over loopback",
-    "browser": "156.0.8078.79",
-    "executablePath": "/usr/bin/chromium",
-    "checks": [
-      "initial 256x256 world / 1000 real organisms / paused",
-      "single step exactly +1",
-      "organisms change coordinates while running",
-      "play / 4x speed / pause stays stable",
-      "visible tick / population / food equal actual Worker metrics",
-      "map hit selection opens real energy / age / genome",
-      "genetic histogram matches real organisms; trait color and mean chart controls work",
-      "zoom / pan change rendered camera",
-      "new seed resets world / tick / population / selection",
-      "keyboard Space toggles playback",
-      "responsive 1366 / 1920 / 390 widths without horizontal overflow",
-      "same 12 Worker ticks produce identical metrics and buffers with normal and delayed rendering"
-    ],
-    "errors": [],
-    "screenshots": [
-      "reports/dd-02/screenshot-1366x768.png",
-      "reports/dd-02/screenshot-1920x1080.png",
-      "reports/dd-02/screenshot-mobile.png"
-    ],
-    "speedMeasurement": {
-      "ticks": 16,
-      "normalMs": 929.8768350000003,
-      "acceleratedMs": 221.9172120000003
-    }
-  },
-  "experiments": {
-    "engineVersion": "0.3.0",
-    "genomeVersion": "1",
-    "evolutionVersion": "1",
-    "seeds": [
-      "dd02-amber",
-      "dd02-fern",
-      "dd02-dune",
-      "dd02-coral",
-      "dd02-slate"
-    ],
+    "replicas": 20,
     "ticks": 4000,
-    "replicasPerCondition": 5,
-    "aggregate": [
-      {
-        "condition": "E01",
-        "extinctions": 0,
-        "population": {
-          "n": 5,
-          "missing": 0,
-          "mean": 274.2,
-          "min": 197,
-          "max": 388
-        },
-        "births": {
-          "n": 5,
-          "missing": 0,
-          "mean": 1411.8,
-          "min": 1265,
-          "max": 1555
-        },
-        "changedBirthFraction": {
-          "n": 5,
-          "missing": 0,
-          "mean": 0,
-          "min": 0,
-          "max": 0
-        },
-        "variants": {
-          "n": 5,
-          "missing": 0,
-          "mean": 50.2,
-          "min": 35,
-          "max": 73
-        },
-        "genes": [
-          {
-            "gene": "speed",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.8190309275568406,
-              "min": 0.8002227637883708,
-              "max": 0.8398698842242001
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.02724489288942759,
-              "min": 0.020255104343867094,
-              "max": 0.031651055931020744
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.13405884318165687,
-              "min": 0.08244601048633315,
-              "max": 0.24935520299528136
-            }
-          },
-          {
-            "gene": "sensor",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 3.263991640389932,
-              "min": 3.094642989938399,
-              "max": 3.4780124506220544
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.7609657077267318,
-              "min": 0.6364866974798277,
-              "max": 0.9105983592644845
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": -0.04445486406254906,
-              "min": -0.11674575648373087,
-              "max": 0.03539690662817818
-            }
-          },
-          {
-            "gene": "efficiency",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.8082519768087476,
-              "min": 0.7989740850438981,
-              "max": 0.8134463380043618
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.0022379855000372274,
-              "min": 0.0015469243405740317,
-              "max": 0.00345140043350815
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.1669035342992961,
-              "min": 0.0593239723804424,
-              "max": 0.2731727973966779
-            }
-          },
-          {
-            "gene": "threshold",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 44.87158314522903,
-              "min": 44.37784073893233,
-              "max": 45.691940913557474
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 11.639890632198417,
-              "min": 9.069445977122077,
-              "max": 13.569514514442533
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": -0.12111324869689118,
-              "min": -0.19628679424777895,
-              "max": -0.09404620752154691
-            }
-          }
-        ]
-      },
-      {
-        "condition": "E02",
-        "extinctions": 0,
-        "population": {
-          "n": 5,
-          "missing": 0,
-          "mean": 523.6,
-          "min": 460,
-          "max": 604
-        },
-        "births": {
-          "n": 5,
-          "missing": 0,
-          "mean": 1701.2,
-          "min": 1346,
-          "max": 1950
-        },
-        "changedBirthFraction": {
-          "n": 5,
-          "missing": 0,
-          "mean": 0.40702480173425304,
-          "min": 0.40307692307692305,
-          "max": 0.41064638783269963
-        },
-        "variants": {
-          "n": 5,
-          "missing": 0,
-          "mean": 352.4,
-          "min": 306,
-          "max": 388
-        },
-        "genes": [
-          {
-            "gene": "speed",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.9442101049083315,
-              "min": 0.8822519684864512,
-              "max": 0.9868151255532587
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.026007793421777343,
-              "min": 0.022247157097990064,
-              "max": 0.03220336674425267
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.1786462198892929,
-              "min": 0.046546774566313065,
-              "max": 0.29765262221770905
-            }
-          },
-          {
-            "gene": "sensor",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 2.348400420645919,
-              "min": 2.2008783078595413,
-              "max": 2.5680141699563754
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 1.2582366656367356,
-              "min": 1.0966790625838811,
-              "max": 1.3804624572922164
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": -0.1425336654931565,
-              "min": -0.20452403137402575,
-              "max": -0.1146969937662129
-            }
-          },
-          {
-            "gene": "efficiency",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.8191462404894028,
-              "min": 0.792249465453761,
-              "max": 0.8361749329632117
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.0030162232170531833,
-              "min": 0.0012194651086448248,
-              "max": 0.0047572915910493
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.21654455449715376,
-              "min": 0.045534792620672615,
-              "max": 0.32516154225797
-            }
-          },
-          {
-            "gene": "threshold",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 43.66435039705865,
-              "min": 41.825211599075885,
-              "max": 45.66608768913048
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 13.172035040200052,
-              "min": 9.666372033298375,
-              "max": 19.590696518904362
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": -0.20395841069483334,
-              "min": -0.3023336758426258,
-              "max": -0.02130607672305529
-            }
-          }
-        ]
-      },
-      {
-        "condition": "E03",
-        "extinctions": 0,
-        "population": {
-          "n": 5,
-          "missing": 0,
-          "mean": 183,
-          "min": 43,
-          "max": 315
-        },
-        "births": {
-          "n": 5,
-          "missing": 0,
-          "mean": 729.8,
-          "min": 516,
-          "max": 946
-        },
-        "changedBirthFraction": {
-          "n": 5,
-          "missing": 0,
-          "mean": 0.4044053418422873,
-          "min": 0.3858350951374207,
-          "max": 0.436046511627907
-        },
-        "variants": {
-          "n": 5,
-          "missing": 0,
-          "mean": 88.2,
-          "min": 17,
-          "max": 134
-        },
-        "genes": [
-          {
-            "gene": "speed",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.8561532698519183,
-              "min": 0.6148457897460758,
-              "max": 1.0271226148024772
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.02049977222059305,
-              "min": 0.007471315798233408,
-              "max": 0.0444677186800987
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.3857476436752226,
-              "min": -0.3436317270596905,
-              "max": 0.7592752333538506
-            }
-          },
-          {
-            "gene": "sensor",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 2.303192103118937,
-              "min": 1.5763602155127205,
-              "max": 3.8886568472029763
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.898290748687754,
-              "min": 0.17454575182092233,
-              "max": 2.034649101079785
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": -0.5138335408029935,
-              "min": -0.6178019071001217,
-              "max": -0.3102405397892005
-            }
-          },
-          {
-            "gene": "efficiency",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.8003802896424024,
-              "min": 0.7553019052327387,
-              "max": 0.8644729245046869
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.0003570315763576137,
-              "min": 0.00023399095084276181,
-              "max": 0.00061427132416779
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": -0.7198623267367446,
-              "min": -1.382612420851787,
-              "max": 0.39909950401542793
-            }
-          },
-          {
-            "gene": "threshold",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 45.39607354994895,
-              "min": 42.45187087344124,
-              "max": 49.22192555540378
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 3.9678305391057407,
-              "min": 2.321324443075766,
-              "max": 5.941331216678356
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.1434648345450841,
-              "min": -0.3326258636948505,
-              "max": 0.3682458452223587
-            }
-          }
-        ]
-      },
-      {
-        "condition": "E04",
-        "extinctions": 0,
-        "population": {
-          "n": 5,
-          "missing": 0,
-          "mean": 119.4,
-          "min": 58,
-          "max": 169
-        },
-        "births": {
-          "n": 5,
-          "missing": 0,
-          "mean": 935.2,
-          "min": 609,
-          "max": 1223
-        },
-        "changedBirthFraction": {
-          "n": 5,
-          "missing": 0,
-          "mean": 0.3944954413836085,
-          "min": 0.3694581280788177,
-          "max": 0.4057142857142857
-        },
-        "variants": {
-          "n": 5,
-          "missing": 0,
-          "mean": 55,
-          "min": 23,
-          "max": 91
-        },
-        "genes": [
-          {
-            "gene": "speed",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.7344864248129166,
-              "min": 0.5122841953759176,
-              "max": 0.9064027770152957
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.019272278617538465,
-              "min": 0.0010901954191561984,
-              "max": 0.030993109592171154
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.049990756510701354,
-              "min": -0.05520526862326092,
-              "max": 0.32801350786372896
-            }
-          },
-          {
-            "gene": "sensor",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 3.484425896322011,
-              "min": 2.9369203881261203,
-              "max": 3.830706772961574
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.6378911332874,
-              "min": 0.27972671055766085,
-              "max": 1.0148114012811693
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": -0.015701127212679643,
-              "min": -0.08670057300231271,
-              "max": 0.1266327727585581
-            }
-          },
-          {
-            "gene": "efficiency",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.8654784554960748,
-              "min": 0.8253967056825818,
-              "max": 0.897072504064736
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.0024661110341839356,
-              "min": 0.0008576377825510316,
-              "max": 0.0037909925966132726
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.05528027860663567,
-              "min": -0.0972718914505275,
-              "max": 0.14683580126441265
-            }
-          },
-          {
-            "gene": "threshold",
-            "mean": {
-              "n": 5,
-              "missing": 0,
-              "mean": 44.04221854704483,
-              "min": 42.96158669304993,
-              "max": 44.66339362580769
-            },
-            "variance": {
-              "n": 5,
-              "missing": 0,
-              "mean": 9.99823496123965,
-              "min": 5.775220789376335,
-              "max": 14.469692568098619
-            },
-            "highMinusLowBirthRate": {
-              "n": 5,
-              "missing": 0,
-              "mean": 0.0045525172761442965,
-              "min": -0.0639385392312557,
-              "max": 0.10748470049783432
-            }
-          }
-        ]
-      }
-    ]
+    "sha256": "0af32554d849146d987b6ece874bc4c22a6399664ae4dfeeec4cbdd917614750"
   },
   "evidence": [
-    "reports/dd-02/build.log",
-    "reports/dd-02/checks.json",
-    "reports/dd-02/dd01-compatibility.log",
-    "reports/dd-02/determinism.log",
-    "reports/dd-02/e2e.json",
-    "reports/dd-02/e2e.log",
-    "reports/dd-02/experiments.json",
-    "reports/dd-02/experiments.log",
-    "reports/dd-02/integration.log",
-    "reports/dd-02/lint.log",
-    "reports/dd-02/long-run-a.json",
-    "reports/dd-02/long-run-b.json",
-    "reports/dd-02/no-food.json",
-    "reports/dd-02/no-reproduction.json",
-    "reports/dd-02/performance-5000.json",
-    "reports/dd-02/screenshot-1366x768.png",
-    "reports/dd-02/screenshot-1920x1080.png",
-    "reports/dd-02/screenshot-mobile.png",
-    "reports/dd-02/typecheck.log",
-    "reports/dd-02/unit.log"
+    "reports/dd-03/checks.json",
+    "reports/dd-03/unit.log",
+    "reports/dd-03/integration.log",
+    "reports/dd-03/typecheck.log",
+    "reports/dd-03/build.log",
+    "reports/dd-03/lint.log",
+    "reports/dd-03/e2e.log",
+    "reports/dd-03/e2e.json",
+    "reports/dd-03/browser-benchmark.log",
+    "reports/dd-03/browser-benchmark.json",
+    "reports/dd-03/long-run-a.json",
+    "reports/dd-03/long-run-b.json",
+    "reports/dd-03/determinism.log",
+    "reports/dd-03/dd02-regression.log",
+    "reports/dd-03/dd02-state.log",
+    "reports/dd-03/experiments.log",
+    "reports/dd-03/dd01-compatibility.log",
+    "reports/dd-03/performance-5000.json",
+    "reports/dd-03/no-food.json",
+    "reports/dd-03/no-reproduction.json",
+    "reports/dd-03/screenshot-1366x768.png",
+    "reports/dd-03/screenshot-1920x1080.png",
+    "reports/dd-03/screenshot-mobile.png"
   ],
   "blockers": [
-    "GitHub GraphQL отклонил создание PR с Forbidden. Публичная ссылка на форму перенаправляет на вход в GitHub."
+    "GitHub GraphQL вернул Forbidden для gh pr create. Ветка опубликована; создание PR доступно через форму GitHub после входа."
   ],
   "nextStageAuthorized": false
 }

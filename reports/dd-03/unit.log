@@ -1,0 +1,31 @@
+✔ same seed, configuration and ticks produce identical complete states (5.11965ms)
+✔ different seeds produce distinct worlds (41.308728ms)
+✔ food competition never overdraws even in crowded cells (13.408619ms)
+✔ feeding gain matches assimilation minus explicit metabolic cost (0.94119ms)
+✔ reproduction transfers energy and pays cost instead of copying energy (0.685834ms)
+✔ zero mutation offspring inherits a separate exact genome (1.680514ms)
+✔ mutations stay within bounds for 10000 successive genomes (8.617023ms)
+✔ organism dies when energy is exhausted (0.309316ms)
+✔ confirmed dead organism never moves, eats or reproduces (0.354785ms)
+✔ one intent per organism per tick; newborn waits until next tick (0.376498ms)
+✔ integer resource and energy budget closes over birth/death cycles (20.242558ms)
+✔ no NaN or Infinity across multiple seeded worlds (173.294765ms)
+✔ toroidal cell lookup wraps both axes (0.222836ms)
+✔ invalid configs and tick counts are rejected (1.084345ms)
+✔ proportional conflict allocation is independent of iteration order without mutation (1.076724ms)
+✔ UTF-16 seeds sharing a high surrogate initialize distinct RNG streams (1.380231ms)
+✔ tick stages publish in order and observations do not move organisms (0.280704ms)
+✔ an eligible organism never gives birth when reproduction is disabled (0.536399ms)
+✔ zero reserves skip every action while duplicate IDs fail the tick (0.814999ms)
+✔ full invariant check rejects counterfeited state and missing food (1.931963ms)
+✔ phenotype maps the four genes and makes high assimilation costly (0.737582ms)
+✔ mutation strength zero copies values and maximum strength remains bounded (1.300431ms)
+✔ live genetic distributions, cohort deaths and zero-birth values reflect state (2.921936ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 384.970173
