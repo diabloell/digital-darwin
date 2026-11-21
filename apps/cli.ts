@@ -1,4 +1,7 @@
 import { Engine, ENGINE_VERSION, TICK_PHASES } from '../src/core/engine.ts';
+import { EVOLUTION_VERSION, GENOME_VERSION } from '../src/core/genetics.ts';
+import type { Rule } from '../src/core/genetics.ts';
+import { EvolutionObserver } from '../src/core/evolution.ts';
 import { createHash } from 'node:crypto';
 import { writeFile, mkdir } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
@@ -31,9 +34,14 @@ const engine = new Engine({
   height: Number(arg('height', '256')),
   population: Number(arg('population', '1000')),
   reproduction: !process.argv.includes('--no-reproduction'),
-  regrowth: !noFood
+  regrowth: !noFood,
+  rule: arg('rule', 'selection') as Rule,
+  mutationRate: Number(arg('mutation-rate', '.12')),
+  mutationStrength: Number(arg('mutation-strength', '.08')),
+  resourceScale: Number(arg('resource-scale', '1'))
 });
 if (noFood) engine.food.fill(0);
+const observer = process.argv.includes('--evolution') ? new EvolutionObserver(engine) : null;
 
 const hashState = () => createHash('sha256').update(engine.canonical()).digest('hex');
 const initial = engine.metrics(), history = [initial], checkpoints = [{ tick: 0, hash: hashState() }];
@@ -52,6 +60,7 @@ for (let t = 1; t <= ticks; t++) {
     phaseStart = now;
   } : undefined);
   timings.push(performance.now() - tickStart);
+  observer?.record(engine);
   if (engine.organisms.length === 0 && extinctionTick === null) extinctionTick = t;
   if (t % auditEvery === 0 || t === ticks) {
     const auditStart = performance.now();
@@ -77,7 +86,7 @@ function summarize(samples: number[]) {
 }
 const timing = summarize(timings);
 const result = {
-  engineVersion: ENGINE_VERSION, seed, ticks, config: engine.config, noFood, initial,
+  engineVersion: ENGINE_VERSION, genomeVersion: GENOME_VERSION, evolutionVersion: EVOLUTION_VERSION, seed, ticks, config: engine.config, noFood, initial,
   final: engine.metrics(), extinctionTick, errors: [], hash: checkpoints.at(-1)!.hash, checkpoints,
   elapsedMs, tps: ticks / elapsedMs * 1000, tickP50Ms: timing.p50Ms, tickP95Ms: timing.p95Ms,
   phases: profiling ? Object.fromEntries([...phases].map(([phase, samples]) => [phase, summarize(samples)])) : null,
@@ -86,7 +95,7 @@ const result = {
     node: process.version, platform: process.platform, arch: process.arch, cpu: os.cpus()[0]?.model,
     logicalCpus: os.cpus().length, memoryBytes: process.memoryUsage().rss
   },
-  history
+  history, evolution: observer?.snapshot(engine) ?? null
 };
 const output = arg('output', '');
 if (output) {

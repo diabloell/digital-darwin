@@ -52,3 +52,14 @@ git push -u origin dd-00-first-working-slice
 ```
 
 Не переносите каталог `.git` поверх другого checkout. PNG-скриншоты и JSON/логи в `reports/` служат доказательствами; при переносе их можно включить в коммит. Никаких ключей, секретов, облачных API или телеметрии приложению не требуется.
+
+## Наследственность и эксперименты DD-02
+
+График показывает численность или среднее любого из четырёх генов. Цвет точек переключается по признаку, гистограмма показывает распределение скорости живых организмов, а инспектор выводит геном и фенотип.
+
+```sh
+node apps/experiments.ts outputs/dd02/experiments.json
+npm run simulate -- --seed dd02-example --ticks 10000 --evolution --output outputs/dd02/example.json
+```
+
+Доступны `--rule selection|neutral|dd01`, `--mutation-rate`, `--mutation-strength` и `--resource-scale`. Методика и единицы описаны в [генетических метриках](docs/genetic-metrics.md). Итоговые проверки и результаты — в [отчёте DD-02](reports/DD-02.md).

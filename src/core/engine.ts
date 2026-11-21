@@ -1,42 +1,42 @@
 import { Rng } from './rng.ts';
+import { EVOLUTION_VERSION, GENOME_VERSION, GENES, GENE_BOUNDS, mutate, phenotype } from './genetics.ts';
+import type { Genome, Phenotype, Rule } from './genetics.ts';
+export { GENE_BOUNDS, mutate } from './genetics.ts';
+export type { Genome } from './genetics.ts';
 
-export const ENGINE_VERSION = '0.2.0';
-export const GENE_BOUNDS = { speed: [0.25, 1.8], sensor: [1, 8], efficiency: [0.65, 1], threshold: [32, 64] } as const;
-export type Genome = { speed: number; sensor: number; efficiency: number; threshold: number };
+export const ENGINE_VERSION = '0.3.0';
 export type Organism = { id: number; parent: number | null; generation: number; x: number; y: number; heading: number; velocity: number; energy: number; age: number; born: number; lastActionTick: number; genome: Genome };
-export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean; reproduction?: boolean };
+export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean; reproduction?: boolean; rule?: Rule; resourceScale?: number; mutationStrength?: number };
 export type Metrics = { tick: number; population: number; food: number; births: number; deaths: number; meanEnergy: number; maxGeneration: number };
 export type Audit = { grown: number; consumed: number; assimilated: number; dissipated: number; reproductionCost: number; digestiveLoss: number; transferred: number; actions: number };
 export const TICK_PHASES = ['environment', 'observations', 'intents', 'movement', 'competition', 'metabolism', 'death', 'reproduction', 'audit'] as const;
 export type TickPhase = typeof TICK_PHASES[number];
-type Observation = { agent: Organism; localFood: number; dx: number; dy: number };
-type Intent = { agent: Organism; heading: number; speed: number; portion: number };
+export type Birth = { parent: Genome; child: Organism };
+type Observation = { agent: Organism; traits: Phenotype; localFood: number; dx: number; dy: number };
+type Intent = { agent: Organism; traits: Phenotype; heading: number; speed: number; portion: number };
 
 function newAudit(): Audit {
   return { grown: 0, consumed: 0, assimilated: 0, dissipated: 0, reproductionCost: 0, digestiveLoss: 0, transferred: 0, actions: 0 };
 }
 
-const KEYS = Object.keys(GENE_BOUNDS) as (keyof Genome)[];
 const DX = [1, 0.7071067811865476, 0, -0.7071067811865476, -1, -0.7071067811865476, 0, 0.7071067811865476];
 const DY = [0, 0.7071067811865476, 1, 0.7071067811865476, 0, -0.7071067811865476, -1, -0.7071067811865476];
-export function mutate(parent: Genome, rng: Rng, rate: number): Genome {
-  const child = { ...parent };
-  for (const key of KEYS) {
-    const [min, max] = GENE_BOUNDS[key];
-    if (rng.next() < rate) child[key] = Math.min(max, Math.max(min, child[key] + (rng.next() * 2 - 1) * (max - min) * 0.08));
-  }
-  return child;
-}
 export function validateConfig(c: Config): void {
   if (typeof c.seed !== 'string' || c.seed.length === 0 || c.seed.length > 128) throw Error('Seed: от 1 до 128 символов');
   for (const k of ['width', 'height'] as const) if (!Number.isInteger(c[k]) || c[k] < 8 || c[k] > 512) throw Error('Размер мира: 8..512');
   if (!Number.isInteger(c.population) || c.population < 0 || c.population > 20000) throw Error('Популяция: 0..20000');
   if (!Number.isFinite(c.mutationRate) || c.mutationRate < 0 || c.mutationRate > 1) throw Error('Мутация: 0..1');
   if (c.reproduction !== undefined && typeof c.reproduction !== 'boolean') throw Error('Invalid reproduction flag');
+  if (c.rule !== undefined && !['dd01', 'selection', 'neutral'].includes(c.rule)) throw Error('Invalid evolution rule');
+  for (const value of [c.mutationStrength, c.resourceScale]) {
+    if (value !== undefined && !(Number.isFinite(value) && value >= 0 && value <= 1)) throw Error('Evolution scale: 0..1');
+  }
   if (typeof c.regrowth !== 'boolean') throw Error('Некорректный рост ресурсов');
 }
 export class Engine {
-  config: Config;
+  config: Config & Required<Pick<Config, 'rule' | 'resourceScale' | 'mutationStrength'>>;
+  lastBirths: Birth[] = [];
+  lastDeaths: Organism[] = [];
   rng: Rng;
   food: Int32Array;
   capacity: Int32Array;
@@ -49,7 +49,7 @@ export class Engine {
   audit: Audit = newAudit();
   private expectedFood: number | undefined;
   constructor(options: Partial<Config> = {}) {
-    this.config = { seed: 'coral-42', width: 256, height: 256, population: 1000, mutationRate: 0.12, regrowth: true, ...options, reproduction: options.reproduction === undefined ? true : options.reproduction };
+    this.config = { seed: 'coral-42', width: 256, height: 256, population: 1000, mutationRate: 0.12, regrowth: true, ...options, rule: options.rule === undefined ? 'selection' : options.rule, resourceScale: options.resourceScale === undefined ? 1 : options.resourceScale, mutationStrength: options.mutationStrength === undefined ? .08 : options.mutationStrength, reproduction: options.reproduction === undefined ? true : options.reproduction };
     validateConfig(this.config);
     this.rng = new Rng(this.config.seed);
     const { width: w, height: h } = this.config;
@@ -64,8 +64,8 @@ export class Engine {
       }
       const i = y * w + x;
       this.capacity[i] = Math.floor(500 + Math.min(1, fertility) * 6500);
-      this.food[i] = Math.floor(this.capacity[i] * (0.3 + this.rng.next() * 0.7));
-      this.growth[i] = Math.max(2, Math.floor(fertility * 28));
+      this.food[i] = Math.floor(this.capacity[i] * (0.3 + this.rng.next() * 0.7) * this.config.resourceScale);
+      this.growth[i] = Math.floor(Math.max(2, Math.floor(fertility * 28)) * this.config.resourceScale);
     }
     for (let i = 0; i < this.config.population; i++) this.organisms.push(this.spawn());
   }
@@ -84,7 +84,6 @@ export class Engine {
   private advance(phaseCompleted?: (phase: TickPhase) => void): void {
     this.tick++;
     const audit = newAudit();
-    const startingPopulation = this.organisms.length;
     // Canonical order assigns RNG draws and child IDs, never priority for food.
     this.organisms.sort((a, b) => a.id - b.id);
     const startingFood = this.updateEnvironment(audit);
@@ -111,10 +110,16 @@ export class Engine {
     this.feedAndMetabolize(intents, audit);
     phaseCompleted?.('metabolism');
 
-    const survivors = this.organisms.filter(agent => agent.energy > 0);
-    const dead = startingPopulation - survivors.length;
+    const survivors: Organism[] = [];
+    this.lastDeaths = [];
+    for (const agent of this.organisms) {
+      if (agent.energy > 0) survivors.push(agent);
+      else this.lastDeaths.push(agent);
+    }
+    const dead = this.lastDeaths.length;
     phaseCompleted?.('death');
 
+    this.lastBirths = [];
     const newborns = this.reproduce(survivors, audit);
     phaseCompleted?.('reproduction');
 
@@ -149,10 +154,11 @@ export class Engine {
   }
 
   private observe(agent: Organism): Observation {
+    const traits = phenotype(agent.genome, this.config.rule);
     const localFood = this.food[this.cell(agent.x, agent.y)];
     let best = localFood, dx = 0, dy = 0;
     for (let d = 0; d < DX.length; d++) {
-      const probeX = DX[d] * agent.genome.sensor, probeY = DY[d] * agent.genome.sensor;
+      const probeX = DX[d] * traits.radius, probeY = DY[d] * traits.radius;
       const food = this.food[this.cell(agent.x + probeX, agent.y + probeY)];
       if (food > best) {
         best = food;
@@ -160,12 +166,12 @@ export class Engine {
         dy = probeY;
       }
     }
-    return { agent, localFood, dx, dy };
+    return { agent, traits, localFood, dx, dy };
   }
 
-  private decide({ agent, localFood, dx, dy }: Observation): Intent {
+  private decide({ agent, traits, localFood, dx, dy }: Observation): Intent {
     const heading = dx || dy ? Math.atan2(dy, dx) : agent.heading + (this.rng.next() - 0.5) * 1.2;
-    return { agent, heading, speed: localFood >= 650 ? 0 : agent.genome.speed, portion: 0 };
+    return { agent, traits, heading, speed: localFood >= 650 ? 0 : traits.speed, portion: 0 };
   }
 
   private move(intents: Intent[]): Map<number, Intent[]> {
@@ -200,12 +206,17 @@ export class Engine {
   }
 
   private feedAndMetabolize(intents: Intent[], audit: Audit): void {
-    for (const { agent, portion } of intents) {
-      const gain = Math.min(80000 - agent.energy, Math.floor(portion * agent.genome.efficiency));
+    for (const { agent, traits, portion } of intents) {
+      const gain = Math.min(80000 - agent.energy, Math.floor(portion * traits.assimilation));
       agent.energy += gain;
       audit.assimilated += gain;
       audit.digestiveLoss += portion - gain;
-      const cost = Math.min(agent.energy, Math.ceil(70 + 35 * agent.velocity ** 2 + 4 * agent.genome.sensor + 16 * agent.genome.efficiency ** 2));
+      // Preserve the precise DD-01 operation order in its compatibility mode.
+      const base = 70 + 35 * agent.velocity ** 2;
+      const demand = this.config.rule === 'dd01'
+        ? base + 4 * agent.genome.sensor + 16 * agent.genome.efficiency ** 2
+        : base + traits.maintenance;
+      const cost = Math.min(agent.energy, Math.ceil(demand));
       agent.energy -= cost;
       audit.dissipated += cost;
       audit.actions++;
@@ -216,17 +227,19 @@ export class Engine {
     const newborns: Organism[] = [];
     if (this.config.reproduction === false) return newborns;
     for (const agent of survivors) {
-      if (agent.age < 45 || agent.energy < agent.genome.threshold * 1000) continue;
+      if (agent.age < 45 || agent.energy < phenotype(agent.genome, this.config.rule).birthReserve) continue;
       const investment = Math.floor(agent.energy * 0.45);
       agent.energy -= investment + 1200;
       audit.reproductionCost += 1200;
       audit.transferred += investment;
-      newborns.push({
+      const child: Organism = {
         id: this.nextId++, parent: agent.id, generation: agent.generation + 1,
         x: agent.x, y: agent.y, heading: this.rng.next() * Math.PI * 2,
         velocity: 0, energy: investment, age: 0, born: this.tick, lastActionTick: -1,
-        genome: mutate(agent.genome, this.rng, this.config.mutationRate)
-      });
+        genome: mutate(agent.genome, this.rng, this.config.mutationRate, this.config.mutationStrength)
+      };
+      newborns.push(child);
+      this.lastBirths.push({ parent: agent.genome, child });
     }
     return newborns;
   }
@@ -254,7 +267,7 @@ export class Engine {
       if (!Number.isSafeInteger(a.id) || a.id < 1 || a.id >= this.nextId || ids.has(a.id)) throw Error('Duplicate or invalid ID');
       ids.add(a.id);
       if (!Number.isFinite(a.heading) || !(a.x >= 0 && a.x < this.config.width) || !(a.y >= 0 && a.y < this.config.height)
-        || !(a.velocity >= 0 && a.velocity <= a.genome.speed) || !Number.isInteger(a.energy) || a.energy <= 0 || a.energy > 80000) {
+        || !(a.velocity >= 0 && a.velocity <= phenotype(a.genome, this.config.rule).speed) || !Number.isInteger(a.energy) || a.energy <= 0 || a.energy > 80000) {
         throw Error('Invalid organism state');
       }
       if (!Number.isSafeInteger(a.born) || a.born < 0 || a.born > this.tick || a.age !== this.tick - a.born
@@ -265,7 +278,7 @@ export class Engine {
             || a.parent === null || !Number.isSafeInteger(a.parent) || a.parent < 1 || a.parent >= a.id)) {
         throw Error('Invalid lifecycle state');
       }
-      for (const key of KEYS) {
+      for (const key of GENES) {
         const [min, max] = GENE_BOUNDS[key];
         if (!(a.genome[key] >= min && a.genome[key] <= max)) throw Error('Invalid genome');
       }
@@ -273,6 +286,6 @@ export class Engine {
   }
   // Canonical state includes hidden future-affecting fields, not just visible metrics.
   canonical(): string {
-    return JSON.stringify({ version: ENGINE_VERSION, config: this.config, rng: this.rng.state, tick: this.tick, nextId: this.nextId, births: this.births, deaths: this.deaths, capacity: Array.from(this.capacity), growth: Array.from(this.growth), food: Array.from(this.food), organisms: [...this.organisms].sort((a, b) => a.id - b.id) });
+    return JSON.stringify({ version: ENGINE_VERSION, genomeVersion: GENOME_VERSION, evolutionVersion: EVOLUTION_VERSION, config: this.config, rng: this.rng.state, tick: this.tick, nextId: this.nextId, births: this.births, deaths: this.deaths, capacity: Array.from(this.capacity), growth: Array.from(this.growth), food: Array.from(this.food), organisms: [...this.organisms].sort((a, b) => a.id - b.id) });
   }
 }

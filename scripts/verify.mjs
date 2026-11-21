@@ -17,6 +17,8 @@ const commands = [
   ['performance-5000', simulation('performance-5000', 'dd00-performance', '1000', '5000', '--profile')],
   ['no-food', simulation('no-food', 'dd01-starvation', '600', '1000', '--width', '32', '--height', '32', '--no-food')],
   ['no-reproduction', simulation('no-reproduction', 'dd01-control', '1000', '1000', '--width', '32', '--height', '32', '--no-reproduction')],
+  ['dd01-compatibility', ['scripts/check-dd01-compatibility.mjs']],
+  ['experiments', ['apps/experiments.ts', `${output}/experiments.json`]],
   ['e2e', ['scripts/e2e.mjs']],
   ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`, '10000']]
 ];

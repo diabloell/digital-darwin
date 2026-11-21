@@ -3,7 +3,7 @@ name: Digital Darwin verification
 on:
   pull_request:
   push:
-    branches: [dd-01-engine-hardening]
+    branches: [dd-02-heritable-evolution]
 
 permissions:
   contents: read

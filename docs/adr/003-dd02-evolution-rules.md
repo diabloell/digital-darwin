@@ -1,0 +1,9 @@
+# ADR-003 — Versioned genome, expressed phenotype and evolution observer
+
+Engine 0.3.0 uses genome schema 1 and evolution rules schema 1. The genotype is the existing four-allele tuple. Each newborn copies the parent tuple before independent per-allele mutations. A mutation adds a uniform offset in ±strength × allele range, clamped to its bounds. Default probability is 0.12, default strength is 0.08. Rate zero and strength zero both preserve alleles. The RNG remains seeded and phases retain DD-01 order.
+
+Selection-mode phenotype maps the four alleles directly to velocity cap, probe radius, assimilation fraction, and required birth reserve. Metabolic cost rounds up basal 70, movement 35 × velocity², radius 4 × radius, and assimilation maintenance 16 × efficiency² + 125 × ((efficiency − 0.65) / 0.35)² quanta per tick. This added maintenance creates an explicit acquisition-versus-cost trade-off. At scant food, high assimilation can cost more than it returns. Food supplies all assimilation. The DD-01 parent-to-child reserve transfer and birth debit are unchanged. Lower threshold can bring birth earlier, with less reserve after investment.
+
+DD-02 resource scale multiplies initial food and per-cell growth before integer rounding. Capacity remains fixed. Neutral control maps every genotype to the same phenotype with speed 0.8, radius 3.5, assimilation 0.85 and threshold 44. Neutral variants still inherit and mutate.
+
+The default uses the selection model, so trajectories and canonical SHA-256 change. The `dd01` rule restores original phenotype cost, including floating-point evaluation order. The compatibility check projects its canonical metadata to DD-01 format and compares the full state at tick 10,000. The canonical representation adds version fields and resolved options. Existing Worker commands and position-buffer stride remain intact. Frame additions carry trait samples, bins and selected phenotype.

@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "transport": "Node HTTP server over loopback",
+  "browser": "156.0.8078.79",
+  "executablePath": "/usr/bin/chromium",
+  "checks": [
+    "initial 256x256 world / 1000 real organisms / paused",
+    "single step exactly +1",
+    "organisms change coordinates while running",
+    "play / 4x speed / pause stays stable",
+    "visible tick / population / food equal actual Worker metrics",
+    "map hit selection opens real energy / age / genome",
+    "genetic histogram matches real organisms; trait color and mean chart controls work",
+    "zoom / pan change rendered camera",
+    "new seed resets world / tick / population / selection",
+    "keyboard Space toggles playback",
+    "responsive 1366 / 1920 / 390 widths without horizontal overflow",
+    "same 12 Worker ticks produce identical metrics and buffers with normal and delayed rendering"
+  ],
+  "errors": [],
+  "screenshots": [
+    "outputs/dd02-final/screenshot-1366x768.png",
+    "outputs/dd02-final/screenshot-1920x1080.png",
+    "outputs/dd02-final/screenshot-mobile.png"
+  ],
+  "speedMeasurement": {
+    "ticks": 16,
+    "normalMs": 929.8768350000003,
+    "acceleratedMs": 221.9172120000003
+  }
+}

@@ -84,3 +84,65 @@ test('full invariant check rejects counterfeited state and missing food', () => 
     assert.throws(() => e.assertValid());
   }
 });
+
+test('phenotype maps the four genes and makes high assimilation costly', async () => {
+  const { phenotype } = await import('../src/core/genetics.ts');
+  const low = { speed: .8, sensor: 3.5, efficiency: .65, threshold: 44 };
+  const high = { ...low, efficiency: 1 };
+  const traits = phenotype(high);
+  assert.equal(traits.speed, .8);
+  assert.equal(traits.radius, 3.5);
+  assert.equal(traits.assimilation, 1);
+  assert.equal(traits.birthReserve, 44000);
+  assert.ok(traits.maintenance > phenotype(low).maintenance);
+  assert.deepEqual(phenotype(low, 'neutral'), phenotype(high, 'neutral'));
+  const e = new Engine({ width: 8, height: 8, population: 2, regrowth: false });
+  for (const [i, genome] of [low, high].entries()) {
+    const a = e.organisms[i];
+    a.genome = genome;
+    a.x = a.y = i;
+    a.energy = 20000;
+  }
+  e.food.fill(0);
+  e.step();
+  assert.ok(e.organisms[0].energy > e.organisms[1].energy);
+  assert.equal(40000 - e.organisms.reduce((sum, a) => sum + a.energy, 0), e.audit.dissipated);
+  e.assertValid();
+});
+
+test('mutation strength zero copies values and maximum strength remains bounded', () => {
+  const e = fixture(), parent = e.organisms[0].genome;
+  assert.deepEqual(mutate(parent, new Rng('zero-strength'), 1, 0), parent);
+  const rng = new Rng('max-strength');
+  let candidate = parent;
+  for (let i = 0; i < 500; i++) {
+    candidate = mutate(candidate, rng, 1, 1);
+    for (const key of Object.keys(GENE_BOUNDS) as (keyof typeof parent)[]) {
+      const [min, max] = GENE_BOUNDS[key];
+      assert.ok(candidate[key] >= min && candidate[key] <= max);
+    }
+  }
+  assert.throws(() => new Engine({ mutationStrength: Infinity }));
+});
+
+test('live genetic distributions, cohort deaths and zero-birth values reflect state', async () => {
+  const { EvolutionObserver, describeGenomes } = await import('../src/core/evolution.ts');
+  const e = new Engine({ width: 8, height: 8, population: 2, regrowth: false });
+  e.organisms[0].genome.speed = GENE_BOUNDS.speed[0];
+  e.organisms[1].genome.speed = GENE_BOUNDS.speed[1];
+  const observer = new EvolutionObserver(e);
+  const speed = describeGenomes(e.organisms)[0];
+  assert.deepEqual(speed.histogram, [1, 0, 0, 0, 0, 0, 0, 1]);
+  assert.equal(speed.mean, speed.median);
+  assert.ok(Math.abs(speed.variance! - .600625) < 1e-12);
+  e.food.fill(0);
+  e.organisms[0].energy = 1;
+  e.step();
+  observer.record(e);
+  const snapshot = observer.snapshot(e);
+  assert.equal(snapshot.live.population, 1);
+  assert.equal(snapshot.live.genes[0].mean, 1.8);
+  assert.equal(snapshot.lifetime.groups[0].low.survivorFraction, 0);
+  assert.equal(snapshot.lifetime.groups[0].high.survivorFraction, 1);
+  assert.equal(snapshot.lifetime.mutationFraction, null);
+});

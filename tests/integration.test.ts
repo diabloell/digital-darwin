@@ -6,7 +6,7 @@ test('without food or regrowth all energy-dependent organisms die', () => { cons
 test('batch size does not affect deterministic outcome', () => { const a = new Engine({ seed: 'batch', width: 32, height: 32, population: 100 }), b = new Engine({ seed: 'batch', width: 32, height: 32, population: 100 }); a.step(500); for (let i = 0; i < 50; i++) b.step(10); assert.equal(a.canonical(), b.canonical()); });
 
 test('5000 claimants share a crowded cell equally under reversed storage', () => {
-  const options = { seed: 'dense-claim', width: 8, height: 8, population: 5000, regrowth: false };
+  const options = { seed: 'dense-claim', rule: 'dd01' as const, width: 8, height: 8, population: 5000, regrowth: false };
   const a = new Engine(options), b = new Engine(options);
   const cell = a.cell(3, 3);
   for (const e of [a, b]) {

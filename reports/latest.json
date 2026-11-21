@@ -1,20 +1,18 @@
 {
-  "stage": "DD-01",
+  "stage": "DD-02",
   "status": "PARTIAL",
-  "sourceCommit": "1da62808a52f3e69342d93cc0c99f8d418dd5726",
-  "branch": "dd-01-engine-hardening",
-  "baseMain": "83c0e8b4dc17d9f61c6d64b80851a55c8942d6d8",
-  "acceptedDD00": "c26d9e6195e2b097fd78f9ca4fadb3cb177cb4cf",
+  "sourceCommit": "6d94aaa1c7bb41d6f9a7457f7d83b085a791f68e",
+  "baseMain": "aadf740",
+  "branch": "dd-02-heritable-evolution",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-01-engine-hardening"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-02-heritable-evolution"
   },
   "ci": {
     "status": "PASS",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44942955208",
-    "event": "push",
-    "sourceCommit": "1da62808a52f3e69342d93cc0c99f8d418dd5726"
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44944287881",
+    "sourceCommit": "6d94aaa1c7bb41d6f9a7457f7d83b085a791f68e"
   },
   "checks": [
     {
@@ -49,31 +47,43 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd01/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd02-final/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd01/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd02-final/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd01/performance-5000.json --profile",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd02-final/performance-5000.json --profile",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-food",
-      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd01/no-food.json --width 32 --height 32 --no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd02-final/no-food.json --width 32 --height 32 --no-food",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-reproduction",
-      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd01/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd02-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "dd01-compatibility",
+      "command": "node scripts/check-dd01-compatibility.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "experiments",
+      "command": "node apps/experiments.ts outputs/dd02-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -85,13 +95,13 @@
     },
     {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/dd01/long-run-a.json outputs/dd01/long-run-b.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd02-final/long-run-a.json outputs/dd02-final/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
   ],
   "unit": {
-    "passed": 20,
+    "passed": 23,
     "failed": 0,
     "skipped": 0
   },
@@ -99,6 +109,169 @@
     "passed": 5,
     "failed": 0,
     "skipped": 0
+  },
+  "longRun": {
+    "config": {
+      "seed": "dd00-verification",
+      "width": 256,
+      "height": 256,
+      "population": 1000,
+      "mutationRate": 0.12,
+      "regrowth": true,
+      "reproduction": true,
+      "rule": "selection",
+      "mutationStrength": 0.08,
+      "resourceScale": 1
+    },
+    "initial": {
+      "tick": 0,
+      "population": 1000,
+      "food": 118760.783,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 22.924143,
+      "maxGeneration": 0
+    },
+    "final": {
+      "tick": 10000,
+      "population": 2913,
+      "food": 16785.864,
+      "births": 16597,
+      "deaths": 14684,
+      "meanEnergy": 17.96153381393752,
+      "maxGeneration": 33
+    },
+    "ticks": 10000,
+    "audits": 10000,
+    "environment": {
+      "node": "v24.22.3",
+      "platform": "linux",
+      "arch": "x64",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "logicalCpus": 5,
+      "memoryBytes": 222330880
+    }
+  },
+  "determinism": {
+    "status": "PASS",
+    "checkpoints": [
+      {
+        "tick": 0,
+        "hash": "f78904899c590d0f145a20d974e8de85e25c34b4abfe451c007ad7343a621be0"
+      },
+      {
+        "tick": 1000,
+        "hash": "d2f13ac164c1321ff4e5f70d2348c79032a1dda5ef593293367bbae3d4cc86f0"
+      },
+      {
+        "tick": 2000,
+        "hash": "43b88498da3b1512fa386d6c4a2b2f2bcee38da4140a65a9cb9f26270cfe9154"
+      },
+      {
+        "tick": 3000,
+        "hash": "74fc61524fc36da7192f6c0eccd24036e07199943a14691b4058db86731850a3"
+      },
+      {
+        "tick": 4000,
+        "hash": "cbef787e8c925b6c06ee2396aee92a8a3923fc204b081e54fdbdb0383e84ce02"
+      },
+      {
+        "tick": 5000,
+        "hash": "0954150d1ce9325ff4007e7c267525077abecf3a9240a0f9cd918f8750a6452f"
+      },
+      {
+        "tick": 6000,
+        "hash": "7fdef8f0e6b9bf6738fe33ad38a3b8a3c8b249c3c1c6639189f3852d0ab09dc4"
+      },
+      {
+        "tick": 7000,
+        "hash": "de28e6d1e0757438000dc2704319b0692953a9e1345f810b9a9c8ec3e410ef4c"
+      },
+      {
+        "tick": 8000,
+        "hash": "381635f2f4d08c95c2ee4605161b414bed0ebde1f942f24ae74f8a8f1e60dd3f"
+      },
+      {
+        "tick": 9000,
+        "hash": "c5a9cc4a3fd63e1a5f1319e2b24f4af8fad9d6da7c590c3cb8a9c1be294a052c"
+      },
+      {
+        "tick": 10000,
+        "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
+      }
+    ],
+    "experimentFileSha256": "0af32554d849146d987b6ece874bc4c22a6399664ae4dfeeec4cbdd917614750"
+  },
+  "performance": {
+    "initial": {
+      "tick": 0,
+      "population": 5000,
+      "food": 142432.163,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 22.9893296,
+      "maxGeneration": 0
+    },
+    "final": {
+      "tick": 1000,
+      "population": 3177,
+      "food": 141421.943,
+      "births": 4168,
+      "deaths": 5991,
+      "meanEnergy": 20.86454863078376,
+      "maxGeneration": 9
+    },
+    "tps": 189.12609636563548,
+    "tickP50Ms": 3.4931649999998626,
+    "tickP95Ms": 5.879944000000023,
+    "peakSampledRssBytes": 227151872,
+    "phases": {
+      "environment": {
+        "p50Ms": 0.48535100000003695,
+        "p95Ms": 0.5643709999999373,
+        "totalMs": 491.5171380000135
+      },
+      "observations": {
+        "p50Ms": 1.9109109999999419,
+        "p95Ms": 3.35593700000004,
+        "totalMs": 2232.0836240000076
+      },
+      "intents": {
+        "p50Ms": 0.11755700000003344,
+        "p95Ms": 0.22250599999995302,
+        "totalMs": 160.64440699999636
+      },
+      "movement": {
+        "p50Ms": 0.643880000000081,
+        "p95Ms": 1.2122470000001613,
+        "totalMs": 767.1549579999933
+      },
+      "competition": {
+        "p50Ms": 0.057766999999785185,
+        "p95Ms": 0.12883399999998346,
+        "totalMs": 79.6437429999938
+      },
+      "metabolism": {
+        "p50Ms": 0.07010600000012346,
+        "p95Ms": 0.12012099999992643,
+        "totalMs": 93.15014300000925
+      },
+      "death": {
+        "p50Ms": 0.04225399999995716,
+        "p95Ms": 0.08754200000021228,
+        "totalMs": 72.17607699999786
+      },
+      "reproduction": {
+        "p50Ms": 0.05473200000005818,
+        "p95Ms": 0.08134299999983341,
+        "totalMs": 73.04420300000461
+      },
+      "audit": {
+        "p50Ms": 0.0116769999999633,
+        "p95Ms": 0.04014100000006238,
+        "totalMs": 19.110624000003554
+      }
+    }
   },
   "e2e": {
     "status": "PASS",
@@ -112,6 +285,7 @@
       "play / 4x speed / pause stays stable",
       "visible tick / population / food equal actual Worker metrics",
       "map hit selection opens real energy / age / genome",
+      "genetic histogram matches real organisms; trait color and mean chart controls work",
       "zoom / pan change rendered camera",
       "new seed resets world / tick / population / selection",
       "keyboard Space toggles playback",
@@ -120,385 +294,576 @@
     ],
     "errors": [],
     "screenshots": [
-      "reports/dd-01/screenshot-1366x768.png",
-      "reports/dd-01/screenshot-1920x1080.png",
-      "reports/dd-01/screenshot-mobile.png"
+      "reports/dd-02/screenshot-1366x768.png",
+      "reports/dd-02/screenshot-1920x1080.png",
+      "reports/dd-02/screenshot-mobile.png"
     ],
     "speedMeasurement": {
       "ticks": 16,
-      "normalMs": 922.851633,
-      "acceleratedMs": 215.687684
+      "normalMs": 929.8768350000003,
+      "acceleratedMs": 221.9172120000003
     }
   },
-  "compatibleDD00": {
-    "version": "0.1.0 projection",
-    "node": "v24.22.3",
-    "hash": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
-    "metrics": {
-      "tick": 5000,
-      "population": 4346,
-      "food": 23365.26,
-      "births": 11254,
-      "deaths": 7908,
-      "meanEnergy": 20.502630694891852,
-      "maxGeneration": 31
-    }
-  },
-  "determinism": {
-    "status": "PASS",
-    "checkpoints": [
-      {
-        "tick": 0,
-        "hash": "417bc2bac843d47b618c10afb78ad27960eac95b7713b63e7d281483384706a2"
-      },
-      {
-        "tick": 1000,
-        "hash": "74f827d66c5ef3e2e387320f67d55f10a38fc7bdfac4c3bd002459688c162432"
-      },
-      {
-        "tick": 2000,
-        "hash": "76f97e9ded0220b9812e56656ae6ba8c4d384ace769ef49f9942edb469b46505"
-      },
-      {
-        "tick": 3000,
-        "hash": "272554486eb78fd670ee3eb84e29585210ebbca667ab2d895fdf5df453c934e0"
-      },
-      {
-        "tick": 4000,
-        "hash": "6b8896e0aa3b31277a1acf67cab659aa5d1c7b668c34a7fcc0b0e6ff10dba658"
-      },
-      {
-        "tick": 5000,
-        "hash": "8bdd679c9125d0808f38a0fb44da47e8439f6b7573c65150c50e9b3ad483ad43"
-      },
-      {
-        "tick": 6000,
-        "hash": "645c0cdfa92fe92f204c7976bc8111223080e6fd87b00774b8298a40033d7133"
-      },
-      {
-        "tick": 7000,
-        "hash": "0e61f30cbefcdcdc44460dc298aef815d472fd877452c973cae7378710dc5845"
-      },
-      {
-        "tick": 8000,
-        "hash": "a8165354b63fe933e08c8742806b80439a5a86148ce1bec7396b405a4ff6916d"
-      },
-      {
-        "tick": 9000,
-        "hash": "2fca02c3f34e94df4dcfe41e7529ae9f961ff436858bd9d2e1f4ed785144de80"
-      },
-      {
-        "tick": 10000,
-        "hash": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea"
-      }
+  "experiments": {
+    "engineVersion": "0.3.0",
+    "genomeVersion": "1",
+    "evolutionVersion": "1",
+    "seeds": [
+      "dd02-amber",
+      "dd02-fern",
+      "dd02-dune",
+      "dd02-coral",
+      "dd02-slate"
     ],
-    "hashA": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea",
-    "hashB": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea"
-  },
-  "simulations": {
-    "long-run-a": {
-      "engineVersion": "0.2.0",
-      "config": {
-        "seed": "dd00-verification",
-        "width": 256,
-        "height": 256,
-        "population": 1000,
-        "mutationRate": 0.12,
-        "regrowth": true,
-        "reproduction": true
+    "ticks": 4000,
+    "replicasPerCondition": 5,
+    "aggregate": [
+      {
+        "condition": "E01",
+        "extinctions": 0,
+        "population": {
+          "n": 5,
+          "missing": 0,
+          "mean": 274.2,
+          "min": 197,
+          "max": 388
+        },
+        "births": {
+          "n": 5,
+          "missing": 0,
+          "mean": 1411.8,
+          "min": 1265,
+          "max": 1555
+        },
+        "changedBirthFraction": {
+          "n": 5,
+          "missing": 0,
+          "mean": 0,
+          "min": 0,
+          "max": 0
+        },
+        "variants": {
+          "n": 5,
+          "missing": 0,
+          "mean": 50.2,
+          "min": 35,
+          "max": 73
+        },
+        "genes": [
+          {
+            "gene": "speed",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.8190309275568406,
+              "min": 0.8002227637883708,
+              "max": 0.8398698842242001
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.02724489288942759,
+              "min": 0.020255104343867094,
+              "max": 0.031651055931020744
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.13405884318165687,
+              "min": 0.08244601048633315,
+              "max": 0.24935520299528136
+            }
+          },
+          {
+            "gene": "sensor",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 3.263991640389932,
+              "min": 3.094642989938399,
+              "max": 3.4780124506220544
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.7609657077267318,
+              "min": 0.6364866974798277,
+              "max": 0.9105983592644845
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": -0.04445486406254906,
+              "min": -0.11674575648373087,
+              "max": 0.03539690662817818
+            }
+          },
+          {
+            "gene": "efficiency",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.8082519768087476,
+              "min": 0.7989740850438981,
+              "max": 0.8134463380043618
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.0022379855000372274,
+              "min": 0.0015469243405740317,
+              "max": 0.00345140043350815
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.1669035342992961,
+              "min": 0.0593239723804424,
+              "max": 0.2731727973966779
+            }
+          },
+          {
+            "gene": "threshold",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 44.87158314522903,
+              "min": 44.37784073893233,
+              "max": 45.691940913557474
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 11.639890632198417,
+              "min": 9.069445977122077,
+              "max": 13.569514514442533
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": -0.12111324869689118,
+              "min": -0.19628679424777895,
+              "max": -0.09404620752154691
+            }
+          }
+        ]
       },
-      "ticks": 10000,
-      "initial": {
-        "tick": 0,
-        "population": 1000,
-        "food": 118760.783,
-        "births": 0,
-        "deaths": 0,
-        "meanEnergy": 22.924143,
-        "maxGeneration": 0
+      {
+        "condition": "E02",
+        "extinctions": 0,
+        "population": {
+          "n": 5,
+          "missing": 0,
+          "mean": 523.6,
+          "min": 460,
+          "max": 604
+        },
+        "births": {
+          "n": 5,
+          "missing": 0,
+          "mean": 1701.2,
+          "min": 1346,
+          "max": 1950
+        },
+        "changedBirthFraction": {
+          "n": 5,
+          "missing": 0,
+          "mean": 0.40702480173425304,
+          "min": 0.40307692307692305,
+          "max": 0.41064638783269963
+        },
+        "variants": {
+          "n": 5,
+          "missing": 0,
+          "mean": 352.4,
+          "min": 306,
+          "max": 388
+        },
+        "genes": [
+          {
+            "gene": "speed",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.9442101049083315,
+              "min": 0.8822519684864512,
+              "max": 0.9868151255532587
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.026007793421777343,
+              "min": 0.022247157097990064,
+              "max": 0.03220336674425267
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.1786462198892929,
+              "min": 0.046546774566313065,
+              "max": 0.29765262221770905
+            }
+          },
+          {
+            "gene": "sensor",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 2.348400420645919,
+              "min": 2.2008783078595413,
+              "max": 2.5680141699563754
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 1.2582366656367356,
+              "min": 1.0966790625838811,
+              "max": 1.3804624572922164
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": -0.1425336654931565,
+              "min": -0.20452403137402575,
+              "max": -0.1146969937662129
+            }
+          },
+          {
+            "gene": "efficiency",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.8191462404894028,
+              "min": 0.792249465453761,
+              "max": 0.8361749329632117
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.0030162232170531833,
+              "min": 0.0012194651086448248,
+              "max": 0.0047572915910493
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.21654455449715376,
+              "min": 0.045534792620672615,
+              "max": 0.32516154225797
+            }
+          },
+          {
+            "gene": "threshold",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 43.66435039705865,
+              "min": 41.825211599075885,
+              "max": 45.66608768913048
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 13.172035040200052,
+              "min": 9.666372033298375,
+              "max": 19.590696518904362
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": -0.20395841069483334,
+              "min": -0.3023336758426258,
+              "max": -0.02130607672305529
+            }
+          }
+        ]
       },
-      "final": {
-        "tick": 10000,
-        "population": 4315,
-        "food": 14070.097,
-        "births": 19537,
-        "deaths": 16222,
-        "meanEnergy": 20.041107995365003,
-        "maxGeneration": 34
+      {
+        "condition": "E03",
+        "extinctions": 0,
+        "population": {
+          "n": 5,
+          "missing": 0,
+          "mean": 183,
+          "min": 43,
+          "max": 315
+        },
+        "births": {
+          "n": 5,
+          "missing": 0,
+          "mean": 729.8,
+          "min": 516,
+          "max": 946
+        },
+        "changedBirthFraction": {
+          "n": 5,
+          "missing": 0,
+          "mean": 0.4044053418422873,
+          "min": 0.3858350951374207,
+          "max": 0.436046511627907
+        },
+        "variants": {
+          "n": 5,
+          "missing": 0,
+          "mean": 88.2,
+          "min": 17,
+          "max": 134
+        },
+        "genes": [
+          {
+            "gene": "speed",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.8561532698519183,
+              "min": 0.6148457897460758,
+              "max": 1.0271226148024772
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.02049977222059305,
+              "min": 0.007471315798233408,
+              "max": 0.0444677186800987
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.3857476436752226,
+              "min": -0.3436317270596905,
+              "max": 0.7592752333538506
+            }
+          },
+          {
+            "gene": "sensor",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 2.303192103118937,
+              "min": 1.5763602155127205,
+              "max": 3.8886568472029763
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.898290748687754,
+              "min": 0.17454575182092233,
+              "max": 2.034649101079785
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": -0.5138335408029935,
+              "min": -0.6178019071001217,
+              "max": -0.3102405397892005
+            }
+          },
+          {
+            "gene": "efficiency",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.8003802896424024,
+              "min": 0.7553019052327387,
+              "max": 0.8644729245046869
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.0003570315763576137,
+              "min": 0.00023399095084276181,
+              "max": 0.00061427132416779
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": -0.7198623267367446,
+              "min": -1.382612420851787,
+              "max": 0.39909950401542793
+            }
+          },
+          {
+            "gene": "threshold",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 45.39607354994895,
+              "min": 42.45187087344124,
+              "max": 49.22192555540378
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 3.9678305391057407,
+              "min": 2.321324443075766,
+              "max": 5.941331216678356
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.1434648345450841,
+              "min": -0.3326258636948505,
+              "max": 0.3682458452223587
+            }
+          }
+        ]
       },
-      "extinctionTick": null,
-      "hash": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea",
-      "audits": 10000,
-      "tps": 255.83092209184377,
-      "tickP50Ms": 3.281794999998965,
-      "tickP95Ms": 4.126292000000831,
-      "peakSampledRssBytes": 218345472
-    },
-    "long-run-b": {
-      "engineVersion": "0.2.0",
-      "config": {
-        "seed": "dd00-verification",
-        "width": 256,
-        "height": 256,
-        "population": 1000,
-        "mutationRate": 0.12,
-        "regrowth": true,
-        "reproduction": true
-      },
-      "ticks": 10000,
-      "initial": {
-        "tick": 0,
-        "population": 1000,
-        "food": 118760.783,
-        "births": 0,
-        "deaths": 0,
-        "meanEnergy": 22.924143,
-        "maxGeneration": 0
-      },
-      "final": {
-        "tick": 10000,
-        "population": 4315,
-        "food": 14070.097,
-        "births": 19537,
-        "deaths": 16222,
-        "meanEnergy": 20.041107995365003,
-        "maxGeneration": 34
-      },
-      "extinctionTick": null,
-      "hash": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea",
-      "audits": 10000,
-      "tps": 258.34326811531326,
-      "tickP50Ms": 3.282088999996631,
-      "tickP95Ms": 4.0312749999975495,
-      "peakSampledRssBytes": 217280512
-    },
-    "performance-5000": {
-      "engineVersion": "0.2.0",
-      "config": {
-        "seed": "dd00-performance",
-        "width": 256,
-        "height": 256,
-        "population": 5000,
-        "mutationRate": 0.12,
-        "regrowth": true,
-        "reproduction": true
-      },
-      "ticks": 1000,
-      "initial": {
-        "tick": 0,
-        "population": 5000,
-        "food": 142432.163,
-        "births": 0,
-        "deaths": 0,
-        "meanEnergy": 22.9893296,
-        "maxGeneration": 0
-      },
-      "final": {
-        "tick": 1000,
-        "population": 5474,
-        "food": 98616.742,
-        "births": 5549,
-        "deaths": 5075,
-        "meanEnergy": 20.185284983558642,
-        "maxGeneration": 9
-      },
-      "extinctionTick": null,
-      "hash": "67b2515bfcfa1529615d2ed92c8b281a84b84b01a437cc557a3f2621c3fa2de2",
-      "audits": 1000,
-      "tps": 141.3538501134067,
-      "tickP50Ms": 5.006202999999914,
-      "tickP95Ms": 6.799591999999848,
-      "peakSampledRssBytes": 229040128
-    },
-    "no-food": {
-      "engineVersion": "0.2.0",
-      "config": {
-        "seed": "dd01-starvation",
-        "width": 32,
-        "height": 32,
-        "population": 1000,
-        "mutationRate": 0.12,
-        "regrowth": false,
-        "reproduction": true
-      },
-      "ticks": 600,
-      "initial": {
-        "tick": 0,
-        "population": 1000,
-        "food": 0,
-        "births": 0,
-        "deaths": 0,
-        "meanEnergy": 23.056645,
-        "maxGeneration": 0
-      },
-      "final": {
-        "tick": 600,
-        "population": 0,
-        "food": 0,
-        "births": 0,
-        "deaths": 1000,
-        "meanEnergy": 0,
-        "maxGeneration": 0
-      },
-      "extinctionTick": 278,
-      "hash": "8f57558a40e5b220c2faffd51ba97fe50e4ce62cd2b555c089ea5e76b86d303b",
-      "audits": 600,
-      "tps": 3279.1020677411,
-      "tickP50Ms": 0.005287000000009812,
-      "tickP95Ms": 0.7342239999999975,
-      "peakSampledRssBytes": 70361088
-    },
-    "no-reproduction": {
-      "engineVersion": "0.2.0",
-      "config": {
-        "seed": "dd01-control",
-        "width": 32,
-        "height": 32,
-        "population": 1000,
-        "mutationRate": 0.12,
-        "regrowth": true,
-        "reproduction": false
-      },
-      "ticks": 1000,
-      "initial": {
-        "tick": 0,
-        "population": 1000,
-        "food": 4670.166,
-        "births": 0,
-        "deaths": 0,
-        "meanEnergy": 23.233852,
-        "maxGeneration": 0
-      },
-      "final": {
-        "tick": 1000,
-        "population": 477,
-        "food": 258.708,
-        "births": 0,
-        "deaths": 523,
-        "meanEnergy": 17.29027253668763,
-        "maxGeneration": 0
-      },
-      "extinctionTick": null,
-      "hash": "03c53398e2deff6e4bc1955f71132c12b2491ef0bf23477929432c8812a161e6",
-      "audits": 1000,
-      "tps": 1352.8245388832286,
-      "tickP50Ms": 0.4680909999999585,
-      "tickP95Ms": 0.8569399999999519,
-      "peakSampledRssBytes": 80064512
-    },
-    "endurance": {
-      "engineVersion": "0.2.0",
-      "config": {
-        "seed": "dd01-endurance",
-        "width": 64,
-        "height": 64,
-        "population": 500,
-        "mutationRate": 0.12,
-        "regrowth": true,
-        "reproduction": true
-      },
-      "ticks": 100000,
-      "initial": {
-        "tick": 0,
-        "population": 500,
-        "food": 15438.386,
-        "births": 0,
-        "deaths": 0,
-        "meanEnergy": 22.837732,
-        "maxGeneration": 0
-      },
-      "final": {
-        "tick": 100000,
-        "population": 855,
-        "food": 504.724,
-        "births": 22152,
-        "deaths": 21797,
-        "meanEnergy": 22.480445614035087,
-        "maxGeneration": 27
-      },
-      "extinctionTick": null,
-      "hash": "1e5a119ceaf7d73c9229cddf80e7dc9752686e8a600cbd83879e616dec8f8176",
-      "audits": 1000,
-      "tps": 1615.608333795803,
-      "tickP50Ms": 0.5908349999990605,
-      "tickP95Ms": 0.7203529999999319,
-      "peakSampledRssBytes": 207499264
-    }
-  },
-  "performance": {
-    "scenario": "performance-5000",
-    "phases": {
-      "environment": {
-        "p50Ms": 0.5039010000000417,
-        "p95Ms": 0.6179839999995238,
-        "totalMs": 519.6825670000163
-      },
-      "observations": {
-        "p50Ms": 2.969065999999998,
-        "p95Ms": 3.7874919999999292,
-        "totalMs": 3087.955672999996
-      },
-      "intents": {
-        "p50Ms": 0.19196000000010827,
-        "p95Ms": 0.3668250000000626,
-        "totalMs": 230.24463199998544
-      },
-      "movement": {
-        "p50Ms": 1.007622000000083,
-        "p95Ms": 1.5426809999999023,
-        "totalMs": 1129.8386489999978
-      },
-      "competition": {
-        "p50Ms": 0.08615000000008877,
-        "p95Ms": 0.20260599999983242,
-        "totalMs": 118.4268460000051
-      },
-      "metabolism": {
-        "p50Ms": 0.0777180000000044,
-        "p95Ms": 0.12390700000003108,
-        "totalMs": 90.84081700000009
-      },
-      "death": {
-        "p50Ms": 0.036626000000069325,
-        "p95Ms": 0.07325099999980011,
-        "totalMs": 51.155494999999206
-      },
-      "reproduction": {
-        "p50Ms": 0.03768599999966682,
-        "p95Ms": 0.06775199999992765,
-        "totalMs": 44.39416700001131
-      },
-      "audit": {
-        "p50Ms": 0.018368000000009488,
-        "p95Ms": 0.0383679999999913,
-        "totalMs": 23.94556999999729
+      {
+        "condition": "E04",
+        "extinctions": 0,
+        "population": {
+          "n": 5,
+          "missing": 0,
+          "mean": 119.4,
+          "min": 58,
+          "max": 169
+        },
+        "births": {
+          "n": 5,
+          "missing": 0,
+          "mean": 935.2,
+          "min": 609,
+          "max": 1223
+        },
+        "changedBirthFraction": {
+          "n": 5,
+          "missing": 0,
+          "mean": 0.3944954413836085,
+          "min": 0.3694581280788177,
+          "max": 0.4057142857142857
+        },
+        "variants": {
+          "n": 5,
+          "missing": 0,
+          "mean": 55,
+          "min": 23,
+          "max": 91
+        },
+        "genes": [
+          {
+            "gene": "speed",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.7344864248129166,
+              "min": 0.5122841953759176,
+              "max": 0.9064027770152957
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.019272278617538465,
+              "min": 0.0010901954191561984,
+              "max": 0.030993109592171154
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.049990756510701354,
+              "min": -0.05520526862326092,
+              "max": 0.32801350786372896
+            }
+          },
+          {
+            "gene": "sensor",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 3.484425896322011,
+              "min": 2.9369203881261203,
+              "max": 3.830706772961574
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.6378911332874,
+              "min": 0.27972671055766085,
+              "max": 1.0148114012811693
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": -0.015701127212679643,
+              "min": -0.08670057300231271,
+              "max": 0.1266327727585581
+            }
+          },
+          {
+            "gene": "efficiency",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.8654784554960748,
+              "min": 0.8253967056825818,
+              "max": 0.897072504064736
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.0024661110341839356,
+              "min": 0.0008576377825510316,
+              "max": 0.0037909925966132726
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.05528027860663567,
+              "min": -0.0972718914505275,
+              "max": 0.14683580126441265
+            }
+          },
+          {
+            "gene": "threshold",
+            "mean": {
+              "n": 5,
+              "missing": 0,
+              "mean": 44.04221854704483,
+              "min": 42.96158669304993,
+              "max": 44.66339362580769
+            },
+            "variance": {
+              "n": 5,
+              "missing": 0,
+              "mean": 9.99823496123965,
+              "min": 5.775220789376335,
+              "max": 14.469692568098619
+            },
+            "highMinusLowBirthRate": {
+              "n": 5,
+              "missing": 0,
+              "mean": 0.0045525172761442965,
+              "min": -0.0639385392312557,
+              "max": 0.10748470049783432
+            }
+          }
+        ]
       }
-    },
-    "auditTimeMs": 1731.7861339999995
+    ]
   },
   "evidence": [
-    "reports/dd-01/build.log",
-    "reports/dd-01/checks.json",
-    "reports/dd-01/dd-00-compatibility.json",
-    "reports/dd-01/determinism.log",
-    "reports/dd-01/e2e.json",
-    "reports/dd-01/e2e.log",
-    "reports/dd-01/endurance.json",
-    "reports/dd-01/integration.log",
-    "reports/dd-01/lint.log",
-    "reports/dd-01/long-run-a.json",
-    "reports/dd-01/long-run-b.json",
-    "reports/dd-01/no-food.json",
-    "reports/dd-01/no-reproduction.json",
-    "reports/dd-01/performance-5000.json",
-    "reports/dd-01/screenshot-1366x768.png",
-    "reports/dd-01/screenshot-1920x1080.png",
-    "reports/dd-01/screenshot-mobile.png",
-    "reports/dd-01/typecheck.log",
-    "reports/dd-01/unit.log"
+    "reports/dd-02/build.log",
+    "reports/dd-02/checks.json",
+    "reports/dd-02/dd01-compatibility.log",
+    "reports/dd-02/determinism.log",
+    "reports/dd-02/e2e.json",
+    "reports/dd-02/e2e.log",
+    "reports/dd-02/experiments.json",
+    "reports/dd-02/experiments.log",
+    "reports/dd-02/integration.log",
+    "reports/dd-02/lint.log",
+    "reports/dd-02/long-run-a.json",
+    "reports/dd-02/long-run-b.json",
+    "reports/dd-02/no-food.json",
+    "reports/dd-02/no-reproduction.json",
+    "reports/dd-02/performance-5000.json",
+    "reports/dd-02/screenshot-1366x768.png",
+    "reports/dd-02/screenshot-1920x1080.png",
+    "reports/dd-02/screenshot-mobile.png",
+    "reports/dd-02/typecheck.log",
+    "reports/dd-02/unit.log"
   ],
   "blockers": [
-    "Создание PR заблокировано: прокси отклонил GitHub GraphQL с Forbidden, а веб-форма требует входа в GitHub."
+    "GitHub GraphQL отклонил создание PR с Forbidden. Публичная ссылка на форму перенаправляет на вход в GitHub."
   ],
   "nextStageAuthorized": false
 }

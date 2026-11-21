@@ -1,0 +1,1016 @@
+{
+  "engineVersion": "0.3.0",
+  "genomeVersion": "1",
+  "evolutionVersion": "1",
+  "seed": "dd00-verification",
+  "ticks": 10000,
+  "config": {
+    "seed": "dd00-verification",
+    "width": 256,
+    "height": 256,
+    "population": 1000,
+    "mutationRate": 0.12,
+    "regrowth": true,
+    "reproduction": true,
+    "rule": "selection",
+    "mutationStrength": 0.08,
+    "resourceScale": 1
+  },
+  "noFood": false,
+  "initial": {
+    "tick": 0,
+    "population": 1000,
+    "food": 118760.783,
+    "births": 0,
+    "deaths": 0,
+    "meanEnergy": 22.924143,
+    "maxGeneration": 0
+  },
+  "final": {
+    "tick": 10000,
+    "population": 2913,
+    "food": 16785.864,
+    "births": 16597,
+    "deaths": 14684,
+    "meanEnergy": 17.96153381393752,
+    "maxGeneration": 33
+  },
+  "extinctionTick": null,
+  "errors": [],
+  "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505",
+  "checkpoints": [
+    {
+      "tick": 0,
+      "hash": "f78904899c590d0f145a20d974e8de85e25c34b4abfe451c007ad7343a621be0"
+    },
+    {
+      "tick": 1000,
+      "hash": "d2f13ac164c1321ff4e5f70d2348c79032a1dda5ef593293367bbae3d4cc86f0"
+    },
+    {
+      "tick": 2000,
+      "hash": "43b88498da3b1512fa386d6c4a2b2f2bcee38da4140a65a9cb9f26270cfe9154"
+    },
+    {
+      "tick": 3000,
+      "hash": "74fc61524fc36da7192f6c0eccd24036e07199943a14691b4058db86731850a3"
+    },
+    {
+      "tick": 4000,
+      "hash": "cbef787e8c925b6c06ee2396aee92a8a3923fc204b081e54fdbdb0383e84ce02"
+    },
+    {
+      "tick": 5000,
+      "hash": "0954150d1ce9325ff4007e7c267525077abecf3a9240a0f9cd918f8750a6452f"
+    },
+    {
+      "tick": 6000,
+      "hash": "7fdef8f0e6b9bf6738fe33ad38a3b8a3c8b249c3c1c6639189f3852d0ab09dc4"
+    },
+    {
+      "tick": 7000,
+      "hash": "de28e6d1e0757438000dc2704319b0692953a9e1345f810b9a9c8ec3e410ef4c"
+    },
+    {
+      "tick": 8000,
+      "hash": "381635f2f4d08c95c2ee4605161b414bed0ebde1f942f24ae74f8a8f1e60dd3f"
+    },
+    {
+      "tick": 9000,
+      "hash": "c5a9cc4a3fd63e1a5f1319e2b24f4af8fad9d6da7c590c3cb8a9c1be294a052c"
+    },
+    {
+      "tick": 10000,
+      "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
+    }
+  ],
+  "elapsedMs": 25815.138236000003,
+  "tps": 387.36960881560157,
+  "tickP50Ms": 2.465148000001136,
+  "tickP95Ms": 2.809613999999783,
+  "phases": null,
+  "auditEvery": 1,
+  "auditTimeMs": 6344.154104999999,
+  "audits": 10000,
+  "peakSampledRssBytes": 215252992,
+  "environment": {
+    "node": "v24.22.3",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 5,
+    "memoryBytes": 222330880
+  },
+  "history": [
+    {
+      "tick": 0,
+      "population": 1000,
+      "food": 118760.783,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 22.924143,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 100,
+      "population": 1489,
+      "food": 128474.446,
+      "births": 489,
+      "deaths": 0,
+      "meanEnergy": 25.755906648757556,
+      "maxGeneration": 2
+    },
+    {
+      "tick": 200,
+      "population": 1800,
+      "food": 128865.838,
+      "births": 903,
+      "deaths": 103,
+      "meanEnergy": 22.417634999999997,
+      "maxGeneration": 3
+    },
+    {
+      "tick": 300,
+      "population": 1575,
+      "food": 143840.058,
+      "births": 996,
+      "deaths": 421,
+      "meanEnergy": 15.95097015873016,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 400,
+      "population": 1258,
+      "food": 146424.628,
+      "births": 1119,
+      "deaths": 861,
+      "meanEnergy": 17.889587440381558,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 500,
+      "population": 1109,
+      "food": 150044.623,
+      "births": 1212,
+      "deaths": 1103,
+      "meanEnergy": 17.236719567177637,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 600,
+      "population": 865,
+      "food": 157521.72,
+      "births": 1251,
+      "deaths": 1386,
+      "meanEnergy": 16.11642312138728,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 700,
+      "population": 740,
+      "food": 159912.548,
+      "births": 1314,
+      "deaths": 1574,
+      "meanEnergy": 18.042586486486485,
+      "maxGeneration": 3
+    },
+    {
+      "tick": 800,
+      "population": 652,
+      "food": 163277.569,
+      "births": 1355,
+      "deaths": 1703,
+      "meanEnergy": 17.30633435582822,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 900,
+      "population": 523,
+      "food": 167173.153,
+      "births": 1389,
+      "deaths": 1866,
+      "meanEnergy": 17.597969407265772,
+      "maxGeneration": 3
+    },
+    {
+      "tick": 1000,
+      "population": 491,
+      "food": 168176.45,
+      "births": 1430,
+      "deaths": 1939,
+      "meanEnergy": 18.78373930753564,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 1100,
+      "population": 436,
+      "food": 170166.703,
+      "births": 1471,
+      "deaths": 2035,
+      "meanEnergy": 18.48188532110092,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 1200,
+      "population": 392,
+      "food": 171904.188,
+      "births": 1502,
+      "deaths": 2110,
+      "meanEnergy": 18.153229591836734,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 1300,
+      "population": 336,
+      "food": 174011.771,
+      "births": 1525,
+      "deaths": 2189,
+      "meanEnergy": 16.18571130952381,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 1400,
+      "population": 264,
+      "food": 175021.157,
+      "births": 1536,
+      "deaths": 2272,
+      "meanEnergy": 18.691579545454545,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 1500,
+      "population": 242,
+      "food": 175907.395,
+      "births": 1554,
+      "deaths": 2312,
+      "meanEnergy": 18.800838842975203,
+      "maxGeneration": 4
+    },
+    {
+      "tick": 1600,
+      "population": 214,
+      "food": 176997.729,
+      "births": 1567,
+      "deaths": 2353,
+      "meanEnergy": 18.20621495327103,
+      "maxGeneration": 5
+    },
+    {
+      "tick": 1700,
+      "population": 205,
+      "food": 177179.327,
+      "births": 1583,
+      "deaths": 2378,
+      "meanEnergy": 18.550975609756097,
+      "maxGeneration": 6
+    },
+    {
+      "tick": 1800,
+      "population": 183,
+      "food": 177628.601,
+      "births": 1607,
+      "deaths": 2424,
+      "meanEnergy": 19.115786885245903,
+      "maxGeneration": 6
+    },
+    {
+      "tick": 1900,
+      "population": 182,
+      "food": 177897.137,
+      "births": 1623,
+      "deaths": 2441,
+      "meanEnergy": 18.57202197802198,
+      "maxGeneration": 6
+    },
+    {
+      "tick": 2000,
+      "population": 157,
+      "food": 178386.262,
+      "births": 1634,
+      "deaths": 2477,
+      "meanEnergy": 19.60291719745223,
+      "maxGeneration": 6
+    },
+    {
+      "tick": 2100,
+      "population": 156,
+      "food": 178709.455,
+      "births": 1650,
+      "deaths": 2494,
+      "meanEnergy": 18.39567948717949,
+      "maxGeneration": 7
+    },
+    {
+      "tick": 2200,
+      "population": 128,
+      "food": 179398.506,
+      "births": 1660,
+      "deaths": 2532,
+      "meanEnergy": 18.210109375,
+      "maxGeneration": 7
+    },
+    {
+      "tick": 2300,
+      "population": 114,
+      "food": 179828.07,
+      "births": 1670,
+      "deaths": 2556,
+      "meanEnergy": 18.68975438596491,
+      "maxGeneration": 9
+    },
+    {
+      "tick": 2400,
+      "population": 115,
+      "food": 179883.829,
+      "births": 1688,
+      "deaths": 2573,
+      "meanEnergy": 17.5878347826087,
+      "maxGeneration": 10
+    },
+    {
+      "tick": 2500,
+      "population": 115,
+      "food": 179580.008,
+      "births": 1708,
+      "deaths": 2593,
+      "meanEnergy": 18.736191304347827,
+      "maxGeneration": 11
+    },
+    {
+      "tick": 2600,
+      "population": 110,
+      "food": 179139.033,
+      "births": 1726,
+      "deaths": 2616,
+      "meanEnergy": 23.542572727272727,
+      "maxGeneration": 13
+    },
+    {
+      "tick": 2700,
+      "population": 130,
+      "food": 178568.016,
+      "births": 1756,
+      "deaths": 2626,
+      "meanEnergy": 24.01456923076923,
+      "maxGeneration": 14
+    },
+    {
+      "tick": 2800,
+      "population": 195,
+      "food": 176327.469,
+      "births": 1824,
+      "deaths": 2629,
+      "meanEnergy": 25.733882051282052,
+      "maxGeneration": 15
+    },
+    {
+      "tick": 2900,
+      "population": 252,
+      "food": 174767.079,
+      "births": 1888,
+      "deaths": 2636,
+      "meanEnergy": 24.620309523809524,
+      "maxGeneration": 16
+    },
+    {
+      "tick": 3000,
+      "population": 338,
+      "food": 171863.786,
+      "births": 1991,
+      "deaths": 2653,
+      "meanEnergy": 25.28094674556213,
+      "maxGeneration": 18
+    },
+    {
+      "tick": 3100,
+      "population": 461,
+      "food": 167970.728,
+      "births": 2134,
+      "deaths": 2673,
+      "meanEnergy": 24.744945770065076,
+      "maxGeneration": 19
+    },
+    {
+      "tick": 3200,
+      "population": 624,
+      "food": 161520.557,
+      "births": 2325,
+      "deaths": 2701,
+      "meanEnergy": 25.643121794871792,
+      "maxGeneration": 20
+    },
+    {
+      "tick": 3300,
+      "population": 874,
+      "food": 153570.606,
+      "births": 2588,
+      "deaths": 2714,
+      "meanEnergy": 23.890805491990847,
+      "maxGeneration": 22
+    },
+    {
+      "tick": 3400,
+      "population": 1094,
+      "food": 144015.836,
+      "births": 2862,
+      "deaths": 2768,
+      "meanEnergy": 23.654535648994514,
+      "maxGeneration": 23
+    },
+    {
+      "tick": 3500,
+      "population": 1282,
+      "food": 133626.723,
+      "births": 3151,
+      "deaths": 2869,
+      "meanEnergy": 24.417978939157564,
+      "maxGeneration": 24
+    },
+    {
+      "tick": 3600,
+      "population": 1534,
+      "food": 124027.29,
+      "births": 3477,
+      "deaths": 2943,
+      "meanEnergy": 23.13952151238592,
+      "maxGeneration": 24
+    },
+    {
+      "tick": 3700,
+      "population": 1764,
+      "food": 113508.83,
+      "births": 3807,
+      "deaths": 3043,
+      "meanEnergy": 22.57937925170068,
+      "maxGeneration": 24
+    },
+    {
+      "tick": 3800,
+      "population": 1958,
+      "food": 103246.256,
+      "births": 4174,
+      "deaths": 3216,
+      "meanEnergy": 21.980720122574052,
+      "maxGeneration": 24
+    },
+    {
+      "tick": 3900,
+      "population": 2087,
+      "food": 95781.021,
+      "births": 4498,
+      "deaths": 3411,
+      "meanEnergy": 21.051490177287974,
+      "maxGeneration": 24
+    },
+    {
+      "tick": 4000,
+      "population": 2166,
+      "food": 88950.525,
+      "births": 4790,
+      "deaths": 3624,
+      "meanEnergy": 20.754650046168052,
+      "maxGeneration": 25
+    },
+    {
+      "tick": 4100,
+      "population": 2270,
+      "food": 82576.886,
+      "births": 5098,
+      "deaths": 3828,
+      "meanEnergy": 20.257352863436125,
+      "maxGeneration": 26
+    },
+    {
+      "tick": 4200,
+      "population": 2375,
+      "food": 75481.349,
+      "births": 5406,
+      "deaths": 4031,
+      "meanEnergy": 20.497195789473686,
+      "maxGeneration": 27
+    },
+    {
+      "tick": 4300,
+      "population": 2523,
+      "food": 66003.855,
+      "births": 5771,
+      "deaths": 4248,
+      "meanEnergy": 21.32662742766548,
+      "maxGeneration": 27
+    },
+    {
+      "tick": 4400,
+      "population": 2740,
+      "food": 58133.126,
+      "births": 6156,
+      "deaths": 4416,
+      "meanEnergy": 20.713014233576644,
+      "maxGeneration": 27
+    },
+    {
+      "tick": 4500,
+      "population": 2856,
+      "food": 51168.618,
+      "births": 6476,
+      "deaths": 4620,
+      "meanEnergy": 20.280429271708684,
+      "maxGeneration": 27
+    },
+    {
+      "tick": 4600,
+      "population": 2960,
+      "food": 44798.448,
+      "births": 6805,
+      "deaths": 4845,
+      "meanEnergy": 19.687570608108107,
+      "maxGeneration": 27
+    },
+    {
+      "tick": 4700,
+      "population": 2925,
+      "food": 41250.033,
+      "births": 7067,
+      "deaths": 5142,
+      "meanEnergy": 19.375413333333334,
+      "maxGeneration": 28
+    },
+    {
+      "tick": 4800,
+      "population": 2890,
+      "food": 39413.766,
+      "births": 7290,
+      "deaths": 5400,
+      "meanEnergy": 19.015244982698963,
+      "maxGeneration": 28
+    },
+    {
+      "tick": 4900,
+      "population": 2835,
+      "food": 38670.963,
+      "births": 7485,
+      "deaths": 5650,
+      "meanEnergy": 18.893099823633158,
+      "maxGeneration": 28
+    },
+    {
+      "tick": 5000,
+      "population": 2838,
+      "food": 36799.286,
+      "births": 7713,
+      "deaths": 5875,
+      "meanEnergy": 19.144305144467936,
+      "maxGeneration": 29
+    },
+    {
+      "tick": 5100,
+      "population": 2832,
+      "food": 35109.772,
+      "births": 7926,
+      "deaths": 6094,
+      "meanEnergy": 19.42768820621469,
+      "maxGeneration": 29
+    },
+    {
+      "tick": 5200,
+      "population": 2873,
+      "food": 34423.225,
+      "births": 8171,
+      "deaths": 6298,
+      "meanEnergy": 19.06676122520014,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 5300,
+      "population": 2887,
+      "food": 31927.475,
+      "births": 8394,
+      "deaths": 6507,
+      "meanEnergy": 19.38910218219605,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 5400,
+      "population": 2919,
+      "food": 30359.306,
+      "births": 8620,
+      "deaths": 6701,
+      "meanEnergy": 19.1669448441247,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 5500,
+      "population": 2920,
+      "food": 28840.951,
+      "births": 8844,
+      "deaths": 6924,
+      "meanEnergy": 19.101047602739726,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 5600,
+      "population": 2884,
+      "food": 28179.882,
+      "births": 9032,
+      "deaths": 7148,
+      "meanEnergy": 19.195379680998613,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 5700,
+      "population": 2896,
+      "food": 27220.757,
+      "births": 9254,
+      "deaths": 7358,
+      "meanEnergy": 19.157069406077348,
+      "maxGeneration": 29
+    },
+    {
+      "tick": 5800,
+      "population": 2898,
+      "food": 26896.479,
+      "births": 9442,
+      "deaths": 7544,
+      "meanEnergy": 18.98123326432022,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 5900,
+      "population": 2922,
+      "food": 25986.498,
+      "births": 9648,
+      "deaths": 7726,
+      "meanEnergy": 18.777247433264886,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 6000,
+      "population": 2912,
+      "food": 26027.547,
+      "births": 9828,
+      "deaths": 7916,
+      "meanEnergy": 18.539617101648354,
+      "maxGeneration": 30
+    },
+    {
+      "tick": 6100,
+      "population": 2874,
+      "food": 25312.172,
+      "births": 10030,
+      "deaths": 8156,
+      "meanEnergy": 18.790434237995825,
+      "maxGeneration": 31
+    },
+    {
+      "tick": 6200,
+      "population": 2905,
+      "food": 24370.845,
+      "births": 10227,
+      "deaths": 8322,
+      "meanEnergy": 18.722017900172116,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 6300,
+      "population": 2893,
+      "food": 24041.753,
+      "births": 10413,
+      "deaths": 8520,
+      "meanEnergy": 18.787887659868648,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 6400,
+      "population": 2873,
+      "food": 24042.482,
+      "births": 10597,
+      "deaths": 8724,
+      "meanEnergy": 18.889307692307693,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 6500,
+      "population": 2871,
+      "food": 23337.541,
+      "births": 10774,
+      "deaths": 8903,
+      "meanEnergy": 19.184777081156394,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 6600,
+      "population": 2885,
+      "food": 22193.634,
+      "births": 10964,
+      "deaths": 9079,
+      "meanEnergy": 19.312951126516467,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 6700,
+      "population": 2901,
+      "food": 22291.487,
+      "births": 11137,
+      "deaths": 9236,
+      "meanEnergy": 19.056804205446397,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 6800,
+      "population": 2884,
+      "food": 22084.721,
+      "births": 11292,
+      "deaths": 9408,
+      "meanEnergy": 19.227630721220528,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 6900,
+      "population": 2900,
+      "food": 21677.996,
+      "births": 11469,
+      "deaths": 9569,
+      "meanEnergy": 19.236487586206895,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 7000,
+      "population": 2885,
+      "food": 21381.789,
+      "births": 11652,
+      "deaths": 9767,
+      "meanEnergy": 19.33274939341421,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 7100,
+      "population": 2905,
+      "food": 20992.246,
+      "births": 11836,
+      "deaths": 9931,
+      "meanEnergy": 19.20322512908778,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 7200,
+      "population": 2889,
+      "food": 21142.59,
+      "births": 11985,
+      "deaths": 10096,
+      "meanEnergy": 19.160340256143993,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 7300,
+      "population": 2889,
+      "food": 21084.309,
+      "births": 12146,
+      "deaths": 10257,
+      "meanEnergy": 19.186413984077536,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 7400,
+      "population": 2914,
+      "food": 20822.793,
+      "births": 12331,
+      "deaths": 10417,
+      "meanEnergy": 18.991686684969114,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 7500,
+      "population": 2896,
+      "food": 20834.289,
+      "births": 12485,
+      "deaths": 10589,
+      "meanEnergy": 19.062758977900554,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 7600,
+      "population": 2920,
+      "food": 20811.252,
+      "births": 12677,
+      "deaths": 10757,
+      "meanEnergy": 18.719081506849314,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 7700,
+      "population": 2903,
+      "food": 20330.053,
+      "births": 12823,
+      "deaths": 10920,
+      "meanEnergy": 18.76478332759215,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 7800,
+      "population": 2895,
+      "food": 20140.334,
+      "births": 12997,
+      "deaths": 11102,
+      "meanEnergy": 18.736537823834198,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 7900,
+      "population": 2884,
+      "food": 19921.489,
+      "births": 13174,
+      "deaths": 11290,
+      "meanEnergy": 18.815028779472957,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8000,
+      "population": 2887,
+      "food": 19602.778,
+      "births": 13347,
+      "deaths": 11460,
+      "meanEnergy": 18.897105645999307,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8100,
+      "population": 2880,
+      "food": 19627.095,
+      "births": 13504,
+      "deaths": 11624,
+      "meanEnergy": 18.979382986111112,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8200,
+      "population": 2886,
+      "food": 19357.816,
+      "births": 13648,
+      "deaths": 11762,
+      "meanEnergy": 18.98223354123354,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8300,
+      "population": 2891,
+      "food": 19181.247,
+      "births": 13826,
+      "deaths": 11935,
+      "meanEnergy": 19.112988585264613,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8400,
+      "population": 2927,
+      "food": 18843.894,
+      "births": 13997,
+      "deaths": 12070,
+      "meanEnergy": 18.792291424666896,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8500,
+      "population": 2931,
+      "food": 18704.648,
+      "births": 14171,
+      "deaths": 12240,
+      "meanEnergy": 18.519247355851245,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8600,
+      "population": 2913,
+      "food": 18641.737,
+      "births": 14316,
+      "deaths": 12403,
+      "meanEnergy": 18.438691383453484,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8700,
+      "population": 2904,
+      "food": 18640.822,
+      "births": 14475,
+      "deaths": 12571,
+      "meanEnergy": 18.324631542699723,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8800,
+      "population": 2891,
+      "food": 18412.161,
+      "births": 14642,
+      "deaths": 12751,
+      "meanEnergy": 18.360023521272918,
+      "maxGeneration": 32
+    },
+    {
+      "tick": 8900,
+      "population": 2879,
+      "food": 18504.544,
+      "births": 14791,
+      "deaths": 12912,
+      "meanEnergy": 18.489395970823203,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9000,
+      "population": 2879,
+      "food": 18508.928,
+      "births": 14951,
+      "deaths": 13072,
+      "meanEnergy": 18.56945293504689,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9100,
+      "population": 2921,
+      "food": 17741.267,
+      "births": 15145,
+      "deaths": 13224,
+      "meanEnergy": 18.504462855186578,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9200,
+      "population": 2907,
+      "food": 17372.023,
+      "births": 15311,
+      "deaths": 13404,
+      "meanEnergy": 18.527706570347437,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9300,
+      "population": 2909,
+      "food": 17139.668,
+      "births": 15485,
+      "deaths": 13576,
+      "meanEnergy": 18.451738054314198,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9400,
+      "population": 2909,
+      "food": 17398.287,
+      "births": 15651,
+      "deaths": 13742,
+      "meanEnergy": 18.32434479202475,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9500,
+      "population": 2888,
+      "food": 17294.194,
+      "births": 15804,
+      "deaths": 13916,
+      "meanEnergy": 18.455209833795017,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9600,
+      "population": 2905,
+      "food": 17417.079,
+      "births": 15975,
+      "deaths": 14070,
+      "meanEnergy": 18.321834423407918,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9700,
+      "population": 2910,
+      "food": 17009.399,
+      "births": 16138,
+      "deaths": 14228,
+      "meanEnergy": 18.29436494845361,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9800,
+      "population": 2912,
+      "food": 16916.826,
+      "births": 16291,
+      "deaths": 14379,
+      "meanEnergy": 18.161003434065933,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 9900,
+      "population": 2903,
+      "food": 16401.53,
+      "births": 16442,
+      "deaths": 14539,
+      "meanEnergy": 18.260771960041335,
+      "maxGeneration": 33
+    },
+    {
+      "tick": 10000,
+      "population": 2913,
+      "food": 16785.864,
+      "births": 16597,
+      "deaths": 14684,
+      "meanEnergy": 17.96153381393752,
+      "maxGeneration": 33
+    }
+  ],
+  "evolution": null
+}
