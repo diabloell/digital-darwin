@@ -88,6 +88,50 @@ try {
   await page.locator('#viewport').focus(); await page.keyboard.press('Space'); await page.waitForFunction(() => document.querySelector('#status').textContent === 'МИР ЖИВЁТ'); await page.keyboard.press('Space'); await page.waitForFunction(() => document.querySelector('#status').textContent === 'НА ПАУЗЕ'); checks.push('keyboard Space toggles playback');
   await page.setViewportSize({width:1920,height:1080}); await page.waitForTimeout(150); assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true); await page.screenshot({path:`${output}/screenshot-1920x1080.png`,fullPage:true}); screenshots.push(`${output}/screenshot-1920x1080.png`);
   await page.setViewportSize({width:390,height:844}); await page.waitForTimeout(150); assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true); await page.screenshot({path:`${output}/screenshot-mobile.png`,fullPage:true}); screenshots.push(`${output}/screenshot-mobile.png`); checks.push('responsive 1366 / 1920 / 390 widths without horizontal overflow');
+  const worldAtTick = async frameDelay => {
+    const view = await browser.newPage();
+    try {
+      await view.addInitScript(delay => {
+        const drawImage = CanvasRenderingContext2D.prototype.drawImage;
+        window.__renderCalls = 0;
+        CanvasRenderingContext2D.prototype.drawImage = function (...args) {
+          window.__renderCalls++;
+          return drawImage.apply(this, args);
+        };
+        const NativeWorker = window.Worker;
+        window.Worker = class extends NativeWorker {
+          set onmessage(handler) {
+            super.onmessage = event => {
+              if (delay) setTimeout(() => handler.call(this, event), delay);
+              else handler.call(this, event);
+            };
+          }
+          constructor(...args) {
+            super(...args);
+            this.addEventListener('message', ({ data }) => {
+              if (data.kind === 'frame') window.__world = {
+                metrics: data.metrics, ids: [...data.ids], positions: [...data.positions], food: [...data.food]
+              };
+            });
+          }
+        };
+      }, frameDelay);
+      await view.goto(`http://127.0.0.1:${server.address().port}/`);
+      await view.locator('#step').waitFor();
+      for (let tick = 1; tick <= 12; tick++) {
+        await view.locator('#step').click();
+        await view.waitForFunction(tick => window.__world?.metrics.tick === tick,
+          tick, { polling: 20 });
+      }
+      await view.waitForFunction(() => document.querySelector('#tick').textContent === '12');
+      assert.ok(await view.evaluate(() => window.__renderCalls > 0));
+      return await view.evaluate(() => window.__world);
+    } finally {
+      await view.close();
+    }
+  };
+  assert.deepEqual(await worldAtTick(0), await worldAtTick(100));
+  checks.push('same 12 Worker ticks produce identical metrics and buffers with normal and delayed rendering');
   assert.deepEqual(errors, []);
   await writeFile(`${output}/e2e.json`,JSON.stringify({status:'PASS',transport:'Node HTTP server over loopback',browser:await browser.version(),executablePath,checks,errors,screenshots,speedMeasurement:{ticks:16,normalMs,acceleratedMs}},null,2)); console.log(`E2E PASS: ${checks.length} checks; browser ${await browser.version()}; loopback HTTP`);
 } catch(e) { await writeFile(`${output}/e2e.json`,JSON.stringify({status:'FAIL',checks,errors,failure:String(e)},null,2)); throw e; }

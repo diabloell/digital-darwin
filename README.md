@@ -22,9 +22,11 @@ npx --no-install playwright install chromium
 npm run verify
 ```
 
-Для проверки по отдельности используйте `npm run typecheck` (TypeScript strict, включая тесты), `npm run build`, `npm run lint`, `npm run test:unit`, `npm run test:integration` и `npm run test:e2e`. Полная матрица включает два прогона по 5 000 тиков со сравнением хешей и замер с 5 000 стартовых организмов. Журналы, JSON и скриншоты сохраняются в `outputs/verification/`; путь можно задать через `DD_EVIDENCE_DIR`. E2E запускает штатный HTTP-сервер на свободном порту и проверяет собранное приложение с реальным Worker. Для заранее установленного Chromium укажите путь в `DD_BROWSER`.
+Для проверки по отдельности используйте `npm run typecheck` (TypeScript strict, включая тесты), `npm run build`, `npm run lint`, `npm run test:unit`, `npm run test:integration` и `npm run test:e2e`. Полная матрица включает два прогона по 10 000 тиков со сравнением хешей и замер с 5 000 стартовых организмов. Журналы, JSON и скриншоты сохраняются в `outputs/verification/`; путь можно задать через `DD_EVIDENCE_DIR`. E2E запускает штатный HTTP-сервер на свободном порту и проверяет собранное приложение с реальным Worker. Для заранее установленного Chromium укажите путь в `DD_BROWSER`.
 
-GitHub Actions повторяет матрицу для pull request и прикладывает артефакт `dd-00-verification`.
+GitHub Actions повторяет матрицу для pull request и прикладывает артефакт `digital-darwin-verification`.
+
+Для отдельного прогона используйте `npm run simulate -- --seed dd01-example --ticks 10000 --profile --output outputs/example.json`. Интервалы настраиваются через `--checkpoint-every` и `--audit-every`. Сценарии без пищи и размножения доступны через `--no-food` и `--no-reproduction`. Поддерживаются `--width` и `--height`.
 
 ## Структура
 
@@ -34,7 +36,7 @@ GitHub Actions повторяет матрицу для pull request и прик
 - `apps/cli.ts`: тот же движок без браузера, SHA-256 полного состояния и измерения.
 - `tests/`: инварианты и интеграционные сценарии.
 - `docs/spec/`: копии доступной Notion-документации, включая планы последующих этапов.
-- `reports/DD-00.md`, `reports/latest.json`: фактически выполненные проверки и ограничения.
+- `reports/DD-01.md`, `reports/latest.json`: фактически выполненные проверки и ограничения.
 
 Canvas/DOM и встроенные тесты Node выбраны вместо рекомендуемых React/Vite/PixiJS/Vitest/pnpm из-за недоступного менеджера пакетов и DNS. Это осознанное отклонение DD-00, а не утверждение об эквивалентности всех инструментов. Подробности и модель - в `ARCHITECTURE.md` и `docs/adr/001-dd00.md`.
 

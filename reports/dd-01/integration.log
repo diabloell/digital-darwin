@@ -1,0 +1,13 @@
+✔ 1000-organism real ecology births, deaths and valid metrics (1868.702582ms)
+✔ without food or regrowth all energy-dependent organisms die (305.627571ms)
+✔ batch size does not affect deterministic outcome (265.19364ms)
+✔ 5000 claimants share a crowded cell equally under reversed storage (29.739299ms)
+✔ eight seeded worlds conserve resources across batches, competition and lifecycle (559.854741ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3132.704546

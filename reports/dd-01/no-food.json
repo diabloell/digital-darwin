@@ -1,0 +1,128 @@
+{
+  "engineVersion": "0.2.0",
+  "seed": "dd01-starvation",
+  "ticks": 600,
+  "config": {
+    "seed": "dd01-starvation",
+    "width": 32,
+    "height": 32,
+    "population": 1000,
+    "mutationRate": 0.12,
+    "regrowth": false,
+    "reproduction": true
+  },
+  "noFood": true,
+  "initial": {
+    "tick": 0,
+    "population": 1000,
+    "food": 0,
+    "births": 0,
+    "deaths": 0,
+    "meanEnergy": 23.056645,
+    "maxGeneration": 0
+  },
+  "final": {
+    "tick": 600,
+    "population": 0,
+    "food": 0,
+    "births": 0,
+    "deaths": 1000,
+    "meanEnergy": 0,
+    "maxGeneration": 0
+  },
+  "extinctionTick": 278,
+  "errors": [],
+  "hash": "8f57558a40e5b220c2faffd51ba97fe50e4ce62cd2b555c089ea5e76b86d303b",
+  "checkpoints": [
+    {
+      "tick": 0,
+      "hash": "f87c65a29605412299186ccac7fdf895335fed2bc4120701eabb780d3105f8a0"
+    },
+    {
+      "tick": 600,
+      "hash": "8f57558a40e5b220c2faffd51ba97fe50e4ce62cd2b555c089ea5e76b86d303b"
+    }
+  ],
+  "elapsedMs": 182.976921,
+  "tps": 3279.1020677411,
+  "tickP50Ms": 0.005287000000009812,
+  "tickP95Ms": 0.7342239999999975,
+  "phases": null,
+  "auditEvery": 1,
+  "auditTimeMs": 48.97650899999992,
+  "audits": 600,
+  "peakSampledRssBytes": 70361088,
+  "environment": {
+    "node": "v24.22.3",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 5,
+    "memoryBytes": 70361088
+  },
+  "history": [
+    {
+      "tick": 0,
+      "population": 1000,
+      "food": 0,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 23.056645,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 100,
+      "population": 1000,
+      "food": 0,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 11.160645,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 200,
+      "population": 427,
+      "food": 0,
+      "births": 0,
+      "deaths": 573,
+      "meanEnergy": 2.661306791569087,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 300,
+      "population": 0,
+      "food": 0,
+      "births": 0,
+      "deaths": 1000,
+      "meanEnergy": 0,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 400,
+      "population": 0,
+      "food": 0,
+      "births": 0,
+      "deaths": 1000,
+      "meanEnergy": 0,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 500,
+      "population": 0,
+      "food": 0,
+      "births": 0,
+      "deaths": 1000,
+      "meanEnergy": 0,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 600,
+      "population": 0,
+      "food": 0,
+      "births": 0,
+      "deaths": 1000,
+      "meanEnergy": 0,
+      "maxGeneration": 0
+    }
+  ]
+}

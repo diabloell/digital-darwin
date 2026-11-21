@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0 projection",
+  "node": "v24.22.3",
+  "hash": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+  "metrics": {
+    "tick": 5000,
+    "population": 4346,
+    "food": 23365.26,
+    "births": 11254,
+    "deaths": 7908,
+    "meanEnergy": 20.502630694891852,
+    "maxGeneration": 31
+  }
+}

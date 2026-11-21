@@ -1,12 +1,21 @@
 import { Rng } from './rng.ts';
 
-export const ENGINE_VERSION = '0.1.0';
+export const ENGINE_VERSION = '0.2.0';
 export const GENE_BOUNDS = { speed: [0.25, 1.8], sensor: [1, 8], efficiency: [0.65, 1], threshold: [32, 64] } as const;
 export type Genome = { speed: number; sensor: number; efficiency: number; threshold: number };
 export type Organism = { id: number; parent: number | null; generation: number; x: number; y: number; heading: number; velocity: number; energy: number; age: number; born: number; lastActionTick: number; genome: Genome };
-export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean };
+export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean; reproduction?: boolean };
 export type Metrics = { tick: number; population: number; food: number; births: number; deaths: number; meanEnergy: number; maxGeneration: number };
-export type Audit = { grown: number; consumed: number; assimilated: number; dissipated: number; reproductionCost: number; actions: number };
+export type Audit = { grown: number; consumed: number; assimilated: number; dissipated: number; reproductionCost: number; digestiveLoss: number; transferred: number; actions: number };
+export const TICK_PHASES = ['environment', 'observations', 'intents', 'movement', 'competition', 'metabolism', 'death', 'reproduction', 'audit'] as const;
+export type TickPhase = typeof TICK_PHASES[number];
+type Observation = { agent: Organism; localFood: number; dx: number; dy: number };
+type Intent = { agent: Organism; heading: number; speed: number; portion: number };
+
+function newAudit(): Audit {
+  return { grown: 0, consumed: 0, assimilated: 0, dissipated: 0, reproductionCost: 0, digestiveLoss: 0, transferred: 0, actions: 0 };
+}
+
 const KEYS = Object.keys(GENE_BOUNDS) as (keyof Genome)[];
 const DX = [1, 0.7071067811865476, 0, -0.7071067811865476, -1, -0.7071067811865476, 0, 0.7071067811865476];
 const DY = [0, 0.7071067811865476, 1, 0.7071067811865476, 0, -0.7071067811865476, -1, -0.7071067811865476];
@@ -23,6 +32,7 @@ export function validateConfig(c: Config): void {
   for (const k of ['width', 'height'] as const) if (!Number.isInteger(c[k]) || c[k] < 8 || c[k] > 512) throw Error('Размер мира: 8..512');
   if (!Number.isInteger(c.population) || c.population < 0 || c.population > 20000) throw Error('Популяция: 0..20000');
   if (!Number.isFinite(c.mutationRate) || c.mutationRate < 0 || c.mutationRate > 1) throw Error('Мутация: 0..1');
+  if (c.reproduction !== undefined && typeof c.reproduction !== 'boolean') throw Error('Invalid reproduction flag');
   if (typeof c.regrowth !== 'boolean') throw Error('Некорректный рост ресурсов');
 }
 export class Engine {
@@ -36,9 +46,10 @@ export class Engine {
   nextId = 1;
   births = 0;
   deaths = 0;
-  audit: Audit = { grown: 0, consumed: 0, assimilated: 0, dissipated: 0, reproductionCost: 0, actions: 0 };
+  audit: Audit = newAudit();
+  private expectedFood: number | undefined;
   constructor(options: Partial<Config> = {}) {
-    this.config = { seed: 'coral-42', width: 256, height: 256, population: 1000, mutationRate: 0.12, regrowth: true, ...options };
+    this.config = { seed: 'coral-42', width: 256, height: 256, population: 1000, mutationRate: 0.12, regrowth: true, ...options, reproduction: options.reproduction === undefined ? true : options.reproduction };
     validateConfig(this.config);
     this.rng = new Rng(this.config.seed);
     const { width: w, height: h } = this.config;
@@ -65,64 +76,159 @@ export class Engine {
     const { width: w, height: h } = this.config;
     return Math.floor(((y % h) + h) % h) * w + Math.floor(((x % w) + w) % w);
   }
-  step(count = 1): void {
+  step(count = 1, phaseCompleted?: (phase: TickPhase) => void): void {
     if (!Number.isInteger(count) || count < 1 || count > 100000) throw Error('Tick count: 1..100000');
-    for (let t = 0; t < count; t++) this.advance();
+    for (let t = 0; t < count; t++) this.advance(phaseCompleted);
   }
-  private advance(): void {
+
+  private advance(phaseCompleted?: (phase: TickPhase) => void): void {
     this.tick++;
-    // Normalize storage order before assigning RNG draws and newborn IDs.
+    const audit = newAudit();
+    const startingPopulation = this.organisms.length;
+    // Canonical order assigns RNG draws and child IDs, never priority for food.
     this.organisms.sort((a, b) => a.id - b.id);
-    const audit: Audit = { grown: 0, consumed: 0, assimilated: 0, dissipated: 0, reproductionCost: 0, actions: 0 };
-    if (this.config.regrowth) for (let i = 0; i < this.food.length; i++) {
-      const n = Math.min(this.growth[i], this.capacity[i] - this.food[i]); this.food[i] += n; audit.grown += n;
+    const startingFood = this.updateEnvironment(audit);
+    phaseCompleted?.('environment');
+
+    const observations: Observation[] = [];
+    let startingEnergy = 0, previousId = 0;
+    for (const agent of this.organisms) {
+      if (agent.id <= previousId) throw Error('Duplicate or invalid ID');
+      previousId = agent.id;
+      if (agent.energy === 0) continue;
+      if (!Number.isInteger(agent.energy) || agent.energy < 0 || agent.energy > 80000) throw Error('Invalid starting energy');
+      startingEnergy += agent.energy;
+      observations.push(this.observe(agent));
     }
-    // All decisions use the same food field. Claims are resolved after movement.
-    const claims = new Map<number, Organism[]>();
-    for (const a of this.organisms) {
-      if (a.energy <= 0) continue;
-      if (a.lastActionTick === this.tick) throw Error('Duplicate action');
-      a.lastActionTick = this.tick; a.age++; audit.actions++;
-      const localFood = this.food[this.cell(a.x, a.y)];
-      let best = localFood, bx = 0, by = 0;
-      for (let d = 0; d < 8; d++) {
-        const dx = DX[d] * a.genome.sensor, dy = DY[d] * a.genome.sensor;
-        const f = this.food[this.cell(a.x + dx, a.y + dy)];
-        if (f > best) { best = f; bx = dx; by = dy; }
+    phaseCompleted?.('observations');
+
+    const intents = observations.map(observation => this.decide(observation));
+    phaseCompleted?.('intents');
+    const claims = this.move(intents);
+    phaseCompleted?.('movement');
+    this.resolveClaims(claims, audit);
+    phaseCompleted?.('competition');
+    this.feedAndMetabolize(intents, audit);
+    phaseCompleted?.('metabolism');
+
+    const survivors = this.organisms.filter(agent => agent.energy > 0);
+    const dead = startingPopulation - survivors.length;
+    phaseCompleted?.('death');
+
+    const newborns = this.reproduce(survivors, audit);
+    phaseCompleted?.('reproduction');
+
+    this.organisms = survivors.concat(newborns);
+    this.births += newborns.length;
+    this.deaths += dead;
+    const endingEnergy = this.organisms.reduce((sum, agent) => sum + agent.energy, 0);
+    if (audit.actions !== observations.length || audit.assimilated + audit.digestiveLoss !== audit.consumed
+      || endingEnergy !== startingEnergy + audit.assimilated - audit.dissipated - audit.reproductionCost) {
+      throw Error('Tick energy or action ledger mismatch');
+    }
+    this.expectedFood = startingFood + audit.grown - audit.consumed;
+    this.audit = audit;
+    phaseCompleted?.('audit');
+  }
+
+  private updateEnvironment(audit: Audit): number {
+    let startingFood = 0;
+    for (let i = 0; i < this.food.length; i++) {
+      const before = this.food[i];
+      const capacity = this.capacity[i];
+      const growth = this.growth[i];
+      if (before < 0 || before > capacity || growth < 0) throw Error(`Invalid resource cell ${i}`);
+      startingFood += before;
+      if (this.config.regrowth) {
+        const added = Math.min(growth, capacity - before);
+        this.food[i] = before + added;
+        audit.grown += added;
       }
-      a.heading = bx || by ? Math.atan2(by, bx) : a.heading + (this.rng.next() - 0.5) * 1.2;
-      // Rest and feed on a rich cell; otherwise forage toward sensed resources.
-      const speed = localFood >= 650 ? 0 : a.genome.speed;
-      a.velocity = speed;
-      a.x = (a.x + Math.cos(a.heading) * speed + this.config.width) % this.config.width;
-      a.y = (a.y + Math.sin(a.heading) * speed + this.config.height) % this.config.height;
-      const cell = this.cell(a.x, a.y);
-      const group = claims.get(cell); if (group) group.push(a); else claims.set(cell, [a]);
     }
-    for (const [cell, agents] of claims) {
-      // Equal demand, proportional integer allocation; remainder stays as food.
-      const portion = Math.min(650, Math.floor(this.food[cell] / agents.length));
-      this.food[cell] -= portion * agents.length; audit.consumed += portion * agents.length;
-      for (const a of agents) {
-        const gain = Math.min(80000 - a.energy, Math.floor(portion * a.genome.efficiency));
-        a.energy += gain; audit.assimilated += gain;
+    return startingFood;
+  }
+
+  private observe(agent: Organism): Observation {
+    const localFood = this.food[this.cell(agent.x, agent.y)];
+    let best = localFood, dx = 0, dy = 0;
+    for (let d = 0; d < DX.length; d++) {
+      const probeX = DX[d] * agent.genome.sensor, probeY = DY[d] * agent.genome.sensor;
+      const food = this.food[this.cell(agent.x + probeX, agent.y + probeY)];
+      if (food > best) {
+        best = food;
+        dx = probeX;
+        dy = probeY;
       }
     }
-    const survivors: Organism[] = [], newborns: Organism[] = [];
-    for (const a of this.organisms) {
-      if (a.energy <= 0) { this.deaths++; continue; }
-      const cost = Math.ceil(70 + 35 * a.velocity ** 2 + 4 * a.genome.sensor + 16 * a.genome.efficiency ** 2);
-      audit.dissipated += Math.min(cost, a.energy); a.energy -= cost;
-      if (a.energy <= 0) { a.energy = 0; this.deaths++; continue; }
-      if (a.age >= 45 && a.energy >= a.genome.threshold * 1000) {
-        const investment = Math.floor(a.energy * 0.45);
-        a.energy -= investment + 1200; audit.reproductionCost += 1200;
-        newborns.push({ id: this.nextId++, parent: a.id, generation: a.generation + 1, x: a.x, y: a.y, heading: this.rng.next() * Math.PI * 2, velocity: 0, energy: investment, age: 0, born: this.tick, lastActionTick: -1, genome: mutate(a.genome, this.rng, this.config.mutationRate) });
-        this.births++;
-      }
-      survivors.push(a);
+    return { agent, localFood, dx, dy };
+  }
+
+  private decide({ agent, localFood, dx, dy }: Observation): Intent {
+    const heading = dx || dy ? Math.atan2(dy, dx) : agent.heading + (this.rng.next() - 0.5) * 1.2;
+    return { agent, heading, speed: localFood >= 650 ? 0 : agent.genome.speed, portion: 0 };
+  }
+
+  private move(intents: Intent[]): Map<number, Intent[]> {
+    const claims = new Map<number, Intent[]>();
+    const { width, height } = this.config;
+    for (const intent of intents) {
+      const { agent, heading, speed } = intent;
+      if (agent.born >= this.tick || agent.lastActionTick >= this.tick) throw Error('Ineligible or duplicate action');
+      agent.lastActionTick = this.tick;
+      agent.age++;
+      agent.heading = heading;
+      agent.velocity = speed;
+      agent.x = (agent.x + Math.cos(heading) * speed + width) % width;
+      agent.y = (agent.y + Math.sin(heading) * speed + height) % height;
+      const cell = this.cell(agent.x, agent.y);
+      const group = claims.get(cell);
+      if (group) group.push(intent);
+      else claims.set(cell, [intent]);
     }
-    this.organisms = survivors.concat(newborns); this.audit = audit;
+    return claims;
+  }
+
+  private resolveClaims(claims: Map<number, Intent[]>, audit: Audit): void {
+    for (const [cell, group] of claims) {
+      const available = this.food[cell];
+      const portion = Math.min(650, Math.floor(available / group.length));
+      const consumed = portion * group.length;
+      this.food[cell] = available - consumed;
+      audit.consumed += consumed;
+      for (const intent of group) intent.portion = portion;
+    }
+  }
+
+  private feedAndMetabolize(intents: Intent[], audit: Audit): void {
+    for (const { agent, portion } of intents) {
+      const gain = Math.min(80000 - agent.energy, Math.floor(portion * agent.genome.efficiency));
+      agent.energy += gain;
+      audit.assimilated += gain;
+      audit.digestiveLoss += portion - gain;
+      const cost = Math.min(agent.energy, Math.ceil(70 + 35 * agent.velocity ** 2 + 4 * agent.genome.sensor + 16 * agent.genome.efficiency ** 2));
+      agent.energy -= cost;
+      audit.dissipated += cost;
+      audit.actions++;
+    }
+  }
+
+  private reproduce(survivors: Organism[], audit: Audit): Organism[] {
+    const newborns: Organism[] = [];
+    if (this.config.reproduction === false) return newborns;
+    for (const agent of survivors) {
+      if (agent.age < 45 || agent.energy < agent.genome.threshold * 1000) continue;
+      const investment = Math.floor(agent.energy * 0.45);
+      agent.energy -= investment + 1200;
+      audit.reproductionCost += 1200;
+      audit.transferred += investment;
+      newborns.push({
+        id: this.nextId++, parent: agent.id, generation: agent.generation + 1,
+        x: agent.x, y: agent.y, heading: this.rng.next() * Math.PI * 2,
+        velocity: 0, energy: investment, age: 0, born: this.tick, lastActionTick: -1,
+        genome: mutate(agent.genome, this.rng, this.config.mutationRate)
+      });
+    }
+    return newborns;
   }
   metrics(): Metrics {
     let food = 0, energy = 0, gen = 0;
@@ -131,13 +237,38 @@ export class Engine {
     return { tick: this.tick, population: this.organisms.length, food: food / 1000, births: this.births, deaths: this.deaths, meanEnergy: energy / Math.max(1, this.organisms.length) / 1000, maxGeneration: gen };
   }
   assertValid(): void {
+    const cells = this.config.width * this.config.height;
+    if (this.food.length !== cells || this.capacity.length !== cells || this.growth.length !== cells) throw Error('Invalid grid size');
+    let totalFood = 0;
+    for (let i = 0; i < cells; i++) {
+      if (this.food[i] < 0 || this.food[i] > this.capacity[i] || this.growth[i] < 0) throw Error(`Invalid resource cell ${i}`);
+      totalFood += this.food[i];
+    }
+    if (this.expectedFood !== undefined && this.expectedFood !== totalFood) throw Error('Tick food ledger mismatch');
+    if (!Number.isSafeInteger(this.tick) || this.tick < 0 || !Number.isSafeInteger(this.nextId)
+      || this.nextId !== this.config.population + this.births + 1
+      || this.organisms.length !== this.config.population + this.births - this.deaths) throw Error('Population ledger mismatch');
+
     const ids = new Set<number>();
-    for (let i = 0; i < this.food.length; i++) if (!Number.isInteger(this.food[i]) || this.food[i] < 0 || this.food[i] > this.capacity[i]) throw Error(`Invalid food ${i}`);
     for (const a of this.organisms) {
-      if (ids.has(a.id)) throw Error('Duplicate ID'); ids.add(a.id);
-      for (const n of [a.x, a.y, a.energy, a.heading, a.velocity, a.age, ...Object.values(a.genome)]) if (!Number.isFinite(n)) throw Error('Nonfinite organism');
-      if (a.energy <= 0 || a.x < 0 || a.y < 0 || a.x >= this.config.width || a.y >= this.config.height) throw Error('Invalid organism');
-      for (const key of KEYS) { const [min, max] = GENE_BOUNDS[key]; if (a.genome[key] < min || a.genome[key] > max) throw Error('Invalid genome'); }
+      if (!Number.isSafeInteger(a.id) || a.id < 1 || a.id >= this.nextId || ids.has(a.id)) throw Error('Duplicate or invalid ID');
+      ids.add(a.id);
+      if (!Number.isFinite(a.heading) || !(a.x >= 0 && a.x < this.config.width) || !(a.y >= 0 && a.y < this.config.height)
+        || !(a.velocity >= 0 && a.velocity <= a.genome.speed) || !Number.isInteger(a.energy) || a.energy <= 0 || a.energy > 80000) {
+        throw Error('Invalid organism state');
+      }
+      if (!Number.isSafeInteger(a.born) || a.born < 0 || a.born > this.tick || a.age !== this.tick - a.born
+        || a.lastActionTick !== (a.age === 0 ? -1 : this.tick)
+        || (a.born === 0
+          ? a.generation !== 0 || a.parent !== null || a.id > this.config.population
+          : !Number.isSafeInteger(a.generation) || a.generation < 1
+            || a.parent === null || !Number.isSafeInteger(a.parent) || a.parent < 1 || a.parent >= a.id)) {
+        throw Error('Invalid lifecycle state');
+      }
+      for (const key of KEYS) {
+        const [min, max] = GENE_BOUNDS[key];
+        if (!(a.genome[key] >= min && a.genome[key] <= max)) throw Error('Invalid genome');
+      }
     }
   }
   // Canonical state includes hidden future-affecting fields, not just visible metrics.

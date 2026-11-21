@@ -3,8 +3,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 
 const output = process.env.DD_EVIDENCE_DIR || 'outputs/verification';
 await mkdir(output, { recursive: true });
-const simulation = (file, seed, ticks, population) => [
-  'apps/cli.ts', '--seed', seed, '--ticks', ticks, '--population', population, '--output', `${output}/${file}.json`
+const simulation = (file, seed, ticks, population, ...options) => [
+  'apps/cli.ts', '--seed', seed, '--ticks', ticks, '--population', population, '--output', `${output}/${file}.json`, ...options
 ];
 const commands = [
   ['typecheck', ['node_modules/typescript/bin/tsc', '--noEmit']],
@@ -12,11 +12,13 @@ const commands = [
   ['lint', ['scripts/lint.mjs']],
   ['unit', ['--test', 'tests/unit.test.ts']],
   ['integration', ['--test', 'tests/integration.test.ts']],
-  ['long-run-a', simulation('long-run-a', 'dd00-verification', '5000', '1000')],
-  ['long-run-b', simulation('long-run-b', 'dd00-verification', '5000', '1000')],
-  ['performance-5000', simulation('performance-5000', 'dd00-performance', '1000', '5000')],
+  ['long-run-a', simulation('long-run-a', 'dd00-verification', '10000', '1000')],
+  ['long-run-b', simulation('long-run-b', 'dd00-verification', '10000', '1000')],
+  ['performance-5000', simulation('performance-5000', 'dd00-performance', '1000', '5000', '--profile')],
+  ['no-food', simulation('no-food', 'dd01-starvation', '600', '1000', '--width', '32', '--height', '32', '--no-food')],
+  ['no-reproduction', simulation('no-reproduction', 'dd01-control', '1000', '1000', '--width', '32', '--height', '32', '--no-reproduction')],
   ['e2e', ['scripts/e2e.mjs']],
-  ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`]]
+  ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`, '10000']]
 ];
 const checks = [];
 for (const [name, args] of commands) {

@@ -1,9 +1,9 @@
-// xoshiro128** v1, initialized with FNV-1a + splitmix32. State is explicit.
+// xoshiro128** v1, initialized with FNV-1a over UTF-16 code units + splitmix32. State is explicit.
 export class Rng {
   state: number[];
   constructor(seed: string) {
     let h = 2166136261;
-    for (const c of seed) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+    for (let i = 0; i < seed.length; i++) h = Math.imul(h ^ seed.charCodeAt(i), 16777619) >>> 0;
     this.state = Array.from({ length: 4 }, () => {
       h = (h + 0x9e3779b9) >>> 0;
       let z = h;
