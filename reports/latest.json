@@ -1,11 +1,21 @@
 {
-  "stage": "DD-00",
-  "revision": "DD-00-FIX",
-  "status": "PASS",
-  "sourceCommit": "60f610a15b2d0eb7456c392868e34b71c1577d89",
-  "pullRequest": "https://github.com/diabloell/digital-darwin/pull/1",
-  "branch": "dd-00-first-working-slice",
-  "localStatus": "PASS",
+  "stage": "DD-01",
+  "status": "PARTIAL",
+  "sourceCommit": "1da62808a52f3e69342d93cc0c99f8d418dd5726",
+  "branch": "dd-01-engine-hardening",
+  "baseMain": "83c0e8b4dc17d9f61c6d64b80851a55c8942d6d8",
+  "acceptedDD00": "c26d9e6195e2b097fd78f9ca4fadb3cb177cb4cf",
+  "pullRequest": {
+    "status": "BLOCKED",
+    "url": null,
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-01-engine-hardening"
+  },
+  "ci": {
+    "status": "PASS",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44942955208",
+    "event": "push",
+    "sourceCommit": "1da62808a52f3e69342d93cc0c99f8d418dd5726"
+  },
   "checks": [
     {
       "name": "typecheck",
@@ -39,19 +49,31 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output outputs/verification/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd01/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output outputs/verification/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd01/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/verification/performance-5000.json",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd01/performance-5000.json --profile",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd01/no-food.json --width 32 --height 32 --no-food",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd01/no-reproduction.json --width 32 --height 32 --no-reproduction",
       "status": "PASS",
       "exitCode": 0
     },
@@ -63,46 +85,20 @@
     },
     {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/verification/long-run-a.json outputs/verification/long-run-b.json",
+      "command": "node scripts/check-determinism.mjs outputs/dd01/long-run-a.json outputs/dd01/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
   ],
-  "ci": {
-    "status": "PASS",
-    "sourceCommit": "60f610a15b2d0eb7456c392868e34b71c1577d89",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44941811781",
-    "jobUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44941811781/job/136960443163",
-    "commands": [
-      "npm ci",
-      "npx --no-install playwright install --with-deps chromium",
-      "npm run verify"
-    ],
-    "result": "GitHub завершил job verify со статусом Success: установка пакетов и Chromium, полная матрица и загрузка артефакта dd-00-verification прошли."
-  },
-  "install": {
-    "status": "PASS",
-    "command": "npm --cache /tmp/dd-npm ci"
-  },
-  "http": {
-    "status": "PASS",
-    "command": "PORT=0 npm start"
-  },
   "unit": {
-    "tests": 15,
-    "pass": 15,
-    "fail": 0,
-    "cancelled": 0,
-    "skipped": 0,
-    "todo": 0
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0
   },
   "integration": {
-    "tests": 3,
-    "pass": 3,
-    "fail": 0,
-    "cancelled": 0,
-    "skipped": 0,
-    "todo": 0
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0
   },
   "e2e": {
     "status": "PASS",
@@ -119,40 +115,26 @@
       "zoom / pan change rendered camera",
       "new seed resets world / tick / population / selection",
       "keyboard Space toggles playback",
-      "responsive 1366 / 1920 / 390 widths without horizontal overflow"
+      "responsive 1366 / 1920 / 390 widths without horizontal overflow",
+      "same 12 Worker ticks produce identical metrics and buffers with normal and delayed rendering"
     ],
     "errors": [],
     "screenshots": [
-      "reports/dd-00-fix/screenshot-1366x768.png",
-      "reports/dd-00-fix/screenshot-1920x1080.png",
-      "reports/dd-00-fix/screenshot-mobile.png"
+      "reports/dd-01/screenshot-1366x768.png",
+      "reports/dd-01/screenshot-1920x1080.png",
+      "reports/dd-01/screenshot-mobile.png"
     ],
     "speedMeasurement": {
       "ticks": 16,
-      "normalMs": 910.4229280000002,
-      "acceleratedMs": 216.31698200000028
+      "normalMs": 922.851633,
+      "acceleratedMs": 215.687684
     }
   },
-  "longRun": {
-    "config": {
-      "seed": "dd00-verification",
-      "width": 256,
-      "height": 256,
-      "population": 1000,
-      "mutationRate": 0.12,
-      "regrowth": true
-    },
-    "ticks": 5000,
-    "initial": {
-      "tick": 0,
-      "population": 1000,
-      "food": 118760.783,
-      "births": 0,
-      "deaths": 0,
-      "meanEnergy": 22.924143,
-      "maxGeneration": 0
-    },
-    "final": {
+  "compatibleDD00": {
+    "version": "0.1.0 projection",
+    "node": "v24.22.3",
+    "hash": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+    "metrics": {
       "tick": 5000,
       "population": 4346,
       "food": 23365.26,
@@ -160,84 +142,363 @@
       "deaths": 7908,
       "meanEnergy": 20.502630694891852,
       "maxGeneration": 31
-    },
-    "errors": [],
-    "environment": {
-      "node": "v24.22.3",
-      "platform": "linux",
-      "arch": "x64",
-      "cpu": "AMD EPYC 9V74 80-Core Processor",
-      "logicalCpus": 5,
-      "memoryBytes": 154718208
     }
   },
   "determinism": {
     "status": "PASS",
-    "hashAlgorithm": "SHA-256 canonical complete engine state",
-    "hashA": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
-    "hashB": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
-    "matchesPreviousReports": true
+    "checkpoints": [
+      {
+        "tick": 0,
+        "hash": "417bc2bac843d47b618c10afb78ad27960eac95b7713b63e7d281483384706a2"
+      },
+      {
+        "tick": 1000,
+        "hash": "74f827d66c5ef3e2e387320f67d55f10a38fc7bdfac4c3bd002459688c162432"
+      },
+      {
+        "tick": 2000,
+        "hash": "76f97e9ded0220b9812e56656ae6ba8c4d384ace769ef49f9942edb469b46505"
+      },
+      {
+        "tick": 3000,
+        "hash": "272554486eb78fd670ee3eb84e29585210ebbca667ab2d895fdf5df453c934e0"
+      },
+      {
+        "tick": 4000,
+        "hash": "6b8896e0aa3b31277a1acf67cab659aa5d1c7b668c34a7fcc0b0e6ff10dba658"
+      },
+      {
+        "tick": 5000,
+        "hash": "8bdd679c9125d0808f38a0fb44da47e8439f6b7573c65150c50e9b3ad483ad43"
+      },
+      {
+        "tick": 6000,
+        "hash": "645c0cdfa92fe92f204c7976bc8111223080e6fd87b00774b8298a40033d7133"
+      },
+      {
+        "tick": 7000,
+        "hash": "0e61f30cbefcdcdc44460dc298aef815d472fd877452c973cae7378710dc5845"
+      },
+      {
+        "tick": 8000,
+        "hash": "a8165354b63fe933e08c8742806b80439a5a86148ce1bec7396b405a4ff6916d"
+      },
+      {
+        "tick": 9000,
+        "hash": "2fca02c3f34e94df4dcfe41e7529ae9f961ff436858bd9d2e1f4ed785144de80"
+      },
+      {
+        "tick": 10000,
+        "hash": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea"
+      }
+    ],
+    "hashA": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea",
+    "hashB": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea"
   },
-  "performance": {
-    "seed": "dd00-performance",
-    "ticks": 1000,
-    "initial": {
-      "tick": 0,
-      "population": 5000,
-      "food": 142432.163,
-      "births": 0,
-      "deaths": 0,
-      "meanEnergy": 22.9893296,
-      "maxGeneration": 0
+  "simulations": {
+    "long-run-a": {
+      "engineVersion": "0.2.0",
+      "config": {
+        "seed": "dd00-verification",
+        "width": 256,
+        "height": 256,
+        "population": 1000,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "reproduction": true
+      },
+      "ticks": 10000,
+      "initial": {
+        "tick": 0,
+        "population": 1000,
+        "food": 118760.783,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.924143,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 10000,
+        "population": 4315,
+        "food": 14070.097,
+        "births": 19537,
+        "deaths": 16222,
+        "meanEnergy": 20.041107995365003,
+        "maxGeneration": 34
+      },
+      "extinctionTick": null,
+      "hash": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea",
+      "audits": 10000,
+      "tps": 255.83092209184377,
+      "tickP50Ms": 3.281794999998965,
+      "tickP95Ms": 4.126292000000831,
+      "peakSampledRssBytes": 218345472
     },
-    "final": {
-      "tick": 1000,
-      "population": 5474,
-      "food": 98616.742,
-      "births": 5549,
-      "deaths": 5075,
-      "meanEnergy": 20.185284983558642,
-      "maxGeneration": 9
+    "long-run-b": {
+      "engineVersion": "0.2.0",
+      "config": {
+        "seed": "dd00-verification",
+        "width": 256,
+        "height": 256,
+        "population": 1000,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "reproduction": true
+      },
+      "ticks": 10000,
+      "initial": {
+        "tick": 0,
+        "population": 1000,
+        "food": 118760.783,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.924143,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 10000,
+        "population": 4315,
+        "food": 14070.097,
+        "births": 19537,
+        "deaths": 16222,
+        "meanEnergy": 20.041107995365003,
+        "maxGeneration": 34
+      },
+      "extinctionTick": null,
+      "hash": "87312d886c956d7b279bdade52741989b7c3eb381eda809d94899d9dd91c4eea",
+      "audits": 10000,
+      "tps": 258.34326811531326,
+      "tickP50Ms": 3.282088999996631,
+      "tickP95Ms": 4.0312749999975495,
+      "peakSampledRssBytes": 217280512
     },
-    "tps": 136.5237478033865,
-    "tickP50Ms": 4.930944000000636,
-    "tickP95Ms": 6.0472859999999855,
-    "environment": {
-      "node": "v24.22.3",
-      "platform": "linux",
-      "arch": "x64",
-      "cpu": "AMD EPYC 9V74 80-Core Processor",
-      "logicalCpus": 5,
-      "memoryBytes": 243535872
+    "performance-5000": {
+      "engineVersion": "0.2.0",
+      "config": {
+        "seed": "dd00-performance",
+        "width": 256,
+        "height": 256,
+        "population": 5000,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "reproduction": true
+      },
+      "ticks": 1000,
+      "initial": {
+        "tick": 0,
+        "population": 5000,
+        "food": 142432.163,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.9893296,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 1000,
+        "population": 5474,
+        "food": 98616.742,
+        "births": 5549,
+        "deaths": 5075,
+        "meanEnergy": 20.185284983558642,
+        "maxGeneration": 9
+      },
+      "extinctionTick": null,
+      "hash": "67b2515bfcfa1529615d2ed92c8b281a84b84b01a437cc557a3f2621c3fa2de2",
+      "audits": 1000,
+      "tps": 141.3538501134067,
+      "tickP50Ms": 5.006202999999914,
+      "tickP95Ms": 6.799591999999848,
+      "peakSampledRssBytes": 229040128
+    },
+    "no-food": {
+      "engineVersion": "0.2.0",
+      "config": {
+        "seed": "dd01-starvation",
+        "width": 32,
+        "height": 32,
+        "population": 1000,
+        "mutationRate": 0.12,
+        "regrowth": false,
+        "reproduction": true
+      },
+      "ticks": 600,
+      "initial": {
+        "tick": 0,
+        "population": 1000,
+        "food": 0,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 23.056645,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 600,
+        "population": 0,
+        "food": 0,
+        "births": 0,
+        "deaths": 1000,
+        "meanEnergy": 0,
+        "maxGeneration": 0
+      },
+      "extinctionTick": 278,
+      "hash": "8f57558a40e5b220c2faffd51ba97fe50e4ce62cd2b555c089ea5e76b86d303b",
+      "audits": 600,
+      "tps": 3279.1020677411,
+      "tickP50Ms": 0.005287000000009812,
+      "tickP95Ms": 0.7342239999999975,
+      "peakSampledRssBytes": 70361088
+    },
+    "no-reproduction": {
+      "engineVersion": "0.2.0",
+      "config": {
+        "seed": "dd01-control",
+        "width": 32,
+        "height": 32,
+        "population": 1000,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "reproduction": false
+      },
+      "ticks": 1000,
+      "initial": {
+        "tick": 0,
+        "population": 1000,
+        "food": 4670.166,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 23.233852,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 1000,
+        "population": 477,
+        "food": 258.708,
+        "births": 0,
+        "deaths": 523,
+        "meanEnergy": 17.29027253668763,
+        "maxGeneration": 0
+      },
+      "extinctionTick": null,
+      "hash": "03c53398e2deff6e4bc1955f71132c12b2491ef0bf23477929432c8812a161e6",
+      "audits": 1000,
+      "tps": 1352.8245388832286,
+      "tickP50Ms": 0.4680909999999585,
+      "tickP95Ms": 0.8569399999999519,
+      "peakSampledRssBytes": 80064512
+    },
+    "endurance": {
+      "engineVersion": "0.2.0",
+      "config": {
+        "seed": "dd01-endurance",
+        "width": 64,
+        "height": 64,
+        "population": 500,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "reproduction": true
+      },
+      "ticks": 100000,
+      "initial": {
+        "tick": 0,
+        "population": 500,
+        "food": 15438.386,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.837732,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 100000,
+        "population": 855,
+        "food": 504.724,
+        "births": 22152,
+        "deaths": 21797,
+        "meanEnergy": 22.480445614035087,
+        "maxGeneration": 27
+      },
+      "extinctionTick": null,
+      "hash": "1e5a119ceaf7d73c9229cddf80e7dc9752686e8a600cbd83879e616dec8f8176",
+      "audits": 1000,
+      "tps": 1615.608333795803,
+      "tickP50Ms": 0.5908349999990605,
+      "tickP95Ms": 0.7203529999999319,
+      "peakSampledRssBytes": 207499264
     }
   },
+  "performance": {
+    "scenario": "performance-5000",
+    "phases": {
+      "environment": {
+        "p50Ms": 0.5039010000000417,
+        "p95Ms": 0.6179839999995238,
+        "totalMs": 519.6825670000163
+      },
+      "observations": {
+        "p50Ms": 2.969065999999998,
+        "p95Ms": 3.7874919999999292,
+        "totalMs": 3087.955672999996
+      },
+      "intents": {
+        "p50Ms": 0.19196000000010827,
+        "p95Ms": 0.3668250000000626,
+        "totalMs": 230.24463199998544
+      },
+      "movement": {
+        "p50Ms": 1.007622000000083,
+        "p95Ms": 1.5426809999999023,
+        "totalMs": 1129.8386489999978
+      },
+      "competition": {
+        "p50Ms": 0.08615000000008877,
+        "p95Ms": 0.20260599999983242,
+        "totalMs": 118.4268460000051
+      },
+      "metabolism": {
+        "p50Ms": 0.0777180000000044,
+        "p95Ms": 0.12390700000003108,
+        "totalMs": 90.84081700000009
+      },
+      "death": {
+        "p50Ms": 0.036626000000069325,
+        "p95Ms": 0.07325099999980011,
+        "totalMs": 51.155494999999206
+      },
+      "reproduction": {
+        "p50Ms": 0.03768599999966682,
+        "p95Ms": 0.06775199999992765,
+        "totalMs": 44.39416700001131
+      },
+      "audit": {
+        "p50Ms": 0.018368000000009488,
+        "p95Ms": 0.0383679999999913,
+        "totalMs": 23.94556999999729
+      }
+    },
+    "auditTimeMs": 1731.7861339999995
+  },
   "evidence": [
-    "reports/dd-00-fix/build.log",
-    "reports/dd-00-fix/checks.json",
-    "reports/dd-00-fix/determinism.log",
-    "reports/dd-00-fix/e2e.json",
-    "reports/dd-00-fix/e2e.log",
-    "reports/dd-00-fix/http.log",
-    "reports/dd-00-fix/install.log",
-    "reports/dd-00-fix/integration.log",
-    "reports/dd-00-fix/lint.log",
-    "reports/dd-00-fix/long-run-a.json",
-    "reports/dd-00-fix/long-run-a.log",
-    "reports/dd-00-fix/long-run-b.json",
-    "reports/dd-00-fix/long-run-b.log",
-    "reports/dd-00-fix/performance-5000.json",
-    "reports/dd-00-fix/performance-5000.log",
-    "reports/dd-00-fix/screenshot-1366x768.png",
-    "reports/dd-00-fix/screenshot-1920x1080.png",
-    "reports/dd-00-fix/screenshot-mobile.png",
-    "reports/dd-00-fix/typecheck.log",
-    "reports/dd-00-fix/unit.log"
+    "reports/dd-01/build.log",
+    "reports/dd-01/checks.json",
+    "reports/dd-01/dd-00-compatibility.json",
+    "reports/dd-01/determinism.log",
+    "reports/dd-01/e2e.json",
+    "reports/dd-01/e2e.log",
+    "reports/dd-01/endurance.json",
+    "reports/dd-01/integration.log",
+    "reports/dd-01/lint.log",
+    "reports/dd-01/long-run-a.json",
+    "reports/dd-01/long-run-b.json",
+    "reports/dd-01/no-food.json",
+    "reports/dd-01/no-reproduction.json",
+    "reports/dd-01/performance-5000.json",
+    "reports/dd-01/screenshot-1366x768.png",
+    "reports/dd-01/screenshot-1920x1080.png",
+    "reports/dd-01/screenshot-mobile.png",
+    "reports/dd-01/typecheck.log",
+    "reports/dd-01/unit.log"
   ],
-  "limitations": [
-    "В текущей облачной среде CDN Playwright вернул 403 Domain forbidden. Локальный E2E выполнен системным Chromium через DD_BROWSER=/usr/bin/chromium.",
-    "Совпадение SHA-256 проверено для заданной конфигурации и запусков Node.js. Полное совпадение состояния между браузерными движками не проверялось.",
-    "TPS относится к измеренной траектории с меняющейся популяцией и проверками инвариантов. Это не браузерный FPS."
+  "blockers": [
+    "Создание PR заблокировано: прокси отклонил GitHub GraphQL с Forbidden, а веб-форма требует входа в GitHub."
   ],
-  "blockers": [],
   "nextStageAuthorized": false
 }

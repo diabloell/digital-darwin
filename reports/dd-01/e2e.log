@@ -1,0 +1,4 @@
+BUILD PASS: 7 files emitted to dist/
+E2E PASS: 11 checks; browser 156.0.8078.79; loopback HTTP
+(node:4109) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
