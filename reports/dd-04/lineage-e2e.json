@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checks": [
+    "live child selection and navigation to its actual parent",
+    "multi-member lineage counts match founder buffer and highlight can be cleared",
+    "lineage and population charts match sampled Worker data",
+    "generation event is filterable and links to the corresponding entity; return to world",
+    "historical death card, world extinction once, and all three layouts without overflow"
+  ],
+  "screenshots": [
+    "outputs/dd04-final/ancestry-1920x1080.png",
+    "outputs/dd04-final/lineages-1366x768.png",
+    "outputs/dd04-final/events-1366x768.png",
+    "outputs/dd04-final/laboratory-390x844.png",
+    "outputs/dd04-final/extinction-390x844.png"
+  ],
+  "errors": [],
+  "browser": "156.0.8078.79"
+}

@@ -1,0 +1,118 @@
+[
+  {
+    "name": "typecheck",
+    "command": "node node_modules/typescript/bin/tsc --noEmit",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "build",
+    "command": "node scripts/build.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": "node scripts/lint.mjs",
+    "status": "PASS",
+    "exitCode": 0,
+    "rerun": true
+  },
+  {
+    "name": "unit",
+    "command": "node --test tests/unit.test.ts",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "integration",
+    "command": "node --test tests/integration.test.ts",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "long-run-a",
+    "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd04-final/long-run-a.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "long-run-b",
+    "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd04-final/long-run-b.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "performance-5000",
+    "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd04-final/performance-5000.json --profile",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "no-food",
+    "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd04-final/no-food.json --width 32 --height 32 --no-food",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "no-reproduction",
+    "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd04-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "dd01-compatibility",
+    "command": "node scripts/check-dd01-compatibility.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "experiments",
+    "command": "node apps/experiments.ts outputs/dd04-final/experiments.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "e2e",
+    "command": "node scripts/e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "lineage-e2e",
+    "command": "node scripts/lineage-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "browser-benchmark",
+    "command": "node scripts/browser-benchmark.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "history-benchmark",
+    "command": "node scripts/history-benchmark.mjs",
+    "status": "PASS",
+    "exitCode": 0,
+    "rerun": true
+  },
+  {
+    "name": "dd02-regression",
+    "command": "node scripts/check-dd02-regression.mjs outputs/dd04-final/experiments.json",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "dd02-state",
+    "command": "node scripts/check-determinism.mjs outputs/dd04-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "determinism",
+    "command": "node scripts/check-determinism.mjs outputs/dd04-final/long-run-a.json outputs/dd04-final/long-run-b.json 10000",
+    "status": "PASS",
+    "exitCode": 0
+  }
+]

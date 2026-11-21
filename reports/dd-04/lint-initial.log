@@ -1,0 +1,12 @@
+(node:13382) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///workspace/digital-darwin/scripts/lint.mjs:11
+      if (dir.startsWith('src/core') && /Math\.random\s*\(|\b(?:document|window|Date\.now)\b/.test(text)) throw Error(`Core boundary violation: ${p}`);
+                                                                                                                ^
+
+Error: Core boundary violation: src/core/history.ts
+    at walk (file:///workspace/digital-darwin/scripts/lint.mjs:11:113)
+    at async walk (file:///workspace/digital-darwin/scripts/lint.mjs:7:26)
+    at async file:///workspace/digital-darwin/scripts/lint.mjs:17:56
+
+Node.js v24.22.3

@@ -1,0 +1,23 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '61c6f10cc5d5433ea9925072b16c67cd6f51d1ffa8d224ea8eecf8dca75b9988'
+- '0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505'
+
+    at file:///workspace/digital-darwin/scripts/history-benchmark.mjs:53:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '61c6f10cc5d5433ea9925072b16c67cd6f51d1ffa8d224ea8eecf8dca75b9988',
+  expected: '0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.3
