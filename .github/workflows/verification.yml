@@ -1,7 +1,9 @@
-name: DD-00 verification
+name: Digital Darwin verification
 
 on:
   pull_request:
+  push:
+    branches: [dd-01-engine-hardening]
 
 permissions:
   contents: read
@@ -26,6 +28,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dd-00-verification
+          name: digital-darwin-verification
           path: outputs/verification/
           if-no-files-found: ignore

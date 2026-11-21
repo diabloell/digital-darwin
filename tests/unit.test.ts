@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { Engine, mutate, GENE_BOUNDS } from '../src/core/engine.ts';
+import { Engine, mutate, GENE_BOUNDS, TICK_PHASES } from '../src/core/engine.ts';
 import { Rng } from '../src/core/rng.ts';
 const fixture = () => { const e = new Engine({ width: 8, height: 8, population: 1, regrowth: false, mutationRate: 0 }); e.food.fill(0); return e; };
 test('same seed, configuration and ticks produce identical complete states', () => { const a = fixture(), b = fixture(); a.step(100); b.step(100); assert.equal(a.canonical(), b.canonical()); });
@@ -18,3 +18,69 @@ test('no NaN or Infinity across multiple seeded worlds', () => { for (const seed
 test('toroidal cell lookup wraps both axes', () => { const e = fixture(); assert.equal(e.cell(-1, -1), 63); assert.equal(e.cell(8, 8), 0); });
 test('invalid configs and tick counts are rejected', () => { for (const c of [{ width: NaN }, { seed: '' }, { population: -1 }, { mutationRate: Infinity }]) assert.throws(() => new Engine(c)); const e = fixture(); assert.throws(() => e.step(NaN)); assert.throws(() => e.step(-1)); });
 test('proportional conflict allocation is independent of iteration order without mutation', () => { const a = new Engine({ seed: 'claims', width: 8, height: 8, population: 20, regrowth: false, mutationRate: 0 }), b = new Engine({ seed: 'claims', width: 8, height: 8, population: 20, regrowth: false, mutationRate: 0 }); a.food.fill(1500); b.food.fill(1500); for (const e of [a, b]) for (const org of e.organisms) { org.x = 1; org.y = 1; org.heading = 0; org.genome.speed = .5; } b.organisms.reverse(); a.step(); b.step(); assert.deepEqual(a.food, b.food); assert.deepEqual(a.organisms.sort((x,y)=>x.id-y.id).map(x=>x.energy), b.organisms.sort((x,y)=>x.id-y.id).map(x=>x.energy)); });
+
+test('UTF-16 seeds sharing a high surrogate initialize distinct RNG streams', () => {
+  const sequence = (seed: string) => {
+    const rng = new Rng(seed);
+    return Array.from({ length: 16 }, () => rng.next());
+  };
+  assert.deepEqual(sequence('🌱'), sequence('🌱'));
+  assert.notDeepEqual(sequence('🌱'), sequence('🌲'));
+  assert.notDeepEqual(new Engine({ seed: '🌱', width: 8, height: 8 }).food,
+    new Engine({ seed: '🌲', width: 8, height: 8 }).food);
+});
+
+test('tick stages publish in order and observations do not move organisms', () => {
+  const e = fixture();
+  const before = { ...e.organisms[0] };
+  const phases: string[] = [];
+  e.step(1, phase => {
+    phases.push(phase);
+    if (phase === 'observations' || phase === 'intents') assert.deepEqual(e.organisms[0], before);
+  });
+  assert.deepEqual(phases, TICK_PHASES);
+  assert.equal(e.audit.actions, 1);
+  e.assertValid();
+});
+
+test('an eligible organism never gives birth when reproduction is disabled', () => {
+  const e = new Engine({ width: 8, height: 8, population: 1, reproduction: false });
+  e.organisms[0].age = 45;
+  e.organisms[0].energy = 80000;
+  e.step();
+  assert.equal(e.organisms.length, 1);
+  assert.equal(e.births, 0);
+  assert.equal(e.audit.transferred, 0);
+  assert.equal(e.audit.reproductionCost, 0);
+});
+
+test('zero reserves skip every action while duplicate IDs fail the tick', () => {
+  const e = new Engine({ width: 8, height: 8, population: 2 });
+  e.organisms[0].energy = 0;
+  e.step();
+  assert.equal(e.audit.actions, 1);
+  assert.equal(e.deaths, 1);
+  e.assertValid();
+  const duplicate = new Engine({ width: 8, height: 8, population: 2 });
+  duplicate.organisms[1].id = duplicate.organisms[0].id;
+  assert.throws(() => duplicate.step(), /Duplicate or invalid ID/);
+});
+
+test('full invariant check rejects counterfeited state and missing food', () => {
+  const corruptions: ((e: Engine) => void)[] = [
+    e => { e.food[0]--; },
+    e => { e.organisms[0].energy = NaN; },
+    e => { e.organisms[0].heading = Infinity; },
+    e => { e.organisms[0].genome.speed = 2; },
+    e => { e.organisms[0].energy += .5; },
+    e => { e.organisms[0].lastActionTick--; },
+    e => { e.nextId++; }
+  ];
+  for (const corrupt of corruptions) {
+    const e = new Engine({ width: 8, height: 8, population: 1 });
+    e.step();
+    e.assertValid();
+    corrupt(e);
+    assert.throws(() => e.assertValid());
+  }
+});
