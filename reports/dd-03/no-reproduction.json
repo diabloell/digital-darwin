@@ -1,0 +1,170 @@
+{
+  "engineVersion": "0.3.0",
+  "genomeVersion": "1",
+  "evolutionVersion": "1",
+  "seed": "dd01-control",
+  "ticks": 1000,
+  "config": {
+    "seed": "dd01-control",
+    "width": 32,
+    "height": 32,
+    "population": 1000,
+    "mutationRate": 0.12,
+    "regrowth": true,
+    "reproduction": false,
+    "rule": "selection",
+    "mutationStrength": 0.08,
+    "resourceScale": 1
+  },
+  "noFood": false,
+  "initial": {
+    "tick": 0,
+    "population": 1000,
+    "food": 4670.166,
+    "births": 0,
+    "deaths": 0,
+    "meanEnergy": 23.233852,
+    "maxGeneration": 0
+  },
+  "final": {
+    "tick": 1000,
+    "population": 350,
+    "food": 352.596,
+    "births": 0,
+    "deaths": 650,
+    "meanEnergy": 28.567271428571427,
+    "maxGeneration": 0
+  },
+  "extinctionTick": null,
+  "errors": [],
+  "hash": "68187e90483ef35a3c5714595c43aaecc2ba108fe6ba673e6081203ed639b6d3",
+  "checkpoints": [
+    {
+      "tick": 0,
+      "hash": "319577e35f109f057f88c2e28e6858717d524c97bc4d2e6eb760ea9ee2f1eef6"
+    },
+    {
+      "tick": 1000,
+      "hash": "68187e90483ef35a3c5714595c43aaecc2ba108fe6ba673e6081203ed639b6d3"
+    }
+  ],
+  "elapsedMs": 573.5097549999999,
+  "tps": 1743.64950427042,
+  "tickP50Ms": 0.2978790000000231,
+  "tickP95Ms": 0.9407699999999863,
+  "phases": null,
+  "auditEvery": 1,
+  "auditTimeMs": 130.71932099999918,
+  "audits": 1000,
+  "peakSampledRssBytes": 81948672,
+  "environment": {
+    "node": "v24.22.3",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 5,
+    "memoryBytes": 81948672
+  },
+  "history": [
+    {
+      "tick": 0,
+      "population": 1000,
+      "food": 4670.166,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 23.233852,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 100,
+      "population": 1000,
+      "food": 77.829,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 17.516437000000003,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 200,
+      "population": 913,
+      "food": 87.978,
+      "births": 0,
+      "deaths": 87,
+      "meanEnergy": 8.796751369112815,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 300,
+      "population": 528,
+      "food": 186.118,
+      "births": 0,
+      "deaths": 472,
+      "meanEnergy": 6.659018939393939,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 400,
+      "population": 404,
+      "food": 299.02,
+      "births": 0,
+      "deaths": 596,
+      "meanEnergy": 8.123111386138614,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 500,
+      "population": 376,
+      "food": 348.117,
+      "births": 0,
+      "deaths": 624,
+      "meanEnergy": 10.709640957446808,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 600,
+      "population": 366,
+      "food": 359.129,
+      "births": 0,
+      "deaths": 634,
+      "meanEnergy": 13.777551912568306,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 700,
+      "population": 359,
+      "food": 325.251,
+      "births": 0,
+      "deaths": 641,
+      "meanEnergy": 17.324623955431754,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 800,
+      "population": 356,
+      "food": 413.561,
+      "births": 0,
+      "deaths": 644,
+      "meanEnergy": 20.72498595505618,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 900,
+      "population": 354,
+      "food": 395.573,
+      "births": 0,
+      "deaths": 646,
+      "meanEnergy": 24.46586723163842,
+      "maxGeneration": 0
+    },
+    {
+      "tick": 1000,
+      "population": 350,
+      "food": 352.596,
+      "births": 0,
+      "deaths": 650,
+      "meanEnergy": 28.567271428571427,
+      "maxGeneration": 0
+    }
+  ],
+  "evolution": null
+}
