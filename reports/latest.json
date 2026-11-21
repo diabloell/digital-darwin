@@ -1,19 +1,23 @@
 {
   "stage": "DD-00",
-  "status": "PARTIAL",
-  "sourceCommit": "8587d440c210e204d36995e75b886dd5aa13c007",
+  "revision": "DD-00-FIX",
+  "status": "PASS",
+  "sourceCommit": "60f610a15b2d0eb7456c392868e34b71c1577d89",
+  "pullRequest": "https://github.com/diabloell/digital-darwin/pull/1",
+  "branch": "dd-00-first-working-slice",
+  "localStatus": "PASS",
   "checks": [
+    {
+      "name": "typecheck",
+      "command": "node node_modules/typescript/bin/tsc --noEmit",
+      "status": "PASS",
+      "exitCode": 0
+    },
     {
       "name": "build",
       "command": "node scripts/build.mjs",
       "status": "PASS",
       "exitCode": 0
-    },
-    {
-      "name": "typecheck",
-      "command": "node scripts/typecheck.mjs",
-      "status": "NOT RUN",
-      "exitCode": 2
     },
     {
       "name": "lint",
@@ -35,19 +39,19 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output outputs/verification/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output reports/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 5000 --population 1000 --output outputs/verification/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output reports/performance-5000.json",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/verification/performance-5000.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -59,28 +63,56 @@
     },
     {
       "name": "determinism",
-      "command": "compare SHA-256 of canonical states from long-run-a and long-run-b",
+      "command": "node scripts/check-determinism.mjs outputs/verification/long-run-a.json outputs/verification/long-run-b.json",
       "status": "PASS",
-      "hashA": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
-      "hashB": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa"
+      "exitCode": 0
     }
   ],
+  "ci": {
+    "status": "PASS",
+    "sourceCommit": "60f610a15b2d0eb7456c392868e34b71c1577d89",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44941811781",
+    "jobUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44941811781/job/136960443163",
+    "commands": [
+      "npm ci",
+      "npx --no-install playwright install --with-deps chromium",
+      "npm run verify"
+    ],
+    "result": "GitHub завершил job verify со статусом Success: установка пакетов и Chromium, полная матрица и загрузка артефакта dd-00-verification прошли."
+  },
+  "install": {
+    "status": "PASS",
+    "command": "npm --cache /tmp/dd-npm ci"
+  },
+  "http": {
+    "status": "PASS",
+    "command": "PORT=0 npm start"
+  },
   "unit": {
-    "passed": 15,
-    "failed": 0
+    "tests": 15,
+    "pass": 15,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
   },
   "integration": {
-    "passed": 3,
-    "failed": 0
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
   },
   "e2e": {
     "status": "PASS",
-    "transport": "Playwright offline routes serving real dist files; loopback network denied by sandbox",
-    "browser": "157.0.8103.79",
-    "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "transport": "Node HTTP server over loopback",
+    "browser": "156.0.8078.79",
+    "executablePath": "/usr/bin/chromium",
     "checks": [
       "initial 256x256 world / 1000 real organisms / paused",
       "single step exactly +1",
+      "organisms change coordinates while running",
       "play / 4x speed / pause stays stable",
       "visible tick / population / food equal actual Worker metrics",
       "map hit selection opens real energy / age / genome",
@@ -91,27 +123,18 @@
     ],
     "errors": [],
     "screenshots": [
-      "reports/screenshot-1366x768.png",
-      "reports/screenshot-1920x1080.png",
-      "reports/screenshot-mobile.png"
-    ]
+      "reports/dd-00-fix/screenshot-1366x768.png",
+      "reports/dd-00-fix/screenshot-1920x1080.png",
+      "reports/dd-00-fix/screenshot-mobile.png"
+    ],
+    "speedMeasurement": {
+      "ticks": 16,
+      "normalMs": 910.4229280000002,
+      "acceleratedMs": 216.31698200000028
+    }
   },
   "longRun": {
-    "seed": "dd00-verification",
-    "ticks": 5000,
-    "initialPopulation": 1000,
-    "finalPopulation": 4346,
-    "births": 11254,
-    "deaths": 7908,
-    "maxGeneration": 31,
-    "errors": []
-  },
-  "determinism": {
-    "status": "PASS",
-    "hashAlgorithm": "SHA-256 canonical complete engine state",
-    "hashA": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
-    "hashB": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
-    "parameters": {
+    "config": {
       "seed": "dd00-verification",
       "width": 256,
       "height": 256,
@@ -119,57 +142,102 @@
       "mutationRate": 0.12,
       "regrowth": true
     },
-    "ticks": 5000
+    "ticks": 5000,
+    "initial": {
+      "tick": 0,
+      "population": 1000,
+      "food": 118760.783,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 22.924143,
+      "maxGeneration": 0
+    },
+    "final": {
+      "tick": 5000,
+      "population": 4346,
+      "food": 23365.26,
+      "births": 11254,
+      "deaths": 7908,
+      "meanEnergy": 20.502630694891852,
+      "maxGeneration": 31
+    },
+    "errors": [],
+    "environment": {
+      "node": "v24.22.3",
+      "platform": "linux",
+      "arch": "x64",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "logicalCpus": 5,
+      "memoryBytes": 154718208
+    }
+  },
+  "determinism": {
+    "status": "PASS",
+    "hashAlgorithm": "SHA-256 canonical complete engine state",
+    "hashA": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+    "hashB": "bacffa16320cfb5647a952f21f32a435f81548f903654a0d74aff8f999d73aaa",
+    "matchesPreviousReports": true
   },
   "performance": {
-    "tps": 110.63857865892899,
-    "initialPopulation": 5000,
-    "finalPopulation": 5474,
+    "seed": "dd00-performance",
     "ticks": 1000,
-    "tickP50Ms": 4.9573999999997795,
-    "tickP95Ms": 8.449500000000171,
-    "environment": {
-      "node": "v24.22.1",
-      "platform": "win32",
-      "arch": "x64",
-      "cpu": "AMD Ryzen 7 4800H with Radeon Graphics         ",
-      "logicalCpus": 16,
-      "memoryBytes": 322359296
+    "initial": {
+      "tick": 0,
+      "population": 5000,
+      "food": 142432.163,
+      "births": 0,
+      "deaths": 0,
+      "meanEnergy": 22.9893296,
+      "maxGeneration": 0
     },
-    "includesPerTickInvariantChecks": true
+    "final": {
+      "tick": 1000,
+      "population": 5474,
+      "food": 98616.742,
+      "births": 5549,
+      "deaths": 5075,
+      "meanEnergy": 20.185284983558642,
+      "maxGeneration": 9
+    },
+    "tps": 136.5237478033865,
+    "tickP50Ms": 4.930944000000636,
+    "tickP95Ms": 6.0472859999999855,
+    "environment": {
+      "node": "v24.22.3",
+      "platform": "linux",
+      "arch": "x64",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "logicalCpus": 5,
+      "memoryBytes": 243535872
+    }
   },
   "evidence": [
-    "reports/build.log",
-    "reports/typecheck.log",
-    "reports/lint.log",
-    "reports/unit.log",
-    "reports/integration.log",
-    "reports/e2e.json",
-    "reports/e2e.log",
-    "reports/e2e-loopback-denied.log",
-    "reports/long-run-a.json",
-    "reports/long-run-b.json",
-    "reports/performance-5000.json",
-    "reports/initial-model-extinction.json",
-    "reports/screenshot-1366x768.png",
-    "reports/screenshot-1920x1080.png",
-    "reports/screenshot-mobile.png",
-    "reports/checks.json",
-    "docs/spec/",
-    "docs/adr/001-dd00.md"
+    "reports/dd-00-fix/build.log",
+    "reports/dd-00-fix/checks.json",
+    "reports/dd-00-fix/determinism.log",
+    "reports/dd-00-fix/e2e.json",
+    "reports/dd-00-fix/e2e.log",
+    "reports/dd-00-fix/http.log",
+    "reports/dd-00-fix/install.log",
+    "reports/dd-00-fix/integration.log",
+    "reports/dd-00-fix/lint.log",
+    "reports/dd-00-fix/long-run-a.json",
+    "reports/dd-00-fix/long-run-a.log",
+    "reports/dd-00-fix/long-run-b.json",
+    "reports/dd-00-fix/long-run-b.log",
+    "reports/dd-00-fix/performance-5000.json",
+    "reports/dd-00-fix/performance-5000.log",
+    "reports/dd-00-fix/screenshot-1366x768.png",
+    "reports/dd-00-fix/screenshot-1920x1080.png",
+    "reports/dd-00-fix/screenshot-mobile.png",
+    "reports/dd-00-fix/typecheck.log",
+    "reports/dd-00-fix/unit.log"
   ],
   "limitations": [
-    "Strict typecheck NOT RUN: tsc and @types/node absent; npm registry DNS unavailable. strict tsconfig is present but build only strips types.",
-    "Recommended React/Vite/PixiJS/Vitest/pnpm replaced by dependency-free DOM/Canvas/Node test adapters; see docs/adr/001-dd00.md.",
-    "Browser E2E uses real dist files and real Worker through offline Playwright routes. Direct loopback HTTP navigation is denied by the sandbox; normal TCP browser launch not verified here.",
-    "Determinism verified only in Node v24.22.1 on Windows x64; cross-browser bit identity not established.",
-    "Performance includes invariant checks and natural population changes, not fixed-population throughput, browser FPS or a long-term stability guarantee.",
-    "DD-01+ features, saves, predators, climate, full lineage archives and experiment lab are intentionally not implemented."
+    "В текущей облачной среде CDN Playwright вернул 403 Domain forbidden. Локальный E2E выполнен системным Chromium через DD_BROWSER=/usr/bin/chromium.",
+    "Совпадение SHA-256 проверено для заданной конфигурации и запусков Node.js. Полное совпадение состояния между браузерными движками не проверялось.",
+    "TPS относится к измеренной траектории с меняющейся популяцией и проверками инвариантов. Это не браузерный FPS."
   ],
-  "blockers": [
-    "Strict typecheck unavailable",
-    "Direct HTTP browser transport not verified due sandbox loopback restriction"
-  ],
-  "nextRecommendedStage": "DD-01",
+  "blockers": [],
   "nextStageAuthorized": false
 }
