@@ -1,7 +1,17 @@
+import { GENES, GENE_BOUNDS } from './core/genetics.ts';
+import type { Genome } from './core/genetics.ts';
 import type { Command, Event, Frame } from './protocol.ts';
 const $ = <T extends HTMLElement>(selector: string): T => { const e = document.querySelector<T>(selector); if (!e) throw Error(`Missing ${selector}`); return e; };
 const canvas = $<HTMLCanvasElement>('#world'), ctx = canvas.getContext('2d')!;
 const chart = $<HTMLCanvasElement>('#chart'), cg = chart.getContext('2d')!;
+const color = $<HTMLSelectElement>('#trait-color'), chartMetric = $<HTMLSelectElement>('#chart-metric');
+const bins = Array.from({ length: 8 }, (_, index) => {
+  const meter = document.createElement('meter');
+  meter.min = 0;
+  meter.setAttribute('aria-label', `Интервал скорости ${index + 1}`);
+  $('#speed-bins').append(meter);
+  return meter;
+});
 const viewport = $('#viewport'), seed = $<HTMLInputElement>('#seed');
 const worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
 let frame: Frame | null = null, scale = 1, offsetX = 0, offsetY = 0, fitted = false, epoch = -1;
@@ -26,13 +36,19 @@ worker.onmessage = (event: MessageEvent<Event>) => {
   const play = $<HTMLButtonElement>('#play'); play.disabled = false; play.textContent = data.running ? 'Ⅱ Пауза' : '▶ Запустить';
   $<HTMLButtonElement>('#step').disabled = data.running;
   document.querySelectorAll<HTMLButtonElement>('[data-speed]').forEach(b => b.classList.toggle('active', Number(b.dataset.speed) === data.speed));
+  bins.forEach((meter, index) => {
+    meter.max = Math.max(1, ...data.speedHistogram);
+    meter.value = data.speedHistogram[index];
+    meter.title = `${fmt(meter.value)} организмов`;
+  });
   inspect(data); resize(); draw(); drawChart(); send({ kind: 'ready' });
 };
 function inspect(f: Frame): void {
   const el = $('#inspection'), a = f.selected;
-  if (a) {
+  const traits = f.selectedPhenotype;
+  if (a && traits) {
     // Only numeric engine data enters this template; user-controlled seed uses textContent.
-    el.innerHTML = `<div class="agent-title">ОРГАНИЗМ #${a.id}</div><div class="agent-meta">ПОКОЛЕНИЕ ${a.generation} · ВОЗРАСТ ${a.age} ticks</div><div class="energy-bar"><span style="width:${a.energy / 800}%"></span></div><div class="gene-row"><span>Энергия</span><b>${(a.energy / 1000).toFixed(2)} / 80</b></div><div class="gene-row"><span>Родитель</span><b>${a.parent === null ? 'основатель' : '#' + a.parent}</b></div><div class="gene-row"><span>Координаты</span><b>${a.x.toFixed(1)}, ${a.y.toFixed(1)}</b></div><p>НАСЛЕДУЕМЫЙ ГЕНОМ</p>${Object.entries(a.genome).map(([k, v]) => `<div class="gene-row"><span>${({ speed: 'Скорость', sensor: 'Радиус поиска', efficiency: 'Усвоение пищи', threshold: 'Порог размножения' } as Record<string, string>)[k]}</span><b>${v.toFixed(3)}</b></div>`).join('')}`;
+    el.innerHTML = `<div class="agent-title">ОРГАНИЗМ #${a.id}</div><div class="agent-meta">ПОКОЛЕНИЕ ${a.generation} · ВОЗРАСТ ${a.age} ticks</div><div class="energy-bar"><span style="width:${a.energy / 800}%"></span></div><div class="gene-row"><span>Энергия</span><b>${(a.energy / 1000).toFixed(2)} / 80</b></div><div class="gene-row"><span>Родитель</span><b>${a.parent === null ? 'основатель' : '#' + a.parent}</b></div><div class="gene-row"><span>Координаты</span><b>${a.x.toFixed(1)}, ${a.y.toFixed(1)}</b></div><p>НАСЛЕДУЕМЫЙ ГЕНОМ</p>${Object.entries(a.genome).map(([k, v]) => `<div class="gene-row"><span>${({ speed: 'Скорость', sensor: 'Радиус поиска', efficiency: 'Усвоение пищи', threshold: 'Порог размножения' } as Record<string, string>)[k]}</span><b>${v.toFixed(3)}</b></div>`).join('')}<p>ФЕНОТИП</p><div class="gene-row"><span>Макс. скорость / радиус</span><b>${traits.speed.toFixed(2)} / ${traits.radius.toFixed(2)}</b></div><div class="gene-row"><span>Усвоение / порог энергии</span><b>${(traits.assimilation * 100).toFixed(1)}% / ${(traits.birthReserve / 1000).toFixed(1)}</b></div><div class="gene-row"><span>Содержание признаков</span><b>${(traits.maintenance / 1000).toFixed(3)} / тик</b></div>`;
   } else if (f.selectedId !== null) el.innerHTML = `<div class="specimen">◎</div><h3>Организм #${f.selectedId} погиб</h3><p>Энергия исчерпана. Его больше нет среди действующих организмов.</p><button id="inspect-first" class="outline">Выбрать живой организм</button>`;
   else if (!el.querySelector('#inspect-first')) el.innerHTML = '<div class="specimen">◎</div><h3>Выберите организм</h3><p>Кликните на карту, чтобы открыть его геном.</p><button id="inspect-first" class="outline">Выбрать организм</button>';
 }
@@ -50,10 +66,11 @@ function draw(): void {
   ctx.strokeStyle = '#34594b'; ctx.lineWidth = 1 / scale; ctx.strokeRect(0, 0, 256, 256);
   ctx.strokeStyle = '#c2efd209'; ctx.lineWidth = .5 / scale; ctx.beginPath();
   for (let i = 16; i < 256; i += 16) { ctx.moveTo(i, 0); ctx.lineTo(i, 256); ctx.moveTo(0, i); ctx.lineTo(256, i); } ctx.stroke();
-  const p = frame.positions;
+  const p = frame.positions, traitIndex = GENES.indexOf(color.value as keyof Genome);
   for (let i = 0; i < frame.ids.length; i++) {
-    const x = p[i * 4], y = p[i * 4 + 1], energy = p[i * 4 + 2], speed = p[i * 4 + 3];
-    ctx.fillStyle = `hsl(${85 + speed * 65} 65% ${55 + energy * 24}%)`;
+    const x = p[i * 4], y = p[i * 4 + 1], energy = p[i * 4 + 2];
+    const band = frame.traitBins[i * GENES.length + traitIndex];
+    ctx.fillStyle = `hsl(${85 + band * 15} 65% ${55 + energy * 24}%)`;
     ctx.beginPath(); ctx.arc(x, y, Math.max(0.48, 1.25 / scale), 0, Math.PI * 2); ctx.fill();
     if (frame.ids[i] === frame.selectedId) { ctx.strokeStyle = '#f0dca1'; ctx.lineWidth = 1.3 / scale; ctx.beginPath(); ctx.arc(x, y, Math.max(3, 6 / scale), 0, Math.PI * 2); ctx.stroke(); if (frame.selected) { ctx.strokeStyle = '#f0dca145'; ctx.beginPath(); ctx.arc(x, y, frame.selected.genome.sensor, 0, Math.PI * 2); ctx.stroke(); } }
   }
@@ -62,14 +79,27 @@ function draw(): void {
 function drawChart(): void {
   if (!frame) return;
   const w = chart.clientWidth, h = chart.clientHeight, dpr = Math.min(devicePixelRatio, 2); chart.width = w * dpr; chart.height = h * dpr; cg.setTransform(dpr, 0, 0, dpr, 0, 0);
-  const history = frame.history, max = Math.max(1200, ...history.map(p => p.population)) * 1.1, first = history[0]?.tick ?? 0, last = history.at(-1)?.tick ?? 0;
+  const history = frame.history, metric = chartMetric.value;
+  const range = metric === 'population' ? [0, Math.max(1200, ...history.map(p => p.population)) * 1.1] : GENE_BOUNDS[metric as keyof Genome];
+  const [min, max] = range, first = history[0]?.tick ?? 0, last = history.at(-1)?.tick ?? 0;
   $('#chart-range').textContent = `tick ${first} → ${last}`;
   const left = 46, bottom = h - 21, top = 10;
   cg.font = '9px monospace'; cg.fillStyle = '#78928c'; cg.strokeStyle = '#22362e'; cg.lineWidth = 1;
-  for (let i = 0; i < 3; i++) { const y = top + (bottom - top) * i / 2; cg.fillText(fmt(max * (1 - i / 2)), 0, y + 4); cg.beginPath(); cg.moveTo(left, y); cg.lineTo(w, y); cg.stroke(); }
+  for (let i = 0; i < 3; i++) { const y = top + (bottom - top) * i / 2; cg.fillText((max - (max - min) * i / 2).toLocaleString('ru-RU', { maximumFractionDigits: 2 }), 0, y + 4); cg.beginPath(); cg.moveTo(left, y); cg.lineTo(w, y); cg.stroke(); }
   cg.fillText(String(first), left, h - 3); cg.fillText(String(last), w - 40, h - 3);
-  cg.beginPath(); history.forEach((p, i) => { const x = left + (p.tick - first) / Math.max(1, last - first) * (w - left), y = bottom - p.population / max * (bottom - top); if (i === 0) cg.moveTo(x, y); else cg.lineTo(x, y); });
+  cg.beginPath();
+  let connected = false;
+  for (const p of history) {
+    const value = metric === 'population' ? p.population : p.genes?.[metric as keyof Genome];
+    if (value === undefined) { connected = false; continue; }
+    const x = left + (p.tick - first) / Math.max(1, last - first) * (w - left);
+    const y = bottom - (value - min) / (max - min) * (bottom - top);
+    if (connected) cg.lineTo(x, y);
+    else cg.moveTo(x, y);
+    connected = true;
+  }
   cg.strokeStyle = '#b8efb7'; cg.lineWidth = 2; cg.stroke();
+  if (metric !== 'population') return;
   cg.lineTo(w, bottom); cg.lineTo(left, bottom); cg.closePath(); const gradient = cg.createLinearGradient(0, top, 0, bottom); gradient.addColorStop(0, '#b8efb72a'); gradient.addColorStop(1, '#b8efb700'); cg.fillStyle = gradient; cg.fill();
 }
 function zoom(factor: number, x = viewport.clientWidth / 2, y = viewport.clientHeight / 2): void { const next = Math.max(.5, Math.min(30, scale * factor)); offsetX = x - (x - offsetX) * next / scale; offsetY = y - (y - offsetY) * next / scale; scale = next; draw(); }
@@ -86,3 +116,6 @@ $('#zoom-in').onclick = () => zoom(1.4); $('#zoom-out').onclick = () => zoom(1 /
 document.addEventListener('keydown', e => { if ((e.target as HTMLElement).matches('input,textarea,select,button')) return; if (e.code === 'Space') { e.preventDefault(); send({ kind: 'play', value: !frame?.running }); } if (e.key === 'Escape') send({ kind: 'inspect', id: null }); if (e.key === '+' || e.key === '=') zoom(1.2); if (e.key === '-') zoom(1 / 1.2); if (e.key.startsWith('Arrow')) { e.preventDefault(); offsetX += e.key === 'ArrowLeft' ? 25 : e.key === 'ArrowRight' ? -25 : 0; offsetY += e.key === 'ArrowUp' ? 25 : e.key === 'ArrowDown' ? -25 : 0; draw(); } });
 new ResizeObserver(() => { resize(); draw(); drawChart(); }).observe(viewport);
 window.addEventListener('resize', drawChart);
+
+color.onchange = draw;
+chartMetric.onchange = drawChart;
