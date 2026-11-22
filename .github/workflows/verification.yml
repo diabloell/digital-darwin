@@ -3,15 +3,20 @@ name: Digital Darwin verification
 on:
   pull_request:
   push:
-    branches: [dd-05-persistence-replay]
+    branches: [dd-06-experiment-lab]
 
 permissions:
   contents: read
 
 jobs:
   verify:
+    name: Verify ${{ matrix.group }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [core, browser, stress, lab-1920, lab-1366, lab-390, LAB-E01, LAB-E02, LAB-E03, LAB-E04]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,13 +26,16 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
       - name: Install Playwright Chromium
+        if: matrix.group == 'browser' || startsWith(matrix.group, 'lab-')
         run: npx --no-install playwright install --with-deps chromium
-      - name: Typecheck, build, lint, unit/integration, headless simulation and browser E2E
+      - name: Run verification group
+        env:
+          DD_VERIFY_GROUP: ${{ matrix.group }}
         run: npm run verify
       - name: Upload verification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: digital-darwin-verification
+          name: digital-darwin-${{ matrix.group }}
           path: outputs/verification/
           if-no-files-found: ignore

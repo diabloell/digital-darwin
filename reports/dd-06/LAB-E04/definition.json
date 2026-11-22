@@ -1,0 +1,79 @@
+{
+  "versions": {
+    "format": 1,
+    "engine": "0.3.0",
+    "evolution": "1",
+    "metrics": 1,
+    "scenario": 1
+  },
+  "initial": {
+    "width": 48,
+    "height": 48,
+    "population": 240
+  },
+  "seeds": [
+    "dd02-amber",
+    "dd02-fern",
+    "dd02-dune",
+    "dd02-coral",
+    "dd02-slate"
+  ],
+  "replicas": 5,
+  "duration": 4000,
+  "interval": 100,
+  "burnIn": 0,
+  "stopPolicy": "fixed-ticks",
+  "criterion": "invariants",
+  "limitations": "Фиксированный набор seed. Диапазон наблюдений описывает разброс, а не доверительный интервал. Связь признака с размножением не устанавливает причинность отдельного гена.",
+  "id": "LAB-E04",
+  "title": "Подвижность и сенсоры",
+  "description": "Начальная пища, ёмкость и рост перераспределяются без изменения их сумм. Нейтральная пара отделяет прямой эффект выраженного фенотипа.",
+  "hypothesis": "Связь скорости и радиуса с частотой рождений зависит от пространственной структуры пищи.",
+  "control": {
+    "id": "control",
+    "label": "Равномерная",
+    "changes": {},
+    "landscape": "uniform",
+    "batch": 1
+  },
+  "treatments": [
+    {
+      "id": "patchy",
+      "label": "Пятнистая",
+      "changes": {},
+      "landscape": "patchy",
+      "batch": 1
+    },
+    {
+      "id": "neutral-uniform",
+      "label": "Равномерная · нейтральная",
+      "changes": {
+        "rule": "neutral"
+      },
+      "landscape": "uniform",
+      "batch": 1
+    },
+    {
+      "id": "neutral-patchy",
+      "label": "Пятнистая · нейтральная",
+      "changes": {
+        "rule": "neutral"
+      },
+      "landscape": "patchy",
+      "batch": 1
+    }
+  ],
+  "primary": "sensorGap",
+  "secondary": [
+    "speedGap",
+    "speed",
+    "sensor",
+    "speedMedian",
+    "sensorMedian",
+    "speedVariance",
+    "sensorVariance",
+    "survival",
+    "dissipated",
+    "births"
+  ]
+}

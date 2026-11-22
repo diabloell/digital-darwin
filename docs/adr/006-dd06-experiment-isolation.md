@@ -1,0 +1,5 @@
+# ADR-006 — Independent experimental runner
+
+Run a declarative, versioned scenario using a fresh Engine per seed and condition. Use the existing EvolutionObserver to avoid duplicated scientific definitions. The runner hashes initial founders, resources, and RNG separately and verifies paired inputs. A versioned tick-zero field redistribution implements the uniform landscape with no Engine or WorldSnapshot format changes. Monitor code runs at completed-tick boundaries, with different Engine.step batch sizes for the determinism scenario.
+
+Use one dedicated browser worker per active series, then terminate it on result or failure. Cooperative cancellation preserves completed runs and labels unused runs. Keep at most 401 samples per run. IndexedDB experiment results use a separate database and atomically replace older series when necessary. The existing observer, saves, CLI, and historical DD-02 runner retain their contracts. Exported results record the fixed definition and descriptive comparisons.

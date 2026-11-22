@@ -77,3 +77,7 @@ npm run simulate -- --seed dd02-example --ticks 10000 --evolution --output outpu
 ## Сохранения DD-05
 
 Раздел «Миры и сохранения» хранит несколько миров в IndexedDB и поддерживает экспорт и импорт JSON. Мир восстанавливается на сохранённом тике, на паузе. [Руководство](docs/saves.md) · [Формат](docs/world-snapshot.md)
+
+## Лаборатория DD-06
+
+[Руководство по лаборатории](docs/experiment-lab.md) · [Схема декларации, архива и метрик](docs/experiment-definition.md). Эталонные headless-серии запускаются командой `node apps/lab.ts all outputs/lab`.

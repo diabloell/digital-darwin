@@ -110,8 +110,39 @@
         <div id="speed-bins" aria-label="Число живых организмов по восьми интервалам"></div><p id="histogram-range"></p>
       </div>
     </section>
+    <details id="experiment-lab" class="chart-panel">
+      <summary>Лаборатория экспериментов</summary>
+      <form id="lab-form">
+        <div class="lab-grid">
+          <label>Сценарий <select id="lab-preset"></select></label>
+          <label>Seed, по одному на строку <textarea id="lab-seeds" rows="5" required maxlength="1548"></textarea></label>
+          <label>Длительность, тиков <input id="lab-duration" type="number" min="1" max="20000" required></label>
+          <label>Интервал выборки, тиков <input id="lab-interval" type="number" min="1" max="20000" required></label>
+        </div>
+        <p id="lab-hypothesis"></p>
+        <ul id="lab-conditions"></ul>
+        <p>Реплик на условие: <output id="lab-count"></output></p>
+        <details><summary>Декларация и условия (JSON)</summary><label>Параметры декларации <textarea id="lab-definition" rows="10" spellcheck="false"></textarea></label><p>Seed, длительность и интервал берутся из полей выше.</p></details>
+        <div class="save-actions"><button id="lab-run" type="submit" class="primary">Запустить серию</button><button id="lab-cancel" type="button">Остановить серию</button></div>
+        <progress id="lab-progress" value="0" max="1" aria-label="Прогресс серии"></progress>
+      </form>
+      <p id="lab-status" role="status"></p>
+      <label>Архив серий <select id="lab-archive"><option value="">Выберите серию</option></select></label>
+      <section id="lab-results" hidden>
+        <h2 id="lab-result-label"></h2>
+        <div class="lab-grid"><label>Метрика <select id="lab-metric"></select></label><label>Реплика <select id="lab-filter"></select></label><label>База для Δ <select id="lab-reference"></select></label></div>
+        <ul id="lab-legend"></ul>
+        <canvas id="lab-chart" aria-label="График эксперимента"></canvas><p id="lab-empty" hidden>Нет временного ряда для этой метрики. Итоговая статистика ниже.</p>
+        <p>Линия — среднее, вертикальные отрезки — наблюдаемый минимум и максимум. Δ = условие минус выбранная база по тому же seed.</p>
+        <div id="lab-summary" class="lab-table" role="region" aria-label="Сводка групп" tabindex="0"></div>
+        <div id="lab-runs" class="lab-table" role="region" aria-label="Результаты реплик" tabindex="0"></div>
+        <details><summary>Исходная декларация · SHA-256</summary><p id="lab-hash"></p><pre id="lab-protocol"></pre></details>
+        <div class="save-actions"><button id="lab-json">Экспорт JSON</button><button id="lab-csv">Экспорт CSV</button><button id="lab-md">Экспорт Markdown</button></div>
+      </section>
+    </details>
     <footer>Статистика цифровой модели. Изменение признака само по себе не доказывает естественный отбор.</footer>
   </main>
   <script type="module" src="/src/app.js"></script>
+  <script type="module" src="/src/lab/ui.js"></script>
 </body>
 </html>

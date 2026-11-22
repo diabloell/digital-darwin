@@ -61,3 +61,7 @@ A completed-tick observer tracks lives, founder lines and aggregate events witho
 ## DD-05 persistence
 
 The Worker snapshots the biological state and bounded history at a completed tick. It builds and validates a separate candidate before replacing the world, then publishes a new paused epoch. IndexedDB commits each slot atomically and file export uses the same versioned format. Recent analytics accompany the save. [Snapshot format](docs/world-snapshot.md) · [ADR](docs/adr/005-dd05-persistence.md)
+
+## DD-06 experiments
+
+The lab validates declarations, runs independent engines and samples the existing evolutionary metrics. The browser uses a dedicated worker and a separate IndexedDB archive. The CLI uses the same runner. Laboratory interventions happen at tick zero and preserve compatibility of the ordinary observer and WorldSnapshot v1. [Experiment schema](docs/experiment-definition.md) · [ADR](docs/adr/006-dd06-experiment-isolation.md)

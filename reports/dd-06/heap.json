@@ -1,0 +1,128 @@
+{
+  "method": "Node heapUsed after explicit GC; one Engine in flight; results released before GC",
+  "afterWarmup": 10100464,
+  "final": 10202912,
+  "delta": 102448,
+  "samples": [
+    {
+      "series": 1,
+      "heapUsed": 10036624,
+      "rss": 91631616
+    },
+    {
+      "series": 2,
+      "heapUsed": 10047784,
+      "rss": 91938816
+    },
+    {
+      "series": 3,
+      "heapUsed": 10037976,
+      "rss": 108896256
+    },
+    {
+      "series": 4,
+      "heapUsed": 10049704,
+      "rss": 109264896
+    },
+    {
+      "series": 5,
+      "heapUsed": 10066528,
+      "rss": 109268992
+    },
+    {
+      "series": 6,
+      "heapUsed": 10094008,
+      "rss": 109326336
+    },
+    {
+      "series": 7,
+      "heapUsed": 10100464,
+      "rss": 109318144
+    },
+    {
+      "series": 8,
+      "heapUsed": 10106080,
+      "rss": 109322240
+    },
+    {
+      "series": 9,
+      "heapUsed": 10138712,
+      "rss": 109346816
+    },
+    {
+      "series": 10,
+      "heapUsed": 10151176,
+      "rss": 146329600
+    },
+    {
+      "series": 11,
+      "heapUsed": 10163384,
+      "rss": 146518016
+    },
+    {
+      "series": 12,
+      "heapUsed": 10161816,
+      "rss": 146690048
+    },
+    {
+      "series": 13,
+      "heapUsed": 10176848,
+      "rss": 146759680
+    },
+    {
+      "series": 14,
+      "heapUsed": 10171456,
+      "rss": 146776064
+    },
+    {
+      "series": 15,
+      "heapUsed": 10182328,
+      "rss": 146776064
+    },
+    {
+      "series": 16,
+      "heapUsed": 10197488,
+      "rss": 146800640
+    },
+    {
+      "series": 17,
+      "heapUsed": 10193720,
+      "rss": 146972672
+    },
+    {
+      "series": 18,
+      "heapUsed": 10198576,
+      "rss": 147013632
+    },
+    {
+      "series": 19,
+      "heapUsed": 10202568,
+      "rss": 147034112
+    },
+    {
+      "series": 20,
+      "heapUsed": 10202752,
+      "rss": 147034112
+    },
+    {
+      "series": 21,
+      "heapUsed": 10208768,
+      "rss": 147034112
+    },
+    {
+      "series": 22,
+      "heapUsed": 10202912,
+      "rss": 147042304
+    },
+    {
+      "series": 23,
+      "heapUsed": 10205080,
+      "rss": 147042304
+    },
+    {
+      "series": 24,
+      "heapUsed": 10202592,
+      "rss": 147042304
+    }
+  ]
+}

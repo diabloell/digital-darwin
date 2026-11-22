@@ -284,3 +284,21 @@ test('malformed, unsupported and honestly checksummed invalid snapshots are reje
   assert.equal(e.tick, 0);
   assert.equal(h.storage.live, 2);
 });
+
+test('lab definition hashes are stable and reject invalid budgets, seeds and schema versions', async () => {
+  const { canonical,SCENARIOS,validateDefinition }=await import('../src/lab/definition.ts');
+  const { sha256 }=await import('../src/snapshot.ts');
+  const d=SCENARIOS[1];
+  assert.equal(await sha256(canonical(validateDefinition(d))),await sha256(canonical(validateDefinition({ ...d,initial:{population:240,width:48,height:48} }))));
+  assert.notEqual(await sha256(canonical(d)),await sha256(canonical({...d,duration:4100})));
+  for(const invalid of [{...d,seeds:[],replicas:0},{...d,seeds:Array.from({length:13},(_,i)=>String(i)),replicas:13},
+    {...d,versions:{...d.versions,metrics:99}},{...d,initial:{...d.initial,width:513}},{...d,interval:1}]) {
+    assert.throws(()=>validateDefinition(invalid));
+  }
+});
+
+test('lab summary uses defined completed values and reports sample SD', async () => {
+  const { summary }=await import('../src/lab/comparison.ts');
+  assert.deepEqual(summary([1,3,null,2]),{n:3,missing:1,mean:2,median:2,min:1,max:3,sd:1});
+  assert.deepEqual(summary([null]),{n:0,missing:1,mean:null,median:null,min:null,max:null,sd:null});
+});
