@@ -10,8 +10,13 @@ permissions:
 
 jobs:
   verify:
+    name: Verify ${{ matrix.group }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [core, browser, lab]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,13 +26,16 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
       - name: Install Playwright Chromium
+        if: matrix.group != 'core'
         run: npx --no-install playwright install --with-deps chromium
-      - name: Typecheck, build, lint, unit/integration, headless simulation and browser E2E
+      - name: Run verification group
+        env:
+          DD_VERIFY_GROUP: ${{ matrix.group }}
         run: npm run verify
       - name: Upload verification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: digital-darwin-verification
+          name: digital-darwin-${{ matrix.group }}
           path: outputs/verification/
           if-no-files-found: ignore

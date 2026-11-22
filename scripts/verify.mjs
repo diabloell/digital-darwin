@@ -34,8 +34,16 @@ const commands = [
   ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`, '10000']]
 ];
 const dependencies = { determinism: ['long-run-a', 'long-run-b'], 'dd02-regression': ['experiments'], 'dd02-state': ['long-run-a'] };
+const groups = {
+  browser: ['e2e','lineage-e2e','persistence-e2e','save-benchmark','browser-benchmark'],
+  lab: ['lab-batches','lab-e2e','lab-stress']
+};
+const group = process.env.DD_VERIFY_GROUP;
+if (group && group !== 'core' && !Object.hasOwn(groups,group)) throw Error('Unknown verification group');
+const selected = group === 'core' ? commands.filter(([name])=>!Object.values(groups).flat().includes(name))
+  : group ? commands.filter(([name])=>groups[group].includes(name)) : commands;
 const checks = [];
-for (const [name, args] of commands) {
+for (const [name, args] of selected) {
   const command = 'node ' + args.map(arg => /\s/.test(arg) ? JSON.stringify(arg) : arg).join(' ');
   if ((dependencies[name] ?? []).some(run => !checks.some(check => check.name === run && check.status === 'PASS'))) {
     checks.push({ name, command, status: 'NOT RUN', exitCode: null });
