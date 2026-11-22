@@ -8,10 +8,25 @@ await mkdir(output,{recursive:true});
 const server=await startServer(0);
 let browser;
 const results=[],screenshots=[];
+const sizes=[[1920,1080],[1366,768],[390,844]].filter(([width])=>!process.argv[2]||String(width)===process.argv[2]);
+assert.ok(sizes.length, 'Unknown viewport');
 try {
   browser=await chromium.launch({headless:true,executablePath:process.env.DD_BROWSER});
-  for(const [width,height] of [[1920,1080],[1366,768],[390,844]]){
+  for(const [width,height] of sizes){
     const page=await browser.newPage({viewport:{width,height}});
+    page.setDefaultTimeout(12000);
+    console.log(`Lab viewport ${width}×${height}: opening observer`);
+    await page.addInitScript(()=>{
+      const Native=Worker;
+      window.Worker=class extends Native{
+        constructor(...args){
+          super(...args);
+          this.addEventListener('message',({data})=>{
+            if(data.kind==='frame')window.__observerFrame=data;
+          });
+        }
+      };
+    });
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
     page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
@@ -20,7 +35,11 @@ try {
     await page.locator('#step').click();
     await page.waitForFunction(()=>document.querySelector('#tick').textContent==='1');
     const tick=await page.locator('#tick').innerText(),seed=await page.locator('#world-seed').innerText();
-    const before=await page.locator('#world').screenshot();
+    const worldState=()=>page.evaluate(()=>{
+      const f=window.__observerFrame;
+      return {metrics:f.metrics,seed:f.seed,ids:[...f.ids],positions:[...f.positions],food:[...f.food]};
+    });
+    const before=await worldState();
     const snapshot=async name=>{
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
       const path=`${output}/${name}-${width}x${height}.png`;
@@ -35,6 +54,7 @@ try {
     if(width===1920)await snapshot('laboratory');
     await page.locator('#lab-run').click();
     await page.waitForFunction(()=>document.querySelector('#lab-status').textContent.startsWith('Реплика'));
+    console.log(`Lab viewport ${width}: live series progress`);
     const raf=await page.evaluate(async ()=>{
       const start=performance.now();
       let frames=0;
@@ -47,6 +67,7 @@ try {
     assert.ok(raf>5);
     if(width===1366)await snapshot('progress');
     await page.getByText('Архивировано · completed',{exact:true}).waitFor();
+    console.log(`Lab viewport ${width}: results archived`);
     const elapsedStart=performance.now();
     const download=async button=>{
       const [file]=await Promise.all([page.waitForEvent('download'),page.locator(button).click()]);
@@ -67,7 +88,7 @@ try {
     assert.match(await page.locator('#lab-chart').getAttribute('aria-label'),/Пища.*🌱-ui/);
     const renderMs=Number(await page.locator('#lab-chart').getAttribute('data-render-ms'));
     if(width===390)await snapshot('comparison');
-    assert.deepEqual(await page.locator('#world').screenshot(),before);
+    assert.deepEqual(await worldState(),before);
     assert.equal(await page.locator('#tick').innerText(),tick);
     assert.equal(await page.locator('#world-seed').innerText(),seed);
     const archived=await page.locator('#lab-archive').inputValue();
@@ -96,7 +117,7 @@ try {
     await page.close();
   }
   await writeFile(`${output}/lab-e2e.json`,JSON.stringify({status:'PASS',browser:browser.version(),results,screenshots},null,2));
-  console.log('Lab E2E PASS: three viewports, isolated worlds, archive reload, downloads and cancellation');
+  console.log(`Lab E2E PASS: ${sizes.length} viewport(s), isolated worlds, archive reload and downloads`);
 } catch(error){
   await writeFile(`${output}/lab-e2e.json`,JSON.stringify({status:'FAIL',results,screenshots,failure:String(error)},null,2));
   throw error;

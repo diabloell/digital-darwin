@@ -36,13 +36,15 @@ const commands = [
 const dependencies = { determinism: ['long-run-a', 'long-run-b'], 'dd02-regression': ['experiments'], 'dd02-state': ['long-run-a'] };
 const groups = {
   browser: ['e2e','lineage-e2e','persistence-e2e','save-benchmark','browser-benchmark'],
-  'lab-ui': ['lab-e2e','lab-stress']
+  stress: ['lab-stress']
 };
 const group = process.env.DD_VERIFY_GROUP;
 const labScenario = /^LAB-E0[1-4]$/.test(group ?? '');
-if (group && group !== 'core' && !labScenario && !Object.hasOwn(groups,group)) throw Error('Unknown verification group');
-const selected = group === 'core' ? commands.filter(([name])=>!Object.values(groups).flat().includes(name) && name !== 'lab-batches')
+const labViewport = /^lab-(1920|1366|390)$/.exec(group ?? '');
+if (group && group !== 'core' && !labScenario && !labViewport && !Object.hasOwn(groups,group)) throw Error('Unknown verification group');
+const selected = group === 'core' ? commands.filter(([name])=>!Object.values(groups).flat().includes(name) && !['lab-batches','lab-e2e'].includes(name))
   : labScenario ? [['lab-batches', ['apps/lab.ts', group, `${output}/lab-batches`]]]
+  : labViewport ? [['lab-e2e',['scripts/lab-e2e.mjs',labViewport[1]]]]
   : group ? commands.filter(([name])=>groups[group].includes(name)) : commands;
 const checks = [];
 for (const [name, args] of selected) {
@@ -53,6 +55,7 @@ for (const [name, args] of selected) {
     continue;
   }
   const result = spawnSync(process.execPath, args, {
+    timeout: name==='lab-e2e' ? 90000 : undefined,
     encoding: 'utf8', maxBuffer: 20 * 1024 * 1024,
     env: { ...process.env, DD_EVIDENCE_DIR: output }
   });

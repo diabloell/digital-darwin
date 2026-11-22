@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [core, browser, lab-ui, LAB-E01, LAB-E02, LAB-E03, LAB-E04]
+        group: [core, browser, stress, lab-1920, lab-1366, lab-390, LAB-E01, LAB-E02, LAB-E03, LAB-E04]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,7 +26,7 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
       - name: Install Playwright Chromium
-        if: matrix.group == 'browser' || matrix.group == 'lab-ui'
+        if: matrix.group == 'browser' || startsWith(matrix.group, 'lab-')
         run: npx --no-install playwright install --with-deps chromium
       - name: Run verification group
         env:
