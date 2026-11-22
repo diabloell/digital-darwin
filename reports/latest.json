@@ -1,18 +1,18 @@
 {
-  "stage": "DD-04",
+  "stage": "DD-05",
   "status": "PARTIAL",
-  "sourceCommit": "1c037d8d58a5a74f6ffc1754a9653ccf25174df8",
-  "branch": "dd-04-lineages-events",
-  "baseMain": "d8fae67",
+  "sourceCommit": "0d6f056d0ad18856b4f293cf7e6d76116e26bdf4",
+  "baseMain": "419009a",
+  "branch": "dd-05-persistence-replay",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-04-lineages-events"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-05-persistence-replay"
   },
   "ci": {
     "status": "PASS",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44948875148",
-    "sourceCommit": "1c037d8d58a5a74f6ffc1754a9653ccf25174df8"
+    "sourceCommit": "0d6f056d0ad18856b4f293cf7e6d76116e26bdf4",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45049604267"
   },
   "checks": [
     {
@@ -31,8 +31,7 @@
       "name": "lint",
       "command": "node scripts/lint.mjs",
       "status": "PASS",
-      "exitCode": 0,
-      "rerun": true
+      "exitCode": 0
     },
     {
       "name": "unit",
@@ -48,31 +47,31 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd04-final/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd05-final/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd04-final/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd05-final/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd04-final/performance-5000.json --profile",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd05-final/performance-5000.json --profile",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-food",
-      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd04-final/no-food.json --width 32 --height 32 --no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd05-final/no-food.json --width 32 --height 32 --no-food",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-reproduction",
-      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd04-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd05-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
       "status": "PASS",
       "exitCode": 0
     },
@@ -84,7 +83,7 @@
     },
     {
       "name": "experiments",
-      "command": "node apps/experiments.ts outputs/dd04-final/experiments.json",
+      "command": "node apps/experiments.ts outputs/dd05-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -101,6 +100,24 @@
       "exitCode": 0
     },
     {
+      "name": "replay",
+      "command": "node scripts/replay.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "persistence-e2e",
+      "command": "node scripts/persistence-e2e.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "save-benchmark",
+      "command": "node scripts/save-benchmark.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
       "name": "browser-benchmark",
       "command": "node scripts/browser-benchmark.mjs",
       "status": "PASS",
@@ -110,35 +127,34 @@
       "name": "history-benchmark",
       "command": "node scripts/history-benchmark.mjs",
       "status": "PASS",
-      "exitCode": 0,
-      "rerun": true
+      "exitCode": 0
     },
     {
       "name": "dd02-regression",
-      "command": "node scripts/check-dd02-regression.mjs outputs/dd04-final/experiments.json",
+      "command": "node scripts/check-dd02-regression.mjs outputs/dd05-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "dd02-state",
-      "command": "node scripts/check-determinism.mjs outputs/dd04-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd05-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/dd04-final/long-run-a.json outputs/dd04-final/long-run-b.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd05-final/long-run-a.json outputs/dd05-final/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
   ],
   "unit": {
-    "passed": 27,
+    "passed": 29,
     "failed": 0,
     "skipped": 0
   },
   "integration": {
-    "passed": 6,
+    "passed": 7,
     "failed": 0,
     "skipped": 0
   },
@@ -167,7 +183,63 @@
       "generation event is filterable and links to the corresponding entity; return to world",
       "historical death card, world extinction once, and all three layouts without overflow"
     ],
-    "errors": []
+    "persistence": {
+      "status": "PASS",
+      "browser": "156.0.8078.79",
+      "runs": [
+        {
+          "viewport": [
+            1920,
+            1080
+          ],
+          "tick": 165,
+          "population": 466,
+          "checks": [
+            "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
+            "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
+            "independent slot, rename, confirmed overwrite and delete"
+          ],
+          "quota": "PASS (injected QuotaExceededError after queuing real IndexedDB put; real quota NOT RUN)",
+          "errors": []
+        },
+        {
+          "viewport": [
+            1366,
+            768
+          ],
+          "tick": 166,
+          "population": 467,
+          "checks": [
+            "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
+            "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
+            "independent slot, rename, confirmed overwrite and delete"
+          ],
+          "quota": "NOT RUN",
+          "errors": []
+        },
+        {
+          "viewport": [
+            390,
+            844
+          ],
+          "tick": 158,
+          "population": 461,
+          "checks": [
+            "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
+            "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
+            "independent slot, rename, confirmed overwrite and delete"
+          ],
+          "quota": "NOT RUN",
+          "errors": []
+        }
+      ],
+      "screenshots": [
+        "reports/dd-05/slots-1920x1080.png",
+        "reports/dd-05/loaded-1366x768.png",
+        "reports/dd-05/import-preview-390x844.png"
+      ],
+      "browserRestart": "PASS"
+    }
   },
   "determinism": {
     "status": "PASS",
@@ -217,149 +289,486 @@
         "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
       }
     ],
-    "matchesDD02": true
+    "replay": {
+      "status": "PASS",
+      "results": [
+        {
+          "config": {
+            "seed": "dd05-alpha",
+            "width": 32,
+            "height": 32,
+            "population": 140
+          },
+          "engineContinuous": "5626e78576dac45206ee1502bedd4f520e6a09726c0f14f878295a3d62bbb077",
+          "engineRestored": "5626e78576dac45206ee1502bedd4f520e6a09726c0f14f878295a3d62bbb077",
+          "historyContinuous": "9512316c73444f3c2e67398e855d826d8f8125ec89554c44d71d3cd0c4220ae7",
+          "historyRestored": "9512316c73444f3c2e67398e855d826d8f8125ec89554c44d71d3cd0c4220ae7",
+          "tick": 6000,
+          "metrics": {
+            "tick": 6000,
+            "population": 432,
+            "food": 205.785,
+            "births": 1192,
+            "deaths": 900,
+            "meanEnergy": 19.050805555555556,
+            "maxGeneration": 13
+          },
+          "lineages": {
+            "living": 64,
+            "extinct": 76
+          },
+          "storage": {
+            "live": 432,
+            "recent": 900,
+            "pinned": 40,
+            "parentReferences": 228,
+            "lines": 140,
+            "events": 180,
+            "droppedEvents": 550
+          }
+        },
+        {
+          "config": {
+            "seed": "dd05-beta",
+            "width": 32,
+            "height": 32,
+            "population": 140
+          },
+          "engineContinuous": "57d47cbe9daa1525ad0e57af9989bbec18a86afda065707d34d32e90f57dc016",
+          "engineRestored": "57d47cbe9daa1525ad0e57af9989bbec18a86afda065707d34d32e90f57dc016",
+          "historyContinuous": "3753a8bb140bebe2022b358543fa66eed17b2baf23b6fd4895796fa98156affb",
+          "historyRestored": "3753a8bb140bebe2022b358543fa66eed17b2baf23b6fd4895796fa98156affb",
+          "tick": 6000,
+          "metrics": {
+            "tick": 6000,
+            "population": 384,
+            "food": 200.936,
+            "births": 1186,
+            "deaths": 942,
+            "meanEnergy": 18.8202109375,
+            "maxGeneration": 17
+          },
+          "lineages": {
+            "living": 58,
+            "extinct": 82
+          },
+          "storage": {
+            "live": 384,
+            "recent": 942,
+            "pinned": 56,
+            "parentReferences": 220,
+            "lines": 140,
+            "events": 180,
+            "droppedEvents": 581
+          }
+        },
+        {
+          "config": {
+            "seed": "🌱-рост",
+            "width": 32,
+            "height": 32,
+            "population": 140
+          },
+          "engineContinuous": "bbd7f71c3ed642f6b93e2911ead85e08931e679d59e7564bf0ac61758df0e5bc",
+          "engineRestored": "bbd7f71c3ed642f6b93e2911ead85e08931e679d59e7564bf0ac61758df0e5bc",
+          "historyContinuous": "847abd784daadef949f18bb6924d000a4498e943caee36faa7e28fe57e7ddd2a",
+          "historyRestored": "847abd784daadef949f18bb6924d000a4498e943caee36faa7e28fe57e7ddd2a",
+          "tick": 6000,
+          "metrics": {
+            "tick": 6000,
+            "population": 473,
+            "food": 196.066,
+            "births": 1217,
+            "deaths": 884,
+            "meanEnergy": 19.394930232558142,
+            "maxGeneration": 17
+          },
+          "lineages": {
+            "living": 70,
+            "extinct": 70
+          },
+          "storage": {
+            "live": 473,
+            "recent": 884,
+            "pinned": 66,
+            "parentReferences": 276,
+            "lines": 140,
+            "events": 180,
+            "droppedEvents": 544
+          }
+        },
+        {
+          "config": {
+            "seed": "青い🌲",
+            "width": 32,
+            "height": 32,
+            "population": 140
+          },
+          "engineContinuous": "e9a3fa27d2a80629c6d0ed99d37d3a96781aa5bba2d7817f32d2282f0082b4d2",
+          "engineRestored": "e9a3fa27d2a80629c6d0ed99d37d3a96781aa5bba2d7817f32d2282f0082b4d2",
+          "historyContinuous": "1aa25fe8f8beebdeb78933e4d1069c39833ee7ec7918eaf3eca34aa5bf08e8bf",
+          "historyRestored": "1aa25fe8f8beebdeb78933e4d1069c39833ee7ec7918eaf3eca34aa5bf08e8bf",
+          "tick": 6000,
+          "metrics": {
+            "tick": 6000,
+            "population": 441,
+            "food": 209.354,
+            "births": 1232,
+            "deaths": 931,
+            "meanEnergy": 20.18908163265306,
+            "maxGeneration": 13
+          },
+          "lineages": {
+            "living": 77,
+            "extinct": 63
+          },
+          "storage": {
+            "live": 441,
+            "recent": 931,
+            "pinned": 73,
+            "parentReferences": 260,
+            "lines": 140,
+            "events": 180,
+            "droppedEvents": 538
+          }
+        },
+        {
+          "config": {
+            "seed": "dd05-omega",
+            "width": 32,
+            "height": 32,
+            "population": 140
+          },
+          "engineContinuous": "7b1fbecb22530fae2e02830498cca4153ff0c416a8fee443f34b748501ed6d2c",
+          "engineRestored": "7b1fbecb22530fae2e02830498cca4153ff0c416a8fee443f34b748501ed6d2c",
+          "historyContinuous": "7a9579a6655cb82a30ce3e11e551b52e374c4fd9a8a000d0c7be0fbdbc6eeb54",
+          "historyRestored": "7a9579a6655cb82a30ce3e11e551b52e374c4fd9a8a000d0c7be0fbdbc6eeb54",
+          "tick": 6000,
+          "metrics": {
+            "tick": 6000,
+            "population": 468,
+            "food": 203.127,
+            "births": 1417,
+            "deaths": 1089,
+            "meanEnergy": 20.48048076923077,
+            "maxGeneration": 12
+          },
+          "lineages": {
+            "living": 72,
+            "extinct": 68
+          },
+          "storage": {
+            "live": 468,
+            "recent": 1089,
+            "pinned": 57,
+            "parentReferences": 258,
+            "lines": 140,
+            "events": 180,
+            "droppedEvents": 569
+          }
+        }
+      ],
+      "repeat": {
+        "checkpoints": [
+          0,
+          25,
+          1234,
+          5000,
+          8001,
+          10000
+        ],
+        "engineContinuous": "3a99137357b4044381fb0bef90f1ff18d61481a488231c186f0eeb191b57d640",
+        "engineRestored": "3a99137357b4044381fb0bef90f1ff18d61481a488231c186f0eeb191b57d640",
+        "historyContinuous": "29c535c65aa9410a4b665cf323867c94f23440bc99788411bd7cac5a8786b4e8",
+        "historyRestored": "29c535c65aa9410a4b665cf323867c94f23440bc99788411bd7cac5a8786b4e8",
+        "tick": 10000,
+        "metrics": {
+          "tick": 10000,
+          "population": 450,
+          "food": 180.149,
+          "births": 1646,
+          "deaths": 1376,
+          "meanEnergy": 18.585095555555554,
+          "maxGeneration": 14
+        },
+        "lineages": {
+          "living": 50,
+          "extinct": 130
+        },
+        "storage": {
+          "live": 450,
+          "recent": 1376,
+          "pinned": 50,
+          "parentReferences": 247,
+          "lines": 180,
+          "events": 180,
+          "droppedEvents": 1031
+        }
+      }
+    }
   },
-  "dd02Regression": {
-    "status": "PASS",
-    "replicas": 20,
-    "ticks": 4000,
-    "sha256": "0af32554d849146d987b6ece874bc4c22a6399664ae4dfeeec4cbdd917614750"
-  },
-  "endurance": {
-    "ticks": 100000,
-    "final": {
-      "tick": 100000,
-      "population": 531,
-      "food": 267.005,
-      "births": 14459,
-      "deaths": 14128,
-      "meanEnergy": 19.23809604519774,
-      "maxGeneration": 23
-    },
-    "storage": {
-      "live": 531,
-      "recent": 4096,
-      "pinned": 176,
-      "parentReferences": 382,
-      "lines": 200,
-      "events": 180,
-      "droppedEvents": 10702
-    },
-    "tps": 2397.3049015192237,
-    "peakRss": 216473600
-  },
-  "browserBenchmark": {
+  "benchmark": {
     "status": "PASS",
     "browser": "156.0.8078.79",
-    "platform": "linux",
-    "viewport": "1366x768",
-    "speed": "16×",
-    "method": "Chromium headless, landscape and organisms on Canvas; map draw wall time inside RAF; browser FPS is RAF cadence; sampled JS heap is approximate and excludes GPU/OS RSS.",
-    "runs": [
+    "memoryScope": "periodic renderer JS heap samples, excluding Worker and browser RSS",
+    "rows": [
       {
-        "initialPopulation": 1000,
-        "historyPanel": false,
-        "frameBufferBytes": 193760,
-        "frameMetadataJsonBytes": 37106,
-        "historyPackets": 0,
-        "historyJsonBytes": 0,
-        "elapsedMs": 8000.600000000559,
-        "startTick": 336,
-        "endTick": 2833,
-        "startPopulation": 2333,
-        "endPopulation": 4007,
-        "engineTps": 312.1015923805497,
-        "browserRafFps": 60.120490963173566,
-        "maxRafGapMs": 16.80000000000109,
-        "mapPaintFps": 8.499362547808321,
-        "mapRenderP50Ms": 1.099999999627471,
-        "mapRenderP95Ms": 1.900000000372529,
-        "stepToPaintP50Ms": 16.90000000037253,
-        "stepToPaintP95Ms": 31.299999999813735,
-        "peakJsHeapBytes": 17446324
+        "scenario": "1000 founders",
+        "config": {
+          "seed": "dd05-small",
+          "width": 256,
+          "height": 256,
+          "population": 1000,
+          "mutationRate": 0.12,
+          "regrowth": true,
+          "rule": "selection",
+          "resourceScale": 1,
+          "mutationStrength": 0.08,
+          "reproduction": true
+        },
+        "metrics": {
+          "tick": 0,
+          "population": 1000,
+          "food": 130300.632,
+          "births": 0,
+          "deaths": 0,
+          "meanEnergy": 22.865183000000002,
+          "maxGeneration": 0
+        },
+        "lineages": {
+          "living": 1000,
+          "extinct": 0
+        },
+        "storage": {
+          "live": 1000,
+          "recent": 0,
+          "pinned": 0,
+          "parentReferences": 0,
+          "lines": 1000,
+          "events": 0,
+          "droppedEvents": 0
+        },
+        "times": {
+          "snapshot": 16.9000000001397,
+          "serialize": 3.7000000001862645,
+          "sha256": 7.5,
+          "envelope": 5.300000000046566,
+          "indexedDbWrite": 39.39999999990687,
+          "indexedDbRead": 3.300000000046566,
+          "decodeAndValidate": 30.5,
+          "engine": 3.5,
+          "history": 4.400000000139698
+        },
+        "biologyBytes": 1099275,
+        "historyBytes": 310416,
+        "fileBytes": 1480371,
+        "sampledPeakJsHeap": 10435112,
+        "originalTps": 698.8120195662817,
+        "restoredTps": 711.7437722419929,
+        "match": true,
+        "futureMatch": true
       },
       {
-        "initialPopulation": 5000,
-        "historyPanel": false,
-        "frameBufferBytes": 220992,
-        "frameMetadataJsonBytes": 34786,
-        "historyPackets": 0,
-        "historyJsonBytes": 0,
-        "elapsedMs": 8016.699999999255,
-        "startTick": 187,
-        "endTick": 2787,
-        "startPopulation": 6298,
-        "endPopulation": 4858,
-        "engineTps": 324.3229757880726,
-        "browserRafFps": 60.124490126865766,
-        "maxRafGapMs": 16.80000000000109,
-        "mapPaintFps": 7.858595182557144,
-        "mapRenderP50Ms": 1.2000000001862645,
-        "mapRenderP95Ms": 2.2999999998137355,
-        "stepToPaintP50Ms": 28.399999999441206,
-        "stepToPaintP95Ms": 38.799999999813735,
-        "peakJsHeapBytes": 21050017
+        "scenario": "5000 founders",
+        "config": {
+          "seed": "dd05-large",
+          "width": 256,
+          "height": 256,
+          "population": 5000,
+          "mutationRate": 0.12,
+          "regrowth": true,
+          "rule": "selection",
+          "resourceScale": 1,
+          "mutationStrength": 0.08,
+          "reproduction": true
+        },
+        "metrics": {
+          "tick": 0,
+          "population": 5000,
+          "food": 130237.612,
+          "births": 0,
+          "deaths": 0,
+          "meanEnergy": 23.0395438,
+          "maxGeneration": 0
+        },
+        "lineages": {
+          "living": 5000,
+          "extinct": 0
+        },
+        "storage": {
+          "live": 5000,
+          "recent": 0,
+          "pinned": 0,
+          "parentReferences": 0,
+          "lines": 5000,
+          "events": 0,
+          "droppedEvents": 0
+        },
+        "times": {
+          "snapshot": 33.699999999953434,
+          "serialize": 8.399999999906868,
+          "sha256": 19.800000000046566,
+          "envelope": 19.800000000046566,
+          "indexedDbWrite": 26.800000000046566,
+          "indexedDbRead": 8.5,
+          "decodeAndValidate": 87.39999999990687,
+          "engine": 13.800000000046566,
+          "history": 12.199999999953434
+        },
+        "biologyBytes": 2323166,
+        "historyBytes": 1563490,
+        "fileBytes": 4237336,
+        "sampledPeakJsHeap": 69151369,
+        "originalTps": 220.94564737070132,
+        "restoredTps": 222.12350066639348,
+        "match": true,
+        "futureMatch": true
       },
       {
-        "initialPopulation": 5000,
-        "historyPanel": true,
-        "frameBufferBytes": 220224,
-        "frameMetadataJsonBytes": 34798,
-        "historyPackets": 7,
-        "historyJsonBytes": 22260,
-        "elapsedMs": 8000.800000000187,
-        "startTick": 179,
-        "endTick": 2774,
-        "startPopulation": 6344,
-        "endPopulation": 4834,
-        "engineTps": 324.3425657434181,
-        "browserRafFps": 59.61903809618899,
-        "maxRafGapMs": 33.400000000000546,
-        "mapPaintFps": 7.874212578741942,
-        "mapRenderP50Ms": 1.5,
-        "mapRenderP95Ms": 2.400000000372529,
-        "stepToPaintP50Ms": 25.700000000186265,
-        "stepToPaintP95Ms": 48.799999999813735,
-        "peakJsHeapBytes": 21245050
+        "scenario": "10000 ticks and filled archive",
+        "config": {
+          "seed": "dd00-verification",
+          "width": 256,
+          "height": 256,
+          "population": 1000,
+          "mutationRate": 0.12,
+          "regrowth": true,
+          "rule": "selection",
+          "resourceScale": 1,
+          "mutationStrength": 0.08,
+          "reproduction": true
+        },
+        "metrics": {
+          "tick": 10000,
+          "population": 2913,
+          "food": 16785.864,
+          "births": 16597,
+          "deaths": 14684,
+          "meanEnergy": 17.96153381393752,
+          "maxGeneration": 33
+        },
+        "lineages": {
+          "living": 2,
+          "extinct": 998
+        },
+        "storage": {
+          "live": 2913,
+          "recent": 4096,
+          "pinned": 888,
+          "parentReferences": 2237,
+          "lines": 1000,
+          "events": 180,
+          "droppedEvents": 1730
+        },
+        "times": {
+          "snapshot": 38.10000000009313,
+          "serialize": 11.399999999906868,
+          "sha256": 26.699999999953434,
+          "envelope": 17.699999999953434,
+          "indexedDbWrite": 49.0999999998603,
+          "indexedDbRead": 8.199999999953434,
+          "decodeAndValidate": 83.80000000004657,
+          "engine": 7.600000000093132,
+          "history": 18.800000000046566
+        },
+        "biologyBytes": 1686722,
+        "historyBytes": 2388344,
+        "fileBytes": 4449765,
+        "sampledPeakJsHeap": 71624350,
+        "originalTps": 404.04040404040404,
+        "restoredTps": 393.7007874015748,
+        "match": true,
+        "futureMatch": true
+      },
+      {
+        "scenario": "extinct world and lines",
+        "config": {
+          "seed": "dd05-empty",
+          "width": 64,
+          "height": 64,
+          "population": 5000,
+          "mutationRate": 0.12,
+          "regrowth": false,
+          "rule": "selection",
+          "resourceScale": 1,
+          "mutationStrength": 0.08,
+          "reproduction": true
+        },
+        "metrics": {
+          "tick": 600,
+          "population": 0,
+          "food": 0,
+          "births": 0,
+          "deaths": 5000,
+          "meanEnergy": 0,
+          "maxGeneration": 0
+        },
+        "lineages": {
+          "living": 0,
+          "extinct": 5000
+        },
+        "storage": {
+          "live": 0,
+          "recent": 4096,
+          "pinned": 0,
+          "parentReferences": 0,
+          "lines": 5000,
+          "events": 169,
+          "droppedEvents": 0
+        },
+        "times": {
+          "snapshot": 13.299999999813735,
+          "serialize": 3.5,
+          "sha256": 9.200000000186265,
+          "envelope": 7.5,
+          "indexedDbWrite": 10.299999999813735,
+          "indexedDbRead": 3.4000000001396984,
+          "decodeAndValidate": 36.60000000009313,
+          "engine": 0.19999999995343387,
+          "history": 16.5
+        },
+        "biologyBytes": 41124,
+        "historyBytes": 1741013,
+        "fileBytes": 2001213,
+        "sampledPeakJsHeap": 92051904,
+        "originalTps": 76923.0769340985,
+        "restoredTps": 71428.57142144396,
+        "match": true,
+        "futureMatch": true
       }
     ]
   },
   "evidence": [
-    "reports/dd-04/ancestry-1920x1080.png",
-    "reports/dd-04/browser-benchmark.json",
-    "reports/dd-04/browser-benchmark.log",
-    "reports/dd-04/build.log",
-    "reports/dd-04/checks.json",
-    "reports/dd-04/dd01-compatibility.log",
-    "reports/dd-04/dd02-regression.log",
-    "reports/dd-04/dd02-state.log",
-    "reports/dd-04/determinism.log",
-    "reports/dd-04/e2e.json",
-    "reports/dd-04/e2e.log",
-    "reports/dd-04/events-1366x768.png",
-    "reports/dd-04/experiments.log",
-    "reports/dd-04/extinction-390x844.png",
-    "reports/dd-04/history-benchmark-initial.log",
-    "reports/dd-04/history-benchmark.json",
-    "reports/dd-04/history-benchmark.log",
-    "reports/dd-04/history-endurance.json",
-    "reports/dd-04/integration.log",
-    "reports/dd-04/laboratory-390x844.png",
-    "reports/dd-04/lineage-e2e.json",
-    "reports/dd-04/lineage-e2e.log",
-    "reports/dd-04/lineages-1366x768.png",
-    "reports/dd-04/lint-initial.log",
-    "reports/dd-04/lint.log",
-    "reports/dd-04/long-run-a.json",
-    "reports/dd-04/long-run-b.json",
-    "reports/dd-04/no-food.json",
-    "reports/dd-04/no-reproduction.json",
-    "reports/dd-04/performance-5000.json",
-    "reports/dd-04/typecheck.log",
-    "reports/dd-04/unit.log"
+    "reports/dd-05/checks.json",
+    "reports/dd-05/build.log",
+    "reports/dd-05/typecheck.log",
+    "reports/dd-05/lint.log",
+    "reports/dd-05/unit.log",
+    "reports/dd-05/integration.log",
+    "reports/dd-05/replay.json",
+    "reports/dd-05/replay.log",
+    "reports/dd-05/save-benchmark.json",
+    "reports/dd-05/save-benchmark.log",
+    "reports/dd-05/persistence-e2e.json",
+    "reports/dd-05/persistence-e2e.log",
+    "reports/dd-05/e2e.json",
+    "reports/dd-05/e2e.log",
+    "reports/dd-05/lineage-e2e.json",
+    "reports/dd-05/lineage-e2e.log",
+    "reports/dd-05/long-run-a.json",
+    "reports/dd-05/long-run-b.json",
+    "reports/dd-05/determinism.log",
+    "reports/dd-05/dd02-regression.log",
+    "reports/dd-05/dd02-state.log",
+    "reports/dd-05/dd01-compatibility.log",
+    "reports/dd-05/history-benchmark.json",
+    "reports/dd-05/browser-benchmark.json",
+    "reports/dd-05/slots-1920x1080.png",
+    "reports/dd-05/loaded-1366x768.png",
+    "reports/dd-05/import-preview-390x844.png"
   ],
   "blockers": [
-    "GitHub GraphQL отклонил gh pr create с Forbidden. Ветка опубликована и доступна через форму создания Pull Request."
+    "GitHub API вернул Forbidden для gh pr create. Ветка опубликована, отдельный PR доступен через форму после входа."
   ],
   "nextStageAuthorized": false
 }

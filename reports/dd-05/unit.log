@@ -1,0 +1,37 @@
+✔ same seed, configuration and ticks produce identical complete states (4.999687ms)
+✔ different seeds produce distinct worlds (40.974247ms)
+✔ food competition never overdraws even in crowded cells (8.396785ms)
+✔ feeding gain matches assimilation minus explicit metabolic cost (0.585901ms)
+✔ reproduction transfers energy and pays cost instead of copying energy (0.751029ms)
+✔ zero mutation offspring inherits a separate exact genome (1.245783ms)
+✔ mutations stay within bounds for 10000 successive genomes (7.950704ms)
+✔ organism dies when energy is exhausted (0.507723ms)
+✔ confirmed dead organism never moves, eats or reproduces (0.415154ms)
+✔ one intent per organism per tick; newborn waits until next tick (0.437588ms)
+✔ integer resource and energy budget closes over birth/death cycles (18.769521ms)
+✔ no NaN or Infinity across multiple seeded worlds (161.429444ms)
+✔ toroidal cell lookup wraps both axes (0.271657ms)
+✔ invalid configs and tick counts are rejected (0.834539ms)
+✔ proportional conflict allocation is independent of iteration order without mutation (1.026467ms)
+✔ UTF-16 seeds sharing a high surrogate initialize distinct RNG streams (1.214088ms)
+✔ tick stages publish in order and observations do not move organisms (0.472487ms)
+✔ an eligible organism never gives birth when reproduction is disabled (0.397686ms)
+✔ zero reserves skip every action while duplicate IDs fail the tick (0.813849ms)
+✔ full invariant check rejects counterfeited state and missing food (1.313196ms)
+✔ phenotype maps the four genes and makes high assimilation costly (0.688812ms)
+✔ mutation strength zero copies values and maximum strength remains bounded (1.164624ms)
+✔ live genetic distributions, cohort deaths and zero-birth values reflect state (2.782206ms)
+✔ world event thresholds use only adjacent 100-tick measurements (2.555596ms)
+✔ energy exhaustion is recorded once, aggregated and bounded during mass extinction (2.529267ms)
+✔ living offspring retain their direct parent after historical eviction (0.725847ms)
+✔ food-drop event cooldown suppresses a qualifying repeat then permits a later one (1.35647ms)
+✔ version 1 fixture restores exact numbers, IDs, typed resources and independent copies (18.365337ms)
+✔ malformed, unsupported and honestly checksummed invalid snapshots are rejected (6.420403ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 401.565

@@ -1,0 +1,4 @@
+BUILD PASS: 16 files emitted to dist/
+Persistence E2E PASS: 3 viewports, IndexedDB, verified imports, deterministic replay and quota rollback
+(node:4567) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
