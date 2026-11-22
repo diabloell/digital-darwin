@@ -10,7 +10,7 @@
 | DD-05 | Versioned saves, restore and replay | See reports/DD-05.md for verification and review status |
 | DD-06 | Paired experiments and analysis | See reports/DD-06.md for verification and review status |
 | DD-07 | First Playable Evolution Loop | См. [Issue #8](https://github.com/diabloell/digital-darwin/issues/8) и [отчёт](reports/DD-07.md) |
-| DD-08 | Playable-First, следующий этап | Ожидает приёмки DD-07 |
+| DD-08 | Interface as Evolution Console | См. [отчёт DD-08](reports/DD-08.md) |
 | DD-09 | Playable-First | Запланирован |
 | DD-10 | Playable-First | Запланирован |
 | DD-11 | Playable-First | Запланирован |

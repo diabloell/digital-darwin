@@ -1,3 +1,4 @@
+import { drawTrends, updateConsole } from './console.ts';
 import { GamePanel } from './game/ui.ts';
 import { SavesPanel } from './saves-panel.ts';
 import { HistoryPanel } from './history-panel.ts';
@@ -22,7 +23,7 @@ let focusEntity: number | null = null;
 const observerHistory = new HistoryPanel(send, id => {
   focusEntity = id;
   send({ kind: 'inspect', id });
-}, id => map.highlight(id));
+}, id => map.highlight(id ?? frame?.game?.founder ?? null));
 const bins = Array.from({ length: 8 }, () => {
   const meter = document.createElement('meter');
   meter.min = 0;
@@ -86,6 +87,9 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
   }
   observerHistory.onFrame(data.epoch, data.selectedId);
   gamePanel.update(data);
+  updateConsole(data, previous);
+  if (data.game?.founder != null && (newWorld || previous?.game?.founder !== data.game.founder)) map.focusLine(data.game.founder);
+  if (data.game?.active !== previous?.game?.active) scheduleChart();
   saves.onFrame(data);
   send({ kind: 'ready', epoch: data.epoch });
 };
@@ -144,6 +148,7 @@ function scheduleChart() {
 
 function drawChart() {
   if (!frame) return;
+  drawTrends(frame);
   const { title, unit, read } = CHARTS[chartMode.value];
   const samples = frame.history;
   const values = samples.map(read);
@@ -233,6 +238,13 @@ $('inspection').addEventListener('click', e => {
 });
 $('zoom-in').onclick = () => map.zoom(1.4);
 $('zoom-out').onclick = () => map.zoom(1 / 1.4);
+$('focus-line').onclick = () => {
+  const founder = frame?.game?.founder;
+  if (founder != null) { map.highlight(founder); map.focusLine(founder); }
+};
+document.querySelectorAll<HTMLElement>('[data-open]').forEach(link => {
+  link.addEventListener('click', () => { $<HTMLDetailsElement>(link.dataset.open!).open = true; });
+});
 $('fit').onclick = () => map.fit();
 $<HTMLSelectElement>('trait-color').onchange = e => map.setMode((e.target as HTMLSelectElement).value);
 chartMode.onchange = scheduleChart;

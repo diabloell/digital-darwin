@@ -239,6 +239,10 @@ export class PopulationHistory {
       events: [...this.events].reverse(), droppedEvents: this.eventId - this.events.length };
   }
 
+  latestEvents(): WorldEvent[] {
+    return this.events.slice(-3).reverse();
+  }
+
   snapshot(): HistorySnapshot {
     const link = (row?: EventLink) => row ? { id: row.id, founder: row.founder } : null;
     return structuredClone({

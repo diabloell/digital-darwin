@@ -1,7 +1,7 @@
 import type { EventKind, HistoryView, LifeRecord, LineSummary, WorldEvent } from './core/history.ts';
 import type { Command } from './protocol.ts';
 
-const LABELS: Record<EventKind, string> = {
+export const EVENT_LABELS: Record<EventKind, string> = {
   births: 'Рождения', deaths: 'Смерти', variation: 'Потомки с изменённым генотипом',
   generation: 'Новое максимальное поколение', 'lineage-extinction': 'Вымирание линий',
   extinction: 'Полное вымирание', 'population-crisis': 'Сокращение популяции',
@@ -32,7 +32,7 @@ export class HistoryPanel {
     this.send = send;
     this.chooseEntity = chooseEntity;
     this.chooseLine = chooseLine;
-    for (const [kind, label] of Object.entries(LABELS)) this.filter.add(new Option(label, kind));
+    for (const [kind, label] of Object.entries(EVENT_LABELS)) this.filter.add(new Option(label, kind));
     this.filter.onchange = () => this.render();
     for (const button of this.nav) button.onclick = () => this.open(button.dataset.history as Mode);
     this.close.onclick = () => {
@@ -178,7 +178,7 @@ export class HistoryPanel {
     return `${view.droppedEvents ? `<p>Старые записи вытеснены: ${fmt(view.droppedEvents)}.</p>` : ''}
       ${visible.length ? '' : '<p>Событий этого типа пока нет.</p>'}
       <ol class="history-list event-list">${visible.map(e => `<li data-event="${e.kind}"><small>Тик ${fmt(e.tick)}</small>
-        <strong>${LABELS[e.kind]}</strong><span class="event-${e.severity}">${details(e)}</span>
+        <strong>${EVENT_LABELS[e.kind]}</strong><span class="event-${e.severity}">${details(e)}</span>
         ${e.entity ? this.entityButton(e.entity, 'Организм #' + e.entity) : ''}
         ${e.founder ? this.lineButton(e.founder) : ''}</li>`).join('')}</ol>`;
   }

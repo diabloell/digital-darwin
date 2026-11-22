@@ -1,6 +1,6 @@
 import type { Action, GameView, Habitat } from './core/game.ts';
 import type { Manifest, SaveFile } from './snapshot.ts';
-import type { HistoryView } from './core/history.ts';
+import type { HistoryView, WorldEvent } from './core/history.ts';
 import type { Config, Metrics, Organism } from './core/engine.ts';
 import type { Genome, Phenotype } from './core/genetics.ts';
 export type WorldSettings = Pick<Config, 'width' | 'height' | 'population' | 'mutationRate' | 'mutationStrength' | 'regrowth' | 'rule'>;
@@ -17,6 +17,7 @@ export type Frame = {
   selected: Organism | null; selectedId: number | null; selectedPhenotype: Phenotype | null;
   running: boolean; speed: number; tps: number; history: Sample[]; traitBins: Uint8Array;
   game?: GameView;
+  recentEvents: WorldEvent[];
   speedHistogram: number[]; histograms: number[][];
 };
 export type PersistenceEvent =

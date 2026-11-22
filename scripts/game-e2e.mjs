@@ -40,6 +40,7 @@ try {
       await wait(()=>!window.__gameFrame.running);
     };
     const create = async (seed,habitat)=>{
+      if(!await loc('#evolution-game').evaluate(el=>el.open))await loc('#evolution-game summary').click();
       await loc('#game-seed').fill(seed);
       await loc('#game-habitat').selectOption(habitat);
       await loc('#game-form button').click();
@@ -65,6 +66,47 @@ try {
     await page.goto(url);
     await loc('#evolution-game > summary').click();
     await create('coral-42','garden');
+    const screenshotConsole = async (name) => {
+      assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+      await page.screenshot({path:`${output}/${name}-${width}x${height}.png`});
+    };
+    const atTop = () => page.evaluate(()=>window.scrollTo(0,0));
+    const rawWorld = () => page.evaluate(()=>{
+      const {metrics,positions,ids,food,game}=window.__gameFrame;
+      return {metrics,positions:[...positions],ids:[...ids],food:[...food],game};
+    });
+    await atTop();
+    for (const selector of ['#viewport','#game-ep','#game-cards button','#play']) {
+      if(width===390 && selector.includes('game-cards'))continue;
+      const box=await loc(selector).first().boundingBox();
+      assert.ok(box && box.y>=0 && box.y+box.height<=height,`${selector} outside first viewport at ${width}`);
+    }
+    await screenshotConsole('console');
+    const initial = await rawWorld();
+    const camera = await loc('#camera-readout').textContent();
+    await loc('#world').hover();
+    const scrollBefore = await page.evaluate(()=>scrollY);
+    await page.mouse.wheel(0,-200);
+    await wait(before=>document.querySelector('#camera-readout').textContent!==before,camera);
+    assert.equal(await page.evaluate(()=>scrollY),scrollBefore);
+    await loc('#focus-line').click();
+    await loc('#fit').click();
+    assert.deepEqual(await rawWorld(),initial);
+    await loc('#star-system summary').click();
+    assert.match(await loc('#star-system p').innerText(),/Декоративная схема/);
+    assert.deepEqual(await rawWorld(),initial);
+    if(width===1366)await screenshotConsole('star-system');
+    await loc('#star-system summary').click();
+    await atTop();
+    await loc('.masthead nav [data-open="experiment-lab"]').click();
+    await loc('#lab-preset').waitFor();
+    assert.deepEqual(await rawWorld(),initial);
+    await loc('#experiment-lab > summary').click();
+    await atTop();
+    await page.mouse.move(width-9,Math.min(250,height-5));
+    await page.mouse.wheel(0,420);
+    await wait(()=>scrollY>100);
+    await atTop();
     assert.equal(await locatorDisabled('nutrition'),true);
     await start();
     await loc('[data-card="nutrition"]:enabled').waitFor();
@@ -72,6 +114,15 @@ try {
     await loc('[data-card="nutrition"]').click();
     await wait(()=>window.__gameFrame.game.active==='nutrition');
     assert.equal(await locatorDisabled('mobility'),true);
+    assert.match(await loc('#console-programme').innerText(),/Усвоение/);
+    assert.equal(await loc('#game-progress').isVisible(),true);
+    if(width===1366){
+      await start();
+      await wait(()=>window.__gameFrame.metrics.tick>=window.__gameFrame.game.attempts[0].start+75);
+      await pause();
+      await atTop();
+      await screenshotConsole('active-programme');
+    }
     await saveAndReload('Активная программа');
     await start();
     await loc('[data-card="fertility"]:enabled').waitFor();
@@ -99,6 +150,12 @@ try {
     assert.deepEqual((await read()).game,game.view(genealogy));
     assert.deepEqual(await page.evaluate(()=>window.__gameFrame.metrics),engine.metrics());
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true);
+    if(width===1366){
+      await loc('#game-analysis > summary').click();
+      await loc('#game-samples table').waitFor();
+      await loc('#analysis').evaluate(el=>el.scrollIntoView());
+      await screenshotConsole('deep-analysis');
+    }
     const screenshot = `${output}/game-${width}x${height}.png`;
     await page.screenshot({path:screenshot,fullPage:true});
     await create('zero','empty');
@@ -110,7 +167,7 @@ try {
     assert.equal((await read()).game.spent,0);
     assert.deepEqual(errors,[]);
     await writeFile(`${output}/game-e2e-${width}.json`,JSON.stringify({status:'PASS',viewport:{width,height},completed,screenshot,
-      checks:['two purchases','active and completed slots survive reload','CLI/Worker agreement after resumed step','clock locks on extinction','restart clears progression','no horizontal overflow','no console errors']},null,2)+'\n');
+      checks:['two purchases','active and completed slots survive reload','CLI/Worker agreement after resumed step','clock locks on extinction','restart clears progression','first-screen console','camera and star system preserve paused world','laboratory navigation preserves paused game','wheel zoom and page scroll','no horizontal overflow','no console errors']},null,2)+'\n');
     await page.close();
     console.log(`${width}x${height}: PASS`);
     function locatorDisabled(card){return loc(`[data-card="${card}"]`).isDisabled();}
