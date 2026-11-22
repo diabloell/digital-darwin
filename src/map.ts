@@ -112,6 +112,22 @@ export class WorldMap {
     this.invalidate();
   }
 
+  focusLine(founder: number): void {
+    const frame = this.frame;
+    if (!frame) return;
+    const index = frame.founders.indexOf(founder) * 4;
+    if (index < 0) return;
+    this.fit();
+    this.zoom(1.25);
+    const x = this.width / 2 - frame.positions[index] * this.scale;
+    const y = this.height / 2 - frame.positions[index + 1] * this.scale;
+    const limit = (origin: number, view: number, world: number) =>
+      world <= view * .68 ? (view - world) / 2 : Math.min(view * .16, Math.max(view * .84 - world, origin));
+    this.x = limit(x, this.width, frame.width * this.scale);
+    this.y = limit(y, this.height, frame.height * this.scale);
+    this.invalidate();
+  }
+
   setMode(mode: string): void {
     this.mode = mode;
     this.invalidate();

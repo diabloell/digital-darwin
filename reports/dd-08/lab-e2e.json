@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "browser": "156.0.8078.79",
+  "results": [
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "runs": 4,
+      "scenarioHash": "91bb23ba9e213bf8340ce3669a24ca9bfc8ffdb4343bcecf4daec39789a5affe",
+      "rafCallbacksIn400ms": 25,
+      "renderMs": 2.699999999254942,
+      "exportAndFilterMs": 988.5155179999992,
+      "cancel": "PASS",
+      "errors": []
+    },
+    {
+      "viewport": [
+        1366,
+        768
+      ],
+      "runs": 4,
+      "scenarioHash": "8420af5e07ef33132802f3e9d728dd384ba75bf4bf840dc318c755f9e7f3efb5",
+      "rafCallbacksIn400ms": 25,
+      "renderMs": 3,
+      "exportAndFilterMs": 580.2590149999996,
+      "cancel": "NOT RUN",
+      "errors": []
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "runs": 4,
+      "scenarioHash": "91bb23ba9e213bf8340ce3669a24ca9bfc8ffdb4343bcecf4daec39789a5affe",
+      "rafCallbacksIn400ms": 25,
+      "renderMs": 2.399999998509884,
+      "exportAndFilterMs": 693.7709880000002,
+      "cancel": "NOT RUN",
+      "errors": []
+    }
+  ],
+  "screenshots": [
+    "outputs/dd08-final/laboratory-1920x1080.png",
+    "outputs/dd08-final/progress-1366x768.png",
+    "outputs/dd08-final/comparison-390x844.png"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "browser": "156.0.8078.79",
+  "runs": [
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "tick": 164,
+      "population": 466,
+      "checks": [
+        "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
+        "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
+        "independent slot, rename, confirmed overwrite and delete"
+      ],
+      "quota": "PASS (injected QuotaExceededError after queuing real IndexedDB put; real quota NOT RUN)",
+      "errors": []
+    },
+    {
+      "viewport": [
+        1366,
+        768
+      ],
+      "tick": 156,
+      "population": 461,
+      "checks": [
+        "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
+        "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
+        "independent slot, rename, confirmed overwrite and delete"
+      ],
+      "quota": "NOT RUN",
+      "errors": []
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "tick": 158,
+      "population": 461,
+      "checks": [
+        "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
+        "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
+        "independent slot, rename, confirmed overwrite and delete"
+      ],
+      "quota": "NOT RUN",
+      "errors": []
+    }
+  ],
+  "screenshots": [
+    "outputs/dd08-final/slots-1920x1080.png",
+    "outputs/dd08-final/loaded-1366x768.png",
+    "outputs/dd08-final/import-preview-390x844.png"
+  ],
+  "browserRestart": "PASS"
+}

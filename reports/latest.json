@@ -1,21 +1,20 @@
 {
-  "stage": "DD-07",
+  "stage": "DD-08",
   "status": "PARTIAL",
-  "sourceCommit": "89a9758d230c0d13320808bebcf862cbb53d6dbc",
-  "baseMain": "9645692c8434c793060ac3ee76acad1d64431cf5",
-  "branch": "dd-07-first-playable-evolution",
-  "issue": "https://github.com/diabloell/digital-darwin/issues/8",
+  "sourceCommit": "ab05a98f5739d7617c2999586ea0d53d7fcd803e",
+  "baseMain": "bca728ef8d6f4c39ea763a003a554f6aa7080742",
+  "branch": "dd-08-evolution-console",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
     "error": "Post \"https://api.github.com/graphql\": Forbidden",
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-07-first-playable-evolution"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-08-evolution-console"
   },
   "ci": {
     "status": "PASS",
     "event": "push",
     "pullRequestEvent": "NOT RUN",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45081593913",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45084802230",
     "groups": [
       "LAB-E01",
       "LAB-E02",
@@ -66,31 +65,31 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd07-final/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd08-final/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd07-final/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd08-final/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd07-final/performance-5000.json --profile",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd08-final/performance-5000.json --profile",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-food",
-      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd07-final/no-food.json --width 32 --height 32 --no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd08-final/no-food.json --width 32 --height 32 --no-food",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-reproduction",
-      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd07-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd08-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
       "status": "PASS",
       "exitCode": 0
     },
@@ -102,7 +101,7 @@
     },
     {
       "name": "experiments",
-      "command": "node apps/experiments.ts outputs/dd07-final/experiments.json",
+      "command": "node apps/experiments.ts outputs/dd08-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -138,7 +137,7 @@
     },
     {
       "name": "lab-batches",
-      "command": "node apps/lab.ts all outputs/dd07-final/lab-batches",
+      "command": "node apps/lab.ts all outputs/dd08-final/lab-batches",
       "status": "PASS",
       "exitCode": 0
     },
@@ -168,13 +167,13 @@
     },
     {
       "name": "dd02-regression",
-      "command": "node scripts/check-dd02-regression.mjs outputs/dd07-final/experiments.json",
+      "command": "node scripts/check-dd02-regression.mjs outputs/dd08-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "dd02-state",
-      "command": "node scripts/check-determinism.mjs outputs/dd07-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd08-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
       "status": "PASS",
       "exitCode": 0
     },
@@ -192,7 +191,7 @@
     },
     {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/dd07-final/long-run-a.json outputs/dd07-final/long-run-b.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd08-final/long-run-a.json outputs/dd08-final/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
@@ -200,9 +199,9 @@
   "legacyLab": {
     "status": "PASS",
     "replicas": 42,
-    "evidence": "dd-07/legacy-lab.json"
+    "evidence": "dd-08/legacy-lab.json"
   },
-  "report": "DD-07.md",
-  "evidence": "dd-07/",
-  "playtest": "AWAITING CUSTOMER"
+  "report": "DD-08.md",
+  "evidence": "dd-08/",
+  "customerTest": "AWAITING CUSTOMER"
 }

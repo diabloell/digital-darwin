@@ -1,0 +1,18 @@
+✔ 1000-organism real ecology births, deaths and valid metrics (1568.802892ms)
+✔ without food or regrowth all energy-dependent organisms die (304.100108ms)
+✔ batch size does not affect deterministic outcome (232.024416ms)
+✔ 5000 claimants share a crowded cell equally under reversed storage (33.87134ms)
+✔ eight seeded worlds conserve resources across batches, competition and lifecycle (485.634819ms)
+✔ history is deterministic and bounded while preserving ancestry and Engine state (5918.244415ms)
+✔ mass births, retained ancestry, pending events and extinction round trip (37.412276ms)
+✔ lab pairs preserve founders and RNG and uniform landscape conserves integer totals (1344.718427ms)
+✔ lab preserves extinct, failed and interrupted runs without filling undefined effects (14.81751ms)
+✔ mutation OFF produces no new genotypes after actual births (253.762414ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10308.988888

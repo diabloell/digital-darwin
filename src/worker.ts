@@ -54,7 +54,7 @@ function emit(force = false): void {
   });
   const selected = engine.organisms.find(a => a.id === selectedId) ?? null;
   const food = Uint8Array.from(engine.food, f => Math.min(255, Math.floor(f / 28)));
-  const frame: Frame = { kind: 'frame', ...(game?{game:game.view(genealogy)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
+  const frame: Frame = { kind: 'frame', recentEvents: genealogy.latestEvents(), ...(game?{game:game.view(genealogy)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
   self.postMessage(frame, [positions.buffer, ids.buffer, food.buffer, traitBins.buffer, generations.buffer, founders.buffer]); inFlight = true; lastFrame = performance.now();
 }
 self.onmessage = e => {

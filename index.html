@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital Darwin · Наблюдение за миром</title>
+  <title>Digital Darwin · Консоль эволюции</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <header class="masthead">
     <a class="brand" href="/" aria-label="Digital Darwin"><span aria-hidden="true">◈</span> DIGITAL DARWIN</a>
-    <span class="masthead-note">Лаборатория искусственной жизни</span>
+    <span class="masthead-note">Искусственная жизнь</span><nav aria-label="Разделы"><a href="#analysis">Аналитика</a><a href="#world-saves" data-open="world-saves">Сохранения</a><a href="#experiment-lab" data-open="experiment-lab">Лаборатория</a></nav>
   </header>
   <main>
-    <div class="page-heading">
-      <div><h1>Наблюдение за миром</h1><p>Ресурсы, наследственность и жизнь цифровой экосистемы.</p></div>
+    <div class="console-heading">
+      <h1>Консоль эволюции</h1>
       <details id="world-settings">
         <summary>Настройки нового мира</summary>
         <form id="world-form">
@@ -31,29 +31,105 @@
         </form>
       </details>
     </div>
-    <details id="evolution-game" class="chart-panel">
-      <summary>Играть за эволюционную линию</summary>
-      <form id="game-form" class="lab-grid">
-        <label>Seed <input id="game-seed" value="coral-42" maxlength="128" required></label>
-        <label>Среда <select id="game-habitat"><option value="garden">Сад</option><option value="scarce">Дефицит</option><option value="empty">Без ресурсов</option></select></label>
-        <button class="primary" type="submit">Новая игра</button>
-      </form>
-      <div id="game-panel" hidden>
-        <p id="game-status" role="status"></p>
-        <div id="game-choice" class="save-actions">
-          <label>Линия <select id="game-founder"></select></label><button id="game-choose">Выбрать основателя</button>
+    <div id="error" role="alert" hidden></div>
+    <dl class="console-bar" aria-label="Текущее состояние">
+      <div><dt>Тик / скорость</dt><dd><span id="tick">0</span> <span id="console-speed">· 1×</span></dd></div>
+      <div><dt>Популяция</dt><dd id="population">—</dd></div>
+      <div><dt>Моя линия</dt><dd id="console-line">—</dd></div>
+      <div><dt>Баланс</dt><dd id="game-ep">—</dd></div>
+      <div><dt>Адаптация</dt><dd id="console-programme">—</dd></div>
+      <div><dt>Событие</dt><dd id="console-event">—</dd></div>
+    </dl>
+    <div class="console-grid">
+      <section class="world-panel">
+        <div class="panel-heading">
+          <div><span id="status-dot"></span> <b id="status" role="status">ПОДГОТОВКА МИРА</b><span id="world-seed">coral-42</span></div>
+          <button id="focus-line" hidden>К линии</button><label>Окраска <select id="trait-color">
+            <option value="normal">Обычная</option><option value="energy">Энергия</option><option value="generation">Поколение</option>
+            <option value="speed">Скорость</option><option value="sensor">Радиус поиска</option><option value="efficiency">Усвоение</option><option value="threshold">Порог размножения</option>
+          </select></label>
         </div>
-        <div id="game-dashboard" hidden>
-          <div class="game-stats"><strong id="game-ep"></strong><span id="game-pop"></span><span id="game-energy"></span></div>
-          <p id="game-ledger"></p>
-          <div id="game-cards" class="game-cards"></div>
-          <p id="game-programme"></p>
-          <div class="lab-table" id="game-attempts" tabindex="0" aria-label="Итоги программ"></div>
-          <details><summary>Траектория линии</summary><div class="lab-table" id="game-samples" tabindex="0" aria-label="Измеренные признаки"></div></details>
+        <div id="viewport" tabindex="0" role="region" aria-label="Карта мира. Стрелки перемещают камеру, плюс и минус меняют масштаб. Enter выбирает ближайший к центру организм.">
+          <canvas id="world" aria-label="Карта пищи и организмов"></canvas>
+          <div class="map-label">ПИЩЕВОЙ ЛАНДШАФТ <span id="world-size">—</span></div>
+          <div class="map-help" id="camera-readout">Центр — · масштаб —</div>
+          <div class="camera-tools">
+            <button id="zoom-in" aria-label="Приблизить">+</button><button id="zoom-out" aria-label="Отдалить">−</button><button id="fit" aria-label="Показать весь мир">⌖</button>
+          </div>
+        </div>
+        <div class="legend"><a href="#organism-inspector">Инспектор ↓</a>
+          <span><i class="food-key"></i> Пища · яркость по запасу</span><span id="color-legend"><i class="organism-key"></i> Организмы</span>
+        </div>
+        <div class="controls">
+          <div class="play-controls"><button id="play" class="primary" disabled>▶ Запустить</button><button id="step" disabled>Шаг +1</button></div>
+          <div class="speed-controls" role="group" aria-label="Скорость симуляции"><button data-speed="1" aria-pressed="true">1×</button><button data-speed="4" aria-pressed="false">4×</button><button data-speed="16" aria-pressed="false">16×</button><button data-speed="32" aria-pressed="false">32×</button></div>
+          <span class="tps"><b id="tps">0</b> тиков/с</span>
+        </div>
+      </section>
+      <section class="situation" aria-labelledby="situation-title">
+        <h2 id="situation-title">Текущая ситуация</h2>
+        <p id="observer-note">Режим наблюдения. Начните игру, чтобы управлять линией.</p>
+        <button id="quick-game" class="primary">Начать игру</button>
+        <details id="evolution-game">
+          <summary>Настроить новую игру</summary>
+          <form id="game-form" class="lab-grid">
+            <label>Seed <input id="game-seed" value="coral-42" maxlength="128" required></label>
+            <label>Среда <select id="game-habitat"><option value="garden">Сад</option><option value="scarce">Дефицит</option><option value="empty">Без ресурсов</option></select></label>
+            <button class="primary" type="submit">Новая игра</button>
+          </form>
+        </details>
+          <div id="game-panel" hidden>
+            <p id="game-status" role="status"></p>
+            <div id="game-choice" class="save-actions">
+              <label>Линия <select id="game-founder"></select></label><button id="game-choose">Выбрать основателя</button>
+            </div>
+            <div id="game-dashboard" hidden>
+              <p class="game-stats"><span id="game-pop"></span><span id="game-energy"></span></p>
+              <p id="game-ledger"></p>
+              <p id="game-programme"></p><progress id="game-progress" aria-label="Прогресс адаптации" hidden></progress>
+              <div id="game-cards" class="game-cards"></div>
+              <ul id="game-attempts" aria-label="Итоги программ"></ul>
+
+            </div>
+            <p id="game-receipt" role="status"></p>
+          </div>
+        <section class="recent-events" aria-labelledby="recent-title">
+          <h3 id="recent-title">Недавние события</h3>
+          <p id="world-changes">Изменения появятся после двух отсчётов.</p>
+          <ol id="recent-events"></ol>
+        </section>
+      </section>
+      <section class="quick-charts" aria-label="Динамика экосистемы">
+        <figure><figcaption>Популяция <output id="trend-population-label">—</output></figcaption><canvas id="trend-population"></canvas></figure>
+        <figure><figcaption>Пища <output id="trend-food-label">—</output></figcaption><canvas id="trend-food"></canvas></figure>
+        <figure><figcaption>Средняя энергия <output id="trend-energy-label">—</output></figcaption><canvas id="trend-energy"></canvas></figure>
+        <figure><figcaption><span id="trend-adaptation-name">Носители линии</span> <output id="trend-carriers-label">—</output></figcaption><canvas id="trend-carriers"></canvas></figure>
+      </section>
+      <section class="planet-panel" aria-labelledby="planet-title">
+        <h2 id="planet-title">Планета</h2>
+        <div class="planet-art" aria-hidden="true"><div class="globe"></div></div>
+        <p id="planet-seed">—</p>
+        <p id="planet-size">—</p>
+        <dl class="planet-metrics">
+          <div><dt><i class="resource-dot"></i> Пища, ед.</dt><dd id="food">—</dd></div>
+          <div><dt><i class="life-dot"></i> Рождения</dt><dd id="births">0</dd></div>
+          <div><dt><i class="loss-dot"></i> Смерти</dt><dd id="deaths">0</dd></div>
+        </dl>
+        <details id="star-system"><summary>Звёздная система</summary>
+          <svg class="orbit-art" viewBox="0 0 200 118" aria-hidden="true">
+            <ellipse cx="97" cy="59" rx="40" ry="18"/><ellipse cx="97" cy="59" rx="67" ry="32"/><ellipse cx="97" cy="59" rx="91" ry="48"/>
+            <circle cx="97" cy="59" r="13" fill="#ffd58d"/><circle cx="65" cy="70" r="5" fill="#c98cc1"/>
+            <circle cx="148" cy="39" r="7" fill="#9cf3ca"/><circle cx="178" cy="81" r="4" fill="#9ca4ee"/>
+          </svg>
+          <p>Декоративная схема. Орбиты и другие планеты вне модели.</p>
+        </details>
+      </section>
+    </div>
+    <h2 class="analysis-heading" id="analysis">Глубокая аналитика</h2>
+    <section id="organism-inspector" class="chart-panel inspector"><h2>Инспектор организма</h2><div id="inspection"><p>Выберите организм на карте.</p><button id="inspect-first">Выбрать организм</button></div></section>
+    <details id="game-analysis" class="chart-panel" hidden><summary>Генетика моей линии</summary>
+          <div class="lab-table" id="game-samples" tabindex="0" aria-label="Траектория измеренных признаков"></div>
           <p>Направленная вариация — игровая абстракция. Изменения появляются у части новорождённых, а дальнейшая судьба признака зависит от симуляции.</p>
-        </div>
-        <p id="game-receipt" role="status"></p>
-      </div>
     </details>
     <details id="world-saves" class="chart-panel">
       <summary>Миры и сохранения</summary>
@@ -71,45 +147,6 @@
       </div>
       <p id="save-status" role="status"></p>
     </details>
-    <div id="error" role="alert" hidden></div>
-    <section class="workspace" aria-label="Наблюдательный пост">
-      <section class="world-panel">
-        <div class="panel-heading">
-          <div><span id="status-dot"></span> <b id="status" role="status">ПОДГОТОВКА МИРА</b><span id="world-seed">coral-42</span></div>
-          <label>Окраска <select id="trait-color">
-            <option value="normal">Обычная</option><option value="energy">Энергия</option><option value="generation">Поколение</option>
-            <option value="speed">Скорость</option><option value="sensor">Радиус поиска</option><option value="efficiency">Усвоение</option><option value="threshold">Порог размножения</option>
-          </select></label>
-        </div>
-        <div id="viewport" tabindex="0" role="region" aria-label="Карта мира. Стрелки перемещают камеру, плюс и минус меняют масштаб. Enter выбирает ближайший к центру организм.">
-          <canvas id="world" aria-label="Карта пищи и организмов"></canvas>
-          <div class="map-label">ПИЩЕВОЙ ЛАНДШАФТ <span id="world-size">—</span></div>
-          <div class="map-help" id="camera-readout">Центр — · масштаб —</div>
-          <div class="camera-tools">
-            <button id="zoom-in" aria-label="Приблизить">+</button><button id="zoom-out" aria-label="Отдалить">−</button><button id="fit" aria-label="Показать весь мир">⌖</button>
-          </div>
-        </div>
-        <div class="legend">
-          <span><i class="food-key"></i> Пища · яркость по запасу</span><span id="color-legend"><i class="organism-key"></i> Организмы</span>
-        </div>
-        <div class="controls">
-          <div class="play-controls"><button id="play" class="primary" disabled>▶ Запустить</button><button id="step" disabled>Шаг +1</button></div>
-          <div class="speed-controls" role="group" aria-label="Скорость симуляции"><button data-speed="1" aria-pressed="true">1×</button><button data-speed="4" aria-pressed="false">4×</button><button data-speed="16" aria-pressed="false">16×</button><button data-speed="32" aria-pressed="false">32×</button></div>
-          <span class="tps"><b id="tps">0</b> тиков/с</span>
-        </div>
-      </section>
-      <aside aria-label="Телеметрия и инспектор">
-        <section class="summary">
-          <h2>Телеметрия мира</h2>
-          <div class="population"><span id="population">—</span><span>живых организмов</span></div>
-          <dl class="metric-grid">
-            <div><dt>Текущий тик</dt><dd id="tick">0</dd></div><div><dt>Пища, ед. энергии</dt><dd id="food">—</dd></div>
-            <div><dt>Рождения, всего</dt><dd id="births">0</dd></div><div><dt>Смерти, всего</dt><dd id="deaths">0</dd></div>
-          </dl>
-        </section>
-        <section class="inspector"><h2>Инспектор организма</h2><div id="inspection"><p>Выберите организм на карте.</p><button id="inspect-first">Выбрать организм</button></div></section>
-      </aside>
-    </section>
     <section class="chart-panel history-panel" aria-labelledby="history-title">
       <div class="chart-heading"><h2 id="history-title">История мира</h2><button id="history-close" hidden>К наблюдению</button></div>
       <div class="history-nav" role="group" aria-label="Разделы истории">

@@ -1,0 +1,2556 @@
+{
+  "status": "PASS",
+  "batchSizes": [
+    1,
+    17
+  ],
+  "results": [
+    {
+      "seed": "coral-42",
+      "habitat": "garden",
+      "founder": 1,
+      "tick": 1200,
+      "world": {
+        "tick": 1200,
+        "population": 439,
+        "food": 5437.757,
+        "births": 656,
+        "deaths": 297,
+        "meanEnergy": 21.00315261958998,
+        "maxGeneration": 7
+      },
+      "game": {
+        "version": 1,
+        "habitat": "garden",
+        "founder": 1,
+        "tick": 1200,
+        "lost": false,
+        "receipt": {
+          "id": 6,
+          "tick": 320,
+          "accepted": false,
+          "reason": "Дождитесь окончания программы"
+        },
+        "renewal": 12,
+        "sustained": 10,
+        "achievement": 3,
+        "spent": 10,
+        "generation": 6,
+        "windowBirths": 0,
+        "ep": 15,
+        "active": null,
+        "line": {
+          "founder": 1,
+          "living": 8,
+          "born": 16,
+          "deaths": 8,
+          "maxGeneration": 6,
+          "lastActivity": 1179,
+          "status": "active",
+          "age": 1200,
+          "generations": 7
+        },
+        "attempts": [
+          {
+            "card": "nutrition",
+            "start": 79,
+            "end": 319,
+            "introduced": 3,
+            "lastIntroduction": 273,
+            "endingCount": 4,
+            "established": true,
+            "peak": 4,
+            "carriers": 5
+          },
+          {
+            "card": "fertility",
+            "start": 319,
+            "end": 559,
+            "introduced": 2,
+            "lastIntroduction": 495,
+            "endingCount": 2,
+            "established": true,
+            "peak": 2,
+            "carriers": 3
+          }
+        ],
+        "samples": [
+          {
+            "tick": 20,
+            "population": 1,
+            "energy": 27.709,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 40,
+            "population": 1,
+            "energy": 31.885,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 60,
+            "population": 1,
+            "energy": 36.241,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 79,
+            "population": 2,
+            "energy": 21.1825,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 80,
+            "population": 2,
+            "energy": 21.5735,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 100,
+            "population": 2,
+            "energy": 27.7555,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 120,
+            "population": 2,
+            "energy": 33.7585,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 140,
+            "population": 2,
+            "energy": 39.2995,
+            "values": {
+              "speed": 0.8247228301111609,
+              "sensor": 3.658111449945718,
+              "efficiency": 0.853261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.06843954065807839,
+            "carriers": 0
+          },
+          {
+            "tick": 160,
+            "population": 4,
+            "energy": 22.87225,
+            "values": {
+              "speed": 0.8477794661135414,
+              "sensor": 3.62356534441933,
+              "efficiency": 0.868261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.0758659663021073,
+            "carriers": 1
+          },
+          {
+            "tick": 180,
+            "population": 4,
+            "energy": 24.9565,
+            "values": {
+              "speed": 0.8477794661135414,
+              "sensor": 3.62356534441933,
+              "efficiency": 0.868261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.0758659663021073,
+            "carriers": 1
+          },
+          {
+            "tick": 200,
+            "population": 4,
+            "energy": 30.06525,
+            "values": {
+              "speed": 0.8477794661135414,
+              "sensor": 3.62356534441933,
+              "efficiency": 0.868261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.0758659663021073,
+            "carriers": 1
+          },
+          {
+            "tick": 220,
+            "population": 4,
+            "energy": 34.43775,
+            "values": {
+              "speed": 0.8477794661135414,
+              "sensor": 3.62356534441933,
+              "efficiency": 0.868261062040925,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.0758659663021073,
+            "carriers": 1
+          },
+          {
+            "tick": 240,
+            "population": 5,
+            "energy": 31.372,
+            "values": {
+              "speed": 0.8431681389130652,
+              "sensor": 3.6001688381023706,
+              "efficiency": 0.8772610620409249,
+              "threshold": 43.378618044517935
+            },
+            "maintenance": 0.08031114631652017,
+            "carriers": 2
+          },
+          {
+            "tick": 260,
+            "population": 6,
+            "energy": 28.883666666666667,
+            "values": {
+              "speed": 0.8400939207794145,
+              "sensor": 3.6098259400762616,
+              "efficiency": 0.873261062040925,
+              "threshold": 43.71879727270454
+            },
+            "maintenance": 0.07833254537344654,
+            "carriers": 2
+          },
+          {
+            "tick": 280,
+            "population": 7,
+            "energy": 25.561,
+            "values": {
+              "speed": 0.838226888410481,
+              "sensor": 3.5969832383282485,
+              "efficiency": 0.8789753477552107,
+              "threshold": 43.67020024010646
+            },
+            "maintenance": 0.08116293078212475,
+            "carriers": 3
+          },
+          {
+            "tick": 300,
+            "population": 7,
+            "energy": 26.257428571428573,
+            "values": {
+              "speed": 0.838226888410481,
+              "sensor": 3.5969832383282485,
+              "efficiency": 0.8789753477552107,
+              "threshold": 43.67020024010646
+            },
+            "maintenance": 0.08116293078212475,
+            "carriers": 3
+          },
+          {
+            "tick": 319,
+            "population": 8,
+            "energy": 25.797,
+            "values": {
+              "speed": 0.836538881123066,
+              "sensor": 3.604624264780432,
+              "efficiency": 0.8856561749984975,
+              "threshold": 43.63375246565789
+            },
+            "maintenance": 0.08475918735749347,
+            "carriers": 4
+          },
+          {
+            "tick": 319,
+            "population": 8,
+            "energy": 25.797,
+            "values": {
+              "speed": 0.836538881123066,
+              "sensor": 3.604624264780432,
+              "efficiency": 0.8856561749984975,
+              "threshold": 43.63375246565789
+            },
+            "maintenance": 0.08475918735749347,
+            "carriers": 4
+          },
+          {
+            "tick": 320,
+            "population": 8,
+            "energy": 26.002875,
+            "values": {
+              "speed": 0.836538881123066,
+              "sensor": 3.604624264780432,
+              "efficiency": 0.8856561749984975,
+              "threshold": 43.63375246565789
+            },
+            "maintenance": 0.08475918735749347,
+            "carriers": 4
+          },
+          {
+            "tick": 340,
+            "population": 8,
+            "energy": 25.549,
+            "values": {
+              "speed": 0.836538881123066,
+              "sensor": 3.604624264780432,
+              "efficiency": 0.8856561749984975,
+              "threshold": 43.63375246565789
+            },
+            "maintenance": 0.08475918735749347,
+            "carriers": 4
+          },
+          {
+            "tick": 360,
+            "population": 8,
+            "energy": 25.27775,
+            "values": {
+              "speed": 0.836538881123066,
+              "sensor": 3.604624264780432,
+              "efficiency": 0.8856561749984975,
+              "threshold": 43.63375246565789
+            },
+            "maintenance": 0.08475918735749347,
+            "carriers": 4
+          },
+          {
+            "tick": 380,
+            "population": 10,
+            "energy": 23.2818,
+            "values": {
+              "speed": 0.8436285117302089,
+              "sensor": 3.587684817392379,
+              "efficiency": 0.8826825746580956,
+              "threshold": 43.282725581429894
+            },
+            "maintenance": 0.08337213951926871,
+            "carriers": 5
+          },
+          {
+            "tick": 400,
+            "population": 10,
+            "energy": 23.9641,
+            "values": {
+              "speed": 0.8436285117302089,
+              "sensor": 3.587684817392379,
+              "efficiency": 0.8826825746580956,
+              "threshold": 43.282725581429894
+            },
+            "maintenance": 0.08337213951926871,
+            "carriers": 5
+          },
+          {
+            "tick": 420,
+            "population": 10,
+            "energy": 22.9312,
+            "values": {
+              "speed": 0.8436285117302089,
+              "sensor": 3.587684817392379,
+              "efficiency": 0.8826825746580956,
+              "threshold": 43.282725581429894
+            },
+            "maintenance": 0.08337213951926871,
+            "carriers": 5
+          },
+          {
+            "tick": 440,
+            "population": 10,
+            "energy": 20.6786,
+            "values": {
+              "speed": 0.8436285117302089,
+              "sensor": 3.587684817392379,
+              "efficiency": 0.8826825746580956,
+              "threshold": 43.282725581429894
+            },
+            "maintenance": 0.08337213951926871,
+            "carriers": 5
+          },
+          {
+            "tick": 460,
+            "population": 10,
+            "energy": 19.643099999999997,
+            "values": {
+              "speed": 0.8436285117302089,
+              "sensor": 3.587684817392379,
+              "efficiency": 0.8826825746580956,
+              "threshold": 43.282725581429894
+            },
+            "maintenance": 0.08337213951926871,
+            "carriers": 5
+          },
+          {
+            "tick": 480,
+            "population": 9,
+            "energy": 20.882111111111108,
+            "values": {
+              "speed": 0.8457291430212144,
+              "sensor": 3.579859635997564,
+              "efficiency": 0.8771559756532725,
+              "threshold": 43.272070863309004
+            },
+            "maintenance": 0.0804209346452903,
+            "carriers": 4
+          },
+          {
+            "tick": 500,
+            "population": 9,
+            "energy": 21.509777777777778,
+            "values": {
+              "speed": 0.8559765368000501,
+              "sensor": 3.564505811319169,
+              "efficiency": 0.8704893089866058,
+              "threshold": 42.93873752997567
+            },
+            "maintenance": 0.07699747042829475,
+            "carriers": 4
+          },
+          {
+            "tick": 520,
+            "population": 10,
+            "energy": 20.9666,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 540,
+            "population": 10,
+            "energy": 21.4375,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 559,
+            "population": 10,
+            "energy": 20.7268,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 560,
+            "population": 10,
+            "energy": 20.6943,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 580,
+            "population": 10,
+            "energy": 20.894599999999997,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 600,
+            "population": 10,
+            "energy": 19.864,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 620,
+            "population": 10,
+            "energy": 20.329,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 640,
+            "population": 10,
+            "energy": 19.886400000000002,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 660,
+            "population": 10,
+            "energy": 19.903299999999998,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 680,
+            "population": 10,
+            "energy": 20.931099999999997,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 700,
+            "population": 10,
+            "energy": 18.7915,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 720,
+            "population": 10,
+            "energy": 16.58,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 740,
+            "population": 10,
+            "energy": 16.1934,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 760,
+            "population": 10,
+            "energy": 17.006700000000002,
+            "values": {
+              "speed": 0.8620738205321133,
+              "sensor": 3.560047932971269,
+              "efficiency": 0.8662719065431504,
+              "threshold": 42.9827255814299
+            },
+            "maintenance": 0.0750479886953198,
+            "carriers": 4
+          },
+          {
+            "tick": 780,
+            "population": 9,
+            "energy": 19.022555555555556,
+            "values": {
+              "speed": 0.8662239305788859,
+              "sensor": 3.549151986640775,
+              "efficiency": 0.8677175559322867,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07578226069945773,
+            "carriers": 4
+          },
+          {
+            "tick": 800,
+            "population": 9,
+            "energy": 19.07933333333333,
+            "values": {
+              "speed": 0.8662239305788859,
+              "sensor": 3.549151986640775,
+              "efficiency": 0.8677175559322867,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07578226069945773,
+            "carriers": 4
+          },
+          {
+            "tick": 820,
+            "population": 8,
+            "energy": 25.15875,
+            "values": {
+              "speed": 0.8714115681373514,
+              "sensor": 3.535532053727657,
+              "efficiency": 0.8695246176687069,
+              "threshold": 42.628618044517935
+            },
+            "maintenance": 0.07670010070463017,
+            "carriers": 4
+          },
+          {
+            "tick": 840,
+            "population": 9,
+            "energy": 23.44033333333333,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 860,
+            "population": 9,
+            "energy": 25.49233333333333,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 880,
+            "population": 9,
+            "energy": 24.222,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 900,
+            "population": 9,
+            "energy": 21.407333333333334,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 920,
+            "population": 9,
+            "energy": 18.690444444444445,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 940,
+            "population": 9,
+            "energy": 18.514777777777777,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 960,
+            "population": 9,
+            "energy": 17.46111111111111,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 980,
+            "population": 9,
+            "energy": 15.289888888888889,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 1000,
+            "population": 9,
+            "energy": 14.790222222222223,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 1020,
+            "population": 9,
+            "energy": 13.447666666666667,
+            "values": {
+              "speed": 0.8662239305788858,
+              "sensor": 3.532315471406198,
+              "efficiency": 0.8743842225989533,
+              "threshold": 42.711951377851264
+            },
+            "maintenance": 0.07907696355680144,
+            "carriers": 5
+          },
+          {
+            "tick": 1040,
+            "population": 9,
+            "energy": 14.043444444444445,
+            "values": {
+              "speed": 0.8462406683735963,
+              "sensor": 3.5459459235332904,
+              "efficiency": 0.8904893089866057,
+              "threshold": 42.563740287418995
+            },
+            "maintenance": 0.08700937763199722,
+            "carriers": 6
+          },
+          {
+            "tick": 1060,
+            "population": 8,
+            "energy": 15.800375,
+            "values": {
+              "speed": 0.8489303981564008,
+              "sensor": 3.5508663123706357,
+              "efficiency": 0.8876428398548158,
+              "threshold": 42.46188056778163
+            },
+            "maintenance": 0.08562406653922541,
+            "carriers": 5
+          },
+          {
+            "tick": 1080,
+            "population": 7,
+            "energy": 17.657,
+            "values": {
+              "speed": 0.8523886221628637,
+              "sensor": 3.557192526590079,
+              "efficiency": 0.8839830938282288,
+              "threshold": 42.33091807110502
+            },
+            "maintenance": 0.08384295227709025,
+            "carriers": 4
+          },
+          {
+            "tick": 1100,
+            "population": 7,
+            "energy": 16.355142857142855,
+            "values": {
+              "speed": 0.8523886221628637,
+              "sensor": 3.557192526590079,
+              "efficiency": 0.8839830938282288,
+              "threshold": 42.33091807110502
+            },
+            "maintenance": 0.08384295227709025,
+            "carriers": 4
+          },
+          {
+            "tick": 1120,
+            "population": 7,
+            "energy": 15.202,
+            "values": {
+              "speed": 0.8523886221628637,
+              "sensor": 3.557192526590079,
+              "efficiency": 0.8839830938282288,
+              "threshold": 42.33091807110502
+            },
+            "maintenance": 0.08384295227709025,
+            "carriers": 4
+          },
+          {
+            "tick": 1140,
+            "population": 7,
+            "energy": 16.925428571428572,
+            "values": {
+              "speed": 0.8523886221628637,
+              "sensor": 3.557192526590079,
+              "efficiency": 0.8839830938282288,
+              "threshold": 42.33091807110502
+            },
+            "maintenance": 0.08384295227709025,
+            "carriers": 4
+          },
+          {
+            "tick": 1160,
+            "population": 7,
+            "energy": 20.222285714285714,
+            "values": {
+              "speed": 0.8523886221628637,
+              "sensor": 3.557192526590079,
+              "efficiency": 0.8839830938282288,
+              "threshold": 42.33091807110502
+            },
+            "maintenance": 0.08384295227709025,
+            "carriers": 4
+          },
+          {
+            "tick": 1180,
+            "population": 8,
+            "energy": 20.036375,
+            "values": {
+              "speed": 0.8492181311671158,
+              "sensor": 3.5678685978893188,
+              "efficiency": 0.8876428398548158,
+              "threshold": 41.98518885966391
+            },
+            "maintenance": 0.08569207568130013,
+            "carriers": 5
+          },
+          {
+            "tick": 1200,
+            "population": 8,
+            "energy": 22.98075,
+            "values": {
+              "speed": 0.8492181311671158,
+              "sensor": 3.5678685978893188,
+              "efficiency": 0.8876428398548158,
+              "threshold": 41.98518885966391
+            },
+            "maintenance": 0.08569207568130013,
+            "carriers": 5
+          }
+        ]
+      },
+      "commands": [
+        {
+          "tick": 0,
+          "action": {
+            "id": 1,
+            "kind": "choose",
+            "founder": 1
+          },
+          "accepted": true
+        },
+        {
+          "tick": 0,
+          "action": {
+            "id": 2,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        },
+        {
+          "tick": 79,
+          "action": {
+            "id": 3,
+            "kind": "buy",
+            "card": "nutrition"
+          },
+          "accepted": true
+        },
+        {
+          "tick": 80,
+          "action": {
+            "id": 4,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        },
+        {
+          "tick": 319,
+          "action": {
+            "id": 5,
+            "kind": "buy",
+            "card": "fertility"
+          },
+          "accepted": true
+        },
+        {
+          "tick": 320,
+          "action": {
+            "id": 6,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        }
+      ],
+      "checkpoints": [
+        {
+          "tick": 109,
+          "sha256": "f8bd25017557ccf2ab8c557db39a07695c0e3ca0d323550cd1a70dde3d00f9f3"
+        }
+      ],
+      "finalSave": "c3d21a229d8841baa68fb9bd2249b7168f5133448916d380507f3f7f97599b2e",
+      "sha256": {
+        "engine": "0b3447be5ebd7db32b2a0412b736494fa6dc1329a9d9d2dd7a4c56a8897de337",
+        "genealogy": "d2662c77d067b53c259580267c7662f5c202919a5860390980e8ba388b22183e",
+        "game": "f3c4d874916802a0a3844c759913ff11492a2e3b1933cb54683a11dc3f35ce02"
+      },
+      "performance": {
+        "wallMs": 468.62938,
+        "stepMs": 410.4709950000019,
+        "tps": 2923.47087764385,
+        "p50Ms": 0.3296869999999785,
+        "p95Ms": 0.5468899999999906,
+        "rssBytes": 94449664
+      }
+    },
+    {
+      "seed": "dune",
+      "habitat": "scarce",
+      "founder": 1,
+      "tick": 1200,
+      "world": {
+        "tick": 1200,
+        "population": 77,
+        "food": 7941.309,
+        "births": 176,
+        "deaths": 179,
+        "meanEnergy": 22.070974025974024,
+        "maxGeneration": 5
+      },
+      "game": {
+        "version": 1,
+        "habitat": "scarce",
+        "founder": 1,
+        "tick": 1200,
+        "lost": false,
+        "receipt": {
+          "id": 6,
+          "tick": 688,
+          "accepted": false,
+          "reason": "Дождитесь окончания программы"
+        },
+        "renewal": 10,
+        "sustained": 6,
+        "achievement": 3,
+        "spent": 10,
+        "generation": 5,
+        "windowBirths": 0,
+        "ep": 9,
+        "active": null,
+        "line": {
+          "founder": 1,
+          "living": 4,
+          "born": 12,
+          "deaths": 8,
+          "maxGeneration": 5,
+          "lastActivity": 1154,
+          "status": "active",
+          "age": 1200,
+          "generations": 6
+        },
+        "attempts": [
+          {
+            "card": "nutrition",
+            "start": 447,
+            "end": 687,
+            "introduced": 3,
+            "lastIntroduction": 662,
+            "endingCount": 4,
+            "established": true,
+            "peak": 4,
+            "carriers": 4
+          },
+          {
+            "card": "fertility",
+            "start": 687,
+            "end": 927,
+            "introduced": 1,
+            "lastIntroduction": 701,
+            "endingCount": 0,
+            "established": false,
+            "peak": 1,
+            "carriers": 0
+          }
+        ],
+        "samples": [
+          {
+            "tick": 20,
+            "population": 1,
+            "energy": 23.761,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 40,
+            "population": 1,
+            "energy": 29.075,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 60,
+            "population": 1,
+            "energy": 26.335,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 80,
+            "population": 1,
+            "energy": 23.595,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 100,
+            "population": 1,
+            "energy": 20.855,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 120,
+            "population": 1,
+            "energy": 18.115,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 140,
+            "population": 1,
+            "energy": 18.651,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 160,
+            "population": 1,
+            "energy": 19.98,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 180,
+            "population": 1,
+            "energy": 17.84,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 200,
+            "population": 1,
+            "energy": 15.7,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 220,
+            "population": 1,
+            "energy": 15.113,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 240,
+            "population": 1,
+            "energy": 18.567,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 260,
+            "population": 1,
+            "energy": 15.507,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 280,
+            "population": 1,
+            "energy": 12.447,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 300,
+            "population": 1,
+            "energy": 9.387,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 320,
+            "population": 1,
+            "energy": 6.335,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 340,
+            "population": 1,
+            "energy": 3.235,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 360,
+            "population": 1,
+            "energy": 9.239,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 380,
+            "population": 1,
+            "energy": 16.861,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 400,
+            "population": 1,
+            "energy": 25.129,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 420,
+            "population": 1,
+            "energy": 33.445,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 440,
+            "population": 1,
+            "energy": 41.737,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 447,
+            "population": 2,
+            "energy": 21.53,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 460,
+            "population": 2,
+            "energy": 25.9,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 480,
+            "population": 2,
+            "energy": 27.484,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 500,
+            "population": 2,
+            "energy": 33.423,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 520,
+            "population": 2,
+            "energy": 36.642,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 540,
+            "population": 2,
+            "energy": 39.582,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8611670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07198355546098202,
+            "carriers": 0
+          },
+          {
+            "tick": 560,
+            "population": 4,
+            "energy": 23.734,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8761670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07979397910825421,
+            "carriers": 1
+          },
+          {
+            "tick": 580,
+            "population": 4,
+            "energy": 28.2405,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8761670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07979397910825421,
+            "carriers": 1
+          },
+          {
+            "tick": 600,
+            "population": 4,
+            "energy": 32.7475,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8761670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07979397910825421,
+            "carriers": 1
+          },
+          {
+            "tick": 620,
+            "population": 4,
+            "energy": 36.44825,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.8761670071389526,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.07979397910825421,
+            "carriers": 1
+          },
+          {
+            "tick": 640,
+            "population": 5,
+            "energy": 34.193599999999996,
+            "values": {
+              "speed": 0.8242238906193526,
+              "sensor": 3.6421960188448432,
+              "efficiency": 0.889722757231444,
+              "threshold": 44.179287736043335
+            },
+            "maintenance": 0.08719574075900607,
+            "carriers": 2
+          },
+          {
+            "tick": 660,
+            "population": 7,
+            "energy": 28.079428571428572,
+            "values": {
+              "speed": 0.8242238906193525,
+              "sensor": 3.645588729009032,
+              "efficiency": 0.8901354000621607,
+              "threshold": 44.17928773604334
+            },
+            "maintenance": 0.08731250132944045,
+            "carriers": 3
+          },
+          {
+            "tick": 680,
+            "population": 8,
+            "energy": 24.982625,
+            "values": {
+              "speed": 0.828829772841651,
+              "sensor": 3.646648950935341,
+              "efficiency": 0.8935311373276635,
+              "threshold": 44.3850798342377
+            },
+            "maintenance": 0.0890218756276582,
+            "carriers": 4
+          },
+          {
+            "tick": 687,
+            "population": 8,
+            "energy": 24.283125,
+            "values": {
+              "speed": 0.828829772841651,
+              "sensor": 3.646648950935341,
+              "efficiency": 0.8935311373276635,
+              "threshold": 44.3850798342377
+            },
+            "maintenance": 0.0890218756276582,
+            "carriers": 4
+          },
+          {
+            "tick": 687,
+            "population": 8,
+            "energy": 24.283125,
+            "values": {
+              "speed": 0.828829772841651,
+              "sensor": 3.646648950935341,
+              "efficiency": 0.8935311373276635,
+              "threshold": 44.3850798342377
+            },
+            "maintenance": 0.0890218756276582,
+            "carriers": 4
+          },
+          {
+            "tick": 700,
+            "population": 8,
+            "energy": 24.2835,
+            "values": {
+              "speed": 0.828829772841651,
+              "sensor": 3.646648950935341,
+              "efficiency": 0.8935311373276635,
+              "threshold": 44.3850798342377
+            },
+            "maintenance": 0.0890218756276582,
+            "carriers": 4
+          },
+          {
+            "tick": 720,
+            "population": 9,
+            "energy": 22.97266666666667,
+            "values": {
+              "speed": 0.8283180081502846,
+              "sensor": 3.6408766315587693,
+              "efficiency": 0.8991327618025243,
+              "threshold": 44.0288807122161
+            },
+            "maintenance": 0.09210864359814212,
+            "carriers": 5
+          },
+          {
+            "tick": 740,
+            "population": 9,
+            "energy": 21.479555555555553,
+            "values": {
+              "speed": 0.8283180081502846,
+              "sensor": 3.6408766315587693,
+              "efficiency": 0.8991327618025243,
+              "threshold": 44.0288807122161
+            },
+            "maintenance": 0.09210864359814212,
+            "carriers": 5
+          },
+          {
+            "tick": 760,
+            "population": 9,
+            "energy": 19.320777777777778,
+            "values": {
+              "speed": 0.8283180081502846,
+              "sensor": 3.6408766315587693,
+              "efficiency": 0.8991327618025243,
+              "threshold": 44.0288807122161
+            },
+            "maintenance": 0.09210864359814212,
+            "carriers": 5
+          },
+          {
+            "tick": 780,
+            "population": 9,
+            "energy": 16.470333333333333,
+            "values": {
+              "speed": 0.8283180081502846,
+              "sensor": 3.6408766315587693,
+              "efficiency": 0.8991327618025243,
+              "threshold": 44.0288807122161
+            },
+            "maintenance": 0.09210864359814212,
+            "carriers": 5
+          },
+          {
+            "tick": 800,
+            "population": 9,
+            "energy": 13.158333333333333,
+            "values": {
+              "speed": 0.8283180081502846,
+              "sensor": 3.6408766315587693,
+              "efficiency": 0.8991327618025243,
+              "threshold": 44.0288807122161
+            },
+            "maintenance": 0.09210864359814212,
+            "carriers": 5
+          },
+          {
+            "tick": 820,
+            "population": 8,
+            "energy": 11.01625,
+            "values": {
+              "speed": 0.828829772841651,
+              "sensor": 3.639227397451177,
+              "efficiency": 0.8963784811354707,
+              "threshold": 44.0100798342377
+            },
+            "maintenance": 0.09071906779165104,
+            "carriers": 4
+          },
+          {
+            "tick": 840,
+            "population": 5,
+            "energy": 13.5302,
+            "values": {
+              "speed": 0.8315933021750302,
+              "sensor": 3.6303215332701804,
+              "efficiency": 0.9055053655333817,
+              "threshold": 43.90855509315431
+            },
+            "maintenance": 0.0957120362722347,
+            "carriers": 3
+          },
+          {
+            "tick": 860,
+            "population": 5,
+            "energy": 15.2202,
+            "values": {
+              "speed": 0.8315933021750302,
+              "sensor": 3.6303215332701804,
+              "efficiency": 0.9055053655333817,
+              "threshold": 43.90855509315431
+            },
+            "maintenance": 0.0957120362722347,
+            "carriers": 3
+          },
+          {
+            "tick": 880,
+            "population": 5,
+            "energy": 14.7514,
+            "values": {
+              "speed": 0.8315933021750302,
+              "sensor": 3.6303215332701804,
+              "efficiency": 0.9055053655333817,
+              "threshold": 43.90855509315431
+            },
+            "maintenance": 0.0957120362722347,
+            "carriers": 3
+          },
+          {
+            "tick": 900,
+            "population": 5,
+            "energy": 11.2654,
+            "values": {
+              "speed": 0.8315933021750302,
+              "sensor": 3.6303215332701804,
+              "efficiency": 0.9055053655333817,
+              "threshold": 43.90855509315431
+            },
+            "maintenance": 0.0957120362722347,
+            "carriers": 3
+          },
+          {
+            "tick": 920,
+            "population": 5,
+            "energy": 7.7534,
+            "values": {
+              "speed": 0.8315933021750302,
+              "sensor": 3.6303215332701804,
+              "efficiency": 0.9055053655333817,
+              "threshold": 43.90855509315431
+            },
+            "maintenance": 0.0957120362722347,
+            "carriers": 3
+          },
+          {
+            "tick": 927,
+            "population": 4,
+            "energy": 8.21125,
+            "values": {
+              "speed": 0.8334356550639497,
+              "sensor": 3.6392273974511773,
+              "efficiency": 0.8958952675163746,
+              "threshold": 44.59087193243206
+            },
+            "maintenance": 0.09043934849979,
+            "carriers": 2
+          },
+          {
+            "tick": 940,
+            "population": 4,
+            "energy": 6.04825,
+            "values": {
+              "speed": 0.8334356550639497,
+              "sensor": 3.6392273974511773,
+              "efficiency": 0.8958952675163746,
+              "threshold": 44.59087193243206
+            },
+            "maintenance": 0.09043934849979,
+            "carriers": 2
+          },
+          {
+            "tick": 960,
+            "population": 3,
+            "energy": 6.920666666666667,
+            "values": {
+              "speed": 0.8365062432121486,
+              "sensor": 3.634279695128401,
+              "efficiency": 0.9074713543088485,
+              "threshold": 44.72806666456163
+            },
+            "maintenance": 0.09659127951272599,
+            "carriers": 2
+          },
+          {
+            "tick": 980,
+            "population": 2,
+            "energy": 11.2265,
+            "values": {
+              "speed": 0.8426474195085467,
+              "sensor": 3.624384290482849,
+              "efficiency": 0.9306235278937965,
+              "threshold": 45.00245612882078
+            },
+            "maintenance": 0.10889514153859797,
+            "carriers": 2
+          },
+          {
+            "tick": 1000,
+            "population": 2,
+            "energy": 16.657,
+            "values": {
+              "speed": 0.8426474195085467,
+              "sensor": 3.624384290482849,
+              "efficiency": 0.9306235278937965,
+              "threshold": 45.00245612882078
+            },
+            "maintenance": 0.10889514153859797,
+            "carriers": 2
+          },
+          {
+            "tick": 1020,
+            "population": 2,
+            "energy": 18.8755,
+            "values": {
+              "speed": 0.8426474195085467,
+              "sensor": 3.624384290482849,
+              "efficiency": 0.9306235278937965,
+              "threshold": 45.00245612882078
+            },
+            "maintenance": 0.10889514153859797,
+            "carriers": 2
+          },
+          {
+            "tick": 1040,
+            "population": 2,
+            "energy": 21.1045,
+            "values": {
+              "speed": 0.8426474195085467,
+              "sensor": 3.624384290482849,
+              "efficiency": 0.9306235278937965,
+              "threshold": 45.00245612882078
+            },
+            "maintenance": 0.10889514153859797,
+            "carriers": 2
+          },
+          {
+            "tick": 1060,
+            "population": 2,
+            "energy": 23.544,
+            "values": {
+              "speed": 0.8426474195085467,
+              "sensor": 3.624384290482849,
+              "efficiency": 0.9306235278937965,
+              "threshold": 45.00245612882078
+            },
+            "maintenance": 0.10889514153859797,
+            "carriers": 2
+          },
+          {
+            "tick": 1080,
+            "population": 2,
+            "energy": 25.8995,
+            "values": {
+              "speed": 0.8426474195085467,
+              "sensor": 3.624384290482849,
+              "efficiency": 0.9306235278937965,
+              "threshold": 45.00245612882078
+            },
+            "maintenance": 0.10889514153859797,
+            "carriers": 2
+          },
+          {
+            "tick": 1100,
+            "population": 3,
+            "energy": 19.96666666666667,
+            "values": {
+              "speed": 0.8487885958049448,
+              "sensor": 3.634279695128401,
+              "efficiency": 0.9261827846579255,
+              "threshold": 45.27684559307993
+            },
+            "maintenance": 0.10625925959745947,
+            "carriers": 3
+          },
+          {
+            "tick": 1120,
+            "population": 3,
+            "energy": 24.130333333333333,
+            "values": {
+              "speed": 0.8487885958049448,
+              "sensor": 3.634279695128401,
+              "efficiency": 0.9261827846579255,
+              "threshold": 45.27684559307993
+            },
+            "maintenance": 0.10625925959745947,
+            "carriers": 3
+          },
+          {
+            "tick": 1140,
+            "population": 2,
+            "energy": 42.587,
+            "values": {
+              "speed": 0.8610709483977408,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.917301298186183,
+              "threshold": 45.82562452159822
+            },
+            "maintenance": 0.10098749571518244,
+            "carriers": 2
+          },
+          {
+            "tick": 1160,
+            "population": 4,
+            "energy": 26.0435,
+            "values": {
+              "speed": 0.8610709483977408,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.917301298186183,
+              "threshold": 45.82562452159822
+            },
+            "maintenance": 0.10098749571518244,
+            "carriers": 4
+          },
+          {
+            "tick": 1180,
+            "population": 4,
+            "energy": 27.8585,
+            "values": {
+              "speed": 0.8610709483977408,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.917301298186183,
+              "threshold": 45.82562452159822
+            },
+            "maintenance": 0.10098749571518244,
+            "carriers": 4
+          },
+          {
+            "tick": 1200,
+            "population": 4,
+            "energy": 24.1225,
+            "values": {
+              "speed": 0.8610709483977408,
+              "sensor": 3.6540705044195056,
+              "efficiency": 0.917301298186183,
+              "threshold": 45.82562452159822
+            },
+            "maintenance": 0.10098749571518244,
+            "carriers": 4
+          }
+        ]
+      },
+      "commands": [
+        {
+          "tick": 0,
+          "action": {
+            "id": 1,
+            "kind": "choose",
+            "founder": 1
+          },
+          "accepted": true
+        },
+        {
+          "tick": 0,
+          "action": {
+            "id": 2,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        },
+        {
+          "tick": 447,
+          "action": {
+            "id": 3,
+            "kind": "buy",
+            "card": "nutrition"
+          },
+          "accepted": true
+        },
+        {
+          "tick": 448,
+          "action": {
+            "id": 4,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        },
+        {
+          "tick": 687,
+          "action": {
+            "id": 5,
+            "kind": "buy",
+            "card": "fertility"
+          },
+          "accepted": true
+        },
+        {
+          "tick": 688,
+          "action": {
+            "id": 6,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        }
+      ],
+      "checkpoints": [
+        {
+          "tick": 477,
+          "sha256": "dc84e699ce0b445e791e6f8ea56e53165b843799f32ece7e9fa7bba036090438"
+        }
+      ],
+      "finalSave": "51afbebb5ca4a5215b381bfaf098d185966983d33fa9e28770411796d595e1ab",
+      "sha256": {
+        "engine": "d52e6e60cdf8afba9a8f7c148af0960bcbbf4edaa62553fed4274896efbeab79",
+        "genealogy": "aa4f8af9b55d8029a2e45520d5f7736e7650e53e713ede6031d19257ea234e67",
+        "game": "38585a48d6612e53a40d8ea9e79c6b222ae3a6591292b48608804af386c3df68"
+      },
+      "performance": {
+        "wallMs": 121.24243999999999,
+        "stepMs": 96.78387699999541,
+        "tps": 12398.759351209466,
+        "p50Ms": 0.06787299999996321,
+        "p95Ms": 0.134373000000096,
+        "rssBytes": 117481472
+      }
+    },
+    {
+      "seed": "fern",
+      "habitat": "scarce",
+      "founder": 2,
+      "tick": 396,
+      "world": {
+        "tick": 396,
+        "population": 48,
+        "food": 7210.591,
+        "births": 17,
+        "deaths": 49,
+        "meanEnergy": 19.458916666666667,
+        "maxGeneration": 1
+      },
+      "game": {
+        "version": 1,
+        "habitat": "scarce",
+        "founder": 2,
+        "tick": 396,
+        "lost": true,
+        "receipt": {
+          "id": 4,
+          "tick": 167,
+          "accepted": false,
+          "reason": "Дождитесь окончания программы"
+        },
+        "renewal": 2,
+        "sustained": 0,
+        "achievement": 3,
+        "spent": 5,
+        "generation": 1,
+        "windowBirths": 0,
+        "ep": 0,
+        "active": null,
+        "line": {
+          "founder": 2,
+          "living": 0,
+          "born": 2,
+          "deaths": 2,
+          "maxGeneration": 1,
+          "lastActivity": 396,
+          "status": "extinct",
+          "age": 396,
+          "generations": 2
+        },
+        "attempts": [
+          {
+            "card": "nutrition",
+            "start": 166,
+            "end": 406,
+            "introduced": 0,
+            "lastIntroduction": -18,
+            "endingCount": 0,
+            "established": false,
+            "peak": 0,
+            "carriers": 0
+          }
+        ],
+        "samples": [
+          {
+            "tick": 20,
+            "population": 1,
+            "energy": 23.238,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 40,
+            "population": 1,
+            "energy": 20.289,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 60,
+            "population": 1,
+            "energy": 17.349,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 80,
+            "population": 1,
+            "energy": 14.409,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 100,
+            "population": 1,
+            "energy": 18.881,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 120,
+            "population": 1,
+            "energy": 26.163,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 140,
+            "population": 1,
+            "energy": 34.36,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 160,
+            "population": 1,
+            "energy": 42.154,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.4660704243462535,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.062026830627103936,
+            "carriers": 0
+          },
+          {
+            "tick": 166,
+            "population": 2,
+            "energy": 21.6415,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 180,
+            "population": 2,
+            "energy": 25.5005,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 200,
+            "population": 2,
+            "energy": 25.5465,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 220,
+            "population": 2,
+            "energy": 22.662,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 240,
+            "population": 2,
+            "energy": 19.7485,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 260,
+            "population": 2,
+            "energy": 16.865,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 280,
+            "population": 2,
+            "energy": 14,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 300,
+            "population": 2,
+            "energy": 11.143,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 320,
+            "population": 2,
+            "energy": 8.2895,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 340,
+            "population": 2,
+            "energy": 5.506,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 360,
+            "population": 2,
+            "energy": 2.896,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.353935979148373,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06157829284631241,
+            "carriers": 0
+          },
+          {
+            "tick": 380,
+            "population": 1,
+            "energy": 1.987,
+            "values": {
+              "speed": 0.7852849743366241,
+              "sensor": 3.241801533950493,
+              "efficiency": 0.8400873209554702,
+              "threshold": 44.13471589103341
+            },
+            "maintenance": 0.06112975506552089,
+            "carriers": 0
+          },
+          {
+            "tick": 396,
+            "population": 0,
+            "energy": null,
+            "values": null,
+            "maintenance": null,
+            "carriers": 0
+          }
+        ]
+      },
+      "commands": [
+        {
+          "tick": 0,
+          "action": {
+            "id": 1,
+            "kind": "choose",
+            "founder": 2
+          },
+          "accepted": true
+        },
+        {
+          "tick": 0,
+          "action": {
+            "id": 2,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        },
+        {
+          "tick": 166,
+          "action": {
+            "id": 3,
+            "kind": "buy",
+            "card": "nutrition"
+          },
+          "accepted": true
+        },
+        {
+          "tick": 167,
+          "action": {
+            "id": 4,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        }
+      ],
+      "checkpoints": [
+        {
+          "tick": 196,
+          "sha256": "c3f74f913ef1e84d535a3a40805d4b1cbb16d92010b30903104302a1e796aa4f"
+        }
+      ],
+      "finalSave": "d819f9c4f272e9d2fae07a0add3034b40a542b54a5010100b95a621b16cdf634",
+      "sha256": {
+        "engine": "6f624ccfa0053c77c67e1f26bef8b2b74a38c976675f6d8fcdc72ccf21850e39",
+        "genealogy": "cac55c61aad64d332a65f615cf93f5b535e9905bae3e330e45d294f40d6659b7",
+        "game": "5e3c94c1708b0d3e59d6570ae8409dd64c2a2600cc83e2a62ff62907eaf9b4a7"
+      },
+      "performance": {
+        "wallMs": 43.074951000000056,
+        "stepMs": 28.02012200000081,
+        "tps": 14132.700778390206,
+        "p50Ms": 0.06877299999996467,
+        "p95Ms": 0.10983499999997548,
+        "rssBytes": 119672832
+      }
+    },
+    {
+      "seed": "zero",
+      "habitat": "empty",
+      "founder": 1,
+      "tick": 170,
+      "world": {
+        "tick": 170,
+        "population": 5,
+        "food": 0,
+        "births": 0,
+        "deaths": 75,
+        "meanEnergy": 0.4838,
+        "maxGeneration": 0
+      },
+      "game": {
+        "version": 1,
+        "habitat": "empty",
+        "founder": 1,
+        "tick": 170,
+        "lost": true,
+        "receipt": {
+          "id": 2,
+          "tick": 0,
+          "accepted": false,
+          "reason": "Недостаточно EP"
+        },
+        "renewal": 0,
+        "sustained": 0,
+        "achievement": 0,
+        "spent": 0,
+        "generation": 0,
+        "windowBirths": 0,
+        "ep": 0,
+        "active": null,
+        "line": {
+          "founder": 1,
+          "living": 0,
+          "born": 1,
+          "deaths": 1,
+          "maxGeneration": 0,
+          "lastActivity": 170,
+          "status": "extinct",
+          "age": 170,
+          "generations": 1
+        },
+        "attempts": [],
+        "samples": [
+          {
+            "tick": 20,
+            "population": 1,
+            "energy": 23.27,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 40,
+            "population": 1,
+            "energy": 20.15,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 60,
+            "population": 1,
+            "energy": 17.03,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 80,
+            "population": 1,
+            "energy": 13.91,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 100,
+            "population": 1,
+            "energy": 10.79,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 120,
+            "population": 1,
+            "energy": 7.67,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 140,
+            "population": 1,
+            "energy": 4.55,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 160,
+            "population": 1,
+            "energy": 1.43,
+            "values": {
+              "speed": 0.8163864005077631,
+              "sensor": 3.4646807901281864,
+              "efficiency": 0.8398772360347211,
+              "threshold": 44.45842582903802
+            },
+            "maintenance": 0.06193417122481821,
+            "carriers": 0
+          },
+          {
+            "tick": 170,
+            "population": 0,
+            "energy": null,
+            "values": null,
+            "maintenance": null,
+            "carriers": 0
+          }
+        ]
+      },
+      "commands": [
+        {
+          "tick": 0,
+          "action": {
+            "id": 1,
+            "kind": "choose",
+            "founder": 1
+          },
+          "accepted": true
+        },
+        {
+          "tick": 0,
+          "action": {
+            "id": 2,
+            "kind": "buy",
+            "card": "mobility"
+          },
+          "accepted": false
+        }
+      ],
+      "checkpoints": [],
+      "finalSave": "7e5f6d9de8163a3611ccbefe2a10c8629e578fa0cdf7ffe47433ec106eaddf53",
+      "sha256": {
+        "engine": "d1aa3f4ade433bb4f33100d7183b4ddeb3b0db3d46e6b12140c1ca2093ad933e",
+        "genealogy": "b640b559ab0d2a54819f7999342fbd199fc8365457409c446595612006790ae4",
+        "game": "0c164dc673f59fc9abfa4bedc6a12e2c63a71d1babaa634498d5df15c6b54ce1"
+      },
+      "performance": {
+        "wallMs": 15.776733999999806,
+        "stepMs": 11.014160000000857,
+        "tps": 15434.676816024716,
+        "p50Ms": 0.06560899999999492,
+        "p95Ms": 0.08485799999994015,
+        "rssBytes": 119316480
+      }
+    }
+  ]
+}

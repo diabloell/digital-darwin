@@ -25,10 +25,14 @@ export class GamePanel {
       if(action.kind==='choose')send({kind:'game-action',epoch,action:{id,kind:'choose',founder:action.founder!}});
       else send({kind:'game-action',epoch,action:{id,kind:'buy',card:action.card!}});
     };
+    $('game-analysis').addEventListener('toggle',()=>{
+      if(this.frame && $<HTMLDetailsElement>('game-analysis').open)this.update(this.frame);
+    });
     $('game-form').onsubmit=e=>{
       e.preventDefault();
       if(confirmNew())send({kind:'new-game',seed:$<HTMLInputElement>('game-seed').value.trim(),habitat:$<HTMLSelectElement>('game-habitat').value as Habitat});
     };
+    $('quick-game').onclick=()=>$<HTMLFormElement>('game-form').requestSubmit();
     $('game-choose').onclick=()=>dispatch({kind:'choose',founder:Number(this.founder.value)});
     for(const [key,c] of Object.entries(CARDS) as [Card,typeof CARDS[Card]][]){
       const panel=document.createElement('section'),title=document.createElement('h3'),text=document.createElement('p'),button=document.createElement('button');
@@ -49,10 +53,15 @@ export class GamePanel {
     const game=frame.game;
     if(reset)this.id=game?.receipt?.id??0;
     $('game-panel').hidden=!game;
+    $('observer-note').hidden=Boolean(game);
+    $('quick-game').hidden=Boolean(game && !game.lost);
+    $('quick-game').textContent=game?.lost?'Новая попытка':'Начать игру';
+    $('game-analysis').hidden=game?.founder==null;
+    $('game-ep').textContent=game?.founder==null?'—':`${game.ep} EP`;
     if(!game)return;
     if(reset||previous?.game?.founder!==game.founder)this.highlight(game.founder);
     if(reset){
-      $<HTMLDetailsElement>('evolution-game').open=true;
+      $<HTMLDetailsElement>('evolution-game').open=false;
       $<HTMLInputElement>('game-seed').value=frame.seed;
       $<HTMLSelectElement>('game-habitat').value=game.habitat;
     }
@@ -61,9 +70,8 @@ export class GamePanel {
     const line=game.line,sample=game.samples.at(-1);
     $('game-status').textContent=game.lost?'Линия вымерла. Начните новую игру.':line
       ?`Линия #${line.founder} · поколение ${line.maxGeneration}`:'Выберите основателя, затем запустите время.';
-    $('game-ep').textContent=`${game.ep} EP`;
     $('game-pop').textContent=line?`живых ${line.living} · рождений ${line.born-1}`:'';
-    $('game-energy').textContent=`Энергия ${fmt(sample?.energy)} ед. · поддержание ${fmt(sample?.maintenance,3)} ед./тик (последний отсчёт)`;
+    $('game-energy').textContent=sample?.energy==null?'Энергия и поддержание · нет отсчёта':`Энергия ${fmt(sample?.energy)} ед. · поддержание ${fmt(sample?.maintenance,3)} ед./тик (последний отсчёт)`;
     $('game-ledger').textContent=`Поколения +${game.renewal} · устойчивые рождения +${game.sustained} · первые потомки +${game.achievement} · потрачено ${game.spent}`;
     $('game-receipt').textContent=game.receipt&&!game.receipt.accepted?game.receipt.reason:'';
     for(const [key,button] of this.buttons){
@@ -72,13 +80,21 @@ export class GamePanel {
       button.textContent=used?'Использована':`${TUNING.price} EP · начать`;
     }
     const active=game.attempts.find(a=>a.card===game.active);
-    $('game-programme').textContent=active?`${CARDS[active.card].title} · ${frame.metrics.tick-active.start}/${TUNING.duration} тиков · новых носителей ${active.introduced}`
-      :game.attempts.length?'Программа завершена. Следующая карта доступна при наличии EP.':'Программа пока не начата.';
-    table($('game-attempts'),['Карта','Носители сейчас','Пик','После программы'],game.attempts.map(a=>[
-      CARDS[a.card].title,`${a.carriers}/${line?.living??0} (${fmt(line?.living?a.carriers/line.living*100:0)}%)`,String(a.peak),
-      a.established===null?'Идёт':a.established?`Закрепилась при завершении${a.carriers?'':' · утрачена'}`
-        :a.peak&&!a.carriers?'Не закрепилась · утрачена':'Не закрепилась'
-    ]));
+    const progress=$<HTMLProgressElement>('game-progress');
+    progress.hidden=!active;
+    progress.max=TUNING.duration;
+    progress.value=active?frame.metrics.tick-active.start:0;
+    $('game-programme').textContent=active?`${CARDS[active.card].title} · ${progress.value}/${progress.max} тиков · носители ${active.carriers}/${line?.living??0}`
+      :game.lost?'Программы остановлены':game.attempts.length?'Можно выбрать следующую карту при наличии EP':'Программа пока не начата';
+    const attempts=game.attempts.map(a=>{
+      const li=document.createElement('li');
+      const share=line?.living?a.carriers/line.living*100:0;
+      const result=a.established===null?'идёт':a.established?'закрепилась':a.peak&&!a.carriers?'утрачена':'не закрепилась';
+      li.textContent=`${CARDS[a.card].title} · ${a.carriers}/${line?.living??0} (${fmt(share)}%) · ${result}${a.established&&!a.carriers?' при завершении, затем утрачена':''}`;
+      return li;
+    });
+    $('game-attempts').replaceChildren(...attempts);
+    if (!$<HTMLDetailsElement>('game-analysis').open) return;
     table($('game-samples'),['Тик','Энергия','Усвоение','Скорость','Порог','Носителей'],game.samples.slice(-10).reverse().map(s=>[
       String(s.tick),fmt(s.energy),fmt(s.values?.efficiency,3),fmt(s.values?.speed,3),fmt(s.values?.threshold),String(s.carriers)
     ]));
