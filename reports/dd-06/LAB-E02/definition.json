@@ -1,0 +1,61 @@
+{
+  "versions": {
+    "format": 1,
+    "engine": "0.3.0",
+    "evolution": "1",
+    "metrics": 1,
+    "scenario": 1
+  },
+  "initial": {
+    "width": 48,
+    "height": 48,
+    "population": 240
+  },
+  "seeds": [
+    "dd02-amber",
+    "dd02-fern",
+    "dd02-dune",
+    "dd02-coral",
+    "dd02-slate"
+  ],
+  "replicas": 5,
+  "duration": 4000,
+  "interval": 100,
+  "burnIn": 0,
+  "stopPolicy": "fixed-ticks",
+  "criterion": "invariants",
+  "limitations": "Фиксированный набор seed. Диапазон наблюдений описывает разброс, а не доверительный интервал. Связь признака с размножением не устанавливает причинность отдельного гена.",
+  "id": "LAB-E02",
+  "title": "Дефицит ресурсов",
+  "description": "Изменяется только начальный запас и скорость роста пищи.",
+  "hypothesis": "Дефицит пищи изменит численность, энергию и репродуктивный успех.",
+  "control": {
+    "id": "control",
+    "label": "Обычные ресурсы",
+    "changes": {},
+    "landscape": "patchy",
+    "batch": 1
+  },
+  "treatments": [
+    {
+      "id": "scarcity",
+      "label": "35% ресурсов",
+      "changes": {
+        "resourceScale": 0.35
+      },
+      "landscape": "patchy",
+      "batch": 1
+    }
+  ],
+  "primary": "population",
+  "secondary": [
+    "averagePopulation",
+    "births",
+    "deaths",
+    "energy",
+    "food",
+    "reproduction",
+    "speed",
+    "sensor"
+  ]
+}

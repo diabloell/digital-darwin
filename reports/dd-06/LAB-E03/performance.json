@@ -1,0 +1,12 @@
+{
+  "elapsedMs": 21157.808856000003,
+  "completedTicks": 40000,
+  "tps": 1890.5549375287349,
+  "initialRss": 238206976,
+  "peakRss": 241541120,
+  "bytes": {
+    "series.json": 266339,
+    "series.csv": 169399,
+    "report.md": 6812
+  }
+}

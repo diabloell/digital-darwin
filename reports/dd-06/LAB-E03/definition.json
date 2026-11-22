@@ -1,0 +1,62 @@
+{
+  "versions": {
+    "format": 1,
+    "engine": "0.3.0",
+    "evolution": "1",
+    "metrics": 1,
+    "scenario": 1
+  },
+  "initial": {
+    "width": 48,
+    "height": 48,
+    "population": 240
+  },
+  "seeds": [
+    "dd02-amber",
+    "dd02-fern",
+    "dd02-dune",
+    "dd02-coral",
+    "dd02-slate"
+  ],
+  "replicas": 5,
+  "duration": 4000,
+  "interval": 100,
+  "burnIn": 0,
+  "stopPolicy": "fixed-ticks",
+  "criterion": "invariants",
+  "limitations": "Фиксированный набор seed. Диапазон наблюдений описывает разброс, а не доверительный интервал. Связь признака с размножением не устанавливает причинность отдельного гена.",
+  "id": "LAB-E03",
+  "title": "Мутации ON / OFF",
+  "description": "Основатели и пища совпадают. Меняется вероятность мутации.",
+  "hypothesis": "Мутации создают новые варианты, но рост разнообразия может не сопровождаться ростом численности или числа рождений.",
+  "control": {
+    "id": "control",
+    "label": "Мутации OFF",
+    "changes": {
+      "mutationRate": 0
+    },
+    "landscape": "patchy",
+    "batch": 1
+  },
+  "treatments": [
+    {
+      "id": "mutations",
+      "label": "Мутации ON",
+      "changes": {
+        "mutationRate": 0.12
+      },
+      "landscape": "patchy",
+      "batch": 1
+    }
+  ],
+  "primary": "variants",
+  "secondary": [
+    "population",
+    "births",
+    "outsideFounder",
+    "mutations",
+    "reproduction",
+    "speedVariance",
+    "sensorVariance"
+  ]
+}

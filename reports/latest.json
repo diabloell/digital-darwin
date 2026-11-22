@@ -1,18 +1,18 @@
 {
-  "stage": "DD-05",
+  "stage": "DD-06",
   "status": "PARTIAL",
-  "sourceCommit": "0d6f056d0ad18856b4f293cf7e6d76116e26bdf4",
-  "baseMain": "419009a",
-  "branch": "dd-05-persistence-replay",
+  "sourceCommit": "e760c0f71e07e1aa5ab8e15bbad25d02849f868b",
+  "baseMain": "fe11f0e",
+  "branch": "dd-06-experiment-lab",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-05-persistence-replay"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-06-experiment-lab"
   },
   "ci": {
     "status": "PASS",
-    "sourceCommit": "0d6f056d0ad18856b4f293cf7e6d76116e26bdf4",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45049604267"
+    "sourceCommit": "e760c0f71e07e1aa5ab8e15bbad25d02849f868b",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45055407148"
   },
   "checks": [
     {
@@ -47,31 +47,31 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd05-final/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd06-final/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd05-final/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd06-final/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd05-final/performance-5000.json --profile",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd06-final/performance-5000.json --profile",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-food",
-      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd05-final/no-food.json --width 32 --height 32 --no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd06-final/no-food.json --width 32 --height 32 --no-food",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-reproduction",
-      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd05-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd06-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
       "status": "PASS",
       "exitCode": 0
     },
@@ -83,7 +83,7 @@
     },
     {
       "name": "experiments",
-      "command": "node apps/experiments.ts outputs/dd05-final/experiments.json",
+      "command": "node apps/experiments.ts outputs/dd06-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -118,6 +118,24 @@
       "exitCode": 0
     },
     {
+      "name": "lab-batches",
+      "command": "node apps/lab.ts all outputs/dd06-final/lab-batches",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "lab-e2e",
+      "command": "node scripts/lab-e2e.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "lab-stress",
+      "command": "node scripts/lab-stress.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
       "name": "browser-benchmark",
       "command": "node scripts/browser-benchmark.mjs",
       "status": "PASS",
@@ -131,644 +149,802 @@
     },
     {
       "name": "dd02-regression",
-      "command": "node scripts/check-dd02-regression.mjs outputs/dd05-final/experiments.json",
+      "command": "node scripts/check-dd02-regression.mjs outputs/dd06-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "dd02-state",
-      "command": "node scripts/check-determinism.mjs outputs/dd05-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd06-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/dd05-final/long-run-a.json outputs/dd05-final/long-run-b.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd06-final/long-run-a.json outputs/dd06-final/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
   ],
   "unit": {
-    "passed": 29,
+    "passed": 31,
     "failed": 0,
     "skipped": 0
   },
   "integration": {
-    "passed": 7,
+    "passed": 10,
     "failed": 0,
     "skipped": 0
   },
-  "e2e": {
-    "observer": [
-      "initial 256x256 world / 1000 real organisms / paused",
-      "single step exactly +1",
-      "organisms change coordinates while running",
-      "play / 4x speed / pause stays stable",
-      "visible tick / population / food equal actual Worker metrics",
-      "map hit selection opens real energy / age / genome",
-      "genetic histogram matches real organisms; trait color and mean chart controls work",
-      "seven palettes, eleven charts, four distributions and speeds; selection survives a new frame",
-      "zoom / pan change rendered camera",
-      "new seed resets world / tick / population / selection",
-      "keyboard Space toggles playback",
-      "responsive 1366 / 1920 / 390 widths without horizontal overflow",
-      "configuration and seed replay match real buffers; dead selection clears live traits",
-      "empty charts are labeled and invalid configuration leaves the current world intact",
-      "same 12 Worker ticks produce identical metrics and buffers with normal and delayed rendering"
-    ],
-    "history": [
-      "live child selection and navigation to its actual parent",
-      "multi-member lineage counts match founder buffer and highlight can be cleared",
-      "lineage and population charts match sampled Worker data",
-      "generation event is filterable and links to the corresponding entity; return to world",
-      "historical death card, world extinction once, and all three layouts without overflow"
-    ],
-    "persistence": {
-      "status": "PASS",
-      "browser": "156.0.8078.79",
-      "runs": [
-        {
-          "viewport": [
-            1920,
-            1080
-          ],
-          "tick": 165,
-          "population": 466,
-          "checks": [
-            "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
-            "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
-            "independent slot, rename, confirmed overwrite and delete"
-          ],
-          "quota": "PASS (injected QuotaExceededError after queuing real IndexedDB put; real quota NOT RUN)",
-          "errors": []
-        },
-        {
-          "viewport": [
-            1366,
-            768
-          ],
-          "tick": 166,
-          "population": 467,
-          "checks": [
-            "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
-            "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
-            "independent slot, rename, confirmed overwrite and delete"
-          ],
-          "quota": "NOT RUN",
-          "errors": []
-        },
-        {
-          "viewport": [
-            390,
-            844
-          ],
-          "tick": 158,
-          "population": 461,
-          "checks": [
-            "IndexedDB survives reload; cancellation and exact paused world, genealogy IDs and charts",
-            "export current or slot, reject corrupt input, import, same continuation, events and ancestry",
-            "independent slot, rename, confirmed overwrite and delete"
-          ],
-          "quota": "NOT RUN",
-          "errors": []
-        }
-      ],
-      "screenshots": [
-        "reports/dd-05/slots-1920x1080.png",
-        "reports/dd-05/loaded-1366x768.png",
-        "reports/dd-05/import-preview-390x844.png"
-      ],
-      "browserRestart": "PASS"
-    }
-  },
   "determinism": {
     "status": "PASS",
-    "checkpoints": [
-      {
-        "tick": 0,
-        "hash": "f78904899c590d0f145a20d974e8de85e25c34b4abfe451c007ad7343a621be0"
-      },
-      {
-        "tick": 1000,
-        "hash": "d2f13ac164c1321ff4e5f70d2348c79032a1dda5ef593293367bbae3d4cc86f0"
-      },
-      {
-        "tick": 2000,
-        "hash": "43b88498da3b1512fa386d6c4a2b2f2bcee38da4140a65a9cb9f26270cfe9154"
-      },
-      {
-        "tick": 3000,
-        "hash": "74fc61524fc36da7192f6c0eccd24036e07199943a14691b4058db86731850a3"
-      },
-      {
-        "tick": 4000,
-        "hash": "cbef787e8c925b6c06ee2396aee92a8a3923fc204b081e54fdbdb0383e84ce02"
-      },
-      {
-        "tick": 5000,
-        "hash": "0954150d1ce9325ff4007e7c267525077abecf3a9240a0f9cd918f8750a6452f"
-      },
-      {
-        "tick": 6000,
-        "hash": "7fdef8f0e6b9bf6738fe33ad38a3b8a3c8b249c3c1c6639189f3852d0ab09dc4"
-      },
-      {
-        "tick": 7000,
-        "hash": "de28e6d1e0757438000dc2704319b0692953a9e1345f810b9a9c8ec3e410ef4c"
-      },
-      {
-        "tick": 8000,
-        "hash": "381635f2f4d08c95c2ee4605161b414bed0ebde1f942f24ae74f8a8f1e60dd3f"
-      },
-      {
-        "tick": 9000,
-        "hash": "c5a9cc4a3fd63e1a5f1319e2b24f4af8fad9d6da7c590c3cb8a9c1be294a052c"
-      },
-      {
-        "tick": 10000,
-        "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
-      }
-    ],
-    "replay": {
-      "status": "PASS",
-      "results": [
-        {
-          "config": {
-            "seed": "dd05-alpha",
-            "width": 32,
-            "height": 32,
-            "population": 140
-          },
-          "engineContinuous": "5626e78576dac45206ee1502bedd4f520e6a09726c0f14f878295a3d62bbb077",
-          "engineRestored": "5626e78576dac45206ee1502bedd4f520e6a09726c0f14f878295a3d62bbb077",
-          "historyContinuous": "9512316c73444f3c2e67398e855d826d8f8125ec89554c44d71d3cd0c4220ae7",
-          "historyRestored": "9512316c73444f3c2e67398e855d826d8f8125ec89554c44d71d3cd0c4220ae7",
-          "tick": 6000,
-          "metrics": {
-            "tick": 6000,
-            "population": 432,
-            "food": 205.785,
-            "births": 1192,
-            "deaths": 900,
-            "meanEnergy": 19.050805555555556,
-            "maxGeneration": 13
-          },
-          "lineages": {
-            "living": 64,
-            "extinct": 76
-          },
-          "storage": {
-            "live": 432,
-            "recent": 900,
-            "pinned": 40,
-            "parentReferences": 228,
-            "lines": 140,
-            "events": 180,
-            "droppedEvents": 550
-          }
-        },
-        {
-          "config": {
-            "seed": "dd05-beta",
-            "width": 32,
-            "height": 32,
-            "population": 140
-          },
-          "engineContinuous": "57d47cbe9daa1525ad0e57af9989bbec18a86afda065707d34d32e90f57dc016",
-          "engineRestored": "57d47cbe9daa1525ad0e57af9989bbec18a86afda065707d34d32e90f57dc016",
-          "historyContinuous": "3753a8bb140bebe2022b358543fa66eed17b2baf23b6fd4895796fa98156affb",
-          "historyRestored": "3753a8bb140bebe2022b358543fa66eed17b2baf23b6fd4895796fa98156affb",
-          "tick": 6000,
-          "metrics": {
-            "tick": 6000,
-            "population": 384,
-            "food": 200.936,
-            "births": 1186,
-            "deaths": 942,
-            "meanEnergy": 18.8202109375,
-            "maxGeneration": 17
-          },
-          "lineages": {
-            "living": 58,
-            "extinct": 82
-          },
-          "storage": {
-            "live": 384,
-            "recent": 942,
-            "pinned": 56,
-            "parentReferences": 220,
-            "lines": 140,
-            "events": 180,
-            "droppedEvents": 581
-          }
-        },
-        {
-          "config": {
-            "seed": "🌱-рост",
-            "width": 32,
-            "height": 32,
-            "population": 140
-          },
-          "engineContinuous": "bbd7f71c3ed642f6b93e2911ead85e08931e679d59e7564bf0ac61758df0e5bc",
-          "engineRestored": "bbd7f71c3ed642f6b93e2911ead85e08931e679d59e7564bf0ac61758df0e5bc",
-          "historyContinuous": "847abd784daadef949f18bb6924d000a4498e943caee36faa7e28fe57e7ddd2a",
-          "historyRestored": "847abd784daadef949f18bb6924d000a4498e943caee36faa7e28fe57e7ddd2a",
-          "tick": 6000,
-          "metrics": {
-            "tick": 6000,
-            "population": 473,
-            "food": 196.066,
-            "births": 1217,
-            "deaths": 884,
-            "meanEnergy": 19.394930232558142,
-            "maxGeneration": 17
-          },
-          "lineages": {
-            "living": 70,
-            "extinct": 70
-          },
-          "storage": {
-            "live": 473,
-            "recent": 884,
-            "pinned": 66,
-            "parentReferences": 276,
-            "lines": 140,
-            "events": 180,
-            "droppedEvents": 544
-          }
-        },
-        {
-          "config": {
-            "seed": "青い🌲",
-            "width": 32,
-            "height": 32,
-            "population": 140
-          },
-          "engineContinuous": "e9a3fa27d2a80629c6d0ed99d37d3a96781aa5bba2d7817f32d2282f0082b4d2",
-          "engineRestored": "e9a3fa27d2a80629c6d0ed99d37d3a96781aa5bba2d7817f32d2282f0082b4d2",
-          "historyContinuous": "1aa25fe8f8beebdeb78933e4d1069c39833ee7ec7918eaf3eca34aa5bf08e8bf",
-          "historyRestored": "1aa25fe8f8beebdeb78933e4d1069c39833ee7ec7918eaf3eca34aa5bf08e8bf",
-          "tick": 6000,
-          "metrics": {
-            "tick": 6000,
-            "population": 441,
-            "food": 209.354,
-            "births": 1232,
-            "deaths": 931,
-            "meanEnergy": 20.18908163265306,
-            "maxGeneration": 13
-          },
-          "lineages": {
-            "living": 77,
-            "extinct": 63
-          },
-          "storage": {
-            "live": 441,
-            "recent": 931,
-            "pinned": 73,
-            "parentReferences": 260,
-            "lines": 140,
-            "events": 180,
-            "droppedEvents": 538
-          }
-        },
-        {
-          "config": {
-            "seed": "dd05-omega",
-            "width": 32,
-            "height": 32,
-            "population": 140
-          },
-          "engineContinuous": "7b1fbecb22530fae2e02830498cca4153ff0c416a8fee443f34b748501ed6d2c",
-          "engineRestored": "7b1fbecb22530fae2e02830498cca4153ff0c416a8fee443f34b748501ed6d2c",
-          "historyContinuous": "7a9579a6655cb82a30ce3e11e551b52e374c4fd9a8a000d0c7be0fbdbc6eeb54",
-          "historyRestored": "7a9579a6655cb82a30ce3e11e551b52e374c4fd9a8a000d0c7be0fbdbc6eeb54",
-          "tick": 6000,
-          "metrics": {
-            "tick": 6000,
-            "population": 468,
-            "food": 203.127,
-            "births": 1417,
-            "deaths": 1089,
-            "meanEnergy": 20.48048076923077,
-            "maxGeneration": 12
-          },
-          "lineages": {
-            "living": 72,
-            "extinct": 68
-          },
-          "storage": {
-            "live": 468,
-            "recent": 1089,
-            "pinned": 57,
-            "parentReferences": 258,
-            "lines": 140,
-            "events": 180,
-            "droppedEvents": 569
-          }
-        }
+    "hash": "e7ea2a95f04cdf180bb294eae8b9e226a89ed74b0e2956c443d0b315f719b486",
+    "historicalCheckpoints": 11
+  },
+  "experiments": [
+    {
+      "id": "LAB-E01",
+      "status": "completed",
+      "verdict": "PASS",
+      "scenarioHash": "3beec879d67ee202fb1666c1a26de0971583729caacd848991575e01006aac81",
+      "seeds": [
+        "dd00-verification"
       ],
-      "repeat": {
-        "checkpoints": [
-          0,
-          25,
-          1234,
-          5000,
-          8001,
-          10000
-        ],
-        "engineContinuous": "3a99137357b4044381fb0bef90f1ff18d61481a488231c186f0eeb191b57d640",
-        "engineRestored": "3a99137357b4044381fb0bef90f1ff18d61481a488231c186f0eeb191b57d640",
-        "historyContinuous": "29c535c65aa9410a4b665cf323867c94f23440bc99788411bd7cac5a8786b4e8",
-        "historyRestored": "29c535c65aa9410a4b665cf323867c94f23440bc99788411bd7cac5a8786b4e8",
-        "tick": 10000,
-        "metrics": {
-          "tick": 10000,
-          "population": 450,
-          "food": 180.149,
-          "births": 1646,
-          "deaths": 1376,
-          "meanEnergy": 18.585095555555554,
-          "maxGeneration": 14
-        },
-        "lineages": {
-          "living": 50,
-          "extinct": 130
-        },
-        "storage": {
-          "live": 450,
-          "recent": 1376,
-          "pinned": 50,
-          "parentReferences": 247,
-          "lines": 180,
-          "events": 180,
-          "droppedEvents": 1031
+      "completed": 2,
+      "extinct": 0,
+      "performance": {
+        "elapsedMs": 11718.166505,
+        "completedTicks": 20000,
+        "tps": 1706.7516485165356,
+        "initialRss": 62615552,
+        "peakRss": 216518656,
+        "bytes": {
+          "series.json": 116466,
+          "series.csv": 84319,
+          "report.md": 4452
+        }
+      }
+    },
+    {
+      "id": "LAB-E02",
+      "status": "completed",
+      "verdict": "DESCRIPTIVE",
+      "scenarioHash": "1be9b9c0a6b9aec806bd2fc900f031408ffeb4597029514b655d5af464b41160",
+      "seeds": [
+        "dd02-amber",
+        "dd02-fern",
+        "dd02-dune",
+        "dd02-coral",
+        "dd02-slate"
+      ],
+      "completed": 10,
+      "extinct": 0,
+      "performance": {
+        "elapsedMs": 15905.484072000001,
+        "completedTicks": 40000,
+        "tps": 2514.855871027274,
+        "initialRss": 217305088,
+        "peakRss": 240582656,
+        "bytes": {
+          "series.json": 274959,
+          "series.csv": 168819,
+          "report.md": 6608
+        }
+      }
+    },
+    {
+      "id": "LAB-E03",
+      "status": "completed",
+      "verdict": "DESCRIPTIVE",
+      "scenarioHash": "5619fe2a7b0d771742847fc3e2d599a95928e3fdf0f5203a41de4d570766b8ba",
+      "seeds": [
+        "dd02-amber",
+        "dd02-fern",
+        "dd02-dune",
+        "dd02-coral",
+        "dd02-slate"
+      ],
+      "completed": 10,
+      "extinct": 0,
+      "performance": {
+        "elapsedMs": 21157.808856000003,
+        "completedTicks": 40000,
+        "tps": 1890.5549375287349,
+        "initialRss": 238206976,
+        "peakRss": 241541120,
+        "bytes": {
+          "series.json": 266339,
+          "series.csv": 169399,
+          "report.md": 6812
+        }
+      }
+    },
+    {
+      "id": "LAB-E04",
+      "status": "completed",
+      "verdict": "DESCRIPTIVE",
+      "scenarioHash": "33cba6d1afee485ce2f720b2293ee147f288b3f08b082b78a5784d18bc938b48",
+      "seeds": [
+        "dd02-amber",
+        "dd02-fern",
+        "dd02-dune",
+        "dd02-coral",
+        "dd02-slate"
+      ],
+      "completed": 20,
+      "extinct": 0,
+      "performance": {
+        "elapsedMs": 31718.486849000008,
+        "completedTicks": 80000,
+        "tps": 2522.188412733887,
+        "initialRss": 239120384,
+        "peakRss": 239153152,
+        "bytes": {
+          "series.json": 527502,
+          "series.csv": 340518,
+          "report.md": 10534
         }
       }
     }
-  },
-  "benchmark": {
+  ],
+  "pairedEffects": [
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "population",
+      "label": "Конечная численность",
+      "n": 5,
+      "mean": -340.6,
+      "median": -337,
+      "min": -417,
+      "max": -249,
+      "sd": 73.92428559005491,
+      "differences": {
+        "dd02-amber": -337,
+        "dd02-fern": -417,
+        "dd02-dune": -411,
+        "dd02-coral": -249,
+        "dd02-slate": -289
+      }
+    },
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "averagePopulation",
+      "label": "Средняя численность",
+      "n": 5,
+      "mean": -405.80674999999997,
+      "median": -396.15475,
+      "min": -450.7172499999999,
+      "max": -390.20775000000003,
+      "sd": 25.255731733113542,
+      "differences": {
+        "dd02-amber": -390.20775000000003,
+        "dd02-fern": -397.51275,
+        "dd02-dune": -394.44124999999997,
+        "dd02-coral": -396.15475,
+        "dd02-slate": -450.7172499999999
+      }
+    },
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "births",
+      "label": "Рождения",
+      "n": 5,
+      "mean": -971.4,
+      "median": -1004,
+      "min": -1081,
+      "max": -830,
+      "sd": 106.34519265110201,
+      "differences": {
+        "dd02-amber": -893,
+        "dd02-fern": -830,
+        "dd02-dune": -1049,
+        "dd02-coral": -1081,
+        "dd02-slate": -1004
+      }
+    },
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "deaths",
+      "label": "Смерти",
+      "n": 5,
+      "mean": -630.8,
+      "median": -638,
+      "min": -832,
+      "max": -413,
+      "sd": 158.63070320716605,
+      "differences": {
+        "dd02-amber": -556,
+        "dd02-fern": -413,
+        "dd02-dune": -638,
+        "dd02-coral": -832,
+        "dd02-slate": -715
+      }
+    },
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "food",
+      "label": "Пища на финале, ед.",
+      "n": 5,
+      "mean": 4822.4378,
+      "median": 1040.1290000000001,
+      "min": 40.868999999999915,
+      "max": 12067.675,
+      "sd": 6021.265651220281,
+      "differences": {
+        "dd02-amber": 40.868999999999915,
+        "dd02-fern": 12067.675,
+        "dd02-dune": 10701.453000000001,
+        "dd02-coral": 1040.1290000000001,
+        "dd02-slate": 262.0629999999999
+      }
+    },
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "energy",
+      "label": "Энергия живых, ед.",
+      "n": 5,
+      "mean": 4.229000128281015,
+      "median": 4.295665472930271,
+      "min": 0.41951186001011465,
+      "max": 10.332619666329627,
+      "sd": 3.8763628438474145,
+      "differences": {
+        "dd02-amber": 0.41951186001011465,
+        "dd02-fern": 10.332619666329627,
+        "dd02-dune": 4.295665472930271,
+        "dd02-coral": 4.714023488660871,
+        "dd02-slate": 1.3831801534741928
+      }
+    },
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "reproduction",
+      "label": "Рождения на 1 000 организм-тиков",
+      "n": 5,
+      "mean": 0.7221272481557075,
+      "median": 0.6878057861105238,
+      "min": 0.522301742214927,
+      "max": 0.883964377934315,
+      "sd": 0.14950538432562785,
+      "differences": {
+        "dd02-amber": 0.522301742214927,
+        "dd02-fern": 0.8570081295546249,
+        "dd02-dune": 0.6878057861105238,
+        "dd02-coral": 0.6595562049641467,
+        "dd02-slate": 0.883964377934315
+      }
+    },
+    {
+      "experiment": "LAB-E02",
+      "reference": "control",
+      "treatment": "scarcity",
+      "metric": "sensorGap",
+      "label": "Разница рождаемости: высокий − низкий радиус",
+      "n": 5,
+      "mean": -0.371299875309837,
+      "median": -0.3965753211326317,
+      "min": -0.45929818210459283,
+      "max": -0.19554354602298762,
+      "sd": 0.10279400785484202,
+      "differences": {
+        "dd02-amber": -0.3797205746385528,
+        "dd02-fern": -0.45929818210459283,
+        "dd02-dune": -0.3965753211326317,
+        "dd02-coral": -0.19554354602298762,
+        "dd02-slate": -0.42536175265041987
+      }
+    },
+    {
+      "experiment": "LAB-E03",
+      "reference": "control",
+      "treatment": "mutations",
+      "metric": "population",
+      "label": "Конечная численность",
+      "n": 5,
+      "mean": 249.4,
+      "median": 263,
+      "min": 147,
+      "max": 365,
+      "sd": 80.39154184365418,
+      "differences": {
+        "dd02-amber": 263,
+        "dd02-fern": 263,
+        "dd02-dune": 209,
+        "dd02-coral": 147,
+        "dd02-slate": 365
+      }
+    },
+    {
+      "experiment": "LAB-E03",
+      "reference": "control",
+      "treatment": "mutations",
+      "metric": "variants",
+      "label": "Живые генотипы",
+      "n": 5,
+      "mean": 302.2,
+      "median": 299,
+      "min": 271,
+      "max": 346,
+      "sd": 27.653209578636616,
+      "differences": {
+        "dd02-amber": 305,
+        "dd02-fern": 271,
+        "dd02-dune": 290,
+        "dd02-coral": 299,
+        "dd02-slate": 346
+      }
+    },
+    {
+      "experiment": "LAB-E03",
+      "reference": "control",
+      "treatment": "mutations",
+      "metric": "births",
+      "label": "Рождения",
+      "n": 5,
+      "mean": 289.4,
+      "median": 300,
+      "min": 81,
+      "max": 448,
+      "sd": 145.13545397317637,
+      "differences": {
+        "dd02-amber": 223,
+        "dd02-fern": 81,
+        "dd02-dune": 300,
+        "dd02-coral": 448,
+        "dd02-slate": 395
+      }
+    },
+    {
+      "experiment": "LAB-E03",
+      "reference": "control",
+      "treatment": "mutations",
+      "metric": "reproduction",
+      "label": "Рождения на 1 000 организм-тиков",
+      "n": 5,
+      "mean": -0.1424896651827138,
+      "median": -0.16001503154943864,
+      "min": -0.2799626581022232,
+      "max": 0.024053422686335812,
+      "sd": 0.10968757902218554,
+      "differences": {
+        "dd02-amber": -0.17188677521321838,
+        "dd02-fern": -0.2799626581022232,
+        "dd02-dune": -0.12463728373502458,
+        "dd02-coral": 0.024053422686335812,
+        "dd02-slate": -0.16001503154943864
+      }
+    },
+    {
+      "experiment": "LAB-E04",
+      "reference": "control",
+      "treatment": "patchy",
+      "metric": "population",
+      "label": "Конечная численность",
+      "n": 5,
+      "mean": -17.8,
+      "median": -18,
+      "min": -30,
+      "max": -4,
+      "sd": 11.41052146047673,
+      "differences": {
+        "dd02-amber": -30,
+        "dd02-fern": -28,
+        "dd02-dune": -9,
+        "dd02-coral": -18,
+        "dd02-slate": -4
+      }
+    },
+    {
+      "experiment": "LAB-E04",
+      "reference": "control",
+      "treatment": "patchy",
+      "metric": "speedGap",
+      "label": "Разница рождаемости: высокая − низкая скорость",
+      "n": 5,
+      "mean": 0.014921152499378665,
+      "median": 0.02116207693615213,
+      "min": -0.07803706468549976,
+      "max": 0.10450654282861349,
+      "sd": 0.08917952746768482,
+      "differences": {
+        "dd02-amber": 0.10450654282861349,
+        "dd02-fern": -0.07803706468549976,
+        "dd02-dune": 0.02116207693615213,
+        "dd02-coral": 0.10038393347006813,
+        "dd02-slate": -0.07340972605244067
+      }
+    },
+    {
+      "experiment": "LAB-E04",
+      "reference": "control",
+      "treatment": "patchy",
+      "metric": "sensorGap",
+      "label": "Разница рождаемости: высокий − низкий радиус",
+      "n": 5,
+      "mean": -0.04292307633541903,
+      "median": -0.03191829103317556,
+      "min": -0.11083891616328068,
+      "max": 0.001231948569176522,
+      "sd": 0.04192792883584369,
+      "differences": {
+        "dd02-amber": -0.04810174566462533,
+        "dd02-fern": 0.001231948569176522,
+        "dd02-dune": -0.11083891616328068,
+        "dd02-coral": -0.024988377385190108,
+        "dd02-slate": -0.03191829103317556
+      }
+    },
+    {
+      "experiment": "LAB-E04",
+      "reference": "neutral-uniform",
+      "treatment": "neutral-patchy",
+      "metric": "population",
+      "label": "Конечная численность · нейтральный режим",
+      "n": 5,
+      "mean": 107.2,
+      "median": 128,
+      "min": 39,
+      "max": 157,
+      "sd": 47.49947368129462,
+      "differences": {
+        "dd02-amber": 39,
+        "dd02-fern": 79,
+        "dd02-dune": 157,
+        "dd02-coral": 128,
+        "dd02-slate": 133
+      }
+    },
+    {
+      "experiment": "LAB-E04",
+      "reference": "neutral-uniform",
+      "treatment": "neutral-patchy",
+      "metric": "sensorGap",
+      "label": "Разница рождаемости по радиусу · нейтральный режим",
+      "n": 5,
+      "mean": -0.13934386634489654,
+      "median": -0.17936882443828028,
+      "min": -0.2485872493847403,
+      "max": 0.042878527987480375,
+      "sd": 0.11246369012116085,
+      "differences": {
+        "dd02-amber": -0.19649168447203047,
+        "dd02-fern": 0.042878527987480375,
+        "dd02-dune": -0.2485872493847403,
+        "dd02-coral": -0.17936882443828028,
+        "dd02-slate": -0.11515010141691207
+      }
+    }
+  ],
+  "e2e": {
     "status": "PASS",
     "browser": "156.0.8078.79",
-    "memoryScope": "periodic renderer JS heap samples, excluding Worker and browser RSS",
-    "rows": [
+    "results": [
       {
-        "scenario": "1000 founders",
-        "config": {
-          "seed": "dd05-small",
-          "width": 256,
-          "height": 256,
-          "population": 1000,
-          "mutationRate": 0.12,
-          "regrowth": true,
-          "rule": "selection",
-          "resourceScale": 1,
-          "mutationStrength": 0.08,
-          "reproduction": true
-        },
-        "metrics": {
-          "tick": 0,
-          "population": 1000,
-          "food": 130300.632,
-          "births": 0,
-          "deaths": 0,
-          "meanEnergy": 22.865183000000002,
-          "maxGeneration": 0
-        },
-        "lineages": {
-          "living": 1000,
-          "extinct": 0
-        },
-        "storage": {
-          "live": 1000,
-          "recent": 0,
-          "pinned": 0,
-          "parentReferences": 0,
-          "lines": 1000,
-          "events": 0,
-          "droppedEvents": 0
-        },
-        "times": {
-          "snapshot": 16.9000000001397,
-          "serialize": 3.7000000001862645,
-          "sha256": 7.5,
-          "envelope": 5.300000000046566,
-          "indexedDbWrite": 39.39999999990687,
-          "indexedDbRead": 3.300000000046566,
-          "decodeAndValidate": 30.5,
-          "engine": 3.5,
-          "history": 4.400000000139698
-        },
-        "biologyBytes": 1099275,
-        "historyBytes": 310416,
-        "fileBytes": 1480371,
-        "sampledPeakJsHeap": 10435112,
-        "originalTps": 698.8120195662817,
-        "restoredTps": 711.7437722419929,
-        "match": true,
-        "futureMatch": true
+        "viewport": [
+          1920,
+          1080
+        ],
+        "runs": 4,
+        "scenarioHash": "91bb23ba9e213bf8340ce3669a24ca9bfc8ffdb4343bcecf4daec39789a5affe",
+        "rafCallbacksIn400ms": 25,
+        "renderMs": 2.2000000001862645,
+        "exportAndFilterMs": 1107.3563289999993,
+        "cancel": "PASS",
+        "errors": []
       },
       {
-        "scenario": "5000 founders",
-        "config": {
-          "seed": "dd05-large",
-          "width": 256,
-          "height": 256,
-          "population": 5000,
-          "mutationRate": 0.12,
-          "regrowth": true,
-          "rule": "selection",
-          "resourceScale": 1,
-          "mutationStrength": 0.08,
-          "reproduction": true
-        },
-        "metrics": {
-          "tick": 0,
-          "population": 5000,
-          "food": 130237.612,
-          "births": 0,
-          "deaths": 0,
-          "meanEnergy": 23.0395438,
-          "maxGeneration": 0
-        },
-        "lineages": {
-          "living": 5000,
-          "extinct": 0
-        },
-        "storage": {
-          "live": 5000,
-          "recent": 0,
-          "pinned": 0,
-          "parentReferences": 0,
-          "lines": 5000,
-          "events": 0,
-          "droppedEvents": 0
-        },
-        "times": {
-          "snapshot": 33.699999999953434,
-          "serialize": 8.399999999906868,
-          "sha256": 19.800000000046566,
-          "envelope": 19.800000000046566,
-          "indexedDbWrite": 26.800000000046566,
-          "indexedDbRead": 8.5,
-          "decodeAndValidate": 87.39999999990687,
-          "engine": 13.800000000046566,
-          "history": 12.199999999953434
-        },
-        "biologyBytes": 2323166,
-        "historyBytes": 1563490,
-        "fileBytes": 4237336,
-        "sampledPeakJsHeap": 69151369,
-        "originalTps": 220.94564737070132,
-        "restoredTps": 222.12350066639348,
-        "match": true,
-        "futureMatch": true
+        "viewport": [
+          1366,
+          768
+        ],
+        "runs": 4,
+        "scenarioHash": "8420af5e07ef33132802f3e9d728dd384ba75bf4bf840dc318c755f9e7f3efb5",
+        "rafCallbacksIn400ms": 25,
+        "renderMs": 2,
+        "exportAndFilterMs": 580.2793450000008,
+        "cancel": "NOT RUN",
+        "errors": []
       },
       {
-        "scenario": "10000 ticks and filled archive",
-        "config": {
-          "seed": "dd00-verification",
-          "width": 256,
-          "height": 256,
-          "population": 1000,
-          "mutationRate": 0.12,
-          "regrowth": true,
-          "rule": "selection",
-          "resourceScale": 1,
-          "mutationStrength": 0.08,
-          "reproduction": true
-        },
-        "metrics": {
-          "tick": 10000,
-          "population": 2913,
-          "food": 16785.864,
-          "births": 16597,
-          "deaths": 14684,
-          "meanEnergy": 17.96153381393752,
-          "maxGeneration": 33
-        },
-        "lineages": {
-          "living": 2,
-          "extinct": 998
-        },
-        "storage": {
-          "live": 2913,
-          "recent": 4096,
-          "pinned": 888,
-          "parentReferences": 2237,
-          "lines": 1000,
-          "events": 180,
-          "droppedEvents": 1730
-        },
-        "times": {
-          "snapshot": 38.10000000009313,
-          "serialize": 11.399999999906868,
-          "sha256": 26.699999999953434,
-          "envelope": 17.699999999953434,
-          "indexedDbWrite": 49.0999999998603,
-          "indexedDbRead": 8.199999999953434,
-          "decodeAndValidate": 83.80000000004657,
-          "engine": 7.600000000093132,
-          "history": 18.800000000046566
-        },
-        "biologyBytes": 1686722,
-        "historyBytes": 2388344,
-        "fileBytes": 4449765,
-        "sampledPeakJsHeap": 71624350,
-        "originalTps": 404.04040404040404,
-        "restoredTps": 393.7007874015748,
-        "match": true,
-        "futureMatch": true
+        "viewport": [
+          390,
+          844
+        ],
+        "runs": 4,
+        "scenarioHash": "91bb23ba9e213bf8340ce3669a24ca9bfc8ffdb4343bcecf4daec39789a5affe",
+        "rafCallbacksIn400ms": 25,
+        "renderMs": 2.099999999627471,
+        "exportAndFilterMs": 647.735045999998,
+        "cancel": "NOT RUN",
+        "errors": []
+      }
+    ],
+    "screenshots": [
+      "reports/dd-06/laboratory-1920x1080.png",
+      "reports/dd-06/progress-1366x768.png",
+      "reports/dd-06/comparison-390x844.png"
+    ]
+  },
+  "stress": {
+    "status": "PASS",
+    "description": "RSS sampled at the end of each independent series; previous series references are released",
+    "memory": [
+      {
+        "series": 1,
+        "bytes": 21515,
+        "rss": 109150208
       },
       {
-        "scenario": "extinct world and lines",
-        "config": {
-          "seed": "dd05-empty",
-          "width": 64,
-          "height": 64,
-          "population": 5000,
-          "mutationRate": 0.12,
-          "regrowth": false,
-          "rule": "selection",
-          "resourceScale": 1,
-          "mutationStrength": 0.08,
-          "reproduction": true
-        },
-        "metrics": {
-          "tick": 600,
-          "population": 0,
-          "food": 0,
-          "births": 0,
-          "deaths": 5000,
-          "meanEnergy": 0,
-          "maxGeneration": 0
-        },
-        "lineages": {
-          "living": 0,
-          "extinct": 5000
-        },
-        "storage": {
-          "live": 0,
-          "recent": 4096,
-          "pinned": 0,
-          "parentReferences": 0,
-          "lines": 5000,
-          "events": 169,
-          "droppedEvents": 0
-        },
-        "times": {
-          "snapshot": 13.299999999813735,
-          "serialize": 3.5,
-          "sha256": 9.200000000186265,
-          "envelope": 7.5,
-          "indexedDbWrite": 10.299999999813735,
-          "indexedDbRead": 3.4000000001396984,
-          "decodeAndValidate": 36.60000000009313,
-          "engine": 0.19999999995343387,
-          "history": 16.5
-        },
-        "biologyBytes": 41124,
-        "historyBytes": 1741013,
-        "fileBytes": 2001213,
-        "sampledPeakJsHeap": 92051904,
-        "originalTps": 76923.0769340985,
-        "restoredTps": 71428.57142144396,
-        "match": true,
-        "futureMatch": true
+        "series": 2,
+        "bytes": 21515,
+        "rss": 109674496
+      },
+      {
+        "series": 3,
+        "bytes": 21515,
+        "rss": 110198784
+      },
+      {
+        "series": 4,
+        "bytes": 21515,
+        "rss": 117407744
+      },
+      {
+        "series": 5,
+        "bytes": 21515,
+        "rss": 117932032
+      },
+      {
+        "series": 6,
+        "bytes": 21515,
+        "rss": 118960128
+      },
+      {
+        "series": 7,
+        "bytes": 21515,
+        "rss": 119353344
+      },
+      {
+        "series": 8,
+        "bytes": 21515,
+        "rss": 119746560
+      },
+      {
+        "series": 9,
+        "bytes": 21515,
+        "rss": 120139776
+      },
+      {
+        "series": 10,
+        "bytes": 21515,
+        "rss": 120532992
+      },
+      {
+        "series": 11,
+        "bytes": 21515,
+        "rss": 120926208
+      },
+      {
+        "series": 12,
+        "bytes": 21515,
+        "rss": 121450496
+      },
+      {
+        "series": 13,
+        "bytes": 21515,
+        "rss": 121843712
+      },
+      {
+        "series": 14,
+        "bytes": 21515,
+        "rss": 122236928
+      },
+      {
+        "series": 15,
+        "bytes": 21515,
+        "rss": 122630144
+      },
+      {
+        "series": 16,
+        "bytes": 21515,
+        "rss": 123023360
+      }
+    ]
+  },
+  "heapProbe": {
+    "method": "Node heapUsed after explicit GC; one Engine in flight; results released before GC",
+    "afterWarmup": 10100464,
+    "final": 10202912,
+    "delta": 102448,
+    "samples": [
+      {
+        "series": 1,
+        "heapUsed": 10036624,
+        "rss": 91631616
+      },
+      {
+        "series": 2,
+        "heapUsed": 10047784,
+        "rss": 91938816
+      },
+      {
+        "series": 3,
+        "heapUsed": 10037976,
+        "rss": 108896256
+      },
+      {
+        "series": 4,
+        "heapUsed": 10049704,
+        "rss": 109264896
+      },
+      {
+        "series": 5,
+        "heapUsed": 10066528,
+        "rss": 109268992
+      },
+      {
+        "series": 6,
+        "heapUsed": 10094008,
+        "rss": 109326336
+      },
+      {
+        "series": 7,
+        "heapUsed": 10100464,
+        "rss": 109318144
+      },
+      {
+        "series": 8,
+        "heapUsed": 10106080,
+        "rss": 109322240
+      },
+      {
+        "series": 9,
+        "heapUsed": 10138712,
+        "rss": 109346816
+      },
+      {
+        "series": 10,
+        "heapUsed": 10151176,
+        "rss": 146329600
+      },
+      {
+        "series": 11,
+        "heapUsed": 10163384,
+        "rss": 146518016
+      },
+      {
+        "series": 12,
+        "heapUsed": 10161816,
+        "rss": 146690048
+      },
+      {
+        "series": 13,
+        "heapUsed": 10176848,
+        "rss": 146759680
+      },
+      {
+        "series": 14,
+        "heapUsed": 10171456,
+        "rss": 146776064
+      },
+      {
+        "series": 15,
+        "heapUsed": 10182328,
+        "rss": 146776064
+      },
+      {
+        "series": 16,
+        "heapUsed": 10197488,
+        "rss": 146800640
+      },
+      {
+        "series": 17,
+        "heapUsed": 10193720,
+        "rss": 146972672
+      },
+      {
+        "series": 18,
+        "heapUsed": 10198576,
+        "rss": 147013632
+      },
+      {
+        "series": 19,
+        "heapUsed": 10202568,
+        "rss": 147034112
+      },
+      {
+        "series": 20,
+        "heapUsed": 10202752,
+        "rss": 147034112
+      },
+      {
+        "series": 21,
+        "heapUsed": 10208768,
+        "rss": 147034112
+      },
+      {
+        "series": 22,
+        "heapUsed": 10202912,
+        "rss": 147042304
+      },
+      {
+        "series": 23,
+        "heapUsed": 10205080,
+        "rss": 147042304
+      },
+      {
+        "series": 24,
+        "heapUsed": 10202592,
+        "rss": 147042304
       }
     ]
   },
   "evidence": [
-    "reports/dd-05/checks.json",
-    "reports/dd-05/build.log",
-    "reports/dd-05/typecheck.log",
-    "reports/dd-05/lint.log",
-    "reports/dd-05/unit.log",
-    "reports/dd-05/integration.log",
-    "reports/dd-05/replay.json",
-    "reports/dd-05/replay.log",
-    "reports/dd-05/save-benchmark.json",
-    "reports/dd-05/save-benchmark.log",
-    "reports/dd-05/persistence-e2e.json",
-    "reports/dd-05/persistence-e2e.log",
-    "reports/dd-05/e2e.json",
-    "reports/dd-05/e2e.log",
-    "reports/dd-05/lineage-e2e.json",
-    "reports/dd-05/lineage-e2e.log",
-    "reports/dd-05/long-run-a.json",
-    "reports/dd-05/long-run-b.json",
-    "reports/dd-05/determinism.log",
-    "reports/dd-05/dd02-regression.log",
-    "reports/dd-05/dd02-state.log",
-    "reports/dd-05/dd01-compatibility.log",
-    "reports/dd-05/history-benchmark.json",
-    "reports/dd-05/browser-benchmark.json",
-    "reports/dd-05/slots-1920x1080.png",
-    "reports/dd-05/loaded-1366x768.png",
-    "reports/dd-05/import-preview-390x844.png"
+    "reports/dd-06/LAB-E01/definition.json",
+    "reports/dd-06/LAB-E01/performance.json",
+    "reports/dd-06/LAB-E01/report.md",
+    "reports/dd-06/LAB-E01/series.csv",
+    "reports/dd-06/LAB-E01/series.json",
+    "reports/dd-06/LAB-E02/definition.json",
+    "reports/dd-06/LAB-E02/performance.json",
+    "reports/dd-06/LAB-E02/report.md",
+    "reports/dd-06/LAB-E02/series.csv",
+    "reports/dd-06/LAB-E02/series.json",
+    "reports/dd-06/LAB-E03/definition.json",
+    "reports/dd-06/LAB-E03/performance.json",
+    "reports/dd-06/LAB-E03/report.md",
+    "reports/dd-06/LAB-E03/series.csv",
+    "reports/dd-06/LAB-E03/series.json",
+    "reports/dd-06/LAB-E04/definition.json",
+    "reports/dd-06/LAB-E04/performance.json",
+    "reports/dd-06/LAB-E04/report.md",
+    "reports/dd-06/LAB-E04/series.csv",
+    "reports/dd-06/LAB-E04/series.json",
+    "reports/dd-06/build.log",
+    "reports/dd-06/checks.json",
+    "reports/dd-06/comparison-390x844.png",
+    "reports/dd-06/dd01-compatibility.log",
+    "reports/dd-06/dd02-regression.log",
+    "reports/dd-06/dd02-state.log",
+    "reports/dd-06/determinism.log",
+    "reports/dd-06/heap-probe.mjs",
+    "reports/dd-06/heap.json",
+    "reports/dd-06/integration.log",
+    "reports/dd-06/interrupt.log",
+    "reports/dd-06/interrupted-series.json",
+    "reports/dd-06/lab-batches.log",
+    "reports/dd-06/lab-e2e.json",
+    "reports/dd-06/lab-e2e.log",
+    "reports/dd-06/lab-stress.json",
+    "reports/dd-06/lab-stress.log",
+    "reports/dd-06/laboratory-1920x1080.png",
+    "reports/dd-06/lint.log",
+    "reports/dd-06/long-run-a.json",
+    "reports/dd-06/long-run-b.json",
+    "reports/dd-06/paired-effects.json",
+    "reports/dd-06/performance-5000.json",
+    "reports/dd-06/persistence-e2e.json",
+    "reports/dd-06/progress-1366x768.png",
+    "reports/dd-06/replay.json",
+    "reports/dd-06/typecheck.log",
+    "reports/dd-06/unit.log"
   ],
   "blockers": [
-    "GitHub API вернул Forbidden для gh pr create. Ветка опубликована, отдельный PR доступен через форму после входа."
+    "GitHub API вернул Forbidden. Ветка опубликована, отдельный PR открывается через форму GitHub после входа."
   ],
   "nextStageAuthorized": false
 }

@@ -1,0 +1,13 @@
+(node:13700) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+BUILD PASS: 22 files emitted to dist/
+Lab viewport 1920×1080: opening observer
+Lab viewport 1920: live series progress
+Lab viewport 1920: results archived
+Lab viewport 1366×768: opening observer
+Lab viewport 1366: live series progress
+Lab viewport 1366: results archived
+Lab viewport 390×844: opening observer
+Lab viewport 390: live series progress
+Lab viewport 390: results archived
+Lab E2E PASS: 3 viewport(s), isolated worlds, archive reload and downloads

@@ -1,0 +1,217 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "config": {
+        "seed": "dd05-alpha",
+        "width": 32,
+        "height": 32,
+        "population": 140
+      },
+      "engineContinuous": "5626e78576dac45206ee1502bedd4f520e6a09726c0f14f878295a3d62bbb077",
+      "engineRestored": "5626e78576dac45206ee1502bedd4f520e6a09726c0f14f878295a3d62bbb077",
+      "historyContinuous": "9512316c73444f3c2e67398e855d826d8f8125ec89554c44d71d3cd0c4220ae7",
+      "historyRestored": "9512316c73444f3c2e67398e855d826d8f8125ec89554c44d71d3cd0c4220ae7",
+      "tick": 6000,
+      "metrics": {
+        "tick": 6000,
+        "population": 432,
+        "food": 205.785,
+        "births": 1192,
+        "deaths": 900,
+        "meanEnergy": 19.050805555555556,
+        "maxGeneration": 13
+      },
+      "lineages": {
+        "living": 64,
+        "extinct": 76
+      },
+      "storage": {
+        "live": 432,
+        "recent": 900,
+        "pinned": 40,
+        "parentReferences": 228,
+        "lines": 140,
+        "events": 180,
+        "droppedEvents": 550
+      }
+    },
+    {
+      "config": {
+        "seed": "dd05-beta",
+        "width": 32,
+        "height": 32,
+        "population": 140
+      },
+      "engineContinuous": "57d47cbe9daa1525ad0e57af9989bbec18a86afda065707d34d32e90f57dc016",
+      "engineRestored": "57d47cbe9daa1525ad0e57af9989bbec18a86afda065707d34d32e90f57dc016",
+      "historyContinuous": "3753a8bb140bebe2022b358543fa66eed17b2baf23b6fd4895796fa98156affb",
+      "historyRestored": "3753a8bb140bebe2022b358543fa66eed17b2baf23b6fd4895796fa98156affb",
+      "tick": 6000,
+      "metrics": {
+        "tick": 6000,
+        "population": 384,
+        "food": 200.936,
+        "births": 1186,
+        "deaths": 942,
+        "meanEnergy": 18.8202109375,
+        "maxGeneration": 17
+      },
+      "lineages": {
+        "living": 58,
+        "extinct": 82
+      },
+      "storage": {
+        "live": 384,
+        "recent": 942,
+        "pinned": 56,
+        "parentReferences": 220,
+        "lines": 140,
+        "events": 180,
+        "droppedEvents": 581
+      }
+    },
+    {
+      "config": {
+        "seed": "🌱-рост",
+        "width": 32,
+        "height": 32,
+        "population": 140
+      },
+      "engineContinuous": "bbd7f71c3ed642f6b93e2911ead85e08931e679d59e7564bf0ac61758df0e5bc",
+      "engineRestored": "bbd7f71c3ed642f6b93e2911ead85e08931e679d59e7564bf0ac61758df0e5bc",
+      "historyContinuous": "847abd784daadef949f18bb6924d000a4498e943caee36faa7e28fe57e7ddd2a",
+      "historyRestored": "847abd784daadef949f18bb6924d000a4498e943caee36faa7e28fe57e7ddd2a",
+      "tick": 6000,
+      "metrics": {
+        "tick": 6000,
+        "population": 473,
+        "food": 196.066,
+        "births": 1217,
+        "deaths": 884,
+        "meanEnergy": 19.394930232558142,
+        "maxGeneration": 17
+      },
+      "lineages": {
+        "living": 70,
+        "extinct": 70
+      },
+      "storage": {
+        "live": 473,
+        "recent": 884,
+        "pinned": 66,
+        "parentReferences": 276,
+        "lines": 140,
+        "events": 180,
+        "droppedEvents": 544
+      }
+    },
+    {
+      "config": {
+        "seed": "青い🌲",
+        "width": 32,
+        "height": 32,
+        "population": 140
+      },
+      "engineContinuous": "e9a3fa27d2a80629c6d0ed99d37d3a96781aa5bba2d7817f32d2282f0082b4d2",
+      "engineRestored": "e9a3fa27d2a80629c6d0ed99d37d3a96781aa5bba2d7817f32d2282f0082b4d2",
+      "historyContinuous": "1aa25fe8f8beebdeb78933e4d1069c39833ee7ec7918eaf3eca34aa5bf08e8bf",
+      "historyRestored": "1aa25fe8f8beebdeb78933e4d1069c39833ee7ec7918eaf3eca34aa5bf08e8bf",
+      "tick": 6000,
+      "metrics": {
+        "tick": 6000,
+        "population": 441,
+        "food": 209.354,
+        "births": 1232,
+        "deaths": 931,
+        "meanEnergy": 20.18908163265306,
+        "maxGeneration": 13
+      },
+      "lineages": {
+        "living": 77,
+        "extinct": 63
+      },
+      "storage": {
+        "live": 441,
+        "recent": 931,
+        "pinned": 73,
+        "parentReferences": 260,
+        "lines": 140,
+        "events": 180,
+        "droppedEvents": 538
+      }
+    },
+    {
+      "config": {
+        "seed": "dd05-omega",
+        "width": 32,
+        "height": 32,
+        "population": 140
+      },
+      "engineContinuous": "7b1fbecb22530fae2e02830498cca4153ff0c416a8fee443f34b748501ed6d2c",
+      "engineRestored": "7b1fbecb22530fae2e02830498cca4153ff0c416a8fee443f34b748501ed6d2c",
+      "historyContinuous": "7a9579a6655cb82a30ce3e11e551b52e374c4fd9a8a000d0c7be0fbdbc6eeb54",
+      "historyRestored": "7a9579a6655cb82a30ce3e11e551b52e374c4fd9a8a000d0c7be0fbdbc6eeb54",
+      "tick": 6000,
+      "metrics": {
+        "tick": 6000,
+        "population": 468,
+        "food": 203.127,
+        "births": 1417,
+        "deaths": 1089,
+        "meanEnergy": 20.48048076923077,
+        "maxGeneration": 12
+      },
+      "lineages": {
+        "living": 72,
+        "extinct": 68
+      },
+      "storage": {
+        "live": 468,
+        "recent": 1089,
+        "pinned": 57,
+        "parentReferences": 258,
+        "lines": 140,
+        "events": 180,
+        "droppedEvents": 569
+      }
+    }
+  ],
+  "repeat": {
+    "checkpoints": [
+      0,
+      25,
+      1234,
+      5000,
+      8001,
+      10000
+    ],
+    "engineContinuous": "3a99137357b4044381fb0bef90f1ff18d61481a488231c186f0eeb191b57d640",
+    "engineRestored": "3a99137357b4044381fb0bef90f1ff18d61481a488231c186f0eeb191b57d640",
+    "historyContinuous": "29c535c65aa9410a4b665cf323867c94f23440bc99788411bd7cac5a8786b4e8",
+    "historyRestored": "29c535c65aa9410a4b665cf323867c94f23440bc99788411bd7cac5a8786b4e8",
+    "tick": 10000,
+    "metrics": {
+      "tick": 10000,
+      "population": 450,
+      "food": 180.149,
+      "births": 1646,
+      "deaths": 1376,
+      "meanEnergy": 18.585095555555554,
+      "maxGeneration": 14
+    },
+    "lineages": {
+      "living": 50,
+      "extinct": 130
+    },
+    "storage": {
+      "live": 450,
+      "recent": 1376,
+      "pinned": 50,
+      "parentReferences": 247,
+      "lines": 180,
+      "events": 180,
+      "droppedEvents": 1031
+    }
+  }
+}

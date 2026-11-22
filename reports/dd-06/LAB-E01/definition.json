@@ -1,0 +1,49 @@
+{
+  "versions": {
+    "format": 1,
+    "engine": "0.3.0",
+    "evolution": "1",
+    "metrics": 1,
+    "scenario": 1
+  },
+  "initial": {
+    "width": 48,
+    "height": 48,
+    "population": 240
+  },
+  "seeds": [
+    "dd00-verification"
+  ],
+  "replicas": 1,
+  "duration": 10000,
+  "interval": 100,
+  "burnIn": 0,
+  "stopPolicy": "fixed-ticks",
+  "criterion": "identical-state",
+  "limitations": "Фиксированный набор seed. Диапазон наблюдений описывает разброс, а не доверительный интервал. Связь признака с размножением не устанавливает причинность отдельного гена.",
+  "id": "LAB-E01",
+  "title": "Детерминизм",
+  "description": "Два независимых запуска с разными пакетами тиков.",
+  "hypothesis": "Полное состояние совпадает при одинаковых seed и условиях.",
+  "control": {
+    "id": "control",
+    "label": "По одному тику",
+    "changes": {},
+    "landscape": "patchy",
+    "batch": 1
+  },
+  "treatments": [
+    {
+      "id": "batch",
+      "label": "Пакеты по 17",
+      "changes": {},
+      "landscape": "patchy",
+      "batch": 17
+    }
+  ],
+  "primary": "population",
+  "secondary": [
+    "births",
+    "food"
+  ]
+}

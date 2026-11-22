@@ -1,0 +1,342 @@
+[
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "population",
+    "label": "Конечная численность",
+    "n": 5,
+    "mean": -340.6,
+    "median": -337,
+    "min": -417,
+    "max": -249,
+    "sd": 73.92428559005491,
+    "differences": {
+      "dd02-amber": -337,
+      "dd02-fern": -417,
+      "dd02-dune": -411,
+      "dd02-coral": -249,
+      "dd02-slate": -289
+    }
+  },
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "averagePopulation",
+    "label": "Средняя численность",
+    "n": 5,
+    "mean": -405.80674999999997,
+    "median": -396.15475,
+    "min": -450.7172499999999,
+    "max": -390.20775000000003,
+    "sd": 25.255731733113542,
+    "differences": {
+      "dd02-amber": -390.20775000000003,
+      "dd02-fern": -397.51275,
+      "dd02-dune": -394.44124999999997,
+      "dd02-coral": -396.15475,
+      "dd02-slate": -450.7172499999999
+    }
+  },
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "births",
+    "label": "Рождения",
+    "n": 5,
+    "mean": -971.4,
+    "median": -1004,
+    "min": -1081,
+    "max": -830,
+    "sd": 106.34519265110201,
+    "differences": {
+      "dd02-amber": -893,
+      "dd02-fern": -830,
+      "dd02-dune": -1049,
+      "dd02-coral": -1081,
+      "dd02-slate": -1004
+    }
+  },
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "deaths",
+    "label": "Смерти",
+    "n": 5,
+    "mean": -630.8,
+    "median": -638,
+    "min": -832,
+    "max": -413,
+    "sd": 158.63070320716605,
+    "differences": {
+      "dd02-amber": -556,
+      "dd02-fern": -413,
+      "dd02-dune": -638,
+      "dd02-coral": -832,
+      "dd02-slate": -715
+    }
+  },
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "food",
+    "label": "Пища на финале, ед.",
+    "n": 5,
+    "mean": 4822.4378,
+    "median": 1040.1290000000001,
+    "min": 40.868999999999915,
+    "max": 12067.675,
+    "sd": 6021.265651220281,
+    "differences": {
+      "dd02-amber": 40.868999999999915,
+      "dd02-fern": 12067.675,
+      "dd02-dune": 10701.453000000001,
+      "dd02-coral": 1040.1290000000001,
+      "dd02-slate": 262.0629999999999
+    }
+  },
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "energy",
+    "label": "Энергия живых, ед.",
+    "n": 5,
+    "mean": 4.229000128281015,
+    "median": 4.295665472930271,
+    "min": 0.41951186001011465,
+    "max": 10.332619666329627,
+    "sd": 3.8763628438474145,
+    "differences": {
+      "dd02-amber": 0.41951186001011465,
+      "dd02-fern": 10.332619666329627,
+      "dd02-dune": 4.295665472930271,
+      "dd02-coral": 4.714023488660871,
+      "dd02-slate": 1.3831801534741928
+    }
+  },
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "reproduction",
+    "label": "Рождения на 1 000 организм-тиков",
+    "n": 5,
+    "mean": 0.7221272481557075,
+    "median": 0.6878057861105238,
+    "min": 0.522301742214927,
+    "max": 0.883964377934315,
+    "sd": 0.14950538432562785,
+    "differences": {
+      "dd02-amber": 0.522301742214927,
+      "dd02-fern": 0.8570081295546249,
+      "dd02-dune": 0.6878057861105238,
+      "dd02-coral": 0.6595562049641467,
+      "dd02-slate": 0.883964377934315
+    }
+  },
+  {
+    "experiment": "LAB-E02",
+    "reference": "control",
+    "treatment": "scarcity",
+    "metric": "sensorGap",
+    "label": "Разница рождаемости: высокий − низкий радиус",
+    "n": 5,
+    "mean": -0.371299875309837,
+    "median": -0.3965753211326317,
+    "min": -0.45929818210459283,
+    "max": -0.19554354602298762,
+    "sd": 0.10279400785484202,
+    "differences": {
+      "dd02-amber": -0.3797205746385528,
+      "dd02-fern": -0.45929818210459283,
+      "dd02-dune": -0.3965753211326317,
+      "dd02-coral": -0.19554354602298762,
+      "dd02-slate": -0.42536175265041987
+    }
+  },
+  {
+    "experiment": "LAB-E03",
+    "reference": "control",
+    "treatment": "mutations",
+    "metric": "population",
+    "label": "Конечная численность",
+    "n": 5,
+    "mean": 249.4,
+    "median": 263,
+    "min": 147,
+    "max": 365,
+    "sd": 80.39154184365418,
+    "differences": {
+      "dd02-amber": 263,
+      "dd02-fern": 263,
+      "dd02-dune": 209,
+      "dd02-coral": 147,
+      "dd02-slate": 365
+    }
+  },
+  {
+    "experiment": "LAB-E03",
+    "reference": "control",
+    "treatment": "mutations",
+    "metric": "variants",
+    "label": "Живые генотипы",
+    "n": 5,
+    "mean": 302.2,
+    "median": 299,
+    "min": 271,
+    "max": 346,
+    "sd": 27.653209578636616,
+    "differences": {
+      "dd02-amber": 305,
+      "dd02-fern": 271,
+      "dd02-dune": 290,
+      "dd02-coral": 299,
+      "dd02-slate": 346
+    }
+  },
+  {
+    "experiment": "LAB-E03",
+    "reference": "control",
+    "treatment": "mutations",
+    "metric": "births",
+    "label": "Рождения",
+    "n": 5,
+    "mean": 289.4,
+    "median": 300,
+    "min": 81,
+    "max": 448,
+    "sd": 145.13545397317637,
+    "differences": {
+      "dd02-amber": 223,
+      "dd02-fern": 81,
+      "dd02-dune": 300,
+      "dd02-coral": 448,
+      "dd02-slate": 395
+    }
+  },
+  {
+    "experiment": "LAB-E03",
+    "reference": "control",
+    "treatment": "mutations",
+    "metric": "reproduction",
+    "label": "Рождения на 1 000 организм-тиков",
+    "n": 5,
+    "mean": -0.1424896651827138,
+    "median": -0.16001503154943864,
+    "min": -0.2799626581022232,
+    "max": 0.024053422686335812,
+    "sd": 0.10968757902218554,
+    "differences": {
+      "dd02-amber": -0.17188677521321838,
+      "dd02-fern": -0.2799626581022232,
+      "dd02-dune": -0.12463728373502458,
+      "dd02-coral": 0.024053422686335812,
+      "dd02-slate": -0.16001503154943864
+    }
+  },
+  {
+    "experiment": "LAB-E04",
+    "reference": "control",
+    "treatment": "patchy",
+    "metric": "population",
+    "label": "Конечная численность",
+    "n": 5,
+    "mean": -17.8,
+    "median": -18,
+    "min": -30,
+    "max": -4,
+    "sd": 11.41052146047673,
+    "differences": {
+      "dd02-amber": -30,
+      "dd02-fern": -28,
+      "dd02-dune": -9,
+      "dd02-coral": -18,
+      "dd02-slate": -4
+    }
+  },
+  {
+    "experiment": "LAB-E04",
+    "reference": "control",
+    "treatment": "patchy",
+    "metric": "speedGap",
+    "label": "Разница рождаемости: высокая − низкая скорость",
+    "n": 5,
+    "mean": 0.014921152499378665,
+    "median": 0.02116207693615213,
+    "min": -0.07803706468549976,
+    "max": 0.10450654282861349,
+    "sd": 0.08917952746768482,
+    "differences": {
+      "dd02-amber": 0.10450654282861349,
+      "dd02-fern": -0.07803706468549976,
+      "dd02-dune": 0.02116207693615213,
+      "dd02-coral": 0.10038393347006813,
+      "dd02-slate": -0.07340972605244067
+    }
+  },
+  {
+    "experiment": "LAB-E04",
+    "reference": "control",
+    "treatment": "patchy",
+    "metric": "sensorGap",
+    "label": "Разница рождаемости: высокий − низкий радиус",
+    "n": 5,
+    "mean": -0.04292307633541903,
+    "median": -0.03191829103317556,
+    "min": -0.11083891616328068,
+    "max": 0.001231948569176522,
+    "sd": 0.04192792883584369,
+    "differences": {
+      "dd02-amber": -0.04810174566462533,
+      "dd02-fern": 0.001231948569176522,
+      "dd02-dune": -0.11083891616328068,
+      "dd02-coral": -0.024988377385190108,
+      "dd02-slate": -0.03191829103317556
+    }
+  },
+  {
+    "experiment": "LAB-E04",
+    "reference": "neutral-uniform",
+    "treatment": "neutral-patchy",
+    "metric": "population",
+    "label": "Конечная численность · нейтральный режим",
+    "n": 5,
+    "mean": 107.2,
+    "median": 128,
+    "min": 39,
+    "max": 157,
+    "sd": 47.49947368129462,
+    "differences": {
+      "dd02-amber": 39,
+      "dd02-fern": 79,
+      "dd02-dune": 157,
+      "dd02-coral": 128,
+      "dd02-slate": 133
+    }
+  },
+  {
+    "experiment": "LAB-E04",
+    "reference": "neutral-uniform",
+    "treatment": "neutral-patchy",
+    "metric": "sensorGap",
+    "label": "Разница рождаемости по радиусу · нейтральный режим",
+    "n": 5,
+    "mean": -0.13934386634489654,
+    "median": -0.17936882443828028,
+    "min": -0.2485872493847403,
+    "max": 0.042878527987480375,
+    "sd": 0.11246369012116085,
+    "differences": {
+      "dd02-amber": -0.19649168447203047,
+      "dd02-fern": 0.042878527987480375,
+      "dd02-dune": -0.2485872493847403,
+      "dd02-coral": -0.17936882443828028,
+      "dd02-slate": -0.11515010141691207
+    }
+  }
+]
