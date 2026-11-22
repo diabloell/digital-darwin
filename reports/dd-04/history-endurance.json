@@ -1,0 +1,2343 @@
+{
+  "status": "PASS",
+  "node": "v24.22.3",
+  "results": [
+    {
+      "config": {
+        "seed": "dd04-endurance",
+        "width": 40,
+        "height": 40,
+        "population": 200
+      },
+      "ticks": 100000,
+      "runs": [
+        {
+          "mode": "detailed",
+          "elapsedMs": 41713.509173,
+          "tps": 2397.3049015192237,
+          "engineMs": 41050.700323000376,
+          "historyMs": 140.02305299987285,
+          "peakRss": 216473600,
+          "final": {
+            "tick": 100000,
+            "population": 531,
+            "food": 267.005,
+            "births": 14459,
+            "deaths": 14128,
+            "meanEnergy": 19.23809604519774,
+            "maxGeneration": 23
+          },
+          "counts": {
+            "living": 6,
+            "extinct": 194
+          },
+          "checkpoints": [
+            {
+              "tick": 1000,
+              "hash": "1f73bec21cbaee4e800649f752250a8db20104f140b6ed2970f262074fb4669d"
+            },
+            {
+              "tick": 2000,
+              "hash": "9a95bb4bb106a084fb16332c03151e5de2a8f9468c84618be2c8b9784333d641"
+            },
+            {
+              "tick": 3000,
+              "hash": "2c3a224f8ff938c302f9f7cc03d2127c70771b307ef8904015f76ce42c00d319"
+            },
+            {
+              "tick": 4000,
+              "hash": "091c943d5e642ffbb92de9b50bc6bcda760478544483734bfe1f061401437a74"
+            },
+            {
+              "tick": 5000,
+              "hash": "fab23ff75175fdddfb7b2066ad6c9f510f56ca1880eb1b497d35805578f481ec"
+            },
+            {
+              "tick": 6000,
+              "hash": "9cf4c184d4f167acca6dda2a2d0e2636a3d11ce18309f89e968fffb65f258fba"
+            },
+            {
+              "tick": 7000,
+              "hash": "a4e08bef6412b37b58fa1c665cab8de35cc1ddc5da2d30ef79b009d0af8eba26"
+            },
+            {
+              "tick": 8000,
+              "hash": "a6ce5cda403f37226d5080c8eeb03b0e283f6c05e0a85d737e013b89f9f126f4"
+            },
+            {
+              "tick": 9000,
+              "hash": "e0ef5f22af92dc03b46499de945dc0643791cb0844f51d119292628c4730d868"
+            },
+            {
+              "tick": 10000,
+              "hash": "236b18eb66d2913690b6b4f10d69764bee7a271fb381246b58d44ca4acd5051a"
+            },
+            {
+              "tick": 11000,
+              "hash": "88017b0e44d2fb83dcbcf6dcef2c72cfdc9ceafb3aecd98dcba6313c2df03aad"
+            },
+            {
+              "tick": 12000,
+              "hash": "f651779ce7d2ea723d2ee550294dbfef05a8ecf9c7473b686af2617583e46342"
+            },
+            {
+              "tick": 13000,
+              "hash": "6cb522214d465170573bba70c628d796b006485517ddf828bf76f401863b0aba"
+            },
+            {
+              "tick": 14000,
+              "hash": "bf5b6d8469ec90bf540f5d95c13858ed03f83985b8129b3be97ddcff903b44d4"
+            },
+            {
+              "tick": 15000,
+              "hash": "0eac613f2302f85da2ac5f1032d5e59d516def3725eaf165c92ac1eed71b1c5e"
+            },
+            {
+              "tick": 16000,
+              "hash": "ccc6f49115473ea2b5125e9001af1eaa5a6c5f335358de6931b7927b133c7c89"
+            },
+            {
+              "tick": 17000,
+              "hash": "1805e11232100a868f4abdd2a88d46aad5afc69e0a47f1f1f2064fa225d0dd6f"
+            },
+            {
+              "tick": 18000,
+              "hash": "5d267bb376c85ef1ddb87416f54461f727a9f89c44a4b0c5444d2411fe536889"
+            },
+            {
+              "tick": 19000,
+              "hash": "6a6599187d84c25060fcac2b21b957d6ae45a13cea974d8ce5c3be5e02f63a4c"
+            },
+            {
+              "tick": 20000,
+              "hash": "bec12203d240248bad979eb0726c44183d1ab5528f969c6340f7e8518cf5a6a8"
+            },
+            {
+              "tick": 21000,
+              "hash": "fc133fc37096a45be6c69d97923c83a6ca5f434f8c9d2bd4e69ceaa82e5925e2"
+            },
+            {
+              "tick": 22000,
+              "hash": "cee43a18df0c0f19cf78e6e19a474b6ba77037879f9567453206882a1f34b9f9"
+            },
+            {
+              "tick": 23000,
+              "hash": "575e132bbfd5a7b2048a10c4ce542fd78c4e645e2189a7233eb833ba4691acdb"
+            },
+            {
+              "tick": 24000,
+              "hash": "9aa9f4b68d5884ebde06cb7cfab7eee4d12c12b9c89ff23d78786fe350054f31"
+            },
+            {
+              "tick": 25000,
+              "hash": "c65726c2a71b59812022d70e0e198b56c2ff6979878c0863887ab1508cd76de3"
+            },
+            {
+              "tick": 26000,
+              "hash": "37bd372d25f95e4a7f1e4a2f92bb6e4917513f5e0e0a30316a48015f3f700d23"
+            },
+            {
+              "tick": 27000,
+              "hash": "84be4cba5b25e1af0c42254554e2c5e0a8da48c2f309505d3c5e341d151cde00"
+            },
+            {
+              "tick": 28000,
+              "hash": "23f38f1bb480ccc3521ab1f87fcd90f1e5b0fc435002cfd5bd789f74b2fb68d3"
+            },
+            {
+              "tick": 29000,
+              "hash": "7177c45b64bbf35aaecd9e753dc192dd29dc1fd81445ca776b054190237791f4"
+            },
+            {
+              "tick": 30000,
+              "hash": "0e2277d42f4446156760ec68f81891fc41080861e2055a892970feee3108e5d1"
+            },
+            {
+              "tick": 31000,
+              "hash": "3937174b62b5a62fbc9c95cb616c2f02934f1091f18d9750c78d4c9bb2b97f2c"
+            },
+            {
+              "tick": 32000,
+              "hash": "8faf50297a9dd64ea5b42ca4a6cc81bcae2cb53cae20e45b987d3af95e96ceae"
+            },
+            {
+              "tick": 33000,
+              "hash": "7166812543973774c9334c65649465774fdb92dfc00ea1a68f4a48ea9d828cf5"
+            },
+            {
+              "tick": 34000,
+              "hash": "bf4c508b584a6d390a15f3d7dd613836f3ad2fdf631044f40f8cff9fa35423b6"
+            },
+            {
+              "tick": 35000,
+              "hash": "839a0134aae9ccb494f2b4b4a88f5a82fe2374be0cf385728aa05080b4ee9a5d"
+            },
+            {
+              "tick": 36000,
+              "hash": "815efe81e092fe118f28ec3962f023e59296c5d590c36d8a42708741dc209f3c"
+            },
+            {
+              "tick": 37000,
+              "hash": "6f07fa4a34d535f78c0d728b5fc16e436530ab456d5ff8af1f8b71c9931eb870"
+            },
+            {
+              "tick": 38000,
+              "hash": "836cd9cc44b75f70be5e60ce93d7def53d61ff62ed87f37b827b6e7df20fb13e"
+            },
+            {
+              "tick": 39000,
+              "hash": "371aa1f777041f7229ece0d2e757a3ae276596e2fdc841da905c10929db657fb"
+            },
+            {
+              "tick": 40000,
+              "hash": "a210688993b82bb5290045a997e596d97f0f3070eea185b6db7343e8938e89f3"
+            },
+            {
+              "tick": 41000,
+              "hash": "f70ff6376a63a9c9d3fdbaf725bce493e9fa57dd32b7db1af3e99d745368ff3c"
+            },
+            {
+              "tick": 42000,
+              "hash": "67299daf86f6b5957f1fc574affc2963b1cdb1e715e851aa2d71a844c0855505"
+            },
+            {
+              "tick": 43000,
+              "hash": "d8e3b6ced800e35d3d86df051827b0b9b54f4eb14798d39d79d1c2899ce48cbb"
+            },
+            {
+              "tick": 44000,
+              "hash": "992900dafb70405238ca3231312f893569cd5bbb8b69c8c1dc846303c91bbd73"
+            },
+            {
+              "tick": 45000,
+              "hash": "dd27fad2e8df2e68d56fd64a224d99107a148ab172606ae71b8dd6382c90ca6f"
+            },
+            {
+              "tick": 46000,
+              "hash": "12c2b89719c1bbd5b7bf6486a45fd984d4f6b8a7621641c4a83f6b3cd9021d97"
+            },
+            {
+              "tick": 47000,
+              "hash": "3104bb6b031ce7ef1d69607e836dc483e4074f964898d5bcff536982d492cd1b"
+            },
+            {
+              "tick": 48000,
+              "hash": "4c21c63525383c8bf3f9097664c4f974e3448e552241c9bec7a7ba100e7e63a7"
+            },
+            {
+              "tick": 49000,
+              "hash": "0cca122744653b63eeb3843b5d5f0683c61231068e8200a56f6e964985cf10b1"
+            },
+            {
+              "tick": 50000,
+              "hash": "516337b471f1b8afae87a51ceb036b58e3c7972d4959f5964d3493aeaf69a634"
+            },
+            {
+              "tick": 51000,
+              "hash": "91dd854fc34022d50f73a38dea3403d49092cdb0d9e160fde5350bd7d178cdc3"
+            },
+            {
+              "tick": 52000,
+              "hash": "44ea7d686cf135b953925f2285681eaa3fd01e9139fce8cd1408319252eb9b23"
+            },
+            {
+              "tick": 53000,
+              "hash": "dba924a1b66086e2750b9069444c74e1e1b29413a230ca30322552fed8e1e170"
+            },
+            {
+              "tick": 54000,
+              "hash": "04c6f5df880d2a53752199765d6a1b90a432affa70a3b530c1f82b55411f0ccd"
+            },
+            {
+              "tick": 55000,
+              "hash": "b9d400371ec21557ed4236bea1cdf1234e7b028f313dd1f2500ce71cad37d770"
+            },
+            {
+              "tick": 56000,
+              "hash": "e071ab915312d8977eb37d5d718aff033ce38f89135309acdb1d5b0372ffb81f"
+            },
+            {
+              "tick": 57000,
+              "hash": "e3b329e6ed994443ecb593ba743fb01f6dc939658eec57df8e877e9c2a06d9fa"
+            },
+            {
+              "tick": 58000,
+              "hash": "1e96eb65c0d27898101a379ace1a06ae50b00340a31949f46fd2150a24b8a8ad"
+            },
+            {
+              "tick": 59000,
+              "hash": "e7dfa32247a56f12a5641328dcf86971f41f778f462758355f44d5a6c37f03f7"
+            },
+            {
+              "tick": 60000,
+              "hash": "31f3d104160eae543d19afd658b0cfe25afcde64e7593c8f0a79061165606c11"
+            },
+            {
+              "tick": 61000,
+              "hash": "68fea9adeb1f1bbd9bc0eedbc5b1c772f2b4e8c5db79a60570f2e14c6c7e30bc"
+            },
+            {
+              "tick": 62000,
+              "hash": "9c61219ecd83661493d29227ecf93002abe5eac63b5cb7fed4de3fff2ef65e4b"
+            },
+            {
+              "tick": 63000,
+              "hash": "6c3063daca7daafc323ba6d51102ef41a47a25cb1f6ecfa96a0eda334ca8a0b0"
+            },
+            {
+              "tick": 64000,
+              "hash": "d1a948ae0c5d5dc176ffa71ad10cf68e7f36409aff34c6aed180f20153ed3283"
+            },
+            {
+              "tick": 65000,
+              "hash": "fb308b531ebd953541138927d72325a013e0c0665e76cc4e9692c33b32f7d74d"
+            },
+            {
+              "tick": 66000,
+              "hash": "7de755e2a82d5bf6674f92cb613046dbaf11aecee4ca8d526ba4f1ef8895006b"
+            },
+            {
+              "tick": 67000,
+              "hash": "1b3b276404bd01ef05fe76bd34f550ef312d0daea1a4317eaf08a870b3ba72eb"
+            },
+            {
+              "tick": 68000,
+              "hash": "0c9e1a5f850fa15b75cdc4406766bf26db043c7ce592caec5fee72661e564a2a"
+            },
+            {
+              "tick": 69000,
+              "hash": "3dd10a244fd15b3946245b3fb15ba0608458bf087ecfea9c1f7f045058cd78c6"
+            },
+            {
+              "tick": 70000,
+              "hash": "5b3040b6cf6a4c0494160ea7e283610d608d919adee62f47f1b58e35f4cc2d6a"
+            },
+            {
+              "tick": 71000,
+              "hash": "4bcaff706262c19e470f9368796804d1a7ca4c16956bc47e899158dd6e945e04"
+            },
+            {
+              "tick": 72000,
+              "hash": "b6b117d05df3312a11ffa477e6861f8a0c8b3950041d26fa71231705d538c2ce"
+            },
+            {
+              "tick": 73000,
+              "hash": "1376a24679fc3613c7ecd18f26508a16a9a2200e3b9af75c2e908a2142cd52e2"
+            },
+            {
+              "tick": 74000,
+              "hash": "ad4e24edd8572f0670956b976eaeea5e481d92d89d49aff7f0a69980a9df82bf"
+            },
+            {
+              "tick": 75000,
+              "hash": "e82b6e5d1e3f0b642271c8e228046cf0569c4e723176a1e7e61e308959d7c448"
+            },
+            {
+              "tick": 76000,
+              "hash": "f089ad4547164d94b9d047cceadf47b72993d522bc9674899689b22024142a1d"
+            },
+            {
+              "tick": 77000,
+              "hash": "f169d702fb4b65267740e2fe0dde362d49e551bf19b5d37c9acdf38eb67574be"
+            },
+            {
+              "tick": 78000,
+              "hash": "d258a81c07511ad1638d1b34381c0394a4d47b8db4ca5397476a7ce30b436a28"
+            },
+            {
+              "tick": 79000,
+              "hash": "31d62be78c80ee67bb06430fa576232045fadb84dd514172adb407da80580c3c"
+            },
+            {
+              "tick": 80000,
+              "hash": "be1c612bbf5f170895e2ad648f936e7064fca721fb0eb02f0fc319e8b8e0a09c"
+            },
+            {
+              "tick": 81000,
+              "hash": "f2efc591b43d962b93b8ca1a227b4cea67bd435a0f0c8b1f58707ec1dab70272"
+            },
+            {
+              "tick": 82000,
+              "hash": "a27900be54af9d11700e7cd13155968a61335822b2645c897dd732a98e021e21"
+            },
+            {
+              "tick": 83000,
+              "hash": "8ff711c58cf639f0733b87a04680867ddd2486edbf4c1f106077971be11da7c4"
+            },
+            {
+              "tick": 84000,
+              "hash": "1e31cb87aa28f3f8adbd56ae85bb6abf7f118b1ebb086eeb1f1894473809660f"
+            },
+            {
+              "tick": 85000,
+              "hash": "7e07d7cacca972b87e18062bbd5e8673367db749a1e10379fec7d4d2e68f2678"
+            },
+            {
+              "tick": 86000,
+              "hash": "efa760cf42251dfb02924cc8744f3ea23b8454ca64b94cbb07abf3be39601ecd"
+            },
+            {
+              "tick": 87000,
+              "hash": "0764d7618107facce6cb2a5775eaaa03dd813dba878e672586022432d0858e26"
+            },
+            {
+              "tick": 88000,
+              "hash": "5cdfa329463d225f9cfc1811c70c5040a6fcb03c93a28d94fc1b3720ac96f4c2"
+            },
+            {
+              "tick": 89000,
+              "hash": "d3ed03a2906bbd9049168ea5fd2eb36f8fd28619a73bea3943ba0f82f8a9a863"
+            },
+            {
+              "tick": 90000,
+              "hash": "c1f4b251f18529132686672f0cba4d0d69babc72f881c4e486395e5dc96b5a12"
+            },
+            {
+              "tick": 91000,
+              "hash": "f7677c13cc7a6be9abadc152ae0e3ded32df3c7a22decba71a4e0625630a9ec1"
+            },
+            {
+              "tick": 92000,
+              "hash": "498a7052c864bc03f887c700af7b863fa85d60f7cb07ec3f015cb0958abbc392"
+            },
+            {
+              "tick": 93000,
+              "hash": "9db12b498d8b5df1df0ae83c66eb005ba0db667caad7212565192dc8e146cdd5"
+            },
+            {
+              "tick": 94000,
+              "hash": "1bc2a7455589b69c24c9d940ae6f8c11c5af1b3432875418576c139980aed46b"
+            },
+            {
+              "tick": 95000,
+              "hash": "4c231afaaa0cd998acf4ae2fb13317673bf907767788613a8525c86985a83314"
+            },
+            {
+              "tick": 96000,
+              "hash": "43046f89efd9dcf34d0a7b19ade6d0d122bb9a535daa7c09676073015d297a9a"
+            },
+            {
+              "tick": 97000,
+              "hash": "74196911f95cec43415775c78d755994739c02f607f0d62a4c75ca9d8782bfe1"
+            },
+            {
+              "tick": 98000,
+              "hash": "dd44c93a14f48bed849138896667ed350e088a63ab925e790e7b1bdadf2efd41"
+            },
+            {
+              "tick": 99000,
+              "hash": "62c5cbf8ca0b70173edc2dbb64afc978df20c13d145dd9f20a30d04b18f6ce07"
+            },
+            {
+              "tick": 100000,
+              "hash": "7f8ac98603d8300599eb70bfcb9ac1de703996705ea763f7b03a7135a525fab9"
+            }
+          ],
+          "samples": [
+            {
+              "tick": 1000,
+              "population": 521,
+              "food": 853.182,
+              "births": 518,
+              "deaths": 197,
+              "meanEnergy": 18.982831094049903,
+              "maxGeneration": 7,
+              "storage": {
+                "live": 521,
+                "recent": 197,
+                "pinned": 26,
+                "parentReferences": 253,
+                "lines": 200,
+                "events": 145,
+                "droppedEvents": 0
+              },
+              "rss": 82563072
+            },
+            {
+              "tick": 2000,
+              "population": 496,
+              "food": 525.276,
+              "births": 761,
+              "deaths": 465,
+              "meanEnergy": 18.61027620967742,
+              "maxGeneration": 10,
+              "storage": {
+                "live": 496,
+                "recent": 465,
+                "pinned": 50,
+                "parentReferences": 243,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 106
+              },
+              "rss": 84004864
+            },
+            {
+              "tick": 3000,
+              "population": 482,
+              "food": 415.37,
+              "births": 958,
+              "deaths": 676,
+              "meanEnergy": 20.47516597510373,
+              "maxGeneration": 11,
+              "storage": {
+                "live": 482,
+                "recent": 676,
+                "pinned": 61,
+                "parentReferences": 251,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 244
+              },
+              "rss": 101306368
+            },
+            {
+              "tick": 4000,
+              "population": 506,
+              "food": 385.834,
+              "births": 1110,
+              "deaths": 804,
+              "meanEnergy": 19.23674308300395,
+              "maxGeneration": 11,
+              "storage": {
+                "live": 506,
+                "recent": 804,
+                "pinned": 62,
+                "parentReferences": 268,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 370
+              },
+              "rss": 101568512
+            },
+            {
+              "tick": 5000,
+              "population": 501,
+              "food": 384.519,
+              "births": 1272,
+              "deaths": 971,
+              "meanEnergy": 17.994700598802396,
+              "maxGeneration": 11,
+              "storage": {
+                "live": 501,
+                "recent": 971,
+                "pinned": 59,
+                "parentReferences": 280,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 499
+              },
+              "rss": 101830656
+            },
+            {
+              "tick": 6000,
+              "population": 497,
+              "food": 354.834,
+              "births": 1429,
+              "deaths": 1132,
+              "meanEnergy": 18.73475050301811,
+              "maxGeneration": 12,
+              "storage": {
+                "live": 497,
+                "recent": 1132,
+                "pinned": 67,
+                "parentReferences": 284,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 619
+              },
+              "rss": 102035456
+            },
+            {
+              "tick": 7000,
+              "population": 498,
+              "food": 327.761,
+              "births": 1603,
+              "deaths": 1305,
+              "meanEnergy": 19.01912048192771,
+              "maxGeneration": 12,
+              "storage": {
+                "live": 498,
+                "recent": 1305,
+                "pinned": 66,
+                "parentReferences": 280,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 737
+              },
+              "rss": 103346176
+            },
+            {
+              "tick": 8000,
+              "population": 504,
+              "food": 329.275,
+              "births": 1786,
+              "deaths": 1482,
+              "meanEnergy": 17.375992063492063,
+              "maxGeneration": 12,
+              "storage": {
+                "live": 504,
+                "recent": 1482,
+                "pinned": 70,
+                "parentReferences": 297,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 859
+              },
+              "rss": 103346176
+            },
+            {
+              "tick": 9000,
+              "population": 508,
+              "food": 304.377,
+              "births": 1954,
+              "deaths": 1646,
+              "meanEnergy": 17.712625984251968,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 508,
+                "recent": 1646,
+                "pinned": 82,
+                "parentReferences": 311,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 983
+              },
+              "rss": 136900608
+            },
+            {
+              "tick": 10000,
+              "population": 496,
+              "food": 309.905,
+              "births": 2135,
+              "deaths": 1839,
+              "meanEnergy": 18.092711693548388,
+              "maxGeneration": 12,
+              "storage": {
+                "live": 496,
+                "recent": 1839,
+                "pinned": 88,
+                "parentReferences": 308,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1105
+              },
+              "rss": 136900608
+            },
+            {
+              "tick": 11000,
+              "population": 492,
+              "food": 299.271,
+              "births": 2302,
+              "deaths": 2010,
+              "meanEnergy": 19.11446951219512,
+              "maxGeneration": 13,
+              "storage": {
+                "live": 492,
+                "recent": 2010,
+                "pinned": 88,
+                "parentReferences": 297,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1215
+              },
+              "rss": 136900608
+            },
+            {
+              "tick": 12000,
+              "population": 497,
+              "food": 298.742,
+              "births": 2482,
+              "deaths": 2185,
+              "meanEnergy": 18.544002012072433,
+              "maxGeneration": 12,
+              "storage": {
+                "live": 497,
+                "recent": 2185,
+                "pinned": 92,
+                "parentReferences": 308,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1332
+              },
+              "rss": 138473472
+            },
+            {
+              "tick": 13000,
+              "population": 497,
+              "food": 292.111,
+              "births": 2631,
+              "deaths": 2334,
+              "meanEnergy": 18.932617706237426,
+              "maxGeneration": 13,
+              "storage": {
+                "live": 497,
+                "recent": 2334,
+                "pinned": 93,
+                "parentReferences": 308,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1445
+              },
+              "rss": 138473472
+            },
+            {
+              "tick": 14000,
+              "population": 499,
+              "food": 283.797,
+              "births": 2788,
+              "deaths": 2489,
+              "meanEnergy": 18.586599198396794,
+              "maxGeneration": 13,
+              "storage": {
+                "live": 499,
+                "recent": 2489,
+                "pinned": 101,
+                "parentReferences": 314,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1560
+              },
+              "rss": 138682368
+            },
+            {
+              "tick": 15000,
+              "population": 491,
+              "food": 301.668,
+              "births": 2910,
+              "deaths": 2619,
+              "meanEnergy": 19.325668024439917,
+              "maxGeneration": 13,
+              "storage": {
+                "live": 491,
+                "recent": 2619,
+                "pinned": 105,
+                "parentReferences": 313,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1664
+              },
+              "rss": 138665984
+            },
+            {
+              "tick": 16000,
+              "population": 494,
+              "food": 287.832,
+              "births": 3067,
+              "deaths": 2773,
+              "meanEnergy": 18.31953846153846,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 494,
+                "recent": 2773,
+                "pinned": 108,
+                "parentReferences": 319,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1779
+              },
+              "rss": 138797056
+            },
+            {
+              "tick": 17000,
+              "population": 504,
+              "food": 304.695,
+              "births": 3213,
+              "deaths": 2909,
+              "meanEnergy": 19.127035714285714,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 504,
+                "recent": 2909,
+                "pinned": 112,
+                "parentReferences": 325,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1891
+              },
+              "rss": 138928128
+            },
+            {
+              "tick": 18000,
+              "population": 494,
+              "food": 295.094,
+              "births": 3341,
+              "deaths": 3047,
+              "meanEnergy": 18.60578947368421,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 494,
+                "recent": 3047,
+                "pinned": 112,
+                "parentReferences": 318,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 1999
+              },
+              "rss": 138924032
+            },
+            {
+              "tick": 19000,
+              "population": 499,
+              "food": 310.459,
+              "births": 3489,
+              "deaths": 3190,
+              "meanEnergy": 19.23161523046092,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 499,
+                "recent": 3190,
+                "pinned": 118,
+                "parentReferences": 325,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2110
+              },
+              "rss": 139186176
+            },
+            {
+              "tick": 20000,
+              "population": 495,
+              "food": 282.976,
+              "births": 3628,
+              "deaths": 3333,
+              "meanEnergy": 20.518169696969697,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 495,
+                "recent": 3333,
+                "pinned": 126,
+                "parentReferences": 326,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2210
+              },
+              "rss": 139317248
+            },
+            {
+              "tick": 21000,
+              "population": 494,
+              "food": 288.874,
+              "births": 3767,
+              "deaths": 3473,
+              "meanEnergy": 19.919595141700402,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 494,
+                "recent": 3473,
+                "pinned": 127,
+                "parentReferences": 330,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2323
+              },
+              "rss": 139419648
+            },
+            {
+              "tick": 22000,
+              "population": 506,
+              "food": 278.917,
+              "births": 3898,
+              "deaths": 3592,
+              "meanEnergy": 20.2441581027668,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 506,
+                "recent": 3592,
+                "pinned": 125,
+                "parentReferences": 340,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2423
+              },
+              "rss": 139681792
+            },
+            {
+              "tick": 23000,
+              "population": 504,
+              "food": 297.589,
+              "births": 4054,
+              "deaths": 3750,
+              "meanEnergy": 19.3345376984127,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 504,
+                "recent": 3750,
+                "pinned": 130,
+                "parentReferences": 332,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2534
+              },
+              "rss": 139812864
+            },
+            {
+              "tick": 24000,
+              "population": 502,
+              "food": 280.464,
+              "births": 4179,
+              "deaths": 3877,
+              "meanEnergy": 19.690442231075696,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 502,
+                "recent": 3877,
+                "pinned": 133,
+                "parentReferences": 338,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2639
+              },
+              "rss": 139943936
+            },
+            {
+              "tick": 25000,
+              "population": 505,
+              "food": 294.886,
+              "births": 4309,
+              "deaths": 4004,
+              "meanEnergy": 19.611184158415842,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 505,
+                "recent": 4004,
+                "pinned": 132,
+                "parentReferences": 342,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2749
+              },
+              "rss": 139931648
+            },
+            {
+              "tick": 26000,
+              "population": 500,
+              "food": 284.033,
+              "births": 4463,
+              "deaths": 4163,
+              "meanEnergy": 19.997266,
+              "maxGeneration": 14,
+              "storage": {
+                "live": 500,
+                "recent": 4096,
+                "pinned": 134,
+                "parentReferences": 344,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2857
+              },
+              "rss": 140275712
+            },
+            {
+              "tick": 27000,
+              "population": 508,
+              "food": 290.458,
+              "births": 4612,
+              "deaths": 4304,
+              "meanEnergy": 18.640557086614173,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 508,
+                "recent": 4096,
+                "pinned": 137,
+                "parentReferences": 342,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 2969
+              },
+              "rss": 140406784
+            },
+            {
+              "tick": 28000,
+              "population": 497,
+              "food": 288.992,
+              "births": 4724,
+              "deaths": 4427,
+              "meanEnergy": 19.4108430583501,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 497,
+                "recent": 4096,
+                "pinned": 138,
+                "parentReferences": 341,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3073
+              },
+              "rss": 140537856
+            },
+            {
+              "tick": 29000,
+              "population": 515,
+              "food": 290.543,
+              "births": 4864,
+              "deaths": 4549,
+              "meanEnergy": 19.94834368932039,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 515,
+                "recent": 4096,
+                "pinned": 138,
+                "parentReferences": 356,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3180
+              },
+              "rss": 140533760
+            },
+            {
+              "tick": 30000,
+              "population": 508,
+              "food": 273.775,
+              "births": 4996,
+              "deaths": 4688,
+              "meanEnergy": 20.00521062992126,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 508,
+                "recent": 4096,
+                "pinned": 141,
+                "parentReferences": 343,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3285
+              },
+              "rss": 140738560
+            },
+            {
+              "tick": 31000,
+              "population": 514,
+              "food": 295.088,
+              "births": 5152,
+              "deaths": 4838,
+              "meanEnergy": 19.41592412451362,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 514,
+                "recent": 4096,
+                "pinned": 146,
+                "parentReferences": 356,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3397
+              },
+              "rss": 140869632
+            },
+            {
+              "tick": 32000,
+              "population": 528,
+              "food": 276.64,
+              "births": 5295,
+              "deaths": 4967,
+              "meanEnergy": 18.162517045454543,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 528,
+                "recent": 4096,
+                "pinned": 152,
+                "parentReferences": 360,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3504
+              },
+              "rss": 141000704
+            },
+            {
+              "tick": 33000,
+              "population": 508,
+              "food": 288.906,
+              "births": 5408,
+              "deaths": 5100,
+              "meanEnergy": 19.36434842519685,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 508,
+                "recent": 4096,
+                "pinned": 155,
+                "parentReferences": 355,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3602
+              },
+              "rss": 141107200
+            },
+            {
+              "tick": 34000,
+              "population": 509,
+              "food": 290.17,
+              "births": 5542,
+              "deaths": 5233,
+              "meanEnergy": 19.25677996070727,
+              "maxGeneration": 15,
+              "storage": {
+                "live": 509,
+                "recent": 4096,
+                "pinned": 147,
+                "parentReferences": 347,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3708
+              },
+              "rss": 208183296
+            },
+            {
+              "tick": 35000,
+              "population": 508,
+              "food": 275.669,
+              "births": 5681,
+              "deaths": 5373,
+              "meanEnergy": 19.89520472440945,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 508,
+                "recent": 4096,
+                "pinned": 147,
+                "parentReferences": 348,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3814
+              },
+              "rss": 208281600
+            },
+            {
+              "tick": 36000,
+              "population": 500,
+              "food": 270.279,
+              "births": 5815,
+              "deaths": 5515,
+              "meanEnergy": 20.107067999999998,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 500,
+                "recent": 4096,
+                "pinned": 148,
+                "parentReferences": 346,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 3919
+              },
+              "rss": 209674240
+            },
+            {
+              "tick": 37000,
+              "population": 510,
+              "food": 274.934,
+              "births": 5954,
+              "deaths": 5644,
+              "meanEnergy": 19.48944117647059,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 510,
+                "recent": 4096,
+                "pinned": 144,
+                "parentReferences": 350,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4021
+              },
+              "rss": 209649664
+            },
+            {
+              "tick": 38000,
+              "population": 515,
+              "food": 285.334,
+              "births": 6107,
+              "deaths": 5792,
+              "meanEnergy": 19.839728155339806,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 515,
+                "recent": 4096,
+                "pinned": 142,
+                "parentReferences": 348,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4131
+              },
+              "rss": 209911808
+            },
+            {
+              "tick": 39000,
+              "population": 516,
+              "food": 274.212,
+              "births": 6260,
+              "deaths": 5944,
+              "meanEnergy": 20.74962403100775,
+              "maxGeneration": 16,
+              "storage": {
+                "live": 516,
+                "recent": 4096,
+                "pinned": 141,
+                "parentReferences": 349,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4236
+              },
+              "rss": 210042880
+            },
+            {
+              "tick": 40000,
+              "population": 507,
+              "food": 287.353,
+              "births": 6405,
+              "deaths": 6098,
+              "meanEnergy": 19.501524654832348,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 507,
+                "recent": 4096,
+                "pinned": 145,
+                "parentReferences": 355,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4347
+              },
+              "rss": 210014208
+            },
+            {
+              "tick": 41000,
+              "population": 508,
+              "food": 269.374,
+              "births": 6539,
+              "deaths": 6231,
+              "meanEnergy": 19.62803149606299,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 508,
+                "recent": 4096,
+                "pinned": 142,
+                "parentReferences": 355,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4453
+              },
+              "rss": 210276352
+            },
+            {
+              "tick": 42000,
+              "population": 521,
+              "food": 280.035,
+              "births": 6686,
+              "deaths": 6365,
+              "meanEnergy": 19.1329443378119,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 521,
+                "recent": 4096,
+                "pinned": 146,
+                "parentReferences": 362,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4555
+              },
+              "rss": 210378752
+            },
+            {
+              "tick": 43000,
+              "population": 510,
+              "food": 288.543,
+              "births": 6820,
+              "deaths": 6510,
+              "meanEnergy": 19.450545098039218,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 510,
+                "recent": 4096,
+                "pinned": 142,
+                "parentReferences": 353,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4662
+              },
+              "rss": 210370560
+            },
+            {
+              "tick": 44000,
+              "population": 509,
+              "food": 279.791,
+              "births": 6963,
+              "deaths": 6654,
+              "meanEnergy": 19.74843222003929,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 509,
+                "recent": 4096,
+                "pinned": 151,
+                "parentReferences": 356,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4767
+              },
+              "rss": 210501632
+            },
+            {
+              "tick": 45000,
+              "population": 521,
+              "food": 282.012,
+              "births": 7099,
+              "deaths": 6778,
+              "meanEnergy": 19.7400556621881,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 521,
+                "recent": 4096,
+                "pinned": 149,
+                "parentReferences": 367,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4865
+              },
+              "rss": 210628608
+            },
+            {
+              "tick": 46000,
+              "population": 518,
+              "food": 272.465,
+              "births": 7243,
+              "deaths": 6925,
+              "meanEnergy": 19.423967181467184,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 518,
+                "recent": 4096,
+                "pinned": 151,
+                "parentReferences": 364,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 4972
+              },
+              "rss": 210882560
+            },
+            {
+              "tick": 47000,
+              "population": 511,
+              "food": 282.976,
+              "births": 7373,
+              "deaths": 7062,
+              "meanEnergy": 19.596029354207435,
+              "maxGeneration": 18,
+              "storage": {
+                "live": 511,
+                "recent": 4096,
+                "pinned": 155,
+                "parentReferences": 353,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5081
+              },
+              "rss": 210976768
+            },
+            {
+              "tick": 48000,
+              "population": 513,
+              "food": 273.85,
+              "births": 7516,
+              "deaths": 7203,
+              "meanEnergy": 19.29407407407407,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 513,
+                "recent": 4096,
+                "pinned": 151,
+                "parentReferences": 358,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5189
+              },
+              "rss": 211066880
+            },
+            {
+              "tick": 49000,
+              "population": 524,
+              "food": 284.205,
+              "births": 7665,
+              "deaths": 7341,
+              "meanEnergy": 19.706036259541985,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 524,
+                "recent": 4096,
+                "pinned": 150,
+                "parentReferences": 361,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5295
+              },
+              "rss": 211165184
+            },
+            {
+              "tick": 50000,
+              "population": 522,
+              "food": 272.666,
+              "births": 7808,
+              "deaths": 7486,
+              "meanEnergy": 19.017312260536396,
+              "maxGeneration": 17,
+              "storage": {
+                "live": 522,
+                "recent": 4096,
+                "pinned": 153,
+                "parentReferences": 361,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5401
+              },
+              "rss": 211120128
+            },
+            {
+              "tick": 51000,
+              "population": 518,
+              "food": 269.942,
+              "births": 7940,
+              "deaths": 7622,
+              "meanEnergy": 20.058106177606177,
+              "maxGeneration": 18,
+              "storage": {
+                "live": 518,
+                "recent": 4096,
+                "pinned": 159,
+                "parentReferences": 361,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5512
+              },
+              "rss": 211333120
+            },
+            {
+              "tick": 52000,
+              "population": 520,
+              "food": 262.666,
+              "births": 8092,
+              "deaths": 7772,
+              "meanEnergy": 19.806473076923076,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 520,
+                "recent": 4096,
+                "pinned": 157,
+                "parentReferences": 366,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5625
+              },
+              "rss": 211300352
+            },
+            {
+              "tick": 53000,
+              "population": 513,
+              "food": 267.348,
+              "births": 8215,
+              "deaths": 7902,
+              "meanEnergy": 19.801070175438596,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 513,
+                "recent": 4096,
+                "pinned": 158,
+                "parentReferences": 358,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5730
+              },
+              "rss": 211431424
+            },
+            {
+              "tick": 54000,
+              "population": 515,
+              "food": 274.814,
+              "births": 8343,
+              "deaths": 8028,
+              "meanEnergy": 19.819438834951455,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 515,
+                "recent": 4096,
+                "pinned": 162,
+                "parentReferences": 369,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5831
+              },
+              "rss": 211668992
+            },
+            {
+              "tick": 55000,
+              "population": 520,
+              "food": 262.42,
+              "births": 8486,
+              "deaths": 8166,
+              "meanEnergy": 19.18871346153846,
+              "maxGeneration": 18,
+              "storage": {
+                "live": 520,
+                "recent": 4096,
+                "pinned": 164,
+                "parentReferences": 371,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 5942
+              },
+              "rss": 211640320
+            },
+            {
+              "tick": 56000,
+              "population": 518,
+              "food": 282.613,
+              "births": 8625,
+              "deaths": 8307,
+              "meanEnergy": 19.618662162162163,
+              "maxGeneration": 18,
+              "storage": {
+                "live": 518,
+                "recent": 4096,
+                "pinned": 163,
+                "parentReferences": 361,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6052
+              },
+              "rss": 211984384
+            },
+            {
+              "tick": 57000,
+              "population": 515,
+              "food": 270.404,
+              "births": 8757,
+              "deaths": 8442,
+              "meanEnergy": 19.88044854368932,
+              "maxGeneration": 18,
+              "storage": {
+                "live": 515,
+                "recent": 4096,
+                "pinned": 162,
+                "parentReferences": 354,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6164
+              },
+              "rss": 212115456
+            },
+            {
+              "tick": 58000,
+              "population": 513,
+              "food": 279.095,
+              "births": 8892,
+              "deaths": 8579,
+              "meanEnergy": 19.477395711500975,
+              "maxGeneration": 18,
+              "storage": {
+                "live": 513,
+                "recent": 4096,
+                "pinned": 158,
+                "parentReferences": 364,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6271
+              },
+              "rss": 212324352
+            },
+            {
+              "tick": 59000,
+              "population": 517,
+              "food": 270.268,
+              "births": 9029,
+              "deaths": 8712,
+              "meanEnergy": 19.510375241779496,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 517,
+                "recent": 4096,
+                "pinned": 157,
+                "parentReferences": 357,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6375
+              },
+              "rss": 212287488
+            },
+            {
+              "tick": 60000,
+              "population": 508,
+              "food": 278.639,
+              "births": 9158,
+              "deaths": 8850,
+              "meanEnergy": 19.941431102362202,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 508,
+                "recent": 4096,
+                "pinned": 159,
+                "parentReferences": 355,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6483
+              },
+              "rss": 212418560
+            },
+            {
+              "tick": 61000,
+              "population": 510,
+              "food": 277.3,
+              "births": 9293,
+              "deaths": 8983,
+              "meanEnergy": 19.567764705882354,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 510,
+                "recent": 4096,
+                "pinned": 164,
+                "parentReferences": 358,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6589
+              },
+              "rss": 212418560
+            },
+            {
+              "tick": 62000,
+              "population": 517,
+              "food": 280.879,
+              "births": 9432,
+              "deaths": 9115,
+              "meanEnergy": 19.726477756286265,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 517,
+                "recent": 4096,
+                "pinned": 171,
+                "parentReferences": 375,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6696
+              },
+              "rss": 212680704
+            },
+            {
+              "tick": 63000,
+              "population": 514,
+              "food": 287.374,
+              "births": 9575,
+              "deaths": 9261,
+              "meanEnergy": 19.714957198443578,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 514,
+                "recent": 4096,
+                "pinned": 176,
+                "parentReferences": 378,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6807
+              },
+              "rss": 212811776
+            },
+            {
+              "tick": 64000,
+              "population": 518,
+              "food": 265.122,
+              "births": 9704,
+              "deaths": 9386,
+              "meanEnergy": 19.31488803088803,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 518,
+                "recent": 4096,
+                "pinned": 172,
+                "parentReferences": 376,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 6911
+              },
+              "rss": 212910080
+            },
+            {
+              "tick": 65000,
+              "population": 523,
+              "food": 271.103,
+              "births": 9829,
+              "deaths": 9506,
+              "meanEnergy": 19.473950286806886,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 523,
+                "recent": 4096,
+                "pinned": 175,
+                "parentReferences": 384,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7016
+              },
+              "rss": 213041152
+            },
+            {
+              "tick": 66000,
+              "population": 525,
+              "food": 260.591,
+              "births": 9964,
+              "deaths": 9639,
+              "meanEnergy": 19.533544761904764,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 525,
+                "recent": 4096,
+                "pinned": 173,
+                "parentReferences": 381,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7129
+              },
+              "rss": 213127168
+            },
+            {
+              "tick": 67000,
+              "population": 520,
+              "food": 267.598,
+              "births": 10110,
+              "deaths": 9790,
+              "meanEnergy": 19.325311538461538,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 520,
+                "recent": 4096,
+                "pinned": 171,
+                "parentReferences": 378,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7230
+              },
+              "rss": 213127168
+            },
+            {
+              "tick": 68000,
+              "population": 507,
+              "food": 271.531,
+              "births": 10243,
+              "deaths": 9936,
+              "meanEnergy": 19.764280078895464,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 507,
+                "recent": 4096,
+                "pinned": 172,
+                "parentReferences": 377,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7336
+              },
+              "rss": 213389312
+            },
+            {
+              "tick": 69000,
+              "population": 524,
+              "food": 259.919,
+              "births": 10368,
+              "deaths": 10044,
+              "meanEnergy": 19.549366412213743,
+              "maxGeneration": 19,
+              "storage": {
+                "live": 524,
+                "recent": 4096,
+                "pinned": 175,
+                "parentReferences": 383,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7441
+              },
+              "rss": 213487616
+            },
+            {
+              "tick": 70000,
+              "population": 520,
+              "food": 272.467,
+              "births": 10495,
+              "deaths": 10175,
+              "meanEnergy": 19.87703846153846,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 520,
+                "recent": 4096,
+                "pinned": 184,
+                "parentReferences": 391,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7544
+              },
+              "rss": 213573632
+            },
+            {
+              "tick": 71000,
+              "population": 520,
+              "food": 282.851,
+              "births": 10655,
+              "deaths": 10335,
+              "meanEnergy": 19.340790384615385,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 520,
+                "recent": 4096,
+                "pinned": 184,
+                "parentReferences": 385,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7655
+              },
+              "rss": 213561344
+            },
+            {
+              "tick": 72000,
+              "population": 523,
+              "food": 268.14,
+              "births": 10777,
+              "deaths": 10454,
+              "meanEnergy": 19.776055449330784,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 523,
+                "recent": 4096,
+                "pinned": 183,
+                "parentReferences": 388,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7763
+              },
+              "rss": 213692416
+            },
+            {
+              "tick": 73000,
+              "population": 525,
+              "food": 275.691,
+              "births": 10905,
+              "deaths": 10580,
+              "meanEnergy": 19.84585714285714,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 525,
+                "recent": 4096,
+                "pinned": 186,
+                "parentReferences": 398,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7865
+              },
+              "rss": 213807104
+            },
+            {
+              "tick": 74000,
+              "population": 525,
+              "food": 252.558,
+              "births": 11031,
+              "deaths": 10706,
+              "meanEnergy": 20.12919238095238,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 525,
+                "recent": 4096,
+                "pinned": 188,
+                "parentReferences": 390,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 7971
+              },
+              "rss": 213938176
+            },
+            {
+              "tick": 75000,
+              "population": 519,
+              "food": 275.931,
+              "births": 11183,
+              "deaths": 10864,
+              "meanEnergy": 20.190928709055875,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 519,
+                "recent": 4096,
+                "pinned": 186,
+                "parentReferences": 380,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8085
+              },
+              "rss": 213925888
+            },
+            {
+              "tick": 76000,
+              "population": 520,
+              "food": 274.151,
+              "births": 11335,
+              "deaths": 11015,
+              "meanEnergy": 19.42494230769231,
+              "maxGeneration": 20,
+              "storage": {
+                "live": 520,
+                "recent": 4096,
+                "pinned": 190,
+                "parentReferences": 384,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8194
+              },
+              "rss": 214020096
+            },
+            {
+              "tick": 77000,
+              "population": 509,
+              "food": 276.993,
+              "births": 11451,
+              "deaths": 11142,
+              "meanEnergy": 21.194371316306484,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 509,
+                "recent": 4096,
+                "pinned": 192,
+                "parentReferences": 379,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8300
+              },
+              "rss": 214151168
+            },
+            {
+              "tick": 78000,
+              "population": 529,
+              "food": 278.146,
+              "births": 11586,
+              "deaths": 11257,
+              "meanEnergy": 19.580364839319472,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 529,
+                "recent": 4096,
+                "pinned": 189,
+                "parentReferences": 384,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8400
+              },
+              "rss": 214151168
+            },
+            {
+              "tick": 79000,
+              "population": 526,
+              "food": 268.085,
+              "births": 11705,
+              "deaths": 11379,
+              "meanEnergy": 20.5584391634981,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 526,
+                "recent": 4096,
+                "pinned": 188,
+                "parentReferences": 385,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8502
+              },
+              "rss": 214224896
+            },
+            {
+              "tick": 80000,
+              "population": 524,
+              "food": 262.138,
+              "births": 11838,
+              "deaths": 11514,
+              "meanEnergy": 19.596269083969467,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 524,
+                "recent": 4096,
+                "pinned": 184,
+                "parentReferences": 380,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8610
+              },
+              "rss": 214478848
+            },
+            {
+              "tick": 81000,
+              "population": 519,
+              "food": 254.976,
+              "births": 11945,
+              "deaths": 11626,
+              "meanEnergy": 19.810404624277457,
+              "maxGeneration": 22,
+              "storage": {
+                "live": 519,
+                "recent": 4096,
+                "pinned": 185,
+                "parentReferences": 373,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8708
+              },
+              "rss": 214609920
+            },
+            {
+              "tick": 82000,
+              "population": 522,
+              "food": 276.266,
+              "births": 12057,
+              "deaths": 11735,
+              "meanEnergy": 20.092249042145596,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 522,
+                "recent": 4096,
+                "pinned": 180,
+                "parentReferences": 372,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8809
+              },
+              "rss": 214593536
+            },
+            {
+              "tick": 83000,
+              "population": 529,
+              "food": 271.188,
+              "births": 12202,
+              "deaths": 11873,
+              "meanEnergy": 19.28203402646503,
+              "maxGeneration": 22,
+              "storage": {
+                "live": 529,
+                "recent": 4096,
+                "pinned": 184,
+                "parentReferences": 380,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 8919
+              },
+              "rss": 214724608
+            },
+            {
+              "tick": 84000,
+              "population": 517,
+              "food": 278.529,
+              "births": 12332,
+              "deaths": 12015,
+              "meanEnergy": 19.72917408123791,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 517,
+                "recent": 4096,
+                "pinned": 186,
+                "parentReferences": 376,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9025
+              },
+              "rss": 214704128
+            },
+            {
+              "tick": 85000,
+              "population": 531,
+              "food": 263.55,
+              "births": 12467,
+              "deaths": 12136,
+              "meanEnergy": 20.684821092278717,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 531,
+                "recent": 4096,
+                "pinned": 187,
+                "parentReferences": 386,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9127
+              },
+              "rss": 214966272
+            },
+            {
+              "tick": 86000,
+              "population": 520,
+              "food": 254.731,
+              "births": 12594,
+              "deaths": 12274,
+              "meanEnergy": 20.800386538461538,
+              "maxGeneration": 21,
+              "storage": {
+                "live": 520,
+                "recent": 4096,
+                "pinned": 189,
+                "parentReferences": 377,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9231
+              },
+              "rss": 215228416
+            },
+            {
+              "tick": 87000,
+              "population": 538,
+              "food": 267.179,
+              "births": 12755,
+              "deaths": 12417,
+              "meanEnergy": 19.5163531598513,
+              "maxGeneration": 22,
+              "storage": {
+                "live": 538,
+                "recent": 4096,
+                "pinned": 187,
+                "parentReferences": 387,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9340
+              },
+              "rss": 215465984
+            },
+            {
+              "tick": 88000,
+              "population": 533,
+              "food": 280.737,
+              "births": 12876,
+              "deaths": 12543,
+              "meanEnergy": 20.075951219512195,
+              "maxGeneration": 22,
+              "storage": {
+                "live": 533,
+                "recent": 4096,
+                "pinned": 186,
+                "parentReferences": 393,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9444
+              },
+              "rss": 215597056
+            },
+            {
+              "tick": 89000,
+              "population": 521,
+              "food": 277.501,
+              "births": 13004,
+              "deaths": 12683,
+              "meanEnergy": 20.62195585412668,
+              "maxGeneration": 22,
+              "storage": {
+                "live": 521,
+                "recent": 4096,
+                "pinned": 187,
+                "parentReferences": 385,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9551
+              },
+              "rss": 215592960
+            },
+            {
+              "tick": 90000,
+              "population": 527,
+              "food": 254.46,
+              "births": 13130,
+              "deaths": 12803,
+              "meanEnergy": 19.806711574952562,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 527,
+                "recent": 4096,
+                "pinned": 188,
+                "parentReferences": 385,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9658
+              },
+              "rss": 215855104
+            },
+            {
+              "tick": 91000,
+              "population": 524,
+              "food": 276.113,
+              "births": 13250,
+              "deaths": 12926,
+              "meanEnergy": 20.482874045801527,
+              "maxGeneration": 22,
+              "storage": {
+                "live": 524,
+                "recent": 4096,
+                "pinned": 185,
+                "parentReferences": 383,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9755
+              },
+              "rss": 215842816
+            },
+            {
+              "tick": 92000,
+              "population": 528,
+              "food": 261.603,
+              "births": 13383,
+              "deaths": 13055,
+              "meanEnergy": 20.07947537878788,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 528,
+                "recent": 4096,
+                "pinned": 180,
+                "parentReferences": 382,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9861
+              },
+              "rss": 215973888
+            },
+            {
+              "tick": 93000,
+              "population": 517,
+              "food": 273.108,
+              "births": 13522,
+              "deaths": 13205,
+              "meanEnergy": 20.210916827852998,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 517,
+                "recent": 4096,
+                "pinned": 179,
+                "parentReferences": 370,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 9967
+              },
+              "rss": 216076288
+            },
+            {
+              "tick": 94000,
+              "population": 525,
+              "food": 264.674,
+              "births": 13653,
+              "deaths": 13328,
+              "meanEnergy": 19.979245714285714,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 525,
+                "recent": 4096,
+                "pinned": 176,
+                "parentReferences": 377,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 10076
+              },
+              "rss": 216162304
+            },
+            {
+              "tick": 95000,
+              "population": 540,
+              "food": 271.214,
+              "births": 13799,
+              "deaths": 13459,
+              "meanEnergy": 19.167801851851852,
+              "maxGeneration": 24,
+              "storage": {
+                "live": 540,
+                "recent": 4096,
+                "pinned": 174,
+                "parentReferences": 393,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 10178
+              },
+              "rss": 216121344
+            },
+            {
+              "tick": 96000,
+              "population": 522,
+              "food": 280.995,
+              "births": 13930,
+              "deaths": 13608,
+              "meanEnergy": 19.273693486590037,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 522,
+                "recent": 4096,
+                "pinned": 172,
+                "parentReferences": 372,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 10279
+              },
+              "rss": 216252416
+            },
+            {
+              "tick": 97000,
+              "population": 531,
+              "food": 262.41,
+              "births": 14079,
+              "deaths": 13748,
+              "meanEnergy": 19.092237288135596,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 531,
+                "recent": 4096,
+                "pinned": 173,
+                "parentReferences": 384,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 10389
+              },
+              "rss": 216371200
+            },
+            {
+              "tick": 98000,
+              "population": 523,
+              "food": 268.442,
+              "births": 14201,
+              "deaths": 13878,
+              "meanEnergy": 19.638583173996174,
+              "maxGeneration": 24,
+              "storage": {
+                "live": 523,
+                "recent": 4096,
+                "pinned": 175,
+                "parentReferences": 385,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 10497
+              },
+              "rss": 216367104
+            },
+            {
+              "tick": 99000,
+              "population": 531,
+              "food": 276.432,
+              "births": 14326,
+              "deaths": 13995,
+              "meanEnergy": 19.66820527306968,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 531,
+                "recent": 4096,
+                "pinned": 176,
+                "parentReferences": 383,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 10606
+              },
+              "rss": 216498176
+            },
+            {
+              "tick": 100000,
+              "population": 531,
+              "food": 267.005,
+              "births": 14459,
+              "deaths": 14128,
+              "meanEnergy": 19.23809604519774,
+              "maxGeneration": 23,
+              "storage": {
+                "live": 531,
+                "recent": 4096,
+                "pinned": 176,
+                "parentReferences": 382,
+                "lines": 200,
+                "events": 180,
+                "droppedEvents": 10702
+              },
+              "rss": 216735744
+            }
+          ],
+          "historyPacketJsonBytes": 25016
+        }
+      ]
+    }
+  ]
+}

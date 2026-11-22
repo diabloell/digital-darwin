@@ -57,3 +57,31 @@ test('eight seeded worlds conserve resources across batches, competition and lif
     assert.equal(single.canonical(), batch.canonical());
   }
 });
+
+test('history is deterministic and bounded while preserving ancestry and Engine state', async () => {
+  const { PopulationHistory, HISTORY_LIMITS } = await import('../src/core/history.ts');
+  const config = { seed: 'lineage-integration', width: 48, height: 48, population: 180 };
+  const original = new Engine(config), observed = new Engine(config);
+  const a = new PopulationHistory(original, 16), b = new PopulationHistory(observed, 16);
+  const untouched = new Engine(config);
+  for (let i = 0; i < 5000; i++) {
+    original.step(); a.observe(original);
+    observed.step(); b.observe(observed);
+    if (i % 100 === 0) { a.assertValid(original); b.assertValid(observed); }
+  }
+  untouched.step(5000);
+  assert.equal(original.canonical(), untouched.canonical());
+  assert.equal(observed.canonical(), untouched.canonical());
+  assert.ok(original.births > 500 && original.deaths > 500);
+  const v = a.view(original.organisms.at(-1)?.id ?? null, null, 32);
+  assert.deepEqual(v, b.view(observed.organisms.at(-1)?.id ?? null, null, 32));
+  assert.ok(v.top.length && v.top[0].maxGeneration > 2);
+  assert.ok(v.ancestors.length <= 32);
+  assert.equal(a.storage.recent, 16);
+  assert.equal(a.storage.events, HISTORY_LIMITS.events);
+  assert.ok(a.storage.droppedEvents > 0);
+  assert.equal(a.counts.living + a.counts.extinct, config.population);
+  assert.ok(v.events.every((e, i, es) => i === 0 || es[i - 1].id > e.id));
+  const events = v.events.filter(e => e.kind === 'population-crisis');
+  assert.ok(events.every((e, i) => i === 0 || events[i - 1].tick - e.tick >= 300));
+});

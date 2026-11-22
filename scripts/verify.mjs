@@ -20,7 +20,9 @@ const commands = [
   ['dd01-compatibility', ['scripts/check-dd01-compatibility.mjs']],
   ['experiments', ['apps/experiments.ts', `${output}/experiments.json`]],
   ['e2e', ['scripts/e2e.mjs']],
+  ['lineage-e2e', ['scripts/lineage-e2e.mjs']],
   ['browser-benchmark', ['scripts/browser-benchmark.mjs']],
+  ['history-benchmark', ['scripts/history-benchmark.mjs']],
   ['dd02-regression', ['scripts/check-dd02-regression.mjs', `${output}/experiments.json`]],
   ['dd02-state', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, 'reports/dd-02/long-run-a.json', '10000']],
   ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`, '10000']]

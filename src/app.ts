@@ -1,3 +1,4 @@
+import { HistoryPanel } from './history-panel.ts';
 import { GENES, GENE_BOUNDS } from './core/genetics.ts';
 import type { Genome, Rule } from './core/genetics.ts';
 import { GENE_LABELS, GENE_UNITS, WorldMap } from './map.ts';
@@ -13,6 +14,11 @@ const form = $<HTMLFormElement>('world-form');
 const play = $<HTMLButtonElement>('play'), step = $<HTMLButtonElement>('step');
 const speeds = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-speed]'));
 const map = new WorldMap(canvas, viewport, $('camera-readout'), $('color-legend'), id => send({ kind: 'inspect', id }));
+let focusEntity: number | null = null;
+const observerHistory = new HistoryPanel(send, id => {
+  focusEntity = id;
+  send({ kind: 'inspect', id });
+}, id => map.highlight(id));
 const bins = Array.from({ length: 8 }, () => {
   const meter = document.createElement('meter');
   meter.min = 0;
@@ -39,6 +45,7 @@ function error(message: string, recoverable: boolean) {
 
 worker.onerror = e => error(e.message, false);
 worker.onmessage = ({ data }: MessageEvent<Event>) => {
+  if (data.kind === 'history') { observerHistory.accept(data.epoch, data.request, data.view); return; }
   if (data.kind === 'error') { error(data.message, Boolean(data.recoverable)); return; }
   const previous = frame;
   frame = data;
@@ -67,6 +74,11 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
   if (previous?.selectedId !== data.selectedId || (tickChanged && data.selected) || (previous?.selected && !data.selected)) inspect(data);
   $<HTMLButtonElement>('inspect-first')?.toggleAttribute('disabled', !data.metrics.population);
   map.accept(data);
+  if (focusEntity !== null && focusEntity === data.selectedId) {
+    if (data.selected) map.centerOn(data.selected.x, data.selected.y);
+    focusEntity = null;
+  }
+  observerHistory.onFrame(data.epoch, data.selectedId);
   send({ kind: 'ready' });
 };
 
@@ -104,6 +116,12 @@ const CHARTS: Record<string, { title: string; unit: string; read: (s: Sample) =>
   food: { title: 'Доступная пища', unit: 'Единицы энергии в мире', read: s => s.food },
   births: { title: 'Рождения', unit: 'Всего с тика 0', read: s => s.births },
   deaths: { title: 'Смерти', unit: 'Всего с тика 0', read: s => s.deaths },
+  intervalBirths: { title: 'Рождения за интервал', unit: 'Рождения между соседними отсчётами', read: s => s.interval ? s.intervalBirths : null },
+  intervalDeaths: { title: 'Смерти за интервал', unit: 'Смерти между соседними отсчётами', read: s => s.interval ? s.intervalDeaths : null },
+  totalEnergy: { title: 'Совокупная энергия', unit: 'Единицы энергии живых', read: s => s.totalEnergy },
+  meanGeneration: { title: 'Среднее поколение', unit: 'Поколение среди живых', read: s => s.meanGeneration },
+  livingLines: { title: 'Живые линии', unit: 'Линии с живыми представителями', read: s => s.livingLines },
+  extinctLines: { title: 'Вымершие линии', unit: 'Линии без живых представителей, всего', read: s => s.extinctLines },
   meanEnergy: { title: 'Средняя энергия', unit: 'Единицы энергии на живой организм', read: s => s.population ? s.meanEnergy : null },
   variants: { title: 'Генетическое разнообразие', unit: 'Уникальные генотипы живых', read: s => s.variants },
   maxGeneration: { title: 'Максимальное поколение', unit: 'Поколение среди живых', read: s => s.population ? s.maxGeneration : null }
@@ -127,6 +145,8 @@ function drawChart() {
   $('chart-unit').textContent = unit;
   $('chart-range').textContent = `тики ${fmt(leftTick)} → ${fmt(rightTick)}`;
   $('chart-empty').hidden = numeric.length > 0;
+  const interval = chartMode.value === 'intervalBirths' || chartMode.value === 'intervalDeaths' ? samples.at(-1)!.interval : 0;
+  if (interval) $('chart-unit').textContent += ` · последний интервал: ${interval} тик.`;
   chart.setAttribute('aria-label', `${title}. ${unit}. Последнее: ${values.at(-1) === null ? 'нет данных' : fmt(values.at(-1)!, 3)}`);
   const { width, height } = chart.getBoundingClientRect(), dpr = Math.min(devicePixelRatio, 2);
   if (chart.width !== Math.round(width * dpr)) chart.width = Math.round(width * dpr);

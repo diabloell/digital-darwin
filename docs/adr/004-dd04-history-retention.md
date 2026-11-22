@@ -1,0 +1,9 @@
+# ADR-004 — Tick observer and bounded genealogy
+
+A separate PopulationHistory reads the Engine's completed-tick births and deaths. It handles births in ID order then deaths, publishes monotonic event IDs, and never calls the RNG or modifies engine entities. Founder ID is computed in the observer. Completed-tick observation is required because Engine exposes the last tick's events. History is outside the canonical simulation state and resets on a new world. DD-02 and DD-03 engine hashes remain valid.
+
+Each live entity has one record. Detailed dead records are kept in a 4,096-entry FIFO by death insertion order. A dead direct parent of any living child is also pinned, up to the number of living organisms, even if the FIFO evicts it. One summary per founder persists, bounded by the configured starting population. Consequently retained rows scale with current population and initial founders, plus fixed dead and event limits, rather than accumulated ticks or births. There is no global byte ceiling independent of the size of the live world. More distant dead ancestors can be missing. The chain shows the unavailable ID, the line still links to its founder aggregate, and there is no fake historical state.
+
+Lifecycle rows hold birth genome, count of direct children known at the end of their lifetime or at the current tick, and final position, age and zero energy on death. The sole modeled cause is energy depletion. The browser does not place archived coordinates on the current map.
+
+Worker frames extend the typed record with one four-byte founder ID per organism and retain at most 300 sampled analytics points. An on-demand history message has epoch and request IDs, up to 32 ancestors, up to 12 active and 12 extinct line summaries, and at most 180 events. The main thread requests a refresh at most once per second during passive browsing. Top line summaries use deterministic count / founder-ID ordering. Line render overlays do not affect trait colors.

@@ -3,7 +3,7 @@ name: Digital Darwin verification
 on:
   pull_request:
   push:
-    branches: [dd-03-interactive-observer]
+    branches: [dd-04-lineages-events]
 
 permissions:
   contents: read

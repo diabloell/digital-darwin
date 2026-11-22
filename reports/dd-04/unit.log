@@ -1,0 +1,35 @@
+✔ same seed, configuration and ticks produce identical complete states (5.509889ms)
+✔ different seeds produce distinct worlds (47.066484ms)
+✔ food competition never overdraws even in crowded cells (12.076962ms)
+✔ feeding gain matches assimilation minus explicit metabolic cost (0.984364ms)
+✔ reproduction transfers energy and pays cost instead of copying energy (0.970233ms)
+✔ zero mutation offspring inherits a separate exact genome (1.72432ms)
+✔ mutations stay within bounds for 10000 successive genomes (12.215821ms)
+✔ organism dies when energy is exhausted (0.475928ms)
+✔ confirmed dead organism never moves, eats or reproduces (0.442407ms)
+✔ one intent per organism per tick; newborn waits until next tick (0.499033ms)
+✔ integer resource and energy budget closes over birth/death cycles (24.43643ms)
+✔ no NaN or Infinity across multiple seeded worlds (197.033257ms)
+✔ toroidal cell lookup wraps both axes (0.276387ms)
+✔ invalid configs and tick counts are rejected (0.800557ms)
+✔ proportional conflict allocation is independent of iteration order without mutation (1.19378ms)
+✔ UTF-16 seeds sharing a high surrogate initialize distinct RNG streams (1.238538ms)
+✔ tick stages publish in order and observations do not move organisms (0.405472ms)
+✔ an eligible organism never gives birth when reproduction is disabled (0.386674ms)
+✔ zero reserves skip every action while duplicate IDs fail the tick (0.68955ms)
+✔ full invariant check rejects counterfeited state and missing food (1.174401ms)
+✔ phenotype maps the four genes and makes high assimilation costly (0.739516ms)
+✔ mutation strength zero copies values and maximum strength remains bounded (1.221191ms)
+✔ live genetic distributions, cohort deaths and zero-birth values reflect state (3.198814ms)
+✔ world event thresholds use only adjacent 100-tick measurements (3.312625ms)
+✔ energy exhaustion is recorded once, aggregated and bounded during mass extinction (2.671008ms)
+✔ living offspring retain their direct parent after historical eviction (0.630862ms)
+✔ food-drop event cooldown suppresses a qualifying repeat then permits a later one (1.880105ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 480.754004

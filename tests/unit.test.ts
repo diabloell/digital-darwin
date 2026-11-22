@@ -146,3 +146,86 @@ test('live genetic distributions, cohort deaths and zero-birth values reflect st
   assert.equal(snapshot.lifetime.groups[0].high.survivorFraction, 1);
   assert.equal(snapshot.lifetime.mutationFraction, null);
 });
+
+test('world event thresholds use only adjacent 100-tick measurements', async () => {
+  const { compareWorld } = await import('../src/core/history.ts');
+  const baseline = new Engine({ width: 8, height: 8, population: 100 }).metrics();
+  const before = { ...baseline, tick: 0, food: 100 };
+  assert.deepEqual(compareWorld(before, { ...before, tick: 100, population: 71, food: 61 }), []);
+  assert.deepEqual(compareWorld(before, { ...before, tick: 101, population: 0, food: 0 }), []);
+  assert.deepEqual(compareWorld(before, { ...before, tick: 100, population: 70, food: 60 }).map(e => e.kind),
+    ['population-crisis', 'food-drop']);
+  assert.deepEqual(compareWorld(before, { ...before, tick: 100, population: 150 }).map(e => e.kind), ['population-growth']);
+});
+
+test('energy exhaustion is recorded once, aggregated and bounded during mass extinction', async () => {
+  const { PopulationHistory } = await import('../src/core/history.ts');
+  const e = new Engine({ seed: 'mass', width: 8, height: 8, population: 100, regrowth: false });
+  const history = new PopulationHistory(e, 4);
+  e.food.fill(0);
+  for (const a of e.organisms) a.energy = 1;
+  e.step();
+  history.observe(e);
+  history.assertValid(e);
+  assert.deepEqual(history.counts, { living: 0, extinct: 100 });
+  assert.equal(history.storage.recent, 4);
+  assert.equal(history.lookup(100)?.final?.cause, 'energy-depleted');
+  assert.equal(history.lookup(1), undefined);
+  const view = history.view(100, 1);
+  assert.equal(view.entity?.died, 1);
+  assert.equal(view.line?.deaths, 1);
+  assert.equal(view.line?.lastActivity, 1);
+  assert.equal(view.events.find(e => e.kind === 'extinction')?.count, 100);
+  assert.equal(view.events.find(e => e.kind === 'lineage-extinction')?.count, 100);
+  assert.equal(view.events.find(e => e.kind === 'deaths')?.count, 100);
+  assert.throws(() => history.observe(e), /consecutive/);
+  for (let i = 0; i < 100; i++) { e.step(); history.observe(e); }
+  assert.equal(history.view(null, null).events.filter(e => e.kind === 'extinction').length, 1);
+  const empty = new Engine({ population: 0, width: 8, height: 8 });
+  const none = new PopulationHistory(empty);
+  empty.step(); none.observe(empty); none.assertValid(empty);
+  assert.deepEqual(none.counts, { living: 0, extinct: 0 });
+  assert.equal(none.view(null, null).events.length, 0);
+});
+
+test('living offspring retain their direct parent after historical eviction', async () => {
+  const { PopulationHistory } = await import('../src/core/history.ts');
+  const e = new Engine({ seed: 'parent', width: 8, height: 8, population: 1, regrowth: false, mutationRate: 0 });
+  const history = new PopulationHistory(e, 0);
+  e.food.fill(0);
+  for (let i = 0; i < 44; i++) { e.step(); history.observe(e); }
+  e.organisms[0].energy = 80000;
+  e.step(); history.observe(e);
+  const child = e.organisms[1];
+  assert.equal(child.parent, 1);
+  assert.equal(history.lookup(1)?.children, 1);
+  e.organisms[0].energy = 1;
+  e.step(); history.observe(e); history.assertValid(e);
+  assert.equal(history.storage.recent, 0);
+  assert.equal(history.storage.pinned, 1);
+  const v = history.view(child.id, 1);
+  assert.equal(v.ancestors[0].died, 46);
+  assert.equal(v.ancestors[0].id, child.parent);
+  assert.equal(v.entity?.generation, 1);
+  assert.equal(v.line?.living, 1);
+  assert.equal(v.line?.born, 2);
+  assert.equal(v.events.filter(e => e.kind === 'variation').length, 0);
+});
+
+test('food-drop event cooldown suppresses a qualifying repeat then permits a later one', async () => {
+  const { PopulationHistory } = await import('../src/core/history.ts');
+  const e = new Engine({ width: 8, height: 8, population: 0, regrowth: false });
+  e.food.fill(500);
+  const history = new PopulationHistory(e);
+  for (let interval = 1; interval <= 5; interval++) {
+    e.food.fill(interval % 2 ? 100 : 500);
+    for (let t = 0; t < 100; t++) { e.step(); history.observe(e); }
+  }
+  const drops = history.view(null, null).events.filter(event => event.kind === 'food-drop');
+  assert.deepEqual(drops.map(event => event.tick), [500, 100]);
+  for (const event of drops) {
+    assert.equal(event.from, 32);
+    assert.equal(event.to, 6.4);
+    assert.equal(event.intervalTicks, 100);
+  }
+});

@@ -70,10 +70,20 @@
         <section class="inspector"><h2>Инспектор организма</h2><div id="inspection"><p>Выберите организм на карте.</p><button id="inspect-first">Выбрать организм</button></div></section>
       </aside>
     </section>
+    <section class="chart-panel history-panel" aria-labelledby="history-title">
+      <div class="chart-heading"><h2 id="history-title">История мира</h2><button id="history-close" hidden>К наблюдению</button></div>
+      <div class="history-nav" role="group" aria-label="Разделы истории">
+        <button data-history="ancestry" aria-pressed="false" aria-controls="history-body">Родословная</button>
+        <button data-history="lineages" aria-pressed="false" aria-controls="history-body">Линии</button>
+        <button data-history="events" aria-pressed="false" aria-controls="history-body">События</button>
+      </div>
+      <label id="event-filter-label" hidden>Тип события <select id="event-filter"><option value="">Все события</option></select></label>
+      <div id="history-body" hidden></div>
+    </section>
     <section class="chart-panel" aria-labelledby="chart-title">
       <div class="chart-heading"><div><h2 id="chart-title">Численность</h2><p id="chart-unit">Живые организмы</p></div><span id="chart-range">тики 0 → 0</span>
         <label>Показатель <select id="chart-metric">
-          <optgroup label="Экосистема"><option value="population">Численность</option><option value="food">Пища</option><option value="births">Рождения</option><option value="deaths">Смерти</option><option value="meanEnergy">Средняя энергия</option><option value="variants">Генетическое разнообразие</option><option value="maxGeneration">Максимальное поколение</option></optgroup>
+          <optgroup label="Экосистема"><option value="population">Численность</option><option value="food">Пища</option><option value="births">Рождения</option><option value="deaths">Смерти</option><option value="intervalBirths">Рождения за интервал</option><option value="intervalDeaths">Смерти за интервал</option><option value="totalEnergy">Суммарная энергия</option><option value="livingLines">Живые линии</option><option value="extinctLines">Вымершие линии</option><option value="meanGeneration">Среднее поколение</option><option value="meanEnergy">Средняя энергия</option><option value="variants">Генетическое разнообразие</option><option value="maxGeneration">Максимальное поколение</option></optgroup>
           <optgroup label="Средние гены живых"><option value="speed">Средняя скорость</option><option value="sensor">Средний радиус</option><option value="efficiency">Среднее усвоение</option><option value="threshold">Средний порог</option></optgroup>
         </select></label>
       </div>

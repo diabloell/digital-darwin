@@ -1,18 +1,18 @@
 {
-  "stage": "DD-03",
+  "stage": "DD-04",
   "status": "PARTIAL",
-  "sourceCommit": "7ed968cb542e01e3ea1fc4005bc8b0584fbd92fd",
-  "branch": "dd-03-interactive-observer",
-  "baseMain": "26de808",
+  "sourceCommit": "1c037d8d58a5a74f6ffc1754a9653ccf25174df8",
+  "branch": "dd-04-lineages-events",
+  "baseMain": "d8fae67",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-03-interactive-observer"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-04-lineages-events"
   },
   "ci": {
     "status": "PASS",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44946327649",
-    "sourceCommit": "7ed968cb542e01e3ea1fc4005bc8b0584fbd92fd"
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/44948875148",
+    "sourceCommit": "1c037d8d58a5a74f6ffc1754a9653ccf25174df8"
   },
   "checks": [
     {
@@ -31,7 +31,8 @@
       "name": "lint",
       "command": "node scripts/lint.mjs",
       "status": "PASS",
-      "exitCode": 0
+      "exitCode": 0,
+      "rerun": true
     },
     {
       "name": "unit",
@@ -47,31 +48,31 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd03-final/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd04-final/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd03-final/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd04-final/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd03-final/performance-5000.json --profile",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd04-final/performance-5000.json --profile",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-food",
-      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd03-final/no-food.json --width 32 --height 32 --no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd04-final/no-food.json --width 32 --height 32 --no-food",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-reproduction",
-      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd03-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd04-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
       "status": "PASS",
       "exitCode": 0
     },
@@ -83,7 +84,7 @@
     },
     {
       "name": "experiments",
-      "command": "node apps/experiments.ts outputs/dd03-final/experiments.json",
+      "command": "node apps/experiments.ts outputs/dd04-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -94,46 +95,55 @@
       "exitCode": 0
     },
     {
+      "name": "lineage-e2e",
+      "command": "node scripts/lineage-e2e.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
       "name": "browser-benchmark",
       "command": "node scripts/browser-benchmark.mjs",
       "status": "PASS",
       "exitCode": 0
     },
     {
+      "name": "history-benchmark",
+      "command": "node scripts/history-benchmark.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "rerun": true
+    },
+    {
       "name": "dd02-regression",
-      "command": "node scripts/check-dd02-regression.mjs outputs/dd03-final/experiments.json",
+      "command": "node scripts/check-dd02-regression.mjs outputs/dd04-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "dd02-state",
-      "command": "node scripts/check-determinism.mjs outputs/dd03-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd04-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/dd03-final/long-run-a.json outputs/dd03-final/long-run-b.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd04-final/long-run-a.json outputs/dd04-final/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
   ],
   "unit": {
-    "passed": 23,
+    "passed": 27,
     "failed": 0,
     "skipped": 0
   },
   "integration": {
-    "passed": 5,
+    "passed": 6,
     "failed": 0,
     "skipped": 0
   },
   "e2e": {
-    "status": "PASS",
-    "transport": "Node HTTP server over loopback",
-    "browser": "156.0.8078.79",
-    "executablePath": "/usr/bin/chromium",
-    "checks": [
+    "observer": [
       "initial 256x256 world / 1000 real organisms / paused",
       "single step exactly +1",
       "organisms change coordinates while running",
@@ -150,61 +160,14 @@
       "empty charts are labeled and invalid configuration leaves the current world intact",
       "same 12 Worker ticks produce identical metrics and buffers with normal and delayed rendering"
     ],
-    "errors": [],
-    "screenshots": [
-      "reports/dd-03/screenshot-1366x768.png",
-      "reports/dd-03/screenshot-1920x1080.png",
-      "reports/dd-03/screenshot-mobile.png"
+    "history": [
+      "live child selection and navigation to its actual parent",
+      "multi-member lineage counts match founder buffer and highlight can be cleared",
+      "lineage and population charts match sampled Worker data",
+      "generation event is filterable and links to the corresponding entity; return to world",
+      "historical death card, world extinction once, and all three layouts without overflow"
     ],
-    "speedMeasurement": {
-      "ticks": 16,
-      "normalMs": 930.5218479999999,
-      "acceleratedMs": 213.629997
-    }
-  },
-  "benchmark": {
-    "status": "PASS",
-    "browser": "156.0.8078.79",
-    "platform": "linux",
-    "viewport": "1366x768",
-    "speed": "16×",
-    "method": "Chromium headless, landscape and organisms on Canvas; map draw wall time inside RAF; browser FPS is RAF cadence; sampled JS heap is approximate and excludes GPU/OS RSS.",
-    "runs": [
-      {
-        "initialPopulation": 1000,
-        "elapsedMs": 8001.199999999906,
-        "startTick": 340,
-        "endTick": 2851,
-        "startPopulation": 2328,
-        "endPopulation": 4025,
-        "engineTps": 313.827925811132,
-        "browserRafFps": 60.115982602610316,
-        "maxRafGapMs": 16.80000000000109,
-        "mapPaintFps": 8.623706444033497,
-        "mapRenderP50Ms": 1,
-        "mapRenderP95Ms": 1.5,
-        "stepToPaintP50Ms": 16.700000000186265,
-        "stepToPaintP95Ms": 22.700000000186265,
-        "peakJsHeapBytes": 16398475
-      },
-      {
-        "initialPopulation": 5000,
-        "elapsedMs": 8004.4999999998145,
-        "startTick": 187,
-        "endTick": 2820,
-        "startPopulation": 6298,
-        "endPopulation": 4914,
-        "engineTps": 328.9399712661704,
-        "browserRafFps": 60.091198700732235,
-        "maxRafGapMs": 16.80000000000109,
-        "mapPaintFps": 8.120432256855707,
-        "mapRenderP50Ms": 1.400000000372529,
-        "mapRenderP95Ms": 2.6000000000931323,
-        "stepToPaintP50Ms": 28.100000000093132,
-        "stepToPaintP95Ms": 41,
-        "peakJsHeapBytes": 19370072
-      }
-    ]
+    "errors": []
   },
   "determinism": {
     "status": "PASS",
@@ -262,33 +225,141 @@
     "ticks": 4000,
     "sha256": "0af32554d849146d987b6ece874bc4c22a6399664ae4dfeeec4cbdd917614750"
   },
+  "endurance": {
+    "ticks": 100000,
+    "final": {
+      "tick": 100000,
+      "population": 531,
+      "food": 267.005,
+      "births": 14459,
+      "deaths": 14128,
+      "meanEnergy": 19.23809604519774,
+      "maxGeneration": 23
+    },
+    "storage": {
+      "live": 531,
+      "recent": 4096,
+      "pinned": 176,
+      "parentReferences": 382,
+      "lines": 200,
+      "events": 180,
+      "droppedEvents": 10702
+    },
+    "tps": 2397.3049015192237,
+    "peakRss": 216473600
+  },
+  "browserBenchmark": {
+    "status": "PASS",
+    "browser": "156.0.8078.79",
+    "platform": "linux",
+    "viewport": "1366x768",
+    "speed": "16×",
+    "method": "Chromium headless, landscape and organisms on Canvas; map draw wall time inside RAF; browser FPS is RAF cadence; sampled JS heap is approximate and excludes GPU/OS RSS.",
+    "runs": [
+      {
+        "initialPopulation": 1000,
+        "historyPanel": false,
+        "frameBufferBytes": 193760,
+        "frameMetadataJsonBytes": 37106,
+        "historyPackets": 0,
+        "historyJsonBytes": 0,
+        "elapsedMs": 8000.600000000559,
+        "startTick": 336,
+        "endTick": 2833,
+        "startPopulation": 2333,
+        "endPopulation": 4007,
+        "engineTps": 312.1015923805497,
+        "browserRafFps": 60.120490963173566,
+        "maxRafGapMs": 16.80000000000109,
+        "mapPaintFps": 8.499362547808321,
+        "mapRenderP50Ms": 1.099999999627471,
+        "mapRenderP95Ms": 1.900000000372529,
+        "stepToPaintP50Ms": 16.90000000037253,
+        "stepToPaintP95Ms": 31.299999999813735,
+        "peakJsHeapBytes": 17446324
+      },
+      {
+        "initialPopulation": 5000,
+        "historyPanel": false,
+        "frameBufferBytes": 220992,
+        "frameMetadataJsonBytes": 34786,
+        "historyPackets": 0,
+        "historyJsonBytes": 0,
+        "elapsedMs": 8016.699999999255,
+        "startTick": 187,
+        "endTick": 2787,
+        "startPopulation": 6298,
+        "endPopulation": 4858,
+        "engineTps": 324.3229757880726,
+        "browserRafFps": 60.124490126865766,
+        "maxRafGapMs": 16.80000000000109,
+        "mapPaintFps": 7.858595182557144,
+        "mapRenderP50Ms": 1.2000000001862645,
+        "mapRenderP95Ms": 2.2999999998137355,
+        "stepToPaintP50Ms": 28.399999999441206,
+        "stepToPaintP95Ms": 38.799999999813735,
+        "peakJsHeapBytes": 21050017
+      },
+      {
+        "initialPopulation": 5000,
+        "historyPanel": true,
+        "frameBufferBytes": 220224,
+        "frameMetadataJsonBytes": 34798,
+        "historyPackets": 7,
+        "historyJsonBytes": 22260,
+        "elapsedMs": 8000.800000000187,
+        "startTick": 179,
+        "endTick": 2774,
+        "startPopulation": 6344,
+        "endPopulation": 4834,
+        "engineTps": 324.3425657434181,
+        "browserRafFps": 59.61903809618899,
+        "maxRafGapMs": 33.400000000000546,
+        "mapPaintFps": 7.874212578741942,
+        "mapRenderP50Ms": 1.5,
+        "mapRenderP95Ms": 2.400000000372529,
+        "stepToPaintP50Ms": 25.700000000186265,
+        "stepToPaintP95Ms": 48.799999999813735,
+        "peakJsHeapBytes": 21245050
+      }
+    ]
+  },
   "evidence": [
-    "reports/dd-03/checks.json",
-    "reports/dd-03/unit.log",
-    "reports/dd-03/integration.log",
-    "reports/dd-03/typecheck.log",
-    "reports/dd-03/build.log",
-    "reports/dd-03/lint.log",
-    "reports/dd-03/e2e.log",
-    "reports/dd-03/e2e.json",
-    "reports/dd-03/browser-benchmark.log",
-    "reports/dd-03/browser-benchmark.json",
-    "reports/dd-03/long-run-a.json",
-    "reports/dd-03/long-run-b.json",
-    "reports/dd-03/determinism.log",
-    "reports/dd-03/dd02-regression.log",
-    "reports/dd-03/dd02-state.log",
-    "reports/dd-03/experiments.log",
-    "reports/dd-03/dd01-compatibility.log",
-    "reports/dd-03/performance-5000.json",
-    "reports/dd-03/no-food.json",
-    "reports/dd-03/no-reproduction.json",
-    "reports/dd-03/screenshot-1366x768.png",
-    "reports/dd-03/screenshot-1920x1080.png",
-    "reports/dd-03/screenshot-mobile.png"
+    "reports/dd-04/ancestry-1920x1080.png",
+    "reports/dd-04/browser-benchmark.json",
+    "reports/dd-04/browser-benchmark.log",
+    "reports/dd-04/build.log",
+    "reports/dd-04/checks.json",
+    "reports/dd-04/dd01-compatibility.log",
+    "reports/dd-04/dd02-regression.log",
+    "reports/dd-04/dd02-state.log",
+    "reports/dd-04/determinism.log",
+    "reports/dd-04/e2e.json",
+    "reports/dd-04/e2e.log",
+    "reports/dd-04/events-1366x768.png",
+    "reports/dd-04/experiments.log",
+    "reports/dd-04/extinction-390x844.png",
+    "reports/dd-04/history-benchmark-initial.log",
+    "reports/dd-04/history-benchmark.json",
+    "reports/dd-04/history-benchmark.log",
+    "reports/dd-04/history-endurance.json",
+    "reports/dd-04/integration.log",
+    "reports/dd-04/laboratory-390x844.png",
+    "reports/dd-04/lineage-e2e.json",
+    "reports/dd-04/lineage-e2e.log",
+    "reports/dd-04/lineages-1366x768.png",
+    "reports/dd-04/lint-initial.log",
+    "reports/dd-04/lint.log",
+    "reports/dd-04/long-run-a.json",
+    "reports/dd-04/long-run-b.json",
+    "reports/dd-04/no-food.json",
+    "reports/dd-04/no-reproduction.json",
+    "reports/dd-04/performance-5000.json",
+    "reports/dd-04/typecheck.log",
+    "reports/dd-04/unit.log"
   ],
   "blockers": [
-    "GitHub GraphQL вернул Forbidden для gh pr create. Ветка опубликована; создание PR доступно через форму GitHub после входа."
+    "GitHub GraphQL отклонил gh pr create с Forbidden. Ветка опубликована и доступна через форму создания Pull Request."
   ],
   "nextStageAuthorized": false
 }

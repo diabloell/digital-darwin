@@ -24,6 +24,8 @@ export class WorldMap {
   private width = 0;
   private height = 0;
   private dpr = 1;
+  private highlighted: number | null = null;
+  private readonly linePositions: number[] = [];
   private mode = 'normal';
   private drag: { startX: number; startY: number; x: number; y: number; moved: boolean; id: number } | undefined;
 
@@ -97,6 +99,17 @@ export class WorldMap {
       if (this.trail.length > 32) this.trail.shift();
     }
     if (reset || previous?.metrics.tick !== frame.metrics.tick || previous.selectedId !== frame.selectedId) this.invalidate();
+  }
+
+  highlight(founder: number | null): void {
+    this.highlighted = founder;
+    this.invalidate();
+  }
+
+  centerOn(x: number, y: number): void {
+    this.x = this.width / 2 - x * this.scale;
+    this.y = this.height / 2 - y * this.scale;
+    this.invalidate();
   }
 
   setMode(mode: string): void {
@@ -185,6 +198,7 @@ export class WorldMap {
     const gene = GENES.indexOf(this.mode as keyof Genome);
     const { positions, ids } = frame;
     this.groups.forEach(group => { group.length = 0; });
+    this.linePositions.length = 0;
     const minX = -this.x / this.scale, minY = -this.y / this.scale;
     const maxX = minX + this.width / this.scale, maxY = minY + this.height / this.scale;
     for (let i = 0; i < ids.length; i++) {
@@ -194,6 +208,7 @@ export class WorldMap {
         : this.mode === 'energy' ? Math.min(7, Math.floor(positions[i * 4 + 2] * 8))
         : this.mode === 'generation' ? Math.min(7, Math.floor(frame.generations[i] / 5)) : 0;
       this.groups[bin].push(i * 4);
+      if (frame.founders[i] === this.highlighted) this.linePositions.push(i * 4);
     }
     const radius = Math.max(.35, 1.35 / this.scale);
     for (const [bin, group] of this.groups.entries()) {
@@ -206,6 +221,17 @@ export class WorldMap {
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
       }
       ctx.fill();
+    }
+    if (this.linePositions.length) {
+      ctx.strokeStyle = '#ffe0a1';
+      ctx.lineWidth = 1.25 / this.scale;
+      ctx.beginPath();
+      const ring = radius + 2 / this.scale;
+      for (const i of this.linePositions) {
+        ctx.moveTo(positions[i] + ring, positions[i + 1]);
+        ctx.arc(positions[i], positions[i + 1], ring, 0, 2 * Math.PI);
+      }
+      ctx.stroke();
     }
     if (frame.selected) this.drawSelection(frame);
     ctx.restore();
