@@ -11,6 +11,11 @@ export type Metrics = { tick: number; population: number; food: number; births: 
 export type Audit = { grown: number; consumed: number; assimilated: number; dissipated: number; reproductionCost: number; digestiveLoss: number; transferred: number; actions: number };
 export const TICK_PHASES = ['environment', 'observations', 'intents', 'movement', 'competition', 'metabolism', 'death', 'reproduction', 'audit'] as const;
 export type TickPhase = typeof TICK_PHASES[number];
+export type EngineSnapshot = {
+  config: Engine['config']; tick: number; nextId: number; births: number; deaths: number;
+  rng: number[]; food: number[]; capacity: number[]; growth: number[]; organisms: Organism[];
+  audit: Audit; expectedFood: number | null; lastBirths: Birth[]; lastDeaths: Organism[];
+};
 export type Birth = { parent: Genome; child: Organism };
 type Observation = { agent: Organism; traits: Phenotype; localFood: number; dx: number; dy: number };
 type Intent = { agent: Organism; traits: Phenotype; heading: number; speed: number; portion: number };
@@ -48,7 +53,26 @@ export class Engine {
   deaths = 0;
   audit: Audit = newAudit();
   private expectedFood: number | undefined;
-  constructor(options: Partial<Config> = {}) {
+  private stepping = false;
+  constructor(options: Partial<Config> = {}, snapshot?: EngineSnapshot) {
+    if (snapshot) {
+      this.config = { ...snapshot.config };
+      this.rng = new Rng(this.config.seed, snapshot.rng);
+      this.food = Int32Array.from(snapshot.food);
+      this.capacity = Int32Array.from(snapshot.capacity);
+      this.growth = Int32Array.from(snapshot.growth);
+      this.tick = snapshot.tick;
+      this.nextId = snapshot.nextId;
+      this.births = snapshot.births;
+      this.deaths = snapshot.deaths;
+      this.audit = { ...snapshot.audit };
+      this.expectedFood = snapshot.expectedFood ?? undefined;
+      this.organisms = structuredClone(snapshot.organisms);
+      this.lastBirths = structuredClone(snapshot.lastBirths);
+      this.lastDeaths = structuredClone(snapshot.lastDeaths);
+      this.assertValid();
+      return;
+    }
     this.config = { seed: 'coral-42', width: 256, height: 256, population: 1000, mutationRate: 0.12, regrowth: true, ...options, rule: options.rule === undefined ? 'selection' : options.rule, resourceScale: options.resourceScale === undefined ? 1 : options.resourceScale, mutationStrength: options.mutationStrength === undefined ? .08 : options.mutationStrength, reproduction: options.reproduction === undefined ? true : options.reproduction };
     validateConfig(this.config);
     this.rng = new Rng(this.config.seed);
@@ -78,7 +102,10 @@ export class Engine {
   }
   step(count = 1, phaseCompleted?: (phase: TickPhase) => void): void {
     if (!Number.isInteger(count) || count < 1 || count > 100000) throw Error('Tick count: 1..100000');
-    for (let t = 0; t < count; t++) this.advance(phaseCompleted);
+    if (this.stepping) throw Error('Nested Engine step');
+    this.stepping = true;
+    try { for (let t = 0; t < count; t++) this.advance(phaseCompleted); }
+    finally { this.stepping = false; }
   }
 
   private advance(phaseCompleted?: (phase: TickPhase) => void): void {
@@ -283,6 +310,15 @@ export class Engine {
         if (!(a.genome[key] >= min && a.genome[key] <= max)) throw Error('Invalid genome');
       }
     }
+  }
+  snapshot(): EngineSnapshot {
+    if (this.stepping) throw Error('Snapshot requires a completed tick');
+    return {
+      config: { ...this.config }, tick: this.tick, nextId: this.nextId, births: this.births, deaths: this.deaths,
+      rng: [...this.rng.state], food: Array.from(this.food), capacity: Array.from(this.capacity), growth: Array.from(this.growth),
+      organisms: structuredClone(this.organisms), audit: { ...this.audit }, expectedFood: this.expectedFood ?? null,
+      lastBirths: structuredClone(this.lastBirths), lastDeaths: structuredClone(this.lastDeaths)
+    };
   }
   // Canonical state includes hidden future-affecting fields, not just visible metrics.
   canonical(): string {

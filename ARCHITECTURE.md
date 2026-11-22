@@ -57,3 +57,7 @@ Canvas sizes change on ResizeObserver. The landscape image is updated once per o
 ## DD-04 history protocol
 
 A completed-tick observer tracks lives, founder lines and aggregate events without mutating Engine or consuming RNG. Frame samples add interval births/deaths, total reserve, mean living generation and lineage counts. Each render frame transfers a parallel Uint32 founder-ID buffer. The UI requests historical packets separately and ignores responses from old worlds or superseded requests. [Retention and protocol](docs/adr/004-dd04-history-retention.md) · [Metrics and thresholds](docs/history-metrics.md)
+
+## DD-05 persistence
+
+The Worker snapshots the biological state and bounded history at a completed tick. It builds and validates a separate candidate before replacing the world, then publishes a new paused epoch. IndexedDB commits each slot atomically and file export uses the same versioned format. Recent analytics accompany the save. [Snapshot format](docs/world-snapshot.md) · [ADR](docs/adr/005-dd05-persistence.md)

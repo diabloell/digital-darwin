@@ -150,3 +150,14 @@ footer { padding: 18px 0; color: var(--muted); font-size: 11px; line-height: 1.5
 .event-list .event-critical { color: #ffbdab; }
 .event-list .event-notice { color: #ffdf9d; }
 @media(max-width: 760px) { .lineage-columns { grid-template-columns: 1fr; } }
+
+#world-saves { margin: 0 0 14px; padding: 0; }
+#world-saves[open] { padding-bottom: 12px; }
+#world-saves summary { background: transparent; border: 0; }
+#world-saves p { margin-block: 4px; color: var(--muted); overflow-wrap: anywhere; font-size: 12px; }
+#world-saves #current-save, #world-saves #save-status { margin-inline: 14px; }
+.save-grid { margin: 10px 14px; display: grid; gap: 8px; grid-template-columns: minmax(0, 1fr); }
+.save-grid label { display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
+.save-grid label input, .save-grid label select { min-width: 0; width: min(100%, 420px); }
+.save-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.save-actions button { font-size: 12px; }

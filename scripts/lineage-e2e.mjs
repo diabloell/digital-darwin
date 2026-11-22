@@ -9,7 +9,8 @@ const server = await startServer(0);
 const browser = await chromium.launch({ executablePath: process.env.DD_BROWSER, headless: true });
 const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
 const errors = [], checks = [], screenshots = [];
-page.on('pageerror', error => errors.push(error.message));
+page.on('dialog', dialog => dialog.message().startsWith('Создать новый мир?') ? dialog.accept() : dialog.dismiss());
+  page.on('pageerror', error => errors.push(error.message));
 page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
 await page.addInitScript(() => {
   const Native = window.Worker;

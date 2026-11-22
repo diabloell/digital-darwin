@@ -1,7 +1,8 @@
 // xoshiro128** v1, initialized with FNV-1a over UTF-16 code units + splitmix32. State is explicit.
 export class Rng {
   state: number[];
-  constructor(seed: string) {
+  constructor(seed: string, state?: readonly number[]) {
+    if (state) { this.state = [...state]; return; }
     let h = 2166136261;
     for (let i = 0; i < seed.length; i++) h = Math.imul(h ^ seed.charCodeAt(i), 16777619) >>> 0;
     this.state = Array.from({ length: 4 }, () => {

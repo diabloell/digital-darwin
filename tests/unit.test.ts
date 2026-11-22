@@ -229,3 +229,58 @@ test('food-drop event cooldown suppresses a qualifying repeat then permits a lat
     assert.equal(event.intervalTicks, 100);
   }
 });
+
+test('version 1 fixture restores exact numbers, IDs, typed resources and independent copies', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { capture, decode, encode, restore } = await import('../src/snapshot.ts');
+  const file = (await readFile(new URL('./fixtures/dd05-v1.ddworld.json', import.meta.url), 'utf8')).trim();
+  const { manifest, state } = await decode(file);
+  const a = restore(state), b = restore(state);
+  assert.equal(a.engine.config.seed, 'dd05-формат🌱');
+  assert.deepEqual(a.engine.rng.state, state.engine.rng);
+  assert.ok(a.engine.food instanceof Int32Array);
+  assert.deepEqual(Array.from(a.engine.food), state.engine.food);
+  assert.deepEqual(a.engine.organisms, state.engine.organisms);
+  assert.equal((await encode(capture(a.engine,a.genealogy), manifest.name, manifest.createdAt)).text, file);
+  a.engine.step(); a.genealogy.observe(a.engine);
+  assert.notEqual(a.engine.canonical(), b.engine.canonical());
+  assert.equal(b.genealogy.snapshot().tick, 0);
+  assert.throws(() => b.engine.step(1, () => b.engine.snapshot()), /completed tick/);
+});
+
+test('malformed, unsupported and honestly checksummed invalid snapshots are rejected', async () => {
+  const { PopulationHistory } = await import('../src/core/history.ts');
+  const { capture, encode, decode, restore, MAX_SAVE_BYTES } = await import('../src/snapshot.ts');
+  const e = new Engine({ width:8, height:8, population:2 });
+  const h = new PopulationHistory(e);
+  const pack = (s: ReturnType<typeof capture>) => encode(s, '<img onerror=bad>', '2026-11-22T00:00:00.000Z');
+  const file = await pack(capture(e,h));
+  await assert.rejects(decode('{'), /JSON/);
+  await assert.rejects(decode(' '.repeat(MAX_SAVE_BYTES + 1)), /32/);
+  const broken = JSON.parse(file.text);
+  broken.manifest.format = 100;
+  await assert.rejects(decode(JSON.stringify(broken)), /версия/);
+  broken.manifest.format = 1;
+  broken.manifest.checksum = '0'.repeat(64);
+  await assert.rejects(decode(JSON.stringify(broken)), /SHA-256/);
+  const corruptions: ((s: ReturnType<typeof capture>) => void)[] = [
+    s => { s.engine.rng.fill(0); },
+    s => { s.engine.food.pop(); },
+    s => { s.engine.capacity[0] = 2147483648; },
+    s => { s.engine.organisms[0].energy = NaN; },
+    s => { s.engine.organisms[0].genome.speed = 999; },
+    s => { s.engine.organisms[1].id = s.engine.organisms[0].id; },
+    s => { Object.defineProperty(s.engine.config, '__proto__', { value: {}, enumerable: true }); },
+    s => { s.history.live.pop(); },
+    s => { s.history.lines[0].founder = 0; },
+    s => { s.history.lastWorldEvent.push(['food-drop',999]); }
+  ];
+  for (const corrupt of corruptions) {
+    const s = capture(e,h);
+    corrupt(s);
+    const f = await pack(s);
+    await assert.rejects(async () => restore((await decode(f.text)).state));
+  }
+  assert.equal(e.tick, 0);
+  assert.equal(h.storage.live, 2);
+});

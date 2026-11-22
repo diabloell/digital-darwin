@@ -19,6 +19,15 @@ export type HistoryView = {
   droppedEvents: number;
 };
 
+type EventLink = Pick<LifeRecord, 'id' | 'founder'>;
+export type HistorySnapshot = {
+  deadLimit: number; live: LifeRecord[]; recent: LifeRecord[]; pinned: LifeRecord[];
+  parentReferences: [number, number][]; lines: Line[]; events: WorldEvent[]; lastWorldEvent: [EventKind, number][];
+  previousMetrics: Metrics; eventId: number; tick: number; added: number; lastEntity: number; removed: number;
+  maxGeneration: number; extinctCount: number; pendingBirths: number; pendingDeaths: number; pendingVariants: number;
+  lastBirth: EventLink | null; lastDeath: EventLink | null; lastVariant: EventLink | null; lastFlush: number;
+};
+
 type Threshold = { kind: EventKind; before: number; after: number; minimum: number; ratio: number; growth?: boolean };
 export function compareWorld(before: Metrics, after: Metrics) {
   if (after.tick - before.tick !== 100) return [];
@@ -53,12 +62,31 @@ export class PopulationHistory {
   private pendingBirths = 0;
   private pendingDeaths = 0;
   private pendingVariants = 0;
-  private lastBirth: LifeRecord | undefined;
-  private lastDeath: LifeRecord | undefined;
-  private lastVariant: LifeRecord | undefined;
+  private lastBirth: EventLink | undefined;
+  private lastDeath: EventLink | undefined;
+  private lastVariant: EventLink | undefined;
   private lastFlush = 0;
 
-  constructor(engine: Engine, deadLimit = HISTORY_LIMITS.dead) {
+  constructor(engine: Engine, deadLimit = HISTORY_LIMITS.dead, snapshot?: HistorySnapshot) {
+    if (snapshot) {
+      const s = structuredClone(snapshot);
+      this.deadLimit = s.deadLimit;
+      this.previousMetrics = s.previousMetrics;
+      for (const r of s.live) this.live.set(r.id, r);
+      for (const r of s.recent) this.recent.set(r.id, r);
+      for (const r of s.pinned) this.pinned.set(r.id, this.recent.get(r.id) ?? r);
+      for (const [id, count] of s.parentReferences) this.parentReferences.set(id, count);
+      for (const line of s.lines) this.lines.set(line.founder, line);
+      for (const event of s.events) this.events.push(event);
+      for (const [kind, tick] of s.lastWorldEvent) this.lastWorldEvent.set(kind, tick);
+      this.eventId = s.eventId; this.tick = s.tick; this.added = s.added; this.lastEntity = s.lastEntity;
+      this.removed = s.removed; this.maxGeneration = s.maxGeneration; this.extinctCount = s.extinctCount;
+      this.pendingBirths = s.pendingBirths; this.pendingDeaths = s.pendingDeaths; this.pendingVariants = s.pendingVariants;
+      this.lastBirth = s.lastBirth ?? undefined; this.lastDeath = s.lastDeath ?? undefined;
+      this.lastVariant = s.lastVariant ?? undefined; this.lastFlush = s.lastFlush;
+      this.assertValid(engine);
+      return;
+    }
     if (engine.tick !== 0) throw Error('History starts at tick zero');
     if (!Number.isSafeInteger(deadLimit) || deadLimit < 0 || deadLimit > HISTORY_LIMITS.dead) throw Error('Invalid history limit');
     this.deadLimit = deadLimit;
@@ -167,7 +195,7 @@ export class PopulationHistory {
     this.lastFlush = this.tick;
   }
 
-  private publish(kind: EventKind, severity: WorldEvent['severity'], count: number, row?: LifeRecord, founder?: number,
+  private publish(kind: EventKind, severity: WorldEvent['severity'], count: number, row?: EventLink, founder?: number,
     details: Pick<WorldEvent, 'from' | 'to' | 'intervalTicks'> = {}) {
     this.events.push({ id: ++this.eventId, kind, tick: this.tick, severity, count, entity: row?.id, founder: row?.founder ?? founder, ...details });
     if (this.events.length > HISTORY_LIMITS.events) this.events.shift();
@@ -203,6 +231,20 @@ export class PopulationHistory {
       top: lines.filter(l => l.living).sort((a,b) => b.living - a.living || a.founder - b.founder).slice(0, HISTORY_LIMITS.lineages).map(l => this.summarize(l)),
       extinct: lines.filter(l => !l.living).sort((a,b) => b.lastActivity - a.lastActivity || a.founder - b.founder).slice(0, HISTORY_LIMITS.lineages).map(l => this.summarize(l)),
       events: [...this.events].reverse(), droppedEvents: this.eventId - this.events.length };
+  }
+
+  snapshot(): HistorySnapshot {
+    const link = (row?: EventLink) => row ? { id: row.id, founder: row.founder } : null;
+    return structuredClone({
+      deadLimit: this.deadLimit, live: [...this.live.values()], recent: [...this.recent.values()], pinned: [...this.pinned.values()],
+      parentReferences: [...this.parentReferences], lines: [...this.lines.values()], events: this.events.map(e =>
+        Object.fromEntries(Object.entries(e).filter(([,value]) => value !== undefined)) as WorldEvent),
+      lastWorldEvent: [...this.lastWorldEvent], previousMetrics: this.previousMetrics,
+      eventId: this.eventId, tick: this.tick, added: this.added, lastEntity: this.lastEntity, removed: this.removed,
+      maxGeneration: this.maxGeneration, extinctCount: this.extinctCount,
+      pendingBirths: this.pendingBirths, pendingDeaths: this.pendingDeaths, pendingVariants: this.pendingVariants,
+      lastBirth: link(this.lastBirth), lastDeath: link(this.lastDeath), lastVariant: link(this.lastVariant), lastFlush: this.lastFlush
+    });
   }
 
   assertValid(engine: Engine): void {
