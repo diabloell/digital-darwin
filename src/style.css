@@ -180,3 +180,14 @@ footer { padding: 18px 0; color: var(--muted); font-size: 11px; line-height: 1.5
 .lab-table table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .lab-table :is(th,td) { text-align: left; padding: 6px; border-bottom: 1px solid var(--line); min-width: 68px; }
 .lab-table th { position: sticky; top: 0; background: #172a2e; }
+
+#evolution-game { margin: 0 0 14px; font-size: 13px; }
+#evolution-game p { margin-block: 8px; color: var(--muted); line-height: 1.5; }
+#evolution-game label { display: grid; gap: 4px; min-width: 0; color: var(--muted); }
+#game-form { margin-top: 12px; align-items: end; }
+#game-form input { width: 100%; min-width: 0; }
+.game-stats { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; }
+#game-ep { font: 600 23px var(--mono); color: var(--mint); }
+.game-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(190px,100%),1fr)); gap: 8px; }
+.game-cards section { border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+.game-cards h3 { font-size: 14px; }

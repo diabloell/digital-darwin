@@ -1,18 +1,37 @@
 {
-  "stage": "DD-06",
+  "stage": "DD-07",
   "status": "PARTIAL",
-  "sourceCommit": "e760c0f71e07e1aa5ab8e15bbad25d02849f868b",
-  "baseMain": "fe11f0e",
-  "branch": "dd-06-experiment-lab",
+  "sourceCommit": "89a9758d230c0d13320808bebcf862cbb53d6dbc",
+  "baseMain": "9645692c8434c793060ac3ee76acad1d64431cf5",
+  "branch": "dd-07-first-playable-evolution",
+  "issue": "https://github.com/diabloell/digital-darwin/issues/8",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-06-experiment-lab"
+    "error": "Post \"https://api.github.com/graphql\": Forbidden",
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-07-first-playable-evolution"
   },
   "ci": {
     "status": "PASS",
-    "sourceCommit": "e760c0f71e07e1aa5ab8e15bbad25d02849f868b",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45055407148"
+    "event": "push",
+    "pullRequestEvent": "NOT RUN",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45081593913",
+    "groups": [
+      "LAB-E01",
+      "LAB-E02",
+      "LAB-E03",
+      "LAB-E04",
+      "browser",
+      "core",
+      "game",
+      "game-1366",
+      "game-1920",
+      "game-390",
+      "lab-1366",
+      "lab-1920",
+      "lab-390",
+      "stress"
+    ]
   },
   "checks": [
     {
@@ -47,31 +66,31 @@
     },
     {
       "name": "long-run-a",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd06-final/long-run-a.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd07-final/long-run-a.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "long-run-b",
-      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd06-final/long-run-b.json",
+      "command": "node apps/cli.ts --seed dd00-verification --ticks 10000 --population 1000 --output outputs/dd07-final/long-run-b.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "performance-5000",
-      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd06-final/performance-5000.json --profile",
+      "command": "node apps/cli.ts --seed dd00-performance --ticks 1000 --population 5000 --output outputs/dd07-final/performance-5000.json --profile",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-food",
-      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd06-final/no-food.json --width 32 --height 32 --no-food",
+      "command": "node apps/cli.ts --seed dd01-starvation --ticks 600 --population 1000 --output outputs/dd07-final/no-food.json --width 32 --height 32 --no-food",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "no-reproduction",
-      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd06-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
+      "command": "node apps/cli.ts --seed dd01-control --ticks 1000 --population 1000 --output outputs/dd07-final/no-reproduction.json --width 32 --height 32 --no-reproduction",
       "status": "PASS",
       "exitCode": 0
     },
@@ -83,7 +102,7 @@
     },
     {
       "name": "experiments",
-      "command": "node apps/experiments.ts outputs/dd06-final/experiments.json",
+      "command": "node apps/experiments.ts outputs/dd07-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
@@ -119,7 +138,7 @@
     },
     {
       "name": "lab-batches",
-      "command": "node apps/lab.ts all outputs/dd06-final/lab-batches",
+      "command": "node apps/lab.ts all outputs/dd07-final/lab-batches",
       "status": "PASS",
       "exitCode": 0
     },
@@ -149,802 +168,41 @@
     },
     {
       "name": "dd02-regression",
-      "command": "node scripts/check-dd02-regression.mjs outputs/dd06-final/experiments.json",
+      "command": "node scripts/check-dd02-regression.mjs outputs/dd07-final/experiments.json",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "dd02-state",
-      "command": "node scripts/check-determinism.mjs outputs/dd06-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd07-final/long-run-a.json reports/dd-02/long-run-a.json 10000",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "game-replay",
+      "command": "node scripts/game-replay.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "game-e2e",
+      "command": "node scripts/game-e2e.mjs",
       "status": "PASS",
       "exitCode": 0
     },
     {
       "name": "determinism",
-      "command": "node scripts/check-determinism.mjs outputs/dd06-final/long-run-a.json outputs/dd06-final/long-run-b.json 10000",
+      "command": "node scripts/check-determinism.mjs outputs/dd07-final/long-run-a.json outputs/dd07-final/long-run-b.json 10000",
       "status": "PASS",
       "exitCode": 0
     }
   ],
-  "unit": {
-    "passed": 31,
-    "failed": 0,
-    "skipped": 0
-  },
-  "integration": {
-    "passed": 10,
-    "failed": 0,
-    "skipped": 0
-  },
-  "determinism": {
+  "legacyLab": {
     "status": "PASS",
-    "hash": "e7ea2a95f04cdf180bb294eae8b9e226a89ed74b0e2956c443d0b315f719b486",
-    "historicalCheckpoints": 11
+    "replicas": 42,
+    "evidence": "dd-07/legacy-lab.json"
   },
-  "experiments": [
-    {
-      "id": "LAB-E01",
-      "status": "completed",
-      "verdict": "PASS",
-      "scenarioHash": "3beec879d67ee202fb1666c1a26de0971583729caacd848991575e01006aac81",
-      "seeds": [
-        "dd00-verification"
-      ],
-      "completed": 2,
-      "extinct": 0,
-      "performance": {
-        "elapsedMs": 11718.166505,
-        "completedTicks": 20000,
-        "tps": 1706.7516485165356,
-        "initialRss": 62615552,
-        "peakRss": 216518656,
-        "bytes": {
-          "series.json": 116466,
-          "series.csv": 84319,
-          "report.md": 4452
-        }
-      }
-    },
-    {
-      "id": "LAB-E02",
-      "status": "completed",
-      "verdict": "DESCRIPTIVE",
-      "scenarioHash": "1be9b9c0a6b9aec806bd2fc900f031408ffeb4597029514b655d5af464b41160",
-      "seeds": [
-        "dd02-amber",
-        "dd02-fern",
-        "dd02-dune",
-        "dd02-coral",
-        "dd02-slate"
-      ],
-      "completed": 10,
-      "extinct": 0,
-      "performance": {
-        "elapsedMs": 15905.484072000001,
-        "completedTicks": 40000,
-        "tps": 2514.855871027274,
-        "initialRss": 217305088,
-        "peakRss": 240582656,
-        "bytes": {
-          "series.json": 274959,
-          "series.csv": 168819,
-          "report.md": 6608
-        }
-      }
-    },
-    {
-      "id": "LAB-E03",
-      "status": "completed",
-      "verdict": "DESCRIPTIVE",
-      "scenarioHash": "5619fe2a7b0d771742847fc3e2d599a95928e3fdf0f5203a41de4d570766b8ba",
-      "seeds": [
-        "dd02-amber",
-        "dd02-fern",
-        "dd02-dune",
-        "dd02-coral",
-        "dd02-slate"
-      ],
-      "completed": 10,
-      "extinct": 0,
-      "performance": {
-        "elapsedMs": 21157.808856000003,
-        "completedTicks": 40000,
-        "tps": 1890.5549375287349,
-        "initialRss": 238206976,
-        "peakRss": 241541120,
-        "bytes": {
-          "series.json": 266339,
-          "series.csv": 169399,
-          "report.md": 6812
-        }
-      }
-    },
-    {
-      "id": "LAB-E04",
-      "status": "completed",
-      "verdict": "DESCRIPTIVE",
-      "scenarioHash": "33cba6d1afee485ce2f720b2293ee147f288b3f08b082b78a5784d18bc938b48",
-      "seeds": [
-        "dd02-amber",
-        "dd02-fern",
-        "dd02-dune",
-        "dd02-coral",
-        "dd02-slate"
-      ],
-      "completed": 20,
-      "extinct": 0,
-      "performance": {
-        "elapsedMs": 31718.486849000008,
-        "completedTicks": 80000,
-        "tps": 2522.188412733887,
-        "initialRss": 239120384,
-        "peakRss": 239153152,
-        "bytes": {
-          "series.json": 527502,
-          "series.csv": 340518,
-          "report.md": 10534
-        }
-      }
-    }
-  ],
-  "pairedEffects": [
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "population",
-      "label": "Конечная численность",
-      "n": 5,
-      "mean": -340.6,
-      "median": -337,
-      "min": -417,
-      "max": -249,
-      "sd": 73.92428559005491,
-      "differences": {
-        "dd02-amber": -337,
-        "dd02-fern": -417,
-        "dd02-dune": -411,
-        "dd02-coral": -249,
-        "dd02-slate": -289
-      }
-    },
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "averagePopulation",
-      "label": "Средняя численность",
-      "n": 5,
-      "mean": -405.80674999999997,
-      "median": -396.15475,
-      "min": -450.7172499999999,
-      "max": -390.20775000000003,
-      "sd": 25.255731733113542,
-      "differences": {
-        "dd02-amber": -390.20775000000003,
-        "dd02-fern": -397.51275,
-        "dd02-dune": -394.44124999999997,
-        "dd02-coral": -396.15475,
-        "dd02-slate": -450.7172499999999
-      }
-    },
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "births",
-      "label": "Рождения",
-      "n": 5,
-      "mean": -971.4,
-      "median": -1004,
-      "min": -1081,
-      "max": -830,
-      "sd": 106.34519265110201,
-      "differences": {
-        "dd02-amber": -893,
-        "dd02-fern": -830,
-        "dd02-dune": -1049,
-        "dd02-coral": -1081,
-        "dd02-slate": -1004
-      }
-    },
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "deaths",
-      "label": "Смерти",
-      "n": 5,
-      "mean": -630.8,
-      "median": -638,
-      "min": -832,
-      "max": -413,
-      "sd": 158.63070320716605,
-      "differences": {
-        "dd02-amber": -556,
-        "dd02-fern": -413,
-        "dd02-dune": -638,
-        "dd02-coral": -832,
-        "dd02-slate": -715
-      }
-    },
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "food",
-      "label": "Пища на финале, ед.",
-      "n": 5,
-      "mean": 4822.4378,
-      "median": 1040.1290000000001,
-      "min": 40.868999999999915,
-      "max": 12067.675,
-      "sd": 6021.265651220281,
-      "differences": {
-        "dd02-amber": 40.868999999999915,
-        "dd02-fern": 12067.675,
-        "dd02-dune": 10701.453000000001,
-        "dd02-coral": 1040.1290000000001,
-        "dd02-slate": 262.0629999999999
-      }
-    },
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "energy",
-      "label": "Энергия живых, ед.",
-      "n": 5,
-      "mean": 4.229000128281015,
-      "median": 4.295665472930271,
-      "min": 0.41951186001011465,
-      "max": 10.332619666329627,
-      "sd": 3.8763628438474145,
-      "differences": {
-        "dd02-amber": 0.41951186001011465,
-        "dd02-fern": 10.332619666329627,
-        "dd02-dune": 4.295665472930271,
-        "dd02-coral": 4.714023488660871,
-        "dd02-slate": 1.3831801534741928
-      }
-    },
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "reproduction",
-      "label": "Рождения на 1 000 организм-тиков",
-      "n": 5,
-      "mean": 0.7221272481557075,
-      "median": 0.6878057861105238,
-      "min": 0.522301742214927,
-      "max": 0.883964377934315,
-      "sd": 0.14950538432562785,
-      "differences": {
-        "dd02-amber": 0.522301742214927,
-        "dd02-fern": 0.8570081295546249,
-        "dd02-dune": 0.6878057861105238,
-        "dd02-coral": 0.6595562049641467,
-        "dd02-slate": 0.883964377934315
-      }
-    },
-    {
-      "experiment": "LAB-E02",
-      "reference": "control",
-      "treatment": "scarcity",
-      "metric": "sensorGap",
-      "label": "Разница рождаемости: высокий − низкий радиус",
-      "n": 5,
-      "mean": -0.371299875309837,
-      "median": -0.3965753211326317,
-      "min": -0.45929818210459283,
-      "max": -0.19554354602298762,
-      "sd": 0.10279400785484202,
-      "differences": {
-        "dd02-amber": -0.3797205746385528,
-        "dd02-fern": -0.45929818210459283,
-        "dd02-dune": -0.3965753211326317,
-        "dd02-coral": -0.19554354602298762,
-        "dd02-slate": -0.42536175265041987
-      }
-    },
-    {
-      "experiment": "LAB-E03",
-      "reference": "control",
-      "treatment": "mutations",
-      "metric": "population",
-      "label": "Конечная численность",
-      "n": 5,
-      "mean": 249.4,
-      "median": 263,
-      "min": 147,
-      "max": 365,
-      "sd": 80.39154184365418,
-      "differences": {
-        "dd02-amber": 263,
-        "dd02-fern": 263,
-        "dd02-dune": 209,
-        "dd02-coral": 147,
-        "dd02-slate": 365
-      }
-    },
-    {
-      "experiment": "LAB-E03",
-      "reference": "control",
-      "treatment": "mutations",
-      "metric": "variants",
-      "label": "Живые генотипы",
-      "n": 5,
-      "mean": 302.2,
-      "median": 299,
-      "min": 271,
-      "max": 346,
-      "sd": 27.653209578636616,
-      "differences": {
-        "dd02-amber": 305,
-        "dd02-fern": 271,
-        "dd02-dune": 290,
-        "dd02-coral": 299,
-        "dd02-slate": 346
-      }
-    },
-    {
-      "experiment": "LAB-E03",
-      "reference": "control",
-      "treatment": "mutations",
-      "metric": "births",
-      "label": "Рождения",
-      "n": 5,
-      "mean": 289.4,
-      "median": 300,
-      "min": 81,
-      "max": 448,
-      "sd": 145.13545397317637,
-      "differences": {
-        "dd02-amber": 223,
-        "dd02-fern": 81,
-        "dd02-dune": 300,
-        "dd02-coral": 448,
-        "dd02-slate": 395
-      }
-    },
-    {
-      "experiment": "LAB-E03",
-      "reference": "control",
-      "treatment": "mutations",
-      "metric": "reproduction",
-      "label": "Рождения на 1 000 организм-тиков",
-      "n": 5,
-      "mean": -0.1424896651827138,
-      "median": -0.16001503154943864,
-      "min": -0.2799626581022232,
-      "max": 0.024053422686335812,
-      "sd": 0.10968757902218554,
-      "differences": {
-        "dd02-amber": -0.17188677521321838,
-        "dd02-fern": -0.2799626581022232,
-        "dd02-dune": -0.12463728373502458,
-        "dd02-coral": 0.024053422686335812,
-        "dd02-slate": -0.16001503154943864
-      }
-    },
-    {
-      "experiment": "LAB-E04",
-      "reference": "control",
-      "treatment": "patchy",
-      "metric": "population",
-      "label": "Конечная численность",
-      "n": 5,
-      "mean": -17.8,
-      "median": -18,
-      "min": -30,
-      "max": -4,
-      "sd": 11.41052146047673,
-      "differences": {
-        "dd02-amber": -30,
-        "dd02-fern": -28,
-        "dd02-dune": -9,
-        "dd02-coral": -18,
-        "dd02-slate": -4
-      }
-    },
-    {
-      "experiment": "LAB-E04",
-      "reference": "control",
-      "treatment": "patchy",
-      "metric": "speedGap",
-      "label": "Разница рождаемости: высокая − низкая скорость",
-      "n": 5,
-      "mean": 0.014921152499378665,
-      "median": 0.02116207693615213,
-      "min": -0.07803706468549976,
-      "max": 0.10450654282861349,
-      "sd": 0.08917952746768482,
-      "differences": {
-        "dd02-amber": 0.10450654282861349,
-        "dd02-fern": -0.07803706468549976,
-        "dd02-dune": 0.02116207693615213,
-        "dd02-coral": 0.10038393347006813,
-        "dd02-slate": -0.07340972605244067
-      }
-    },
-    {
-      "experiment": "LAB-E04",
-      "reference": "control",
-      "treatment": "patchy",
-      "metric": "sensorGap",
-      "label": "Разница рождаемости: высокий − низкий радиус",
-      "n": 5,
-      "mean": -0.04292307633541903,
-      "median": -0.03191829103317556,
-      "min": -0.11083891616328068,
-      "max": 0.001231948569176522,
-      "sd": 0.04192792883584369,
-      "differences": {
-        "dd02-amber": -0.04810174566462533,
-        "dd02-fern": 0.001231948569176522,
-        "dd02-dune": -0.11083891616328068,
-        "dd02-coral": -0.024988377385190108,
-        "dd02-slate": -0.03191829103317556
-      }
-    },
-    {
-      "experiment": "LAB-E04",
-      "reference": "neutral-uniform",
-      "treatment": "neutral-patchy",
-      "metric": "population",
-      "label": "Конечная численность · нейтральный режим",
-      "n": 5,
-      "mean": 107.2,
-      "median": 128,
-      "min": 39,
-      "max": 157,
-      "sd": 47.49947368129462,
-      "differences": {
-        "dd02-amber": 39,
-        "dd02-fern": 79,
-        "dd02-dune": 157,
-        "dd02-coral": 128,
-        "dd02-slate": 133
-      }
-    },
-    {
-      "experiment": "LAB-E04",
-      "reference": "neutral-uniform",
-      "treatment": "neutral-patchy",
-      "metric": "sensorGap",
-      "label": "Разница рождаемости по радиусу · нейтральный режим",
-      "n": 5,
-      "mean": -0.13934386634489654,
-      "median": -0.17936882443828028,
-      "min": -0.2485872493847403,
-      "max": 0.042878527987480375,
-      "sd": 0.11246369012116085,
-      "differences": {
-        "dd02-amber": -0.19649168447203047,
-        "dd02-fern": 0.042878527987480375,
-        "dd02-dune": -0.2485872493847403,
-        "dd02-coral": -0.17936882443828028,
-        "dd02-slate": -0.11515010141691207
-      }
-    }
-  ],
-  "e2e": {
-    "status": "PASS",
-    "browser": "156.0.8078.79",
-    "results": [
-      {
-        "viewport": [
-          1920,
-          1080
-        ],
-        "runs": 4,
-        "scenarioHash": "91bb23ba9e213bf8340ce3669a24ca9bfc8ffdb4343bcecf4daec39789a5affe",
-        "rafCallbacksIn400ms": 25,
-        "renderMs": 2.2000000001862645,
-        "exportAndFilterMs": 1107.3563289999993,
-        "cancel": "PASS",
-        "errors": []
-      },
-      {
-        "viewport": [
-          1366,
-          768
-        ],
-        "runs": 4,
-        "scenarioHash": "8420af5e07ef33132802f3e9d728dd384ba75bf4bf840dc318c755f9e7f3efb5",
-        "rafCallbacksIn400ms": 25,
-        "renderMs": 2,
-        "exportAndFilterMs": 580.2793450000008,
-        "cancel": "NOT RUN",
-        "errors": []
-      },
-      {
-        "viewport": [
-          390,
-          844
-        ],
-        "runs": 4,
-        "scenarioHash": "91bb23ba9e213bf8340ce3669a24ca9bfc8ffdb4343bcecf4daec39789a5affe",
-        "rafCallbacksIn400ms": 25,
-        "renderMs": 2.099999999627471,
-        "exportAndFilterMs": 647.735045999998,
-        "cancel": "NOT RUN",
-        "errors": []
-      }
-    ],
-    "screenshots": [
-      "reports/dd-06/laboratory-1920x1080.png",
-      "reports/dd-06/progress-1366x768.png",
-      "reports/dd-06/comparison-390x844.png"
-    ]
-  },
-  "stress": {
-    "status": "PASS",
-    "description": "RSS sampled at the end of each independent series; previous series references are released",
-    "memory": [
-      {
-        "series": 1,
-        "bytes": 21515,
-        "rss": 109150208
-      },
-      {
-        "series": 2,
-        "bytes": 21515,
-        "rss": 109674496
-      },
-      {
-        "series": 3,
-        "bytes": 21515,
-        "rss": 110198784
-      },
-      {
-        "series": 4,
-        "bytes": 21515,
-        "rss": 117407744
-      },
-      {
-        "series": 5,
-        "bytes": 21515,
-        "rss": 117932032
-      },
-      {
-        "series": 6,
-        "bytes": 21515,
-        "rss": 118960128
-      },
-      {
-        "series": 7,
-        "bytes": 21515,
-        "rss": 119353344
-      },
-      {
-        "series": 8,
-        "bytes": 21515,
-        "rss": 119746560
-      },
-      {
-        "series": 9,
-        "bytes": 21515,
-        "rss": 120139776
-      },
-      {
-        "series": 10,
-        "bytes": 21515,
-        "rss": 120532992
-      },
-      {
-        "series": 11,
-        "bytes": 21515,
-        "rss": 120926208
-      },
-      {
-        "series": 12,
-        "bytes": 21515,
-        "rss": 121450496
-      },
-      {
-        "series": 13,
-        "bytes": 21515,
-        "rss": 121843712
-      },
-      {
-        "series": 14,
-        "bytes": 21515,
-        "rss": 122236928
-      },
-      {
-        "series": 15,
-        "bytes": 21515,
-        "rss": 122630144
-      },
-      {
-        "series": 16,
-        "bytes": 21515,
-        "rss": 123023360
-      }
-    ]
-  },
-  "heapProbe": {
-    "method": "Node heapUsed after explicit GC; one Engine in flight; results released before GC",
-    "afterWarmup": 10100464,
-    "final": 10202912,
-    "delta": 102448,
-    "samples": [
-      {
-        "series": 1,
-        "heapUsed": 10036624,
-        "rss": 91631616
-      },
-      {
-        "series": 2,
-        "heapUsed": 10047784,
-        "rss": 91938816
-      },
-      {
-        "series": 3,
-        "heapUsed": 10037976,
-        "rss": 108896256
-      },
-      {
-        "series": 4,
-        "heapUsed": 10049704,
-        "rss": 109264896
-      },
-      {
-        "series": 5,
-        "heapUsed": 10066528,
-        "rss": 109268992
-      },
-      {
-        "series": 6,
-        "heapUsed": 10094008,
-        "rss": 109326336
-      },
-      {
-        "series": 7,
-        "heapUsed": 10100464,
-        "rss": 109318144
-      },
-      {
-        "series": 8,
-        "heapUsed": 10106080,
-        "rss": 109322240
-      },
-      {
-        "series": 9,
-        "heapUsed": 10138712,
-        "rss": 109346816
-      },
-      {
-        "series": 10,
-        "heapUsed": 10151176,
-        "rss": 146329600
-      },
-      {
-        "series": 11,
-        "heapUsed": 10163384,
-        "rss": 146518016
-      },
-      {
-        "series": 12,
-        "heapUsed": 10161816,
-        "rss": 146690048
-      },
-      {
-        "series": 13,
-        "heapUsed": 10176848,
-        "rss": 146759680
-      },
-      {
-        "series": 14,
-        "heapUsed": 10171456,
-        "rss": 146776064
-      },
-      {
-        "series": 15,
-        "heapUsed": 10182328,
-        "rss": 146776064
-      },
-      {
-        "series": 16,
-        "heapUsed": 10197488,
-        "rss": 146800640
-      },
-      {
-        "series": 17,
-        "heapUsed": 10193720,
-        "rss": 146972672
-      },
-      {
-        "series": 18,
-        "heapUsed": 10198576,
-        "rss": 147013632
-      },
-      {
-        "series": 19,
-        "heapUsed": 10202568,
-        "rss": 147034112
-      },
-      {
-        "series": 20,
-        "heapUsed": 10202752,
-        "rss": 147034112
-      },
-      {
-        "series": 21,
-        "heapUsed": 10208768,
-        "rss": 147034112
-      },
-      {
-        "series": 22,
-        "heapUsed": 10202912,
-        "rss": 147042304
-      },
-      {
-        "series": 23,
-        "heapUsed": 10205080,
-        "rss": 147042304
-      },
-      {
-        "series": 24,
-        "heapUsed": 10202592,
-        "rss": 147042304
-      }
-    ]
-  },
-  "evidence": [
-    "reports/dd-06/LAB-E01/definition.json",
-    "reports/dd-06/LAB-E01/performance.json",
-    "reports/dd-06/LAB-E01/report.md",
-    "reports/dd-06/LAB-E01/series.csv",
-    "reports/dd-06/LAB-E01/series.json",
-    "reports/dd-06/LAB-E02/definition.json",
-    "reports/dd-06/LAB-E02/performance.json",
-    "reports/dd-06/LAB-E02/report.md",
-    "reports/dd-06/LAB-E02/series.csv",
-    "reports/dd-06/LAB-E02/series.json",
-    "reports/dd-06/LAB-E03/definition.json",
-    "reports/dd-06/LAB-E03/performance.json",
-    "reports/dd-06/LAB-E03/report.md",
-    "reports/dd-06/LAB-E03/series.csv",
-    "reports/dd-06/LAB-E03/series.json",
-    "reports/dd-06/LAB-E04/definition.json",
-    "reports/dd-06/LAB-E04/performance.json",
-    "reports/dd-06/LAB-E04/report.md",
-    "reports/dd-06/LAB-E04/series.csv",
-    "reports/dd-06/LAB-E04/series.json",
-    "reports/dd-06/build.log",
-    "reports/dd-06/checks.json",
-    "reports/dd-06/comparison-390x844.png",
-    "reports/dd-06/dd01-compatibility.log",
-    "reports/dd-06/dd02-regression.log",
-    "reports/dd-06/dd02-state.log",
-    "reports/dd-06/determinism.log",
-    "reports/dd-06/heap-probe.mjs",
-    "reports/dd-06/heap.json",
-    "reports/dd-06/integration.log",
-    "reports/dd-06/interrupt.log",
-    "reports/dd-06/interrupted-series.json",
-    "reports/dd-06/lab-batches.log",
-    "reports/dd-06/lab-e2e.json",
-    "reports/dd-06/lab-e2e.log",
-    "reports/dd-06/lab-stress.json",
-    "reports/dd-06/lab-stress.log",
-    "reports/dd-06/laboratory-1920x1080.png",
-    "reports/dd-06/lint.log",
-    "reports/dd-06/long-run-a.json",
-    "reports/dd-06/long-run-b.json",
-    "reports/dd-06/paired-effects.json",
-    "reports/dd-06/performance-5000.json",
-    "reports/dd-06/persistence-e2e.json",
-    "reports/dd-06/progress-1366x768.png",
-    "reports/dd-06/replay.json",
-    "reports/dd-06/typecheck.log",
-    "reports/dd-06/unit.log"
-  ],
-  "blockers": [
-    "GitHub API вернул Forbidden. Ветка опубликована, отдельный PR открывается через форму GitHub после входа."
-  ],
-  "nextStageAuthorized": false
+  "report": "DD-07.md",
+  "evidence": "dd-07/",
+  "playtest": "AWAITING CUSTOMER"
 }

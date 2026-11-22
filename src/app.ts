@@ -1,3 +1,4 @@
+import { GamePanel } from './game/ui.ts';
 import { SavesPanel } from './saves-panel.ts';
 import { HistoryPanel } from './history-panel.ts';
 import { GENES, GENE_BOUNDS } from './core/genetics.ts';
@@ -16,6 +17,7 @@ const form = $<HTMLFormElement>('world-form');
 const play = $<HTMLButtonElement>('play'), step = $<HTMLButtonElement>('step');
 const speeds = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-speed]'));
 const map = new WorldMap(canvas, viewport, $('camera-readout'), $('color-legend'), id => send({ kind: 'inspect', id }));
+const gamePanel=new GamePanel(send,()=>saves.confirmReplacement('Создать новый мир?'),founder=>map.highlight(founder));
 let focusEntity: number | null = null;
 const observerHistory = new HistoryPanel(send, id => {
   focusEntity = id;
@@ -31,7 +33,7 @@ let frame: Frame | undefined, creating = false, failed = false;
 let chartPending = false;
 
 function setControls() {
-  play.disabled = !frame || failed || creating;
+  play.disabled = !frame || failed || creating || Boolean(frame.game && (frame.game.founder===null||frame.game.lost));
   step.disabled = play.disabled || Boolean(frame?.running);
   speeds.forEach(button => { button.disabled = play.disabled; });
 }
@@ -68,7 +70,7 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
     updateHistogram();
     scheduleChart();
   }
-  const status = data.running ? 'МИР ЖИВЁТ' : 'НА ПАУЗЕ';
+  const status = data.game?.lost?'ЛИНИЯ ВЫМЕРЛА':data.game?.founder===null?'ВЫБЕРИТЕ ЛИНИЮ':data.running ? 'МИР ЖИВЁТ' : 'НА ПАУЗЕ';
   if (!creating && $('status').textContent !== status) $('status').textContent = status;
   $('status-dot').classList.toggle('running', data.running);
   $('tps').textContent = fmt(data.tps);
@@ -83,6 +85,7 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
     focusEntity = null;
   }
   observerHistory.onFrame(data.epoch, data.selectedId);
+  gamePanel.update(data);
   saves.onFrame(data);
   send({ kind: 'ready', epoch: data.epoch });
 };

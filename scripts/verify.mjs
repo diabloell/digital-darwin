@@ -31,20 +31,25 @@ const commands = [
   ['history-benchmark', ['scripts/history-benchmark.mjs']],
   ['dd02-regression', ['scripts/check-dd02-regression.mjs', `${output}/experiments.json`]],
   ['dd02-state', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, 'reports/dd-02/long-run-a.json', '10000']],
+  ['game-replay', ['scripts/game-replay.mjs']],
+  ['game-e2e', ['scripts/game-e2e.mjs']],
   ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`, '10000']]
 ];
 const dependencies = { determinism: ['long-run-a', 'long-run-b'], 'dd02-regression': ['experiments'], 'dd02-state': ['long-run-a'] };
 const groups = {
   browser: ['e2e','lineage-e2e','persistence-e2e','save-benchmark','browser-benchmark'],
-  stress: ['lab-stress']
+  stress: ['lab-stress'],
+  game: ['game-replay']
 };
 const group = process.env.DD_VERIFY_GROUP;
 const labScenario = /^LAB-E0[1-4]$/.test(group ?? '');
 const labViewport = /^lab-(1920|1366|390)$/.exec(group ?? '');
-if (group && group !== 'core' && !labScenario && !labViewport && !Object.hasOwn(groups,group)) throw Error('Unknown verification group');
-const selected = group === 'core' ? commands.filter(([name])=>!Object.values(groups).flat().includes(name) && !['lab-batches','lab-e2e'].includes(name))
+const gameViewport = /^game-(1920|1366|390)$/.exec(group ?? '');
+if (group && group !== 'core' && !labScenario && !labViewport && !gameViewport && !Object.hasOwn(groups,group)) throw Error('Unknown verification group');
+const selected = group === 'core' ? commands.filter(([name])=>!Object.values(groups).flat().includes(name) && !['lab-batches','lab-e2e','game-e2e'].includes(name))
   : labScenario ? [['lab-batches', ['apps/lab.ts', group, `${output}/lab-batches`]]]
   : labViewport ? [['lab-e2e',['scripts/lab-e2e.mjs',labViewport[1]]]]
+  : gameViewport ? [['game-e2e',['scripts/game-e2e.mjs',gameViewport[1]]]]
   : group ? commands.filter(([name])=>groups[group].includes(name)) : commands;
 const checks = [];
 for (const [name, args] of selected) {

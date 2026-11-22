@@ -1,3 +1,5 @@
+import { gameWorld } from './core/game.ts';
+import type { Game } from './core/game.ts';
 import { capture, decode, encode, restore } from './snapshot.ts';
 import { PopulationHistory } from './core/history.ts';
 import { Engine } from './core/engine.ts';
@@ -8,6 +10,7 @@ import type { Command, Event, Frame, Sample } from './protocol.ts';
 declare const self: { postMessage(message: Event, transfer?: Transferable[]): void; onmessage: ((e: MessageEvent<Command>) => void) | null };
 let engine = new Engine(), running = false, speed = 1, selectedId: number | null = null, epoch = 0;
 let credit = 0, last = performance.now(), lastFrame = 0, measured = 0, measuredAt = last, tps = 0, inFlight = false;
+let game:Game|null=null;
 let genealogy = new PopulationHistory(engine);
 function observation(previous?: Sample): Sample {
   const metrics = engine.metrics(), counts = genealogy.counts;
@@ -27,8 +30,10 @@ function observation(previous?: Sample): Sample {
 }
 let history = [observation()];
 function advance() {
-  engine.step();
-  genealogy.observe(engine);
+  if(game) {
+    game.step(engine,genealogy);
+    if(!game.ready) { running=false; tps=0; sample(); emit(true); }
+  } else { engine.step(); genealogy.observe(engine); }
 }
 function emit(force = false): void {
   if (inFlight && !force) return;
@@ -49,7 +54,7 @@ function emit(force = false): void {
   });
   const selected = engine.organisms.find(a => a.id === selectedId) ?? null;
   const food = Uint8Array.from(engine.food, f => Math.min(255, Math.floor(f / 28)));
-  const frame: Frame = { kind: 'frame', epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
+  const frame: Frame = { kind: 'frame', ...(game?{game:game.view(genealogy)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
   self.postMessage(frame, [positions.buffer, ids.buffer, food.buffer, traitBins.buffer, generations.buffer, founders.buffer]); inFlight = true; lastFrame = performance.now();
 }
 self.onmessage = e => {
@@ -58,6 +63,18 @@ self.onmessage = e => {
     switch (c.kind) {
       case 'ready': if (c.epoch === undefined || c.epoch === epoch) inFlight = false; break;
       case 'snapshot': case 'restore': void persist(c); break;
+      case 'new-game': {
+        try {
+          const candidate=gameWorld(c.seed,c.habitat);
+          engine=candidate.engine;genealogy=candidate.genealogy;game=candidate.game;
+        } catch(error) { self.postMessage({kind:'error',recoverable:true,message:String(error)});break; }
+        epoch++;running=false;speed=1;credit=0;selectedId=null;tps=0;measured=0;
+        measuredAt=last=performance.now();inFlight=false;history=[observation()];
+        emit(true);break;
+      }
+      case 'game-action':
+        if(game&&c.epoch===epoch) { game.command(c.action,engine,genealogy);emit(true); }
+        break;
       case 'create': {
         const settings = c.settings;
         try {
@@ -72,14 +89,15 @@ self.onmessage = e => {
         }
         epoch++;
         running = false; credit = 0; selectedId = null; measured = 0; tps = 0; measuredAt = performance.now();
+        game=null;
         genealogy = new PopulationHistory(engine);
         history = [observation()];
         emit(true);
         break;
       }
-      case 'play': if (typeof c.value !== 'boolean') throw Error('Invalid play'); running = c.value; credit = 0; last = performance.now(); if (!running) { sample(); tps = 0; measured = 0; } measuredAt = last; emit(true); break;
+      case 'play': if (typeof c.value !== 'boolean') throw Error('Invalid play'); running = c.value && (!game || game.ready); credit = 0; last = performance.now(); if (!running) { sample(); tps = 0; measured = 0; } measuredAt = last; emit(true); break;
       case 'speed': if (![1, 4, 16, 32].includes(c.value)) throw Error('Invalid speed'); speed = c.value; credit = 0; emit(true); break;
-      case 'step': if (!running) { advance(); sample(); emit(true); } break;
+      case 'step': if (!running && (!game || game.ready)) { advance(); sample(); emit(true); } break;
       case 'inspect': if (c.id !== null && (!Number.isSafeInteger(c.id) || c.id < 1)) throw Error('Invalid entity ID'); selectedId = c.id; emit(true); break;
       case 'history': {
         const view = genealogy.view(c.entity, c.founder, c.depth);
@@ -96,7 +114,9 @@ async function persist(c: Extract<Command, { kind: 'snapshot' | 'restore' }>) {
     if (c.epoch !== epoch) throw Error('Мир уже изменился');
     if (c.kind === 'snapshot') {
       const samples = history.at(-1)?.tick === engine.tick ? history : [...history, observation(history.at(-1))].slice(-300);
-      const file = await encode(capture(engine, genealogy, samples), c.name, c.createdAt);
+      const state=capture(engine,genealogy,samples);
+      if(game) state.game=game.snapshot();
+      const file = await encode(state, c.name, c.createdAt);
       self.postMessage({ kind: 'snapshot-ready', request: c.request, epoch: c.epoch, file });
       return;
     }
@@ -105,7 +125,7 @@ async function persist(c: Extract<Command, { kind: 'snapshot' | 'restore' }>) {
     const candidate = restore(state);
     if (c.epoch !== epoch || (token !== undefined && token !== restoreRequest)) throw Error('Мир уже изменился');
     if (!c.preview) {
-      engine = candidate.engine; genealogy = candidate.genealogy;
+      engine = candidate.engine; genealogy = candidate.genealogy; game=candidate.game;
       history = candidate.samples.length ? candidate.samples : [observation()];
       sample();
       epoch++;
@@ -127,9 +147,9 @@ setInterval(() => {
     const now = performance.now();
     if (running) {
       // Wall-clock chooses how many fixed ticks to execute, never their dt/rules.
-      credit += Math.min(now - last, 1000) * 20 * speed / 1000;
+      credit += Math.min(now - last, 1000) * (game?5:20) * speed / 1000;
       const until = now + 10;
-      while (credit >= 1 && performance.now() < until) { advance(); credit--; measured++; }
+      while (running && credit >= 1 && performance.now() < until) { advance(); credit--; measured++; }
       credit = Math.min(credit, 20 * speed); // Drop scheduling debt, never simulated ticks.
     }
     last = now;

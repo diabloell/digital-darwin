@@ -201,6 +201,12 @@ export class PopulationHistory {
     if (this.events.length > HISTORY_LIMITS.events) this.events.shift();
   }
 
+  summary(founder: number): LineSummary {
+    const line = this.lines.get(founder);
+    if (!line) throw Error('Unknown founder');
+    return this.summarize(line);
+  }
+
   private summarize(line: Line): LineSummary {
     const status = line.living ? 'active' : 'extinct';
     return { ...line, status, age: line.living ? this.tick : line.lastActivity, generations: line.maxGeneration + 1 };

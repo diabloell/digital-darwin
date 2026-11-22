@@ -9,11 +9,11 @@
 | DD-04 | Genealogy and aggregate event history | See reports/DD-04.md for verification and review status |
 | DD-05 | Versioned saves, restore and replay | See reports/DD-05.md for verification and review status |
 | DD-06 | Paired experiments and analysis | See reports/DD-06.md for verification and review status |
-| DD-07 | Predators and food chains | Not started |
-| DD-08 | Climate, seasons and biomes | Not started |
-| DD-09 | Social signaling experiments | Not started |
-| DD-10 | Measured large-population scaling | Not started |
-| DD-11 | Release hardening | Not started |
-| DD-12 | Independent audit | Not started |
+| DD-07 | First Playable Evolution Loop | См. [Issue #8](https://github.com/diabloell/digital-darwin/issues/8) и [отчёт](reports/DD-07.md) |
+| DD-08 | Playable-First, следующий этап | Ожидает приёмки DD-07 |
+| DD-09 | Playable-First | Запланирован |
+| DD-10 | Playable-First | Запланирован |
+| DD-11 | Playable-First | Запланирован |
+| DD-12 | Playable-First | Запланирован |
 
-These are scopes, not delivery-date promises. Notion source plans are under docs/spec. Do not start another stage without the customer's review. DD-00 acceptance uses the strict TypeScript, normal HTTP browser, regression and PR CI results in the milestone report.
+Актуальные границы DD-07 задаёт Issue #8. Точные названия и объём DD-08–DD-12 определяет [Playable-First roadmap](https://www.notion.so/4209fe7da94081f1a33cfb14796b6069). [Спецификация исходной дорожной карты](docs/spec/06-roadmap.md) сохраняется как исторический документ. Последующий этап начинается после решения заказчика.

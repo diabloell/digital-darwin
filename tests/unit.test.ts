@@ -302,3 +302,25 @@ test('lab summary uses defined completed values and reports sample SD', async ()
   assert.deepEqual(summary([1,3,null,2]),{n:3,missing:1,mean:2,median:2,min:1,max:3,sd:1});
   assert.deepEqual(summary([null]),{n:0,missing:1,mean:null,median:null,min:null,max:null,sd:null});
 });
+
+test('game intervention edits only current newborns and keeps the engine energy audit balanced', async () => {
+  const { gameWorld } = await import('../src/core/game.ts');
+  const { game, engine, genealogy } = gameWorld('coral-42', 'garden');
+  assert.equal(game.command({ id: 1, kind: 'choose', founder: 81 }, engine, genealogy).accepted, false);
+  assert.equal(game.command({ id: 2, kind: 'choose', founder: 1 }, engine, genealogy).accepted, true);
+  while (engine.tick < 100 && game.ep < 5) game.step(engine, genealogy);
+  assert.equal(game.command({ id: 3, kind: 'buy', card: 'mobility' }, engine, genealogy).accepted, true);
+  const before = new Map(engine.organisms.map(a => [a.id, { ...a.genome }]));
+  for (let i = 0; i < 240; i++) {
+    game.step(engine, genealogy);
+    engine.assertValid();
+    for (const organism of engine.organisms) {
+      if (before.has(organism.id)) assert.deepEqual(organism.genome, before.get(organism.id));
+      else before.set(organism.id, { ...organism.genome });
+    }
+    for (const [id] of game.snapshot().markers) assert.equal(genealogy.founder(id), 1);
+  }
+  assert.ok(game.view(genealogy).attempts[0].introduced > 0);
+  assert.equal(game.active, undefined);
+  assert.equal(game.command({ id: 4, kind: 'buy', card: 'mobility' }, engine, genealogy).accepted, false);
+});
