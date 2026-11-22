@@ -31,6 +31,30 @@
         </form>
       </details>
     </div>
+    <details id="evolution-game" class="chart-panel">
+      <summary>Играть за эволюционную линию</summary>
+      <form id="game-form" class="lab-grid">
+        <label>Seed <input id="game-seed" value="coral-42" maxlength="128" required></label>
+        <label>Среда <select id="game-habitat"><option value="garden">Сад</option><option value="scarce">Дефицит</option><option value="empty">Без ресурсов</option></select></label>
+        <button class="primary" type="submit">Новая игра</button>
+      </form>
+      <div id="game-panel" hidden>
+        <p id="game-status" role="status"></p>
+        <div id="game-choice" class="save-actions">
+          <label>Линия <select id="game-founder"></select></label><button id="game-choose">Выбрать основателя</button>
+        </div>
+        <div id="game-dashboard" hidden>
+          <div class="game-stats"><strong id="game-ep"></strong><span id="game-pop"></span><span id="game-energy"></span></div>
+          <p id="game-ledger"></p>
+          <div id="game-cards" class="game-cards"></div>
+          <p id="game-programme"></p>
+          <div class="lab-table" id="game-attempts" tabindex="0" aria-label="Итоги программ"></div>
+          <details><summary>Траектория линии</summary><div class="lab-table" id="game-samples" tabindex="0" aria-label="Измеренные признаки"></div></details>
+          <p>Направленная вариация — игровая абстракция. Изменения появляются у части новорождённых, а дальнейшая судьба признака зависит от симуляции.</p>
+        </div>
+        <p id="game-receipt" role="status"></p>
+      </div>
+    </details>
     <details id="world-saves" class="chart-panel">
       <summary>Миры и сохранения</summary>
       <p id="current-save"></p>

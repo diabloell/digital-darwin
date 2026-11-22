@@ -16,6 +16,7 @@ export type EngineSnapshot = {
   rng: number[]; food: number[]; capacity: number[]; growth: number[]; organisms: Organism[];
   audit: Audit; expectedFood: number | null; lastBirths: Birth[]; lastDeaths: Organism[];
 };
+export type NewbornHook = (parent: Readonly<Organism>, child: Organism) => void;
 export type Birth = { parent: Genome; child: Organism };
 type Observation = { agent: Organism; traits: Phenotype; localFood: number; dx: number; dy: number };
 type Intent = { agent: Organism; traits: Phenotype; heading: number; speed: number; portion: number };
@@ -100,15 +101,15 @@ export class Engine {
     const { width: w, height: h } = this.config;
     return Math.floor(((y % h) + h) % h) * w + Math.floor(((x % w) + w) % w);
   }
-  step(count = 1, phaseCompleted?: (phase: TickPhase) => void): void {
+  step(count = 1, phaseCompleted?: (phase: TickPhase) => void, newborn?: NewbornHook): void {
     if (!Number.isInteger(count) || count < 1 || count > 100000) throw Error('Tick count: 1..100000');
     if (this.stepping) throw Error('Nested Engine step');
     this.stepping = true;
-    try { for (let t = 0; t < count; t++) this.advance(phaseCompleted); }
+    try { for (let t = 0; t < count; t++) this.advance(phaseCompleted, newborn); }
     finally { this.stepping = false; }
   }
 
-  private advance(phaseCompleted?: (phase: TickPhase) => void): void {
+  private advance(phaseCompleted?: (phase: TickPhase) => void, newborn?: NewbornHook): void {
     this.tick++;
     const audit = newAudit();
     // Canonical order assigns RNG draws and child IDs, never priority for food.
@@ -147,7 +148,7 @@ export class Engine {
     phaseCompleted?.('death');
 
     this.lastBirths = [];
-    const newborns = this.reproduce(survivors, audit);
+    const newborns = this.reproduce(survivors, audit, newborn);
     phaseCompleted?.('reproduction');
 
     this.organisms = survivors.concat(newborns);
@@ -250,7 +251,7 @@ export class Engine {
     }
   }
 
-  private reproduce(survivors: Organism[], audit: Audit): Organism[] {
+  private reproduce(survivors: Organism[], audit: Audit, newborn?: NewbornHook): Organism[] {
     const newborns: Organism[] = [];
     if (this.config.reproduction === false) return newborns;
     for (const agent of survivors) {
@@ -265,6 +266,7 @@ export class Engine {
         velocity: 0, energy: investment, age: 0, born: this.tick, lastActionTick: -1,
         genome: mutate(agent.genome, this.rng, this.config.mutationRate, this.config.mutationStrength)
       };
+      newborn?.(agent, child);
       newborns.push(child);
       this.lastBirths.push({ parent: agent.genome, child });
     }

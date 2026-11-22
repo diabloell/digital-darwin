@@ -1,3 +1,5 @@
+import { restoreGame } from './game/schema.ts';
+import type { GameState } from './core/game.ts';
 import { Engine, ENGINE_VERSION } from './core/engine.ts';
 import type { EngineSnapshot } from './core/engine.ts';
 import { EVOLUTION_VERSION, GENOME_VERSION } from './core/genetics.ts';
@@ -13,7 +15,7 @@ export type Manifest = {
   createdAt: string; name: string; seed: string; tick: number; width: number; height: number; population: number;
   config: EngineSnapshot['config']; checksum: string;
 };
-export type CapturedWorld = { engine: EngineSnapshot; history: HistorySnapshot; samples: Sample[] };
+export type CapturedWorld = { engine: EngineSnapshot; history: HistorySnapshot; samples: Sample[]; game?: GameState };
 export type SaveFile = { manifest: Manifest; text: string };
 const encoder = new TextEncoder();
 const compatible = 'exact';
@@ -70,12 +72,12 @@ export async function decode(text: string): Promise<{ manifest: Manifest; state:
   requireValue(await sha256(checksumInput(m, file.payload)) === m.checksum, 'Контрольная сумма SHA-256 не совпадает');
   let payload: unknown;
   try { payload = JSON.parse(file.payload); } catch { throw Error('Некорректный JSON состояния'); }
-  const raw = fields(payload, 'engine history samples');
+  const raw = fields(payload, 'engine history samples', 'game');
   const engine = validateEngine(raw.engine);
   const config = fields(m.config, Object.keys(engine.config).join(' '));
   requireValue(m.seed === engine.config.seed && m.tick === engine.tick && m.width === engine.config.width && m.height === engine.config.height
     && m.population === engine.organisms.length && Object.entries(engine.config).every(([k,v]) => config[k] === v), 'Манифест расходится с состоянием');
-  return { manifest: m, state: { engine, history: validateHistory(raw.history, engine), samples: validateSamples(raw.samples, engine) } };
+  return { manifest: m, state: { engine, history: validateHistory(raw.history, engine), samples: validateSamples(raw.samples, engine), ...(Object.hasOwn(raw,'game') ? { game: raw.game } : {}) } };
 }
 
 export function restore(state: CapturedWorld, measured?: (stage: 'engine' | 'history') => void) {
@@ -89,5 +91,6 @@ export function restore(state: CapturedWorld, measured?: (stage: 'engine' | 'his
       && last.livingLines === genealogy.counts.living && last.extinctLines === genealogy.counts.extinct, 'Последний график не соответствует миру');
   }
   measured?.('history');
-  return { engine, genealogy, samples };
+  const game = Object.hasOwn(state,'game') ? restoreGame(state.game,engine,genealogy) : null;
+  return { engine, genealogy, samples, game };
 }

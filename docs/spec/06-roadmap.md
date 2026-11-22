@@ -1,3 +1,5 @@
+> Историческая дорожная карта. Начиная с DD-07 актуальная последовательность описана в [ROADMAP.md](../../ROADMAP.md).
+
 Here is the result of "fetch" for the Page with URL https://app.notion.com/p/41f9fe7da9408144abf8f2054f9e9602 as of 2026-11-21T18:21:54.563Z:
 <page url="https://app.notion.com/p/41f9fe7da9408144abf8f2054f9e9602" icon="🚀">
 <ancestor-path></ancestor-path>

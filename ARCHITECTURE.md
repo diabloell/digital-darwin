@@ -65,3 +65,7 @@ The Worker snapshots the biological state and bounded history at a completed tic
 ## DD-06 experiments
 
 The lab validates declarations, runs independent engines and samples the existing evolutionary metrics. The browser uses a dedicated worker and a separate IndexedDB archive. The CLI uses the same runner. Laboratory interventions happen at tick zero and preserve compatibility of the ordinary observer and WorldSnapshot v1. [Experiment schema](docs/experiment-definition.md) · [ADR](docs/adr/006-dd06-experiment-isolation.md)
+
+## Игровой режим DD-07
+
+`src/core/game.ts` управляет выбором линии, EP, программами и измерениями. Worker применяет игровые команды между тиками. Движок предоставляет необязательный обработчик новорождённого после обычной мутации и до вставки в живую популяцию. Черновик игрового снимка проверяется в `src/game/schema.ts`, DOM-панель читает данные из Worker. Подробности приведены в [ADR 007](docs/adr/007-dd07-playable-evolution.md).
