@@ -116,3 +116,65 @@ test('mass births, retained ancestry, pending events and extinction round trip',
   assert.equal(extinct.genealogy.counts.extinct, 40);
   assert.equal(extinct.genealogy.view(null,null).events.filter(e => e.kind === 'extinction').length, 1);
 });
+
+test('lab pairs preserve founders and RNG and uniform landscape conserves integer totals', async ()=>{
+  const { SCENARIOS }=await import('../src/lab/definition.ts');
+  const { runSeries }=await import('../src/lab/runner.ts');
+  const d={...SCENARIOS[3],duration:150,interval:25,seeds:['🌱','🌲'],replicas:2};
+  const a=await runSeries(d,{environment:'test'}),b=await runSeries(d,{environment:'test'});
+  assert.equal(a.status,'completed');
+  assert.equal(a.scenarioHash,b.scenarioHash);
+  assert.notEqual(a.seriesId,b.seriesId);
+  assert.deepEqual(a.runs.map(r=>r.hash),b.runs.map(r=>r.hash));
+  for(const seed of d.seeds) {
+    const rows=a.runs.filter(r=>r.seed===seed);
+    assert.equal(rows.length,4);
+    assert.equal(new Set(rows.map(r=>r.origin?.founders)).size,1);
+    assert.equal(new Set(rows.map(r=>r.origin?.rng)).size,1);
+    assert.equal(new Set(rows.map(r=>JSON.stringify(r.origin?.totals))).size,1);
+    assert.notEqual(rows[0].origin?.resources,rows[1].origin?.resources);
+    assert.deepEqual(rows[0].config,rows[1].config);
+    for(const r of rows) {
+      const last=r.trajectory.at(-1)!;
+      assert.equal(r.trajectory.slice(1).reduce((sum,p)=>sum+(p.values.intervalBirths??0),0),last.values.births);
+      assert.equal(last.values.population,r.genetics?.live.population);
+    }
+  }
+});
+test('lab preserves extinct, failed and interrupted runs without filling undefined effects', async ()=>{
+  const { SCENARIOS }=await import('../src/lab/definition.ts');
+  const { runSeries }=await import('../src/lab/runner.ts');
+  const { pack,unpack }=await import('../src/lab/archive.ts');
+  const { compare,csv,markdown }=await import('../src/lab/comparison.ts');
+  const d={...SCENARIOS[2],duration:30,interval:10,seeds:['☀'],replicas:1,initial:{width:8,height:8,population:0}};
+  const empty=await runSeries(d,{environment:'test'});
+  assert.ok(empty.runs.every(r=>r.extinct===0&&r.final?.population===0&&r.final.energy===null));
+  assert.deepEqual(compare(empty,'population').map(c=>c.extinct),[1,1]);
+  assert.equal(compare(empty,'energy')[1].effect.n,0);
+  assert.equal(empty.runs[0].genetics?.lifetime.outsideFounderBirths,0);
+  const failed=await runSeries(d,{environment:'test',afterTick:()=>{throw Error('fixture failure');}});
+  assert.equal(failed.status,'failed');
+  assert.ok(failed.runs.every(r=>r.status==='failed'&&r.error==='fixture failure'));
+  assert.equal(compare(failed,'population')[1].pairs[0].status,'incomplete');
+  let stop=false;
+  const partial=await runSeries(d,{environment:'test',cancelled:()=>stop,afterTick:e=>{if(e.tick===2)stop=true;}});
+  assert.equal(partial.status,'partial');
+  assert.deepEqual(partial.runs.map(r=>r.status),['cancelled','not-run']);
+  const archive=await pack(partial);
+  assert.deepEqual(await unpack(archive),partial);
+  const broken=JSON.parse(archive);broken.payload+=' ';
+  await assert.rejects(unpack(JSON.stringify(broken)),/SHA-256/);
+  broken.format=99;
+  await assert.rejects(unpack(JSON.stringify(broken)),/формат/);
+  assert.match(csv(partial),/not-run/);
+  assert.match(markdown(partial),new RegExp(partial.scenarioHash));
+  assert.match(markdown(failed),/fixture failure/);
+});
+test('mutation OFF produces no new genotypes after actual births',async()=>{
+  const { SCENARIOS }=await import('../src/lab/definition.ts');
+  const { runSeries }=await import('../src/lab/runner.ts');
+  const a=await runSeries({...SCENARIOS[2],duration:220,interval:20,seeds:['dd02-amber'],replicas:1},{environment:'test'});
+  assert.ok(a.runs[0].final!.births!>0);
+  assert.equal(a.runs[0].final?.outsideFounder,0);
+  assert.equal(a.runs[0].final?.mutations,0);
+});

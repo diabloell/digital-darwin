@@ -3,7 +3,7 @@ name: Digital Darwin verification
 on:
   pull_request:
   push:
-    branches: [dd-05-persistence-replay]
+    branches: [dd-06-experiment-lab]
 
 permissions:
   contents: read

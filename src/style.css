@@ -161,3 +161,22 @@ footer { padding: 18px 0; color: var(--muted); font-size: 11px; line-height: 1.5
 .save-grid label input, .save-grid label select { min-width: 0; width: min(100%, 420px); }
 .save-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .save-actions button { font-size: 12px; }
+
+#experiment-lab { font-size: 13px; overflow-wrap: anywhere; }
+#experiment-lab label { display: grid; gap: 4px; color: var(--muted); min-width: 0; }
+#experiment-lab p, #experiment-lab ul, #experiment-lab .save-actions { margin-block: 8px; }
+#experiment-lab p { color: var(--muted); line-height: 1.5; }
+#experiment-lab textarea { resize: vertical; background: #15272b; color: inherit; border: 1px solid var(--line); border-radius: 7px; padding: 8px; font: 12px var(--mono); }
+#experiment-lab :is(input,select,textarea) { width: 100%; min-width: 0; max-width: 100%; }
+#lab-form, #lab-results { margin-top: 12px; }
+.lab-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(230px,100%),1fr)); gap: 8px; }
+#lab-progress { width: min(420px,100%); accent-color: var(--mint); }
+#lab-results h2 { margin-bottom: 8px; }
+#lab-chart { display: block; width: 100%; height: 230px; }
+#lab-legend { display: flex; gap: 6px 15px; flex-wrap: wrap; list-style: none; padding: 0; }
+#lab-legend li { border-left: 4px solid; padding-left: 6px; }
+.lab-table, #lab-protocol { max-width: 100%; overflow: auto; }
+.lab-table { max-height: 340px; margin-block: 10px; }
+.lab-table table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.lab-table :is(th,td) { text-align: left; padding: 6px; border-bottom: 1px solid var(--line); min-width: 68px; }
+.lab-table th { position: sticky; top: 0; background: #172a2e; }
