@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "seed": "coral-42",
+  "founder": 1,
+  "gameTick": 1,
+  "labPreset": "LAB-E02",
+  "labTicks": 100,
+  "gameStateUnchanged": true
+}

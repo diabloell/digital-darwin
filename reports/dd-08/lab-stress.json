@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "description": "RSS sampled at the end of each independent series; previous series references are released",
+  "memory": [
+    {
+      "series": 1,
+      "bytes": 21515,
+      "rss": 108146688
+    },
+    {
+      "series": 2,
+      "bytes": 21515,
+      "rss": 108670976
+    },
+    {
+      "series": 3,
+      "bytes": 21515,
+      "rss": 109195264
+    },
+    {
+      "series": 4,
+      "bytes": 21515,
+      "rss": 117321728
+    },
+    {
+      "series": 5,
+      "bytes": 21515,
+      "rss": 117841920
+    },
+    {
+      "series": 6,
+      "bytes": 21515,
+      "rss": 117977088
+    },
+    {
+      "series": 7,
+      "bytes": 21515,
+      "rss": 118632448
+    },
+    {
+      "series": 8,
+      "bytes": 21515,
+      "rss": 119025664
+    },
+    {
+      "series": 9,
+      "bytes": 21515,
+      "rss": 119418880
+    },
+    {
+      "series": 10,
+      "bytes": 21515,
+      "rss": 119681024
+    },
+    {
+      "series": 11,
+      "bytes": 21515,
+      "rss": 120074240
+    },
+    {
+      "series": 12,
+      "bytes": 21515,
+      "rss": 120467456
+    },
+    {
+      "series": 13,
+      "bytes": 21515,
+      "rss": 120991744
+    },
+    {
+      "series": 14,
+      "bytes": 21515,
+      "rss": 121516032
+    },
+    {
+      "series": 15,
+      "bytes": 21515,
+      "rss": 121778176
+    },
+    {
+      "series": 16,
+      "bytes": 21515,
+      "rss": 122302464
+    }
+  ]
+}
