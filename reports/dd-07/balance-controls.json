@@ -1,0 +1,536 @@
+{
+  "measurements": [
+    {
+      "seed": "coral-42",
+      "habitat": "garden",
+      "adaptation": false,
+      "observations": [
+        {
+          "tick": 79,
+          "line": {
+            "founder": 1,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 79,
+            "status": "active",
+            "age": 79,
+            "generations": 2
+          },
+          "energy": 21.182499999999997,
+          "maintenance": 0.06843954065807839,
+          "efficiency": 0.853261062040925,
+          "threshold": 43.378618044517935,
+          "attempts": [],
+          "ep": 5
+        },
+        {
+          "tick": 319,
+          "line": {
+            "founder": 1,
+            "living": 8,
+            "born": 8,
+            "deaths": 0,
+            "maxGeneration": 3,
+            "lastActivity": 273,
+            "status": "active",
+            "age": 319,
+            "generations": 4
+          },
+          "energy": 24.199625,
+          "maintenance": 0.06870068407910886,
+          "efficiency": 0.8543148091696202,
+          "threshold": 43.815806376747794,
+          "attempts": [],
+          "ep": 11
+        },
+        {
+          "tick": 559,
+          "line": {
+            "founder": 1,
+            "living": 7,
+            "born": 12,
+            "deaths": 5,
+            "maxGeneration": 4,
+            "lastActivity": 550,
+            "status": "active",
+            "age": 559,
+            "generations": 5
+          },
+          "energy": 22.459857142857143,
+          "maintenance": 0.06787155243822117,
+          "efficiency": 0.853261062040925,
+          "threshold": 43.79474126986627,
+          "attempts": [],
+          "ep": 17
+        },
+        {
+          "tick": 1200,
+          "line": {
+            "founder": 1,
+            "living": 8,
+            "born": 16,
+            "deaths": 8,
+            "maxGeneration": 6,
+            "lastActivity": 1137,
+            "status": "active",
+            "age": 1200,
+            "generations": 7
+          },
+          "energy": 19.419375,
+          "maintenance": 0.06968776269309873,
+          "efficiency": 0.8560500991810114,
+          "threshold": 43.56067195560783,
+          "attempts": [],
+          "ep": 25
+        }
+      ]
+    },
+    {
+      "seed": "coral-42",
+      "habitat": "garden",
+      "adaptation": true,
+      "observations": [
+        {
+          "tick": 79,
+          "line": {
+            "founder": 1,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 79,
+            "status": "active",
+            "age": 79,
+            "generations": 2
+          },
+          "energy": 21.182499999999997,
+          "maintenance": 0.06843954065807839,
+          "efficiency": 0.853261062040925,
+          "threshold": 43.378618044517935,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 79,
+              "end": 319,
+              "introduced": 0,
+              "lastIntroduction": -18,
+              "endingCount": null,
+              "established": null,
+              "peak": 0,
+              "carriers": 0
+            }
+          ],
+          "ep": 0
+        },
+        {
+          "tick": 319,
+          "line": {
+            "founder": 1,
+            "living": 8,
+            "born": 8,
+            "deaths": 0,
+            "maxGeneration": 3,
+            "lastActivity": 316,
+            "status": "active",
+            "age": 319,
+            "generations": 4
+          },
+          "energy": 25.796999999999997,
+          "maintenance": 0.08475918735749347,
+          "efficiency": 0.8856561749984975,
+          "threshold": 43.63375246565789,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 79,
+              "end": 319,
+              "introduced": 3,
+              "lastIntroduction": 273,
+              "endingCount": 4,
+              "established": true,
+              "peak": 4,
+              "carriers": 4
+            },
+            {
+              "card": "fertility",
+              "start": 319,
+              "end": 559,
+              "introduced": 0,
+              "lastIntroduction": -18,
+              "endingCount": null,
+              "established": null,
+              "peak": 0,
+              "carriers": 0
+            }
+          ],
+          "ep": 1
+        },
+        {
+          "tick": 559,
+          "line": {
+            "founder": 1,
+            "living": 10,
+            "born": 12,
+            "deaths": 2,
+            "maxGeneration": 4,
+            "lastActivity": 507,
+            "status": "active",
+            "age": 559,
+            "generations": 5
+          },
+          "energy": 20.7268,
+          "maintenance": 0.07504798869531983,
+          "efficiency": 0.8662719065431504,
+          "threshold": 42.9827255814299,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 79,
+              "end": 319,
+              "introduced": 3,
+              "lastIntroduction": 273,
+              "endingCount": 4,
+              "established": true,
+              "peak": 4,
+              "carriers": 3
+            },
+            {
+              "card": "fertility",
+              "start": 319,
+              "end": 559,
+              "introduced": 2,
+              "lastIntroduction": 495,
+              "endingCount": 2,
+              "established": true,
+              "peak": 2,
+              "carriers": 2
+            }
+          ],
+          "ep": 7
+        },
+        {
+          "tick": 1200,
+          "line": {
+            "founder": 1,
+            "living": 8,
+            "born": 16,
+            "deaths": 8,
+            "maxGeneration": 6,
+            "lastActivity": 1179,
+            "status": "active",
+            "age": 1200,
+            "generations": 7
+          },
+          "energy": 22.98075,
+          "maintenance": 0.08569207568130015,
+          "efficiency": 0.8876428398548158,
+          "threshold": 41.98518885966391,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 79,
+              "end": 319,
+              "introduced": 3,
+              "lastIntroduction": 273,
+              "endingCount": 4,
+              "established": true,
+              "peak": 4,
+              "carriers": 5
+            },
+            {
+              "card": "fertility",
+              "start": 319,
+              "end": 559,
+              "introduced": 2,
+              "lastIntroduction": 495,
+              "endingCount": 2,
+              "established": true,
+              "peak": 2,
+              "carriers": 3
+            }
+          ],
+          "ep": 15
+        }
+      ]
+    },
+    {
+      "seed": "dune",
+      "habitat": "scarce",
+      "adaptation": false,
+      "observations": [
+        {
+          "tick": 447,
+          "line": {
+            "founder": 1,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 447,
+            "status": "active",
+            "age": 447,
+            "generations": 2
+          },
+          "energy": 21.53,
+          "maintenance": 0.07198355546098202,
+          "efficiency": 0.8611670071389526,
+          "threshold": 44.179287736043335,
+          "attempts": [],
+          "ep": 5
+        },
+        {
+          "tick": 687,
+          "line": {
+            "founder": 1,
+            "living": 8,
+            "born": 8,
+            "deaths": 0,
+            "maxGeneration": 3,
+            "lastActivity": 662,
+            "status": "active",
+            "age": 687,
+            "generations": 4
+          },
+          "energy": 24.538874999999997,
+          "maintenance": 0.07310700387392158,
+          "efficiency": 0.8635311373276635,
+          "threshold": 44.3850798342377,
+          "attempts": [],
+          "ep": 11
+        },
+        {
+          "tick": 927,
+          "line": {
+            "founder": 1,
+            "living": 6,
+            "born": 9,
+            "deaths": 3,
+            "maxGeneration": 3,
+            "lastActivity": 917,
+            "status": "active",
+            "age": 927,
+            "generations": 4
+          },
+          "energy": 7.793166666666667,
+          "maintenance": 0.07527224790499308,
+          "efficiency": 0.86811563913431,
+          "threshold": 44.45367720030248,
+          "attempts": [],
+          "ep": 13
+        },
+        {
+          "tick": 1200,
+          "line": {
+            "founder": 1,
+            "living": 6,
+            "born": 12,
+            "deaths": 6,
+            "maxGeneration": 4,
+            "lastActivity": 1149,
+            "status": "active",
+            "age": 1200,
+            "generations": 5
+          },
+          "energy": 24.13466666666667,
+          "maintenance": 0.07856094034900413,
+          "efficiency": 0.8750642711296678,
+          "threshold": 44.72806666456163,
+          "attempts": [],
+          "ep": 17
+        }
+      ]
+    },
+    {
+      "seed": "dune",
+      "habitat": "scarce",
+      "adaptation": true,
+      "observations": [
+        {
+          "tick": 447,
+          "line": {
+            "founder": 1,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 447,
+            "status": "active",
+            "age": 447,
+            "generations": 2
+          },
+          "energy": 21.53,
+          "maintenance": 0.07198355546098202,
+          "efficiency": 0.8611670071389526,
+          "threshold": 44.179287736043335,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 447,
+              "end": 687,
+              "introduced": 0,
+              "lastIntroduction": -18,
+              "endingCount": null,
+              "established": null,
+              "peak": 0,
+              "carriers": 0
+            }
+          ],
+          "ep": 0
+        },
+        {
+          "tick": 687,
+          "line": {
+            "founder": 1,
+            "living": 8,
+            "born": 8,
+            "deaths": 0,
+            "maxGeneration": 3,
+            "lastActivity": 662,
+            "status": "active",
+            "age": 687,
+            "generations": 4
+          },
+          "energy": 24.283125000000002,
+          "maintenance": 0.08902187562765819,
+          "efficiency": 0.8935311373276635,
+          "threshold": 44.3850798342377,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 447,
+              "end": 687,
+              "introduced": 3,
+              "lastIntroduction": 662,
+              "endingCount": 4,
+              "established": true,
+              "peak": 4,
+              "carriers": 4
+            },
+            {
+              "card": "fertility",
+              "start": 687,
+              "end": 927,
+              "introduced": 0,
+              "lastIntroduction": -18,
+              "endingCount": null,
+              "established": null,
+              "peak": 0,
+              "carriers": 0
+            }
+          ],
+          "ep": 1
+        },
+        {
+          "tick": 927,
+          "line": {
+            "founder": 1,
+            "living": 4,
+            "born": 9,
+            "deaths": 5,
+            "maxGeneration": 3,
+            "lastActivity": 926,
+            "status": "active",
+            "age": 927,
+            "generations": 4
+          },
+          "energy": 8.21125,
+          "maintenance": 0.09043934849979,
+          "efficiency": 0.8958952675163746,
+          "threshold": 44.59087193243206,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 447,
+              "end": 687,
+              "introduced": 3,
+              "lastIntroduction": 662,
+              "endingCount": 4,
+              "established": true,
+              "peak": 4,
+              "carriers": 2
+            },
+            {
+              "card": "fertility",
+              "start": 687,
+              "end": 927,
+              "introduced": 1,
+              "lastIntroduction": 701,
+              "endingCount": 0,
+              "established": false,
+              "peak": 1,
+              "carriers": 0
+            }
+          ],
+          "ep": 3
+        },
+        {
+          "tick": 1200,
+          "line": {
+            "founder": 1,
+            "living": 4,
+            "born": 12,
+            "deaths": 8,
+            "maxGeneration": 5,
+            "lastActivity": 1154,
+            "status": "active",
+            "age": 1200,
+            "generations": 6
+          },
+          "energy": 24.1225,
+          "maintenance": 0.10098749571518244,
+          "efficiency": 0.917301298186183,
+          "threshold": 45.82562452159822,
+          "attempts": [
+            {
+              "card": "nutrition",
+              "start": 447,
+              "end": 687,
+              "introduced": 3,
+              "lastIntroduction": 662,
+              "endingCount": 4,
+              "established": true,
+              "peak": 4,
+              "carriers": 4
+            },
+            {
+              "card": "fertility",
+              "start": 687,
+              "end": 927,
+              "introduced": 1,
+              "lastIntroduction": 701,
+              "endingCount": 0,
+              "established": false,
+              "peak": 1,
+              "carriers": 0
+            }
+          ],
+          "ep": 9
+        }
+      ]
+    }
+  ],
+  "recovery": {
+    "seed": "amber",
+    "habitat": "garden",
+    "founder": 3,
+    "failedFirst": {
+      "card": "mobility",
+      "start": 62,
+      "end": 302,
+      "introduced": 1,
+      "lastIntroduction": 178,
+      "endingCount": 1,
+      "established": false,
+      "peak": 1,
+      "carriers": 4
+    },
+    "secondPurchase": {
+      "id": 3,
+      "tick": 643,
+      "accepted": true,
+      "reason": ""
+    }
+  }
+}
