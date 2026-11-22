@@ -1,3 +1,4 @@
+import { SavesPanel } from './saves-panel.ts';
 import { HistoryPanel } from './history-panel.ts';
 import { GENES, GENE_BOUNDS } from './core/genetics.ts';
 import type { Genome, Rule } from './core/genetics.ts';
@@ -8,6 +9,7 @@ const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getEleme
 const fmt = (n: number, decimals = 0) => n.toLocaleString('ru-RU', { maximumFractionDigits: decimals });
 const worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
 const send = (command: Command) => worker.postMessage(command);
+const saves = new SavesPanel(send);
 const viewport = $('viewport'), canvas = $<HTMLCanvasElement>('world'), chart = $<HTMLCanvasElement>('chart');
 const chartMode = $<HTMLSelectElement>('chart-metric'), histogram = $<HTMLSelectElement>('histogram-trait');
 const form = $<HTMLFormElement>('world-form');
@@ -45,8 +47,10 @@ function error(message: string, recoverable: boolean) {
 
 worker.onerror = e => error(e.message, false);
 worker.onmessage = ({ data }: MessageEvent<Event>) => {
+  if (data.kind === 'snapshot-ready' || data.kind === 'restore-result' || data.kind === 'persistence-error') { saves.onEvent(data); return; }
   if (data.kind === 'history') { observerHistory.accept(data.epoch, data.request, data.view); return; }
   if (data.kind === 'error') { error(data.message, Boolean(data.recoverable)); return; }
+  if (frame && data.epoch < frame.epoch) return;
   const previous = frame;
   frame = data;
   const newWorld = previous?.epoch !== data.epoch;
@@ -79,7 +83,8 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
     focusEntity = null;
   }
   observerHistory.onFrame(data.epoch, data.selectedId);
-  send({ kind: 'ready' });
+  saves.onFrame(data);
+  send({ kind: 'ready', epoch: data.epoch });
 };
 
 function inspect(f: Frame) {
@@ -205,6 +210,7 @@ form.addEventListener('submit', e => {
   const data = new FormData(form);
   const seed = String(data.get('seed')).trim();
   if (!seed) { error('Введите seed мира.', true); return; }
+  if (!saves.confirmReplacement('Создать новый мир?')) return;
   creating = true;
   $('error').hidden = true;
   $('status').textContent = 'ПОДГОТОВКА МИРА';

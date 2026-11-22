@@ -1,0 +1,231 @@
+{
+  "status": "PASS",
+  "browser": "156.0.8078.79",
+  "memoryScope": "periodic renderer JS heap samples, excluding Worker and browser RSS",
+  "rows": [
+    {
+      "scenario": "1000 founders",
+      "config": {
+        "seed": "dd05-small",
+        "width": 256,
+        "height": 256,
+        "population": 1000,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "rule": "selection",
+        "resourceScale": 1,
+        "mutationStrength": 0.08,
+        "reproduction": true
+      },
+      "metrics": {
+        "tick": 0,
+        "population": 1000,
+        "food": 130300.632,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.865183000000002,
+        "maxGeneration": 0
+      },
+      "lineages": {
+        "living": 1000,
+        "extinct": 0
+      },
+      "storage": {
+        "live": 1000,
+        "recent": 0,
+        "pinned": 0,
+        "parentReferences": 0,
+        "lines": 1000,
+        "events": 0,
+        "droppedEvents": 0
+      },
+      "times": {
+        "snapshot": 16.9000000001397,
+        "serialize": 3.7000000001862645,
+        "sha256": 7.5,
+        "envelope": 5.300000000046566,
+        "indexedDbWrite": 39.39999999990687,
+        "indexedDbRead": 3.300000000046566,
+        "decodeAndValidate": 30.5,
+        "engine": 3.5,
+        "history": 4.400000000139698
+      },
+      "biologyBytes": 1099275,
+      "historyBytes": 310416,
+      "fileBytes": 1480371,
+      "sampledPeakJsHeap": 10435112,
+      "originalTps": 698.8120195662817,
+      "restoredTps": 711.7437722419929,
+      "match": true,
+      "futureMatch": true
+    },
+    {
+      "scenario": "5000 founders",
+      "config": {
+        "seed": "dd05-large",
+        "width": 256,
+        "height": 256,
+        "population": 5000,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "rule": "selection",
+        "resourceScale": 1,
+        "mutationStrength": 0.08,
+        "reproduction": true
+      },
+      "metrics": {
+        "tick": 0,
+        "population": 5000,
+        "food": 130237.612,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 23.0395438,
+        "maxGeneration": 0
+      },
+      "lineages": {
+        "living": 5000,
+        "extinct": 0
+      },
+      "storage": {
+        "live": 5000,
+        "recent": 0,
+        "pinned": 0,
+        "parentReferences": 0,
+        "lines": 5000,
+        "events": 0,
+        "droppedEvents": 0
+      },
+      "times": {
+        "snapshot": 33.699999999953434,
+        "serialize": 8.399999999906868,
+        "sha256": 19.800000000046566,
+        "envelope": 19.800000000046566,
+        "indexedDbWrite": 26.800000000046566,
+        "indexedDbRead": 8.5,
+        "decodeAndValidate": 87.39999999990687,
+        "engine": 13.800000000046566,
+        "history": 12.199999999953434
+      },
+      "biologyBytes": 2323166,
+      "historyBytes": 1563490,
+      "fileBytes": 4237336,
+      "sampledPeakJsHeap": 69151369,
+      "originalTps": 220.94564737070132,
+      "restoredTps": 222.12350066639348,
+      "match": true,
+      "futureMatch": true
+    },
+    {
+      "scenario": "10000 ticks and filled archive",
+      "config": {
+        "seed": "dd00-verification",
+        "width": 256,
+        "height": 256,
+        "population": 1000,
+        "mutationRate": 0.12,
+        "regrowth": true,
+        "rule": "selection",
+        "resourceScale": 1,
+        "mutationStrength": 0.08,
+        "reproduction": true
+      },
+      "metrics": {
+        "tick": 10000,
+        "population": 2913,
+        "food": 16785.864,
+        "births": 16597,
+        "deaths": 14684,
+        "meanEnergy": 17.96153381393752,
+        "maxGeneration": 33
+      },
+      "lineages": {
+        "living": 2,
+        "extinct": 998
+      },
+      "storage": {
+        "live": 2913,
+        "recent": 4096,
+        "pinned": 888,
+        "parentReferences": 2237,
+        "lines": 1000,
+        "events": 180,
+        "droppedEvents": 1730
+      },
+      "times": {
+        "snapshot": 38.10000000009313,
+        "serialize": 11.399999999906868,
+        "sha256": 26.699999999953434,
+        "envelope": 17.699999999953434,
+        "indexedDbWrite": 49.0999999998603,
+        "indexedDbRead": 8.199999999953434,
+        "decodeAndValidate": 83.80000000004657,
+        "engine": 7.600000000093132,
+        "history": 18.800000000046566
+      },
+      "biologyBytes": 1686722,
+      "historyBytes": 2388344,
+      "fileBytes": 4449765,
+      "sampledPeakJsHeap": 71624350,
+      "originalTps": 404.04040404040404,
+      "restoredTps": 393.7007874015748,
+      "match": true,
+      "futureMatch": true
+    },
+    {
+      "scenario": "extinct world and lines",
+      "config": {
+        "seed": "dd05-empty",
+        "width": 64,
+        "height": 64,
+        "population": 5000,
+        "mutationRate": 0.12,
+        "regrowth": false,
+        "rule": "selection",
+        "resourceScale": 1,
+        "mutationStrength": 0.08,
+        "reproduction": true
+      },
+      "metrics": {
+        "tick": 600,
+        "population": 0,
+        "food": 0,
+        "births": 0,
+        "deaths": 5000,
+        "meanEnergy": 0,
+        "maxGeneration": 0
+      },
+      "lineages": {
+        "living": 0,
+        "extinct": 5000
+      },
+      "storage": {
+        "live": 0,
+        "recent": 4096,
+        "pinned": 0,
+        "parentReferences": 0,
+        "lines": 5000,
+        "events": 169,
+        "droppedEvents": 0
+      },
+      "times": {
+        "snapshot": 13.299999999813735,
+        "serialize": 3.5,
+        "sha256": 9.200000000186265,
+        "envelope": 7.5,
+        "indexedDbWrite": 10.299999999813735,
+        "indexedDbRead": 3.4000000001396984,
+        "decodeAndValidate": 36.60000000009313,
+        "engine": 0.19999999995343387,
+        "history": 16.5
+      },
+      "biologyBytes": 41124,
+      "historyBytes": 1741013,
+      "fileBytes": 2001213,
+      "sampledPeakJsHeap": 92051904,
+      "originalTps": 76923.0769340985,
+      "restoredTps": 71428.57142144396,
+      "match": true,
+      "futureMatch": true
+    }
+  ]
+}

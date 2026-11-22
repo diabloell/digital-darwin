@@ -1,3 +1,4 @@
+import { capture, decode, encode, restore } from './snapshot.ts';
 import { PopulationHistory } from './core/history.ts';
 import { Engine } from './core/engine.ts';
 import { geneBin, geneMeans } from './core/evolution.ts';
@@ -55,7 +56,8 @@ self.onmessage = e => {
   try {
     const c = e.data;
     switch (c.kind) {
-      case 'ready': inFlight = false; break;
+      case 'ready': if (c.epoch === undefined || c.epoch === epoch) inFlight = false; break;
+      case 'snapshot': case 'restore': void persist(c); break;
       case 'create': {
         const settings = c.settings;
         try {
@@ -88,6 +90,35 @@ self.onmessage = e => {
     }
   } catch (error) { running = false; self.postMessage({ kind: 'error', message: String(error) }); }
 };
+let restoreRequest = 0;
+async function persist(c: Extract<Command, { kind: 'snapshot' | 'restore' }>) {
+  try {
+    if (c.epoch !== epoch) throw Error('Мир уже изменился');
+    if (c.kind === 'snapshot') {
+      const samples = history.at(-1)?.tick === engine.tick ? history : [...history, observation(history.at(-1))].slice(-300);
+      const file = await encode(capture(engine, genealogy, samples), c.name, c.createdAt);
+      self.postMessage({ kind: 'snapshot-ready', request: c.request, epoch: c.epoch, file });
+      return;
+    }
+    const token = c.preview ? undefined : ++restoreRequest;
+    const { state, manifest } = await decode(c.text);
+    const candidate = restore(state);
+    if (c.epoch !== epoch || (token !== undefined && token !== restoreRequest)) throw Error('Мир уже изменился');
+    if (!c.preview) {
+      engine = candidate.engine; genealogy = candidate.genealogy;
+      history = candidate.samples.length ? candidate.samples : [observation()];
+      sample();
+      epoch++;
+      running = false; selectedId = null; credit = 0; speed = 1; tps = 0; measured = 0;
+      measuredAt = last = performance.now(); inFlight = false;
+      emit(true);
+    }
+    self.postMessage({ kind: 'restore-result', request: c.request, epoch, manifest, preview: c.preview });
+  } catch (error) {
+    self.postMessage({ kind: 'persistence-error', request: c.request, epoch: c.epoch, message: error instanceof Error ? error.message : String(error) });
+  }
+}
+
 function sample(): void {
   if (history.at(-1)?.tick !== engine.tick) { history.push(observation(history.at(-1))); if (history.length > 300) history.shift(); }
 }

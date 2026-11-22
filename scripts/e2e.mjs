@@ -12,6 +12,7 @@ try {
   server = await startServer(0);
   browser = await chromium.launch({ executablePath, headless: true });
   const page = await browser.newPage({ viewport: { width: 1366, height: 768 } });
+  page.on('dialog', dialog => dialog.message().startsWith('Создать новый мир?') ? dialog.accept() : dialog.dismiss());
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   const frames = [];

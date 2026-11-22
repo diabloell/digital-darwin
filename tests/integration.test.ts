@@ -85,3 +85,34 @@ test('history is deterministic and bounded while preserving ancestry and Engine 
   const events = v.events.filter(e => e.kind === 'population-crisis');
   assert.ok(events.every((e, i) => i === 0 || events[i - 1].tick - e.tick >= 300));
 });
+
+test('mass births, retained ancestry, pending events and extinction round trip', async () => {
+  const { PopulationHistory } = await import('../src/core/history.ts');
+  const { capture, decode, encode, restore } = await import('../src/snapshot.ts');
+  const e = new Engine({ seed: 'dd05-archive', width: 32, height: 32, population: 40, regrowth: false });
+  const h = new PopulationHistory(e, 12);
+  for (let i=0;i<44;i++) { e.step(); h.observe(e); }
+  for (const a of e.organisms) a.energy = 80000;
+  e.step(); h.observe(e);
+  assert.equal(e.lastBirths.length, 40);
+  const roundtrip = async () => {
+    const file = await encode(capture(e,h), 'Мир', '2026-11-22T00:00:00.000Z');
+    const copy = restore((await decode(file.text)).state);
+    assert.deepEqual(capture(copy.engine,copy.genealogy), capture(e,h));
+    return copy;
+  };
+  await roundtrip();
+  e.food.fill(0);
+  for (const a of e.organisms) if (a.parent === null) a.energy = 1;
+  e.step(); h.observe(e);
+  assert.equal(e.lastDeaths.length, 40);
+  const loaded = await roundtrip();
+  assert.equal(loaded.genealogy.view(41,null).ancestors[0].died, 46);
+  assert.equal(loaded.genealogy.storage.pinned, 40);
+  for (const a of e.organisms) a.energy = 1;
+  e.step(); h.observe(e);
+  assert.equal(e.organisms.length, 0);
+  const extinct = await roundtrip();
+  assert.equal(extinct.genealogy.counts.extinct, 40);
+  assert.equal(extinct.genealogy.view(null,null).events.filter(e => e.kind === 'extinction').length, 1);
+});
