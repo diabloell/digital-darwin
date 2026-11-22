@@ -36,11 +36,13 @@ const commands = [
 const dependencies = { determinism: ['long-run-a', 'long-run-b'], 'dd02-regression': ['experiments'], 'dd02-state': ['long-run-a'] };
 const groups = {
   browser: ['e2e','lineage-e2e','persistence-e2e','save-benchmark','browser-benchmark'],
-  lab: ['lab-batches','lab-e2e','lab-stress']
+  'lab-ui': ['lab-e2e','lab-stress']
 };
 const group = process.env.DD_VERIFY_GROUP;
-if (group && group !== 'core' && !Object.hasOwn(groups,group)) throw Error('Unknown verification group');
-const selected = group === 'core' ? commands.filter(([name])=>!Object.values(groups).flat().includes(name))
+const labScenario = /^LAB-E0[1-4]$/.test(group ?? '');
+if (group && group !== 'core' && !labScenario && !Object.hasOwn(groups,group)) throw Error('Unknown verification group');
+const selected = group === 'core' ? commands.filter(([name])=>!Object.values(groups).flat().includes(name) && name !== 'lab-batches')
+  : labScenario ? [['lab-batches', ['apps/lab.ts', group, `${output}/lab-batches`]]]
   : group ? commands.filter(([name])=>groups[group].includes(name)) : commands;
 const checks = [];
 for (const [name, args] of selected) {
