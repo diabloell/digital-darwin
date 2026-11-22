@@ -84,7 +84,7 @@ export class GamePanel {
     progress.hidden=!active;
     progress.max=TUNING.duration;
     progress.value=active?frame.metrics.tick-active.start:0;
-    $('game-programme').textContent=active?`${CARDS[active.card].title} · ${progress.value}/${progress.max} тиков · внедрено ${active.introduced}`
+    $('game-programme').textContent=active?`${CARDS[active.card].title} · ${progress.value}/${progress.max} тиков · носители ${active.carriers}/${line?.living??0}`
       :game.lost?'Программы остановлены':game.attempts.length?'Можно выбрать следующую карту при наличии EP':'Программа пока не начата';
     const attempts=game.attempts.map(a=>{
       const li=document.createElement('li');

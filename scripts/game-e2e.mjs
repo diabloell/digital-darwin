@@ -81,6 +81,11 @@ try {
       const box=await loc(selector).first().boundingBox();
       assert.ok(box && box.y>=0 && box.y+box.height<=height,`${selector} outside first viewport at ${width}`);
     }
+    if(width===390){
+      await loc('#viewport').focus();
+      await page.keyboard.press('Tab');
+      assert.equal(await page.evaluate(()=>document.activeElement.id),'zoom-in');
+    }
     await screenshotConsole('console');
     const initial = await rawWorld();
     const camera = await loc('#camera-readout').textContent();
@@ -116,6 +121,7 @@ try {
     assert.equal(await locatorDisabled('mobility'),true);
     assert.match(await loc('#console-programme').innerText(),/Усвоение/);
     assert.equal(await loc('#game-progress').isVisible(),true);
+    assert.match(await loc('#game-programme').innerText(),/носители/);
     if(width===1366){
       await start();
       await wait(()=>window.__gameFrame.metrics.tick>=window.__gameFrame.game.attempts[0].start+75);
