@@ -23,5 +23,6 @@
 | Этап | Объём | Доказательства |
 | --- | --- | --- |
 | DD-13 | World Welcome + Evolution Choice UX · Product Fix 2 | [Issue #19](https://github.com/diabloell/digital-darwin/issues/19) · [Отчёт](reports/DD-13.md) |
+| DD-14 | Game Feel First · наблюдаемый эффект выбора | [Issue #21](https://github.com/diabloell/digital-darwin/issues/21) · [Отчёт](reports/DD-14.md) |
 
 DD-00–DD-12 образуют предыдущую базовую версию. Для 2.1 действует [Playtest-Driven roadmap](https://www.notion.so/4209fe7da94081f1a33cfb14796b6069).

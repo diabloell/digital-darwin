@@ -1,61 +1,14 @@
 {
-  "stage": "DD-13",
-  "status": "PARTIAL",
-  "technical": "PASS",
-  "product": "NEEDS RE-PLAYTEST",
-  "issue": "https://github.com/diabloell/digital-darwin/issues/19",
-  "baseMain": "38eb1ad4dbee09628e50d0e22e0f5c03c0da5036",
-  "branch": "dd-13-world-welcome-choice-ux",
-  "pullRequest": {
-    "status": "DRAFT",
-    "url": "https://github.com/diabloell/digital-darwin/pull/20"
-  },
-  "ci": {
-    "url": "https://github.com/diabloell/digital-darwin/pull/20/checks",
-    "scope": "Exact draft PR head",
-    "groups": [
-      "LAB-E01",
-      "LAB-E02",
-      "LAB-E03",
-      "LAB-E04",
-      "browser",
-      "core",
-      "ecology",
-      "game",
-      "game-1366",
-      "game-1920",
-      "game-390",
-      "lab-1366",
-      "lab-1920",
-      "lab-390",
-      "planet",
-      "release",
-      "stress",
-      "tree",
-      "welcome"
-    ]
-  },
-  "checks": [
-    {
-      "name": "welcome-fix-e2e",
-      "command": "node scripts/welcome-fix-e2e.mjs",
-      "status": "PASS",
-      "exitCode": 0
-    },
-    {
-      "name": "welcome-e2e",
-      "command": "node scripts/welcome-e2e.mjs",
-      "status": "PASS",
-      "exitCode": 0
-    }
-  ],
-  "legacyLab": {
-    "status": "PASS",
-    "replicas": 42,
-    "evidence": "dd-13/fix2-legacy-lab.json"
-  },
-  "report": "DD-13.md",
-  "evidence": "dd-13/",
-  "baseFixCommit": "73d34ec776db1c1f3f4b9bd952b52eafb4450414",
-  "revision": "PRODUCT FIX 2"
+  "stage": "DD-14",
+  "technicalLocal": "PASS",
+  "product": "NEEDS PLAYTEST",
+  "baseMain": "036b82ecad15bc0860966eda1127ba2f796462c9",
+  "branch": "dd-14-game-feel-impact",
+  "issue": "https://github.com/diabloell/digital-darwin/issues/21",
+  "ci": "https://github.com/diabloell/digital-darwin/actions/workflows/verification.yml?branch=dd-14-game-feel-impact",
+  "report": "DD-14.md",
+  "evidence": "dd-14/",
+  "gameVersion": 4,
+  "comparedTrajectories": 36,
+  "verifiedLegacyLabReplicas": 42
 }

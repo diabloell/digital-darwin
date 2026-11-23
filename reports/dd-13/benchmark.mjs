@@ -6,16 +6,17 @@ import { chromium } from 'playwright';
 const baseline=process.argv[2];
 if(!baseline)throw Error('Specify a git archive of the DD-12 main checkout');
 const from=(dir,file)=>import(pathToFileURL(resolve(dir,file)));
+const impact=process.argv.includes('--dd14');
 const output=process.argv[3]||'reports/dd-13/performance.json';
 const browser=await chromium.launch({executablePath:process.env.DD_BROWSER,args:['--enable-precise-memory-info']});
 const results=[];
 try{
-  for(const [version,directory] of [[12,baseline],[13,'.']]){
+  for(const [version,directory] of (impact?[[13,baseline],[14,'.']]:[[12,baseline],[13,'.']])){
     const {startServer}=await from(directory,'scripts/serve.mjs');
     const {Engine}=await from(directory,'src/core/engine.ts');
     const {releaseWorld}=await from(directory,'src/core/game.ts');
     for(const integrated of [false,true]){
-      const run=integrated?releaseWorld('dune')
+      const run=integrated?releaseWorld('dune','garden',version===14)
         :{engine:new Engine({seed:'dd12-benchmark',population:5000})};
       const {engine,game,genealogy}=run;
       if(game)game.command({id:1,kind:'choose',founder:40},engine,genealogy);
@@ -55,7 +56,7 @@ try{
           await loc('#evolution-game summary').click();
           await loc('#game-seed').fill('dune');
           await loc('#game-release-start').click();
-          if(version===13)await loc('#welcome-create').click();
+          if(version>=13)await loc('#welcome-create').click();
           await loc('#game-founder').selectOption('40');
           await loc('#game-choose').click();
         }else{

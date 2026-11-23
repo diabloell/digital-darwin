@@ -19,7 +19,7 @@ const viewport = $('viewport'), canvas = $<HTMLCanvasElement>('world'), chart = 
 const chartMode = $<HTMLSelectElement>('chart-metric'), histogram = $<HTMLSelectElement>('histogram-trait');
 const form = $<HTMLFormElement>('world-form');
 const terrain = $<HTMLSelectElement>('terrain-layer');
-const terrainLabels={...LAYERS,...ECO_LAYERS};
+const terrainLabels={...LAYERS,...ECO_LAYERS,forage:'Пища и давление'};
 for (const [key, label] of Object.entries(terrainLabels)) terrain.add(new Option(label, key));
 const play = $<HTMLButtonElement>('play'), step = $<HTMLButtonElement>('step');
 const speeds = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-speed]'));
@@ -86,9 +86,9 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
   speeds.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.speed) === data.speed)));
   if (previous?.selectedId !== data.selectedId || (tickChanged && data.selected) || (previous?.selected && !data.selected)) inspect(data);
   $<HTMLButtonElement>('inspect-first')?.toggleAttribute('disabled', !data.metrics.population);
-  if (newWorld) { terrain.value = 'food'; terrain.onchange?.(new Event('change')); }
   if(newWorld)for(const option of Array.from(terrain.options))option.hidden=option.value!=='food'
-    &&(Object.hasOwn(ECO_LAYERS,option.value)?!data.ecology:!data.planet);
+    &&(option.value==='forage'?!(data.game&&data.ecology):Object.hasOwn(ECO_LAYERS,option.value)?!data.ecology:!data.planet);
+  if(newWorld){terrain.value=data.game&&data.ecology?'forage':'food';terrain.onchange?.(new Event('change'));}
   $('terrain-control').hidden = !data.planet&&!data.ecology;
   map.accept(data);
   if (focusEntity !== null && focusEntity === data.selectedId) {
@@ -261,7 +261,7 @@ terrain.onchange = () => {
   const layer = terrain.value as TerrainLayer;
   map.setTerrain(layer);
   $('map-layer-heading').textContent = layer === 'food' ? 'ПИЩЕВОЙ ЛАНДШАФТ' : terrainLabels[layer].toUpperCase();
-  $('terrain-legend').textContent = layer === 'food' ? 'Пища · яркость по запасу' : `${terrainLabels[layer]} · ${layer==='crisis'?'красный: рост снижен':layer==='pressure'?'0–16':layer==='demand'?'0–8+ заявок':'тёмный 0 → яркий 100'}`;
+  $('terrain-legend').textContent = layer === 'forage' ? 'Зелёный — запас пищи · оранжевый — давление · красный — кризис' : layer === 'food' ? 'Пища · яркость по запасу' : `${terrainLabels[layer]} · ${layer==='crisis'?'красный: рост снижен':layer==='pressure'?'0–16':layer==='demand'?'0–8+ заявок':'тёмный 0 → яркий 100'}`;
 };
 chartMode.onchange = scheduleChart;
 histogram.onchange = updateHistogram;

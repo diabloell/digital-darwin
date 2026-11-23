@@ -45,7 +45,7 @@
       <section class="world-panel">
         <div class="panel-heading">
           <div><span id="status-dot"></span> <b id="status" role="status">ПОДГОТОВКА МИРА</b><span id="world-seed">coral-42</span></div>
-          <button id="focus-line" hidden>К линии</button><label>Окраска <select id="trait-color">
+          <button id="focus-line" hidden>К моей линии</button><label>Окраска <select id="trait-color">
             <option value="normal">Обычная</option><option value="energy">Энергия</option><option value="generation">Поколение</option>
             <option value="speed">Скорость</option><option value="sensor">Радиус поиска</option><option value="efficiency">Усвоение</option><option value="threshold">Порог размножения</option>
           </select></label>
@@ -59,6 +59,7 @@
           </div>
         </div>
         <div class="legend"><label id="terrain-control" hidden>Слой <select id="terrain-layer"><option value="food">Пища</option></select></label><span id="terrain-legend">Пища · яркость по запасу</span><a href="#organism-inspector">Инспектор ↓</a>
+          <span id="line-map-legend" hidden><i class="line-key"></i> Моя линия <i class="carrier-key"></i> Носители последней адаптации</span>
           <span id="color-legend"><i class="organism-key"></i> Организмы</span>
         </div>
         <div class="controls">
@@ -72,7 +73,7 @@
         <p id="observer-note">Режим наблюдения. Начните игру, чтобы управлять линией.</p>
         <details id="game-guide"><summary>Как играть</summary>
           <ol>
-            <li>Выберите основателя. На карте его линия отмечена кольцами. Остальные линии развиваются самостоятельно.</li>
+            <li>Выберите основателя. На карте своя линия отмечена золотыми кольцами, носители последней адаптации — голубыми ромбами. Остальные линии развиваются самостоятельно.</li>
             <li>Запустите время под картой. 4× ускоряет ожидание, пауза даёт время прочитать решения.</li>
             <li>Рождения и поколения приносят EP. Когда хватает EP, выберите адаптацию и дождитесь её окончания.</li>
             <li>Признак может появиться у новорождённых и позже исчезнуть. Смотрите на живых носителей, цену и компромисс карты.</li>
@@ -112,6 +113,7 @@
               <p id="game-programme"></p><progress id="game-progress" aria-label="Прогресс адаптации" hidden></progress>
               <button id="choose-adaptation" class="primary" hidden>Выбрать адаптацию</button>
               <p id="programme-feedback" role="status" hidden></p>
+              <p id="impact-comparison" hidden></p>
               <div id="game-cards" class="game-cards"></div>
               <details id="evolution-tree" hidden><summary>Дерево эволюции</summary><p id="tree-progress"></p><ol id="tree-nodes"></ol></details>
           <ul id="game-attempts" aria-label="Итоги программ"></ul>

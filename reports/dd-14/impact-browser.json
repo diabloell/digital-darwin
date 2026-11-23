@@ -1,0 +1,179 @@
+{
+  "browser": "156.0.8078.79",
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "first": {
+        "tick": 49,
+        "elapsedMs": 927.4000000059605
+      },
+      "firstCarrier": {
+        "tick": 99,
+        "elapsedMs": 1685.1000000014901
+      },
+      "second": {
+        "tick": 215,
+        "running": false,
+        "attempt": {
+          "card": "mobility",
+          "start": 49,
+          "end": 209,
+          "introduced": 3,
+          "lastIntroduction": 157,
+          "endingCount": 4,
+          "established": true,
+          "peak": 4,
+          "quote": {
+            "price": 1,
+            "duration": 160,
+            "prepared": 0
+          },
+          "finished": 209,
+          "carriers": 4
+        },
+        "line": {
+          "founder": 40,
+          "living": 8,
+          "born": 8,
+          "deaths": 0,
+          "maxGeneration": 3,
+          "lastActivity": 180,
+          "status": "active",
+          "age": 215,
+          "generations": 4
+        },
+        "count": 4,
+        "misplaced": false,
+        "elapsedMs": 3503.9000000059605
+      },
+      "colors": {
+        "carriers": 315,
+        "own": 10
+      },
+      "events": [
+        "Тик 209 · Программа «Подвижность» завершена · носителей 4",
+        "Тик 200 · Потомки с изменённым генотипом · 2",
+        "Тик 200 · Смерти · 1",
+        "Тик 200 · Рождения · 2",
+        "Тик 49 · Начата программа «Подвижность»"
+      ]
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "first": {
+        "tick": 49,
+        "elapsedMs": 927.1000000014901
+      },
+      "firstCarrier": {
+        "tick": 99,
+        "elapsedMs": 1622.5
+      },
+      "second": {
+        "tick": 215,
+        "running": false,
+        "attempt": {
+          "card": "mobility",
+          "start": 49,
+          "end": 209,
+          "introduced": 3,
+          "lastIntroduction": 157,
+          "endingCount": 4,
+          "established": true,
+          "peak": 4,
+          "quote": {
+            "price": 1,
+            "duration": 160,
+            "prepared": 0
+          },
+          "finished": 209,
+          "carriers": 4
+        },
+        "line": {
+          "founder": 40,
+          "living": 8,
+          "born": 8,
+          "deaths": 0,
+          "maxGeneration": 3,
+          "lastActivity": 180,
+          "status": "active",
+          "age": 215,
+          "generations": 4
+        },
+        "count": 4,
+        "misplaced": false,
+        "elapsedMs": 3430.1999999955297
+      },
+      "colors": {
+        "carriers": 181,
+        "own": 6
+      },
+      "events": [
+        "Тик 209 · Программа «Подвижность» завершена · носителей 4",
+        "Тик 200 · Потомки с изменённым генотипом · 2",
+        "Тик 200 · Смерти · 1",
+        "Тик 200 · Рождения · 2",
+        "Тик 49 · Начата программа «Подвижность»"
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "first": {
+        "tick": 49,
+        "elapsedMs": 888.1000000014901
+      },
+      "firstCarrier": {
+        "tick": 99,
+        "elapsedMs": 1586.5
+      },
+      "second": {
+        "tick": 216,
+        "running": false,
+        "attempt": {
+          "card": "mobility",
+          "start": 49,
+          "end": 209,
+          "introduced": 3,
+          "lastIntroduction": 157,
+          "endingCount": 4,
+          "established": true,
+          "peak": 4,
+          "quote": {
+            "price": 1,
+            "duration": 160,
+            "prepared": 0
+          },
+          "finished": 209,
+          "carriers": 4
+        },
+        "line": {
+          "founder": 40,
+          "living": 8,
+          "born": 8,
+          "deaths": 0,
+          "maxGeneration": 3,
+          "lastActivity": 180,
+          "status": "active",
+          "age": 216,
+          "generations": 4
+        },
+        "count": 4,
+        "misplaced": false,
+        "elapsedMs": 3393.39999999851
+      },
+      "colors": {
+        "carriers": 95,
+        "own": 3
+      },
+      "events": [
+        "Тик 209 · Программа «Подвижность» завершена · носителей 4",
+        "Тик 200 · Потомки с изменённым генотипом · 2",
+        "Тик 200 · Смерти · 1",
+        "Тик 200 · Рождения · 2",
+        "Тик 49 · Начата программа «Подвижность»"
+      ]
+    }
+  ]
+}

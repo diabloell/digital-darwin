@@ -1,0 +1,26 @@
+[
+  {
+    "name": "impact-ab",
+    "command": "node scripts/impact-ab.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "impact-e2e",
+    "command": "node scripts/impact-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "welcome-fix-e2e",
+    "command": "node scripts/welcome-fix-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "welcome-e2e",
+    "command": "node scripts/welcome-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  }
+]
