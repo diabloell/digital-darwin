@@ -1,0 +1,14 @@
+[
+  {
+    "name": "ecology-smoke",
+    "command": "node scripts/ecology-smoke.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "ecology-e2e",
+    "command": "node scripts/ecology-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  }
+]

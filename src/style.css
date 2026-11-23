@@ -317,3 +317,6 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
 #tree-nodes li { padding: 7px 3px; border-top: 1px solid var(--line); }
 #tree-nodes p { margin: 2px 0; font-size: 12px; }
 #tree-nodes small { color: var(--muted); line-height: 1.4; }
+
+#ecology-stats summary { font-size: 12px; padding: 7px 8px; }
+#ecology-trend { margin: 6px 0; padding-inline-start: 20px; color: var(--muted); font-size: 12px; line-height: 1.5; }

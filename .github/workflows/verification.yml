@@ -3,7 +3,7 @@ name: Digital Darwin verification
 on:
   pull_request:
   push:
-    branches: [dd-06-experiment-lab, dd-07-first-playable-evolution, dd-08-evolution-console, dd-09-world-resources, dd-10-evolution-tree]
+    branches: [dd-06-experiment-lab, dd-07-first-playable-evolution, dd-08-evolution-console, dd-09-world-resources, dd-10-evolution-tree, dd-11-ecology-crises]
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [core, browser, stress, lab-1920, lab-1366, lab-390, LAB-E01, LAB-E02, LAB-E03, LAB-E04, game, game-1920, game-1366, game-390, planet, tree]
+        group: [core, browser, stress, lab-1920, lab-1366, lab-390, LAB-E01, LAB-E02, LAB-E03, LAB-E04, game, game-1920, game-1366, game-390, planet, tree, ecology]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,7 +26,7 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
       - name: Install Playwright Chromium
-        if: matrix.group == 'browser' || matrix.group == 'planet' || matrix.group == 'tree' || startsWith(matrix.group, 'lab-') || startsWith(matrix.group, 'game-')
+        if: matrix.group == 'browser' || matrix.group == 'planet' || matrix.group == 'tree' || matrix.group == 'ecology' || startsWith(matrix.group, 'lab-') || startsWith(matrix.group, 'game-')
         run: npx --no-install playwright install --with-deps chromium
       - name: Run verification group
         env:

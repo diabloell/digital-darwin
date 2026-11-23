@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "tick": 128,
+      "collapses": 41,
+      "recoveries": 9,
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "tick": 128,
+      "collapses": 41,
+      "recoveries": 9,
+      "status": "PASS"
+    }
+  ]
+}

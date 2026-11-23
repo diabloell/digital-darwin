@@ -1,3 +1,4 @@
+import { ECOLOGY_VERSION } from './ecology.ts';
 import { CARDS, FORK_AFTER, LEGACY_CARDS, MINOR_PRICE, MINOR_TICKS } from './tree.ts';
 import type { Card, Quote } from './tree.ts';
 export { CARDS } from './tree.ts';
@@ -22,9 +23,9 @@ export type GameState={version:1|2;habitat:Habitat;founder:number|null;tick:numb
   renewal:number;sustained:number;achievement:number;spent:number;generation:number;windowBirths:number;
   attempts:Attempt[];markers:[number,Marker[]][];samples:Sample[]};
 
-export function gameWorld(seed:string,habitat:Habitat, planet = false, tree = false) {
+export function gameWorld(seed:string,habitat:Habitat, planet = false, tree = false, ecology = false) {
   if (!['garden','scarce','empty'].includes(habitat)) throw Error('Неизвестная игровая среда');
-  const e=new Engine({seed,width:TUNING.width,height:TUNING.height,population:TUNING.founders,...(planet?{planet:PLANET_VERSION}:{}),resourceScale:habitat==='garden'?1:habitat==='scarce'?.30:0});
+  const e=new Engine({seed,width:TUNING.width,height:TUNING.height,population:TUNING.founders,...(ecology?{ecology:ECOLOGY_VERSION}:{}),...(planet?{planet:PLANET_VERSION}:{}),resourceScale:habitat==='garden'?1:habitat==='scarce'?.30:0});
   for(const a of e.organisms) {
     const g=a.genome;
     a.genome={speed:.8+(g.speed-.8)*.12,sensor:3.5+(g.sensor-3.5)*.12,

@@ -1,3 +1,5 @@
+import { PRESSURE_MAX } from './core/ecology.ts';
+import type { EcoLayer } from './core/ecology.ts';
 import type { PlanetLayer } from './core/planet.ts';
 import { GENES, GENE_BOUNDS } from './core/genetics.ts';
 import type { Genome } from './core/genetics.ts';
@@ -6,7 +8,10 @@ import type { Frame } from './protocol.ts';
 export const GENE_LABELS: Record<keyof Genome, string> = { speed: 'Скорость', sensor: 'Радиус поиска', efficiency: 'Усвоение', threshold: 'Порог размножения' };
 export const GENE_UNITS: Record<keyof Genome, string> = { speed: 'кл./тик', sensor: 'клетки', efficiency: 'доля', threshold: 'ед. энергии' };
 const PALETTE = ['#badfff', '#a6c7fd', '#aaaaf9', '#c0a0fb', '#db9cf3', '#f49bdb', '#ffabc5', '#ffc0ae'];
-const TERRAIN_COLORS: Record<PlanetLayer, readonly [number, number, number]> = {
+export type TerrainLayer=PlanetLayer|EcoLayer|'food';
+const ECO_SCALE: Record<EcoLayer,number>={pressure:PRESSURE_MAX,crisis:1,demand:8};
+const TERRAIN_COLORS: Record<PlanetLayer|EcoLayer, readonly [number, number, number]> = {
+  pressure:[230,137,55],crisis:[230,70,60],demand:[138,120,230],
   light: [226, 185, 84], temperature: [222, 112, 67], water: [53, 164, 232], fertility: [124, 214, 97]
 };
 const ORGANISM = '#b8fff0';
@@ -31,7 +36,7 @@ export class WorldMap {
   private highlighted: number | null = null;
   private readonly linePositions: number[] = [];
   private mode = 'normal';
-  private layer: PlanetLayer | 'food' = 'food';
+  private layer: TerrainLayer = 'food';
   private drag: { startX: number; startY: number; x: number; y: number; moved: boolean; id: number } | undefined;
 
   private readonly canvas: HTMLCanvasElement;
@@ -133,7 +138,7 @@ export class WorldMap {
     this.invalidate();
   }
 
-  setTerrain(layer: PlanetLayer | 'food'): void {
+  setTerrain(layer: TerrainLayer): void {
     this.layer = layer;
     this.paintedTick = -1;
     this.invalidate();
@@ -204,14 +209,16 @@ export class WorldMap {
   private draw(): void {
     const { frame, ctx, image } = this;
     if (!frame || !image) return;
-    if (this.paintedTick < 0 || (this.layer === 'food' && this.paintedTick !== frame.metrics.tick)) {
+    const ecological = Object.hasOwn(ECO_SCALE,this.layer);
+    if (this.paintedTick < 0 || ((this.layer === 'food'||ecological) && this.paintedTick !== frame.metrics.tick)) {
       const data = image.data;
-      const layer = this.layer === 'food' ? undefined : frame.planet?.layers[this.layer];
+      const layer = ecological ? frame.ecology?.[this.layer === 'crisis' ? 'collapsed' : this.layer as 'pressure'|'demand'] : frame.planet?.layers[this.layer as PlanetLayer];
+      const max = ecological ? ECO_SCALE[this.layer as EcoLayer] : 100;
       const rgb = this.layer === 'food' ? undefined : TERRAIN_COLORS[this.layer];
       for (let i = 0; i < frame.food.length; i++) {
         const f = frame.food[i], j = i * 4;
         if (layer && rgb) {
-          const value = layer[i] / 100;
+          const value = Math.min(1,layer[i] / max);
           data[j] = 13 + rgb[0] * value; data[j + 1] = 20 + rgb[1] * value; data[j + 2] = 24 + rgb[2] * value;
         } else {
           data[j] = 13 + f * .11; data[j + 1] = 30 + f * .34; data[j + 2] = 29 + f * .25;

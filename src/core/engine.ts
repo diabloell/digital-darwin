@@ -1,3 +1,5 @@
+import { Ecology, ECOLOGY_VERSION, niche } from './ecology.ts';
+import type { EcologyState } from './ecology.ts';
 import { cycle, generatePlanet, planetCell, PLANET_VERSION, seasonalGrowth } from './planet.ts';
 import type { Planet } from './planet.ts';
 import { Rng } from './rng.ts';
@@ -8,7 +10,7 @@ export type { Genome } from './genetics.ts';
 
 export const ENGINE_VERSION = '0.3.0';
 export type Organism = { id: number; parent: number | null; generation: number; x: number; y: number; heading: number; velocity: number; energy: number; age: number; born: number; lastActionTick: number; genome: Genome };
-export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean; reproduction?: boolean; rule?: Rule; resourceScale?: number; mutationStrength?: number; planet?: typeof PLANET_VERSION };
+export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean; reproduction?: boolean; rule?: Rule; resourceScale?: number; mutationStrength?: number; planet?: typeof PLANET_VERSION; ecology?: typeof ECOLOGY_VERSION };
 export type Metrics = { tick: number; population: number; food: number; births: number; deaths: number; meanEnergy: number; maxGeneration: number };
 export type Audit = { grown: number; consumed: number; assimilated: number; dissipated: number; reproductionCost: number; digestiveLoss: number; transferred: number; actions: number };
 export const TICK_PHASES = ['environment', 'observations', 'intents', 'movement', 'competition', 'metabolism', 'death', 'reproduction', 'audit'] as const;
@@ -16,7 +18,7 @@ export type TickPhase = typeof TICK_PHASES[number];
 export type EngineSnapshot = {
   config: Engine['config']; tick: number; nextId: number; births: number; deaths: number;
   rng: number[]; food: number[]; capacity: number[]; growth: number[]; organisms: Organism[];
-  audit: Audit; expectedFood: number | null; lastBirths: Birth[]; lastDeaths: Organism[];
+  audit: Audit; expectedFood: number | null; lastBirths: Birth[]; lastDeaths: Organism[]; ecology?: EcologyState;
 };
 export type NewbornHook = (parent: Readonly<Organism>, child: Organism) => void;
 export type Birth = { parent: Genome; child: Organism };
@@ -40,6 +42,7 @@ export function validateConfig(c: Config): void {
     if (value !== undefined && !(Number.isFinite(value) && value >= 0 && value <= 1)) throw Error('Evolution scale: 0..1');
   }
   if (c.planet !== undefined && c.planet !== PLANET_VERSION) throw Error('Неподдерживаемая версия планеты');
+  if (c.ecology !== undefined && c.ecology !== ECOLOGY_VERSION) throw Error('Неподдерживаемая версия экологии');
   if (typeof c.regrowth !== 'boolean') throw Error('Некорректный рост ресурсов');
 }
 export class Engine {
@@ -48,6 +51,7 @@ export class Engine {
   lastDeaths: Organism[] = [];
   rng: Rng;
   readonly planet?: Planet;
+  readonly ecology?: Ecology;
   food: Int32Array;
   capacity: Int32Array;
   growth: Int32Array;
@@ -64,6 +68,10 @@ export class Engine {
       this.config = { ...snapshot.config };
       const { seed, width, height } = this.config;
       if (this.config.planet) this.planet = generatePlanet(seed, width, height);
+      if(this.config.ecology){
+        if(!snapshot.ecology)throw Error('Missing ecology state');
+        this.ecology=new Ecology(width*height,snapshot.ecology);
+      }
       this.rng = new Rng(seed, snapshot.rng);
       this.food = Int32Array.from(snapshot.food);
       this.capacity = Int32Array.from(snapshot.capacity);
@@ -84,6 +92,7 @@ export class Engine {
     validateConfig(this.config);
     this.rng = new Rng(this.config.seed);
     const { width: w, height: h } = this.config;
+    if(this.config.ecology)this.ecology=new Ecology(w*h);
     this.food = new Int32Array(w * h); this.capacity = new Int32Array(w * h); this.growth = new Int32Array(w * h);
     if (this.config.planet) {
       this.planet = generatePlanet(this.config.seed, w, h);
@@ -182,6 +191,8 @@ export class Engine {
 
   private updateEnvironment(audit: Audit): number {
     let startingFood = 0;
+    const ecology=this.ecology;
+    ecology?.start();
     const moisture = this.planet?.layers.water;
     const strength = moisture ? cycle(this.tick).strength : 0;
     for (let i = 0; i < this.food.length; i++) {
@@ -190,8 +201,9 @@ export class Engine {
       const growth = this.growth[i];
       if (before < 0 || before > capacity || growth < 0) throw Error(`Invalid resource cell ${i}`);
       startingFood += before;
-      if (this.config.regrowth) {
-        const added = Math.min(moisture ? seasonalGrowth(growth, moisture[i], strength) : growth, capacity - before);
+      if (this.config.regrowth || ecology) {
+        const potential=this.config.regrowth?(moisture?seasonalGrowth(growth,moisture[i],strength):growth):0;
+        const added = ecology?ecology.renew(i,potential,capacity-before):Math.min(potential,capacity-before);
         this.food[i] = before + added;
         audit.grown += added;
       }
@@ -217,7 +229,9 @@ export class Engine {
 
   private decide({ agent, traits, localFood, dx, dy }: Observation): Intent {
     const heading = dx || dy ? Math.atan2(dy, dx) : agent.heading + (this.rng.next() - 0.5) * 1.2;
-    return { agent, traits, heading, speed: localFood >= 650 ? 0 : traits.speed, portion: 0 };
+    // Explorers leave partially depleted patches if a better probe was observed.
+    const threshold=this.ecology?(niche(traits)===1&&(dx||dy)?900:Math.ceil(500/traits.assimilation)):650;
+    return { agent, traits, heading, speed: localFood >= threshold ? 0 : traits.speed, portion: 0 };
   }
 
   private move(intents: Intent[]): Map<number, Intent[]> {
@@ -244,6 +258,7 @@ export class Engine {
     for (const [cell, group] of claims) {
       const available = this.food[cell];
       const portion = Math.min(650, Math.floor(available / group.length));
+      this.ecology?.claim(cell,group.length,portion);
       const consumed = portion * group.length;
       this.food[cell] = available - consumed;
       audit.consumed += consumed;
@@ -266,6 +281,7 @@ export class Engine {
       agent.energy -= cost;
       audit.dissipated += cost;
       audit.actions++;
+      this.ecology?.feed(traits,agent.velocity,portion,cost);
     }
   }
 
@@ -342,11 +358,11 @@ export class Engine {
       config: { ...this.config }, tick: this.tick, nextId: this.nextId, births: this.births, deaths: this.deaths,
       rng: [...this.rng.state], food: Array.from(this.food), capacity: Array.from(this.capacity), growth: Array.from(this.growth),
       organisms: structuredClone(this.organisms), audit: { ...this.audit }, expectedFood: this.expectedFood ?? null,
-      lastBirths: structuredClone(this.lastBirths), lastDeaths: structuredClone(this.lastDeaths)
+      lastBirths: structuredClone(this.lastBirths), lastDeaths: structuredClone(this.lastDeaths), ...(this.ecology?{ecology:this.ecology.snapshot()}:{} )
     };
   }
   // Canonical state includes hidden future-affecting fields, not just visible metrics.
   canonical(): string {
-    return JSON.stringify({ version: ENGINE_VERSION, genomeVersion: GENOME_VERSION, evolutionVersion: EVOLUTION_VERSION, config: this.config, rng: this.rng.state, tick: this.tick, nextId: this.nextId, births: this.births, deaths: this.deaths, capacity: Array.from(this.capacity), growth: Array.from(this.growth), food: Array.from(this.food), organisms: [...this.organisms].sort((a, b) => a.id - b.id) });
+    return JSON.stringify({ version: ENGINE_VERSION, genomeVersion: GENOME_VERSION, evolutionVersion: EVOLUTION_VERSION, config: this.config, rng: this.rng.state, tick: this.tick, nextId: this.nextId, births: this.births, deaths: this.deaths, capacity: Array.from(this.capacity), growth: Array.from(this.growth), food: Array.from(this.food), ...(this.ecology?{ecology:this.ecology.snapshot()}:{}), organisms: [...this.organisms].sort((a, b) => a.id - b.id) });
   }
 }

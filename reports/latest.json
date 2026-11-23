@@ -1,21 +1,21 @@
 {
-  "stage": "DD-10",
+  "stage": "DD-11",
   "status": "PARTIAL",
-  "issue": "https://github.com/diabloell/digital-darwin/issues/13",
-  "sourceCommit": "05298da61b46772d96badf377be51aa23722a791",
-  "baseMain": "893fc64cac16fecf1efc6cec91bcf04d3c6dc7c6",
-  "branch": "dd-10-evolution-tree",
+  "issue": "https://github.com/diabloell/digital-darwin/issues/15",
+  "sourceCommit": "680874d26030e144eedb3221333641f84a33e7fa",
+  "baseMain": "40c5c0fb3dae1c8e185ccd649167bce81f63827f",
+  "branch": "dd-11-ecology-crises",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
     "error": "Post \"https://api.github.com/graphql\": Forbidden",
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-10-evolution-tree"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-11-ecology-crises"
   },
   "ci": {
     "status": "PASS",
     "event": "push",
     "pullRequestEvent": "NOT RUN",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45158478914",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45168581280",
     "groups": [
       "LAB-E01",
       "LAB-E02",
@@ -23,6 +23,7 @@
       "LAB-E04",
       "browser",
       "core",
+      "ecology",
       "game",
       "game-1366",
       "game-1920",
@@ -37,14 +38,14 @@
   },
   "checks": [
     {
-      "name": "tree-smoke",
-      "command": "node scripts/tree-smoke.mjs",
+      "name": "ecology-smoke",
+      "command": "node scripts/ecology-smoke.mjs",
       "status": "PASS",
       "exitCode": 0
     },
     {
-      "name": "tree-e2e",
-      "command": "node scripts/tree-e2e.mjs",
+      "name": "ecology-e2e",
+      "command": "node scripts/ecology-e2e.mjs",
       "status": "PASS",
       "exitCode": 0
     }
@@ -54,6 +55,6 @@
     "ticks": 10000,
     "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
   },
-  "report": "DD-10.md",
-  "evidence": "dd-10/"
+  "report": "DD-11.md",
+  "evidence": "dd-11/"
 }

@@ -1,0 +1,755 @@
+{
+  "status": "PASS",
+  "comparisons": [
+    {
+      "competitors": true,
+      "initial": {
+        "founder": {
+          "id": 58,
+          "parent": null,
+          "generation": 0,
+          "x": 20.671103494241834,
+          "y": 38.42400869354606,
+          "heading": 4.332906885157932,
+          "velocity": 0,
+          "energy": 18154,
+          "age": 0,
+          "born": 0,
+          "lastActionTick": -1,
+          "genome": {
+            "speed": 0.8125707516875118,
+            "sensor": 3.410279579302296,
+            "efficiency": 0.8462037050276995,
+            "threshold": 44.62203381408006
+          }
+        },
+        "food": 13787.358,
+        "rng": [
+          1872689079,
+          258314210,
+          3913002298,
+          2842050556
+        ]
+      },
+      "collapse": 54,
+      "recovery": 93,
+      "totals": {
+        "consumed": 13122789,
+        "withheld": 4049032,
+        "ownSurvivorFood": 107.50000000000013
+      },
+      "trends": [
+        {
+          "metrics": {
+            "tick": 50,
+            "population": 115,
+            "food": 13755.006,
+            "births": 35,
+            "deaths": 0,
+            "meanEnergy": 30.24178260869565,
+            "maxGeneration": 1
+          },
+          "line": {
+            "founder": 58,
+            "living": 1,
+            "born": 1,
+            "deaths": 0,
+            "maxGeneration": 0,
+            "lastActivity": 0,
+            "status": "active",
+            "age": 50,
+            "generations": 1
+          },
+          "zones": 1,
+          "competitorZones": 76,
+          "exposed": 0,
+          "ownFood": 0.65,
+          "crisis": 0,
+          "collapses": 0,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 100,
+            "population": 166,
+            "food": 13482.439,
+            "births": 86,
+            "deaths": 0,
+            "meanEnergy": 35.03460240963855,
+            "maxGeneration": 2
+          },
+          "line": {
+            "founder": 58,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 69,
+            "status": "active",
+            "age": 100,
+            "generations": 2
+          },
+          "zones": 1,
+          "competitorZones": 64,
+          "exposed": 0,
+          "ownFood": 1.3,
+          "crisis": 15,
+          "collapses": 16,
+          "recoveries": 1
+        },
+        {
+          "metrics": {
+            "tick": 150,
+            "population": 230,
+            "food": 13804.489,
+            "births": 150,
+            "deaths": 0,
+            "meanEnergy": 27.260021739130437,
+            "maxGeneration": 2
+          },
+          "line": {
+            "founder": 58,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 69,
+            "status": "active",
+            "age": 150,
+            "generations": 2
+          },
+          "zones": 1,
+          "competitorZones": 54,
+          "exposed": 2,
+          "ownFood": 0.39,
+          "crisis": 39,
+          "collapses": 51,
+          "recoveries": 12
+        },
+        {
+          "metrics": {
+            "tick": 200,
+            "population": 243,
+            "food": 13915.549,
+            "births": 164,
+            "deaths": 1,
+            "meanEnergy": 22.561432098765433,
+            "maxGeneration": 3
+          },
+          "line": {
+            "founder": 58,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 69,
+            "status": "active",
+            "age": 200,
+            "generations": 2
+          },
+          "zones": 1,
+          "competitorZones": 50,
+          "exposed": 2,
+          "ownFood": 0.03,
+          "crisis": 45,
+          "collapses": 71,
+          "recoveries": 26
+        },
+        {
+          "metrics": {
+            "tick": 250,
+            "population": 247,
+            "food": 13963.559,
+            "births": 172,
+            "deaths": 5,
+            "meanEnergy": 17.608619433198378,
+            "maxGeneration": 3
+          },
+          "line": {
+            "founder": 58,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 69,
+            "status": "active",
+            "age": 250,
+            "generations": 2
+          },
+          "zones": 1,
+          "competitorZones": 47,
+          "exposed": 2,
+          "ownFood": 0.024,
+          "crisis": 46,
+          "collapses": 88,
+          "recoveries": 42
+        },
+        {
+          "metrics": {
+            "tick": 300,
+            "population": 206,
+            "food": 14017.723,
+            "births": 173,
+            "deaths": 47,
+            "meanEnergy": 14.927873786407767,
+            "maxGeneration": 3
+          },
+          "line": {
+            "founder": 58,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 69,
+            "status": "active",
+            "age": 300,
+            "generations": 2
+          },
+          "zones": 1,
+          "competitorZones": 45,
+          "exposed": 2,
+          "ownFood": 0.02,
+          "crisis": 50,
+          "collapses": 98,
+          "recoveries": 48
+        },
+        {
+          "metrics": {
+            "tick": 350,
+            "population": 156,
+            "food": 14083.697,
+            "births": 174,
+            "deaths": 98,
+            "meanEnergy": 12.682352564102564,
+            "maxGeneration": 3
+          },
+          "line": {
+            "founder": 58,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 69,
+            "status": "active",
+            "age": 350,
+            "generations": 2
+          },
+          "zones": 1,
+          "competitorZones": 42,
+          "exposed": 2,
+          "ownFood": 0.044,
+          "crisis": 51,
+          "collapses": 108,
+          "recoveries": 57
+        },
+        {
+          "metrics": {
+            "tick": 397,
+            "population": 114,
+            "food": 14031.115,
+            "births": 176,
+            "deaths": 142,
+            "meanEnergy": 12.660087719298247,
+            "maxGeneration": 3
+          },
+          "line": {
+            "founder": 58,
+            "living": 0,
+            "born": 2,
+            "deaths": 2,
+            "maxGeneration": 1,
+            "lastActivity": 397,
+            "status": "extinct",
+            "age": 397,
+            "generations": 2
+          },
+          "zones": 0,
+          "competitorZones": 38,
+          "exposed": 0,
+          "ownFood": 0,
+          "crisis": 41,
+          "collapses": 110,
+          "recoveries": 69
+        }
+      ],
+      "niches": [
+        {
+          "actions": 45074,
+          "moved": 35641,
+          "food": 8105251,
+          "upkeep": 6932108
+        },
+        {
+          "actions": 28105,
+          "moved": 22559,
+          "food": 5017538,
+          "upkeep": 4334024
+        }
+      ],
+      "final": {
+        "metrics": {
+          "tick": 397,
+          "population": 114,
+          "food": 14031.115,
+          "births": 176,
+          "deaths": 142,
+          "meanEnergy": 12.660087719298247,
+          "maxGeneration": 3
+        },
+        "line": {
+          "founder": 58,
+          "living": 0,
+          "born": 2,
+          "deaths": 2,
+          "maxGeneration": 1,
+          "lastActivity": 397,
+          "status": "extinct",
+          "age": 397,
+          "generations": 2
+        },
+        "zones": 0,
+        "competitorZones": 38,
+        "exposed": 0,
+        "ownFood": 0,
+        "crisis": 41,
+        "collapses": 110,
+        "recoveries": 69
+      }
+    },
+    {
+      "competitors": false,
+      "initial": {
+        "founder": {
+          "id": 58,
+          "parent": null,
+          "generation": 0,
+          "x": 20.671103494241834,
+          "y": 38.42400869354606,
+          "heading": 4.332906885157932,
+          "velocity": 0,
+          "energy": 18154,
+          "age": 0,
+          "born": 0,
+          "lastActionTick": -1,
+          "genome": {
+            "speed": 0.8125707516875118,
+            "sensor": 3.410279579302296,
+            "efficiency": 0.8462037050276995,
+            "threshold": 44.62203381408006
+          }
+        },
+        "food": 13787.358,
+        "rng": [
+          1872689079,
+          258314210,
+          3913002298,
+          2842050556
+        ]
+      },
+      "collapse": 141,
+      "recovery": 353,
+      "totals": {
+        "consumed": 202073,
+        "withheld": 130468,
+        "ownSurvivorFood": 201.96199999999948
+      },
+      "trends": [
+        {
+          "metrics": {
+            "tick": 50,
+            "population": 1,
+            "food": 14657.649,
+            "births": 0,
+            "deaths": 79,
+            "meanEnergy": 38.881,
+            "maxGeneration": 0
+          },
+          "line": {
+            "founder": 58,
+            "living": 1,
+            "born": 1,
+            "deaths": 0,
+            "maxGeneration": 0,
+            "lastActivity": 0,
+            "status": "active",
+            "age": 50,
+            "generations": 1
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 0,
+          "ownFood": 0.65,
+          "crisis": 0,
+          "collapses": 0,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 100,
+            "population": 2,
+            "food": 14652.084,
+            "births": 1,
+            "deaths": 79,
+            "meanEnergy": 35.574,
+            "maxGeneration": 1
+          },
+          "line": {
+            "founder": 58,
+            "living": 2,
+            "born": 2,
+            "deaths": 0,
+            "maxGeneration": 1,
+            "lastActivity": 64,
+            "status": "active",
+            "age": 100,
+            "generations": 2
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 0,
+          "ownFood": 1.3,
+          "crisis": 0,
+          "collapses": 0,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 150,
+            "population": 4,
+            "food": 14647.816,
+            "births": 3,
+            "deaths": 79,
+            "meanEnergy": 23.4545,
+            "maxGeneration": 2
+          },
+          "line": {
+            "founder": 58,
+            "living": 4,
+            "born": 4,
+            "deaths": 0,
+            "maxGeneration": 2,
+            "lastActivity": 128,
+            "status": "active",
+            "age": 150,
+            "generations": 3
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 4,
+          "ownFood": 0.196,
+          "crisis": 2,
+          "collapses": 2,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 200,
+            "population": 4,
+            "food": 14647.806,
+            "births": 3,
+            "deaths": 79,
+            "meanEnergy": 17.5475,
+            "maxGeneration": 2
+          },
+          "line": {
+            "founder": 58,
+            "living": 4,
+            "born": 4,
+            "deaths": 0,
+            "maxGeneration": 2,
+            "lastActivity": 128,
+            "status": "active",
+            "age": 200,
+            "generations": 3
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 4,
+          "ownFood": 0.176,
+          "crisis": 2,
+          "collapses": 2,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 250,
+            "population": 4,
+            "food": 14647.794,
+            "births": 3,
+            "deaths": 79,
+            "meanEnergy": 11.3695,
+            "maxGeneration": 2
+          },
+          "line": {
+            "founder": 58,
+            "living": 4,
+            "born": 4,
+            "deaths": 0,
+            "maxGeneration": 2,
+            "lastActivity": 128,
+            "status": "active",
+            "age": 250,
+            "generations": 3
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 4,
+          "ownFood": 0.152,
+          "crisis": 2,
+          "collapses": 2,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 300,
+            "population": 4,
+            "food": 14647.782,
+            "births": 3,
+            "deaths": 79,
+            "meanEnergy": 4.8995,
+            "maxGeneration": 2
+          },
+          "line": {
+            "founder": 58,
+            "living": 4,
+            "born": 4,
+            "deaths": 0,
+            "maxGeneration": 2,
+            "lastActivity": 128,
+            "status": "active",
+            "age": 300,
+            "generations": 3
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 4,
+          "ownFood": 0.124,
+          "crisis": 2,
+          "collapses": 2,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 350,
+            "population": 1,
+            "food": 14647.78,
+            "births": 3,
+            "deaths": 82,
+            "meanEnergy": 2.635,
+            "maxGeneration": 0
+          },
+          "line": {
+            "founder": 58,
+            "living": 1,
+            "born": 4,
+            "deaths": 3,
+            "maxGeneration": 2,
+            "lastActivity": 339,
+            "status": "active",
+            "age": 350,
+            "generations": 3
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 1,
+          "ownFood": 0.129,
+          "crisis": 2,
+          "collapses": 2,
+          "recoveries": 0
+        },
+        {
+          "metrics": {
+            "tick": 397,
+            "population": 1,
+            "food": 14651.209,
+            "births": 3,
+            "deaths": 82,
+            "meanEnergy": 20.185,
+            "maxGeneration": 0
+          },
+          "line": {
+            "founder": 58,
+            "living": 1,
+            "born": 4,
+            "deaths": 3,
+            "maxGeneration": 2,
+            "lastActivity": 339,
+            "status": "active",
+            "age": 397,
+            "generations": 3
+          },
+          "zones": 1,
+          "competitorZones": 0,
+          "exposed": 0,
+          "ownFood": 0.65,
+          "crisis": 0,
+          "collapses": 2,
+          "recoveries": 2
+        }
+      ],
+      "niches": [
+        {
+          "actions": 1076,
+          "moved": 869,
+          "food": 202073,
+          "upkeep": 164968
+        },
+        {
+          "actions": 0,
+          "moved": 0,
+          "food": 0,
+          "upkeep": 0
+        }
+      ],
+      "final": {
+        "metrics": {
+          "tick": 397,
+          "population": 1,
+          "food": 14651.209,
+          "births": 3,
+          "deaths": 82,
+          "meanEnergy": 20.185,
+          "maxGeneration": 0
+        },
+        "line": {
+          "founder": 58,
+          "living": 1,
+          "born": 4,
+          "deaths": 3,
+          "maxGeneration": 2,
+          "lastActivity": 339,
+          "status": "active",
+          "age": 397,
+          "generations": 3
+        },
+        "zones": 1,
+        "competitorZones": 0,
+        "exposed": 0,
+        "ownFood": 0.65,
+        "crisis": 0,
+        "collapses": 2,
+        "recoveries": 2
+      }
+    }
+  ],
+  "crisisControl": [
+    {
+      "suppress": false,
+      "grown": 8523000,
+      "positionsHash": "6b72309c85b58efacf2b903a33b2b78f50e7222f3b4b675daab9c4e99034e6a0",
+      "metrics": {
+        "tick": 280,
+        "population": 148,
+        "food": 12763.542,
+        "births": 122,
+        "deaths": 54,
+        "meanEnergy": 10.764155405405406,
+        "maxGeneration": 3
+      },
+      "line": {
+        "founder": 73,
+        "living": 4,
+        "born": 4,
+        "deaths": 0,
+        "maxGeneration": 2,
+        "lastActivity": 170,
+        "status": "active",
+        "age": 280,
+        "generations": 3
+      },
+      "zones": 2,
+      "competitorZones": 32,
+      "exposed": 4,
+      "ownFood": 0.026,
+      "crisis": 39,
+      "collapses": 65,
+      "recoveries": 26
+    },
+    {
+      "suppress": true,
+      "grown": 10379833,
+      "positionsHash": "2792345a8452cf12057094f74facfa7c4ba094fa7b51bed949ddff6140460497",
+      "metrics": {
+        "tick": 280,
+        "population": 193,
+        "food": 12747.1,
+        "births": 126,
+        "deaths": 13,
+        "meanEnergy": 14.974875647668394,
+        "maxGeneration": 3
+      },
+      "line": {
+        "founder": 73,
+        "living": 4,
+        "born": 4,
+        "deaths": 0,
+        "maxGeneration": 2,
+        "lastActivity": 160,
+        "status": "active",
+        "age": 280,
+        "generations": 3
+      },
+      "zones": 2,
+      "competitorZones": 31,
+      "exposed": 4,
+      "ownFood": 0.146,
+      "crisis": 46,
+      "collapses": 76,
+      "recoveries": 30
+    }
+  ],
+  "replay": {
+    "actions": [
+      {
+        "tick": 51,
+        "action": {
+          "id": 2,
+          "kind": "buy",
+          "card": "nutrition"
+        }
+      }
+    ],
+    "checkpoint": {
+      "tick": 52,
+      "checksum": "e5dcf1de5c3657aa940e80b9f8c82197b9c42014f305ac3e5859370388bd5dc2"
+    },
+    "hashes": {
+      "engine": "ba599014d1e1af8fceb8cc59b236ce285fc9077d2cb8a2dab06fc6a70e9a87d0",
+      "ecology": "8c03a74f1fd927a16be0a8124791ca64fde050ad75d0c6c526f93823e5f3998d",
+      "history": "6f3f4e15062f7d2ef86c3c2f4c380b8704aaef282c9b28e82959bddab2a54ee1",
+      "game": "8c83ecf8d24368ad45ff2303fb36b8467d9b5ddbfb42a136f22ce4301d3cdd5d",
+      "planet": "330227cbd36bda1cb276570c1994a9de66dbe63d0acc32296f93e07cd06d1dd9"
+    },
+    "engineBatch": "2690f3eb3ed1feb01e9cc4d289308b0b9f366b5deb859d3eb43109978e517a60"
+  },
+  "timings": [
+    {
+      "ecology": false,
+      "tps": 145.1309418040741,
+      "p95Ms": 16.61220800000001,
+      "rssBytes": 151646208,
+      "population": 5895
+    },
+    {
+      "ecology": true,
+      "tps": 117.06584081112442,
+      "p95Ms": 12.65058900000031,
+      "rssBytes": 228450304,
+      "population": 5868
+    },
+    {
+      "ecology": false,
+      "tps": 175.7624163876758,
+      "p95Ms": 6.435195999999905,
+      "rssBytes": 230674432,
+      "population": 5895
+    },
+    {
+      "ecology": true,
+      "tps": 147.56092253431197,
+      "p95Ms": 9.262472000000344,
+      "rssBytes": 232087552,
+      "population": 5868
+    }
+  ]
+}

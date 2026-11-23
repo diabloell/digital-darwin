@@ -1,0 +1,6 @@
+{"enabled":false,"node":"v24.22.3","tps":151.31818267153912,"p95Ms":15.20608100000004,"rssMiB":134.36328125,"population":5186}
+{"enabled":true,"node":"v24.22.3","tps":157.57848806476065,"p95Ms":8.032529999999952,"rssMiB":139.8515625,"population":5124}
+{"enabled":false,"node":"v24.22.3","tps":179.08139782858075,"p95Ms":6.411627999999951,"rssMiB":133.97265625,"population":5186}
+{"enabled":true,"node":"v24.22.3","tps":152.1638138939362,"p95Ms":8.809775999999943,"rssMiB":135.80859375,"population":5124}
+{"enabled":false,"node":"v24.22.3","tps":194.16899795572976,"p95Ms":6.006295000000023,"rssMiB":134.94140625,"population":5186}
+{"enabled":true,"node":"v24.22.3","tps":163.34372727923832,"p95Ms":6.868327000000022,"rssMiB":137.71875,"population":5124}
