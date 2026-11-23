@@ -86,6 +86,7 @@ try{
       await loc('#evolution-game summary').click();
       await loc('#game-seed').fill('dune');
       await loc('#game-release-start').click();
+      await loc('#welcome-create').click();
       await loc('#game-founder').selectOption('40');
       await loc('#game-choose').click();
       await loc('[data-speed="4"]').click();
@@ -99,7 +100,7 @@ try{
       for(const [index,buy] of commands.entries()){
         assert.equal(await to(buy.tick),buy.tick);
         if(index===10)await snapshot('fork');
-        await loc(`[data-card="${buy.card}"]:enabled`).click();
+        await loc(`[data-decision-card="${buy.card}"]:enabled`).click();
         await page.waitForFunction(card=>window.releaseFrame.game.active===card,buy.card);
         if(index<2){
           const end=buy.tick+40;
@@ -136,16 +137,18 @@ try{
       assert.ok(hasCarriers||terminal.game.attempts.some(a=>a.peak>0));
     } else {
       await loc('#quick-game').click();
+      await loc('#welcome-create').click();
       await loc('#game-choose').click();
       await page.waitForFunction(()=>window.releaseFrame?.game?.founder===1);
       assert.equal((await read()).game.version,3);
       await to(70);
-      await loc('#game-cards button:enabled').first().click();
+      await loc('#decision-cards button:enabled').first().click();
       await page.waitForFunction(()=>window.releaseFrame.game.attempts.length===1);
       await snapshot('active-evolution',width===390?'#game-programme':undefined);
     }
     if(width!==1920){
       await to(350);
+      if(await loc('#evolution-decision').evaluate(el=>el.open))await loc('#decision-later').click();
       const lost=await read();
       assert.ok(lost.game.lost);
       await snapshot('debrief','#game-debrief');

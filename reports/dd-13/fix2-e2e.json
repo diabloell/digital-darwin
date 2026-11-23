@@ -1,0 +1,248 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "openedMs": 157.997707,
+      "dragMs": 172.8612149999999,
+      "pausedTick": 3,
+      "touch": false,
+      "camera": [
+        {
+          "seed": "dune",
+          "horizontalPixelShifts": [
+            -53,
+            53
+          ],
+          "pitchClamped": true,
+          "resetPixelExact": true
+        },
+        {
+          "seed": "amber",
+          "horizontalPixelShifts": [
+            -53,
+            53
+          ],
+          "pitchClamped": true,
+          "resetPixelExact": true
+        }
+      ],
+      "miniPaintsDuringTicks": 0,
+      "miniPixelExact": true,
+      "readings": [
+        {
+          "seed": "dune",
+          "habitat": "garden",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 100
+          },
+          "food": 11915.897
+        },
+        {
+          "seed": "dune",
+          "habitat": "scarce",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 29.995148497842838
+          },
+          "food": 3574.191
+        },
+        {
+          "seed": "amber",
+          "habitat": "garden",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 100
+          },
+          "food": 13787.358
+        },
+        {
+          "seed": "amber",
+          "habitat": "scarce",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 29.996065961295848
+          },
+          "food": 4135.665
+        }
+      ]
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "status": "PASS",
+      "openedMs": 137.77601800000048,
+      "dragMs": 169.55299000000014,
+      "pausedTick": 3,
+      "touch": false,
+      "camera": [
+        {
+          "seed": "dune",
+          "horizontalPixelShifts": [
+            -53,
+            53
+          ],
+          "pitchClamped": true,
+          "resetPixelExact": true
+        },
+        {
+          "seed": "amber",
+          "horizontalPixelShifts": [
+            -53,
+            53
+          ],
+          "pitchClamped": true,
+          "resetPixelExact": true
+        }
+      ],
+      "miniPaintsDuringTicks": 0,
+      "miniPixelExact": true,
+      "readings": [
+        {
+          "seed": "dune",
+          "habitat": "garden",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 100
+          },
+          "food": 11915.897
+        },
+        {
+          "seed": "dune",
+          "habitat": "scarce",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 29.995148497842838
+          },
+          "food": 3574.191
+        },
+        {
+          "seed": "amber",
+          "habitat": "garden",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 100
+          },
+          "food": 13787.358
+        },
+        {
+          "seed": "amber",
+          "habitat": "scarce",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 29.996065961295848
+          },
+          "food": 4135.665
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "openedMs": 126.5810190000011,
+      "dragMs": 93.12782399999924,
+      "pausedTick": 3,
+      "touch": true,
+      "camera": [
+        {
+          "seed": "dune",
+          "horizontalPixelShifts": [
+            -53,
+            53
+          ],
+          "pitchClamped": true,
+          "resetPixelExact": true
+        },
+        {
+          "seed": "amber",
+          "horizontalPixelShifts": [
+            -53,
+            53
+          ],
+          "pitchClamped": true,
+          "resetPixelExact": true
+        }
+      ],
+      "miniPaintsDuringTicks": 0,
+      "miniPixelExact": true,
+      "readings": [
+        {
+          "seed": "dune",
+          "habitat": "garden",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 100
+          },
+          "food": 11915.897
+        },
+        {
+          "seed": "dune",
+          "habitat": "scarce",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 29.995148497842838
+          },
+          "food": 3574.191
+        },
+        {
+          "seed": "amber",
+          "habitat": "garden",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 100
+          },
+          "food": 13787.358
+        },
+        {
+          "seed": "amber",
+          "habitat": "scarce",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 29.996065961295848
+          },
+          "food": 4135.665
+        }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,12 @@
+import { PlanetGlobe } from './game/globe.ts';
 import { PERIOD } from './core/planet.ts';
 import { CARDS } from './core/game.ts';
 import { EVENT_LABELS } from './history-panel.ts';
 import type { Frame } from './protocol.ts';
 
 const element = (id: string) => document.getElementById(id)!;
+const mini = element('planet-mini');
+const globe = new PlanetGlobe(mini);
 const format = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
 const delta = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1, signDisplay: 'exceptZero' });
 const trends = ['population', 'food', 'energy', 'carriers'].map(name => ({
@@ -17,6 +20,12 @@ export function updateConsole(frame: Frame, previous?: Frame): void {
   element('planet-seed').textContent = frame.seed;
   element('planet-size').textContent = `${frame.width} × ${frame.height} клеток · тороидальный мир`;
   const planet = frame.planet;
+  if (previous?.epoch !== frame.epoch || previous.seed !== frame.seed
+    || previous.width !== frame.width || previous.height !== frame.height) {
+    mini.hidden = !planet;
+    element('planet-placeholder').hidden = Boolean(planet);
+    if (planet) globe.setTerrain(frame.seed, frame.width, frame.height, planet.layers);
+  }
   element('planet-profile').hidden = !planet;
   if (planet) {
     const indices = (a: number, b: number) => `${Math.round(a * 100)} / ${Math.round(b * 100)}`;

@@ -114,9 +114,7 @@ try {
     await atTop();
     assert.equal(await locatorDisabled('nutrition'),true);
     await start();
-    await loc('[data-card="nutrition"]:enabled').waitFor();
-    await pause();
-    await loc('[data-card="nutrition"]').click();
+    await loc('[data-decision-card="nutrition"]').click();
     await wait(()=>window.__gameFrame.game.active==='nutrition');
     assert.equal(await locatorDisabled('mobility'),true);
     assert.match(await loc('#console-programme').innerText(),/Усвоение/);
@@ -131,13 +129,13 @@ try {
     }
     await saveAndReload('Активная программа');
     await start();
-    await loc('[data-card="fertility"]:enabled').waitFor();
-    await pause();
-    await loc('[data-card="fertility"]').click();
+    await loc('[data-decision-card="fertility"]').click();
     await wait(()=>window.__gameFrame.game.active==='fertility');
     await start();
     await wait(()=>window.__gameFrame.game.attempts[1]?.established!==null);
-    await pause();
+    if((await read()).running)await loc('#play').click();
+    await wait(()=>!window.__gameFrame.running);
+    if(await loc('#evolution-decision').evaluate(el=>el.open))await loc('#decision-later').click();
     const completed = await read();
     assert.equal(completed.game.spent,10);
     assert.ok(completed.game.attempts[0].introduced>0);

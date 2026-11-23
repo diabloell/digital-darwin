@@ -36,7 +36,7 @@ function advance() {
     if(!game.ready) { running=false; tps=0; sample(); emit(true); }
   } else { engine.step(); genealogy.observe(engine); }
 }
-function emit(force = false): void {
+function emit(force = false, pauseToken?: number): void {
   if (inFlight && !force) return;
   const positions = new Float32Array(engine.organisms.length * 4), ids = new Uint32Array(engine.organisms.length);
   const traitBins = new Uint8Array(engine.organisms.length * GENES.length);
@@ -56,7 +56,7 @@ function emit(force = false): void {
   const selected = engine.organisms.find(a => a.id === selectedId) ?? null;
   const foodScale = engine.planet ? PLANET_MAX_CAPACITY / 255 : 28;
   const food = Uint8Array.from(engine.food, f => Math.min(255, Math.floor(f / foodScale)));
-  const frame: Frame = { kind: 'frame', recentEvents: genealogy.latestEvents(), ...(engine.ecology?{ecology:engine.ecology.view()}:{}), ...(engine.planet ? { planet: { ...engine.planet, cycle: cycle(engine.tick) } } : {}), ...(game?{game:game.view(genealogy,engine)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
+  const frame: Frame = { kind: 'frame', ...(pauseToken===undefined?{}:{pauseToken}), recentEvents: genealogy.latestEvents(), ...(engine.ecology?{ecology:engine.ecology.view()}:{}), ...(engine.planet ? { planet: { ...engine.planet, cycle: cycle(engine.tick) } } : {}), ...(game?{game:game.view(genealogy,engine)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
   self.postMessage(frame, [positions.buffer, ids.buffer, food.buffer, traitBins.buffer, generations.buffer, founders.buffer]); inFlight = true; lastFrame = performance.now();
 }
 self.onmessage = e => {
@@ -97,7 +97,7 @@ self.onmessage = e => {
         emit(true);
         break;
       }
-      case 'play': if (typeof c.value !== 'boolean') throw Error('Invalid play'); running = c.value && (!game || game.ready); credit = 0; last = performance.now(); if (!running) { sample(); tps = 0; measured = 0; } measuredAt = last; emit(true); break;
+      case 'play': if(c.epoch!==undefined&&c.epoch!==epoch)break; if (typeof c.value !== 'boolean') throw Error('Invalid play'); running = c.value && (!game || game.ready); credit = 0; last = performance.now(); if (!running) { sample(); tps = 0; measured = 0; } measuredAt = last; emit(true,c.value?undefined:c.pauseToken); break;
       case 'speed': if (![1, 4, 16, 32].includes(c.value)) throw Error('Invalid speed'); speed = c.value; credit = 0; emit(true); break;
       case 'step': if (!running && (!game || game.ready)) { advance(); sample(); emit(true); } break;
       case 'inspect': if (c.id !== null && (!Number.isSafeInteger(c.id) || c.id < 1)) throw Error('Invalid entity ID'); selectedId = c.id; emit(true); break;

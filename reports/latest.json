@@ -1,24 +1,18 @@
 {
-  "stage": "DD-12",
+  "stage": "DD-13",
   "status": "PARTIAL",
-  "readiness": "READY",
-  "releaseCandidate": "0.1.0-rc.1",
-  "publication": "LOCAL_ONLY",
-  "issue": "https://github.com/diabloell/digital-darwin/issues/17",
-  "branch": "dd-12-first-game-release",
-  "sourceCommit": "a02a694928530b3bbdda8b8045437c85586f64f6",
-  "baseMain": "f7e5f43fde94c6a78bb62c73912fd83e481a3b02",
+  "technical": "PASS",
+  "product": "NEEDS RE-PLAYTEST",
+  "issue": "https://github.com/diabloell/digital-darwin/issues/19",
+  "baseMain": "38eb1ad4dbee09628e50d0e22e0f5c03c0da5036",
+  "branch": "dd-13-world-welcome-choice-ux",
   "pullRequest": {
-    "status": "BLOCKED",
-    "url": null,
-    "error": "Post \"https://api.github.com/graphql\": Forbidden",
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-12-first-game-release"
+    "status": "DRAFT",
+    "url": "https://github.com/diabloell/digital-darwin/pull/20"
   },
   "ci": {
-    "status": "PASS",
-    "event": "push",
-    "pullRequestEvent": "NOT RUN",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45171994222",
+    "url": "https://github.com/diabloell/digital-darwin/pull/20/checks",
+    "scope": "Exact draft PR head",
     "groups": [
       "LAB-E01",
       "LAB-E02",
@@ -37,29 +31,31 @@
       "planet",
       "release",
       "stress",
-      "tree"
+      "tree",
+      "welcome"
     ]
   },
   "checks": [
     {
-      "name": "release-smoke",
-      "command": "node scripts/release-smoke.mjs",
+      "name": "welcome-fix-e2e",
+      "command": "node scripts/welcome-fix-e2e.mjs",
       "status": "PASS",
       "exitCode": 0
     },
     {
-      "name": "release-e2e",
-      "command": "node scripts/release-e2e.mjs",
+      "name": "welcome-e2e",
+      "command": "node scripts/welcome-e2e.mjs",
       "status": "PASS",
       "exitCode": 0
     }
   ],
-  "legacyGolden": {
+  "legacyLab": {
     "status": "PASS",
-    "ticks": 10000,
-    "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
+    "replicas": 42,
+    "evidence": "dd-13/fix2-legacy-lab.json"
   },
-  "packageManifestSha256": "1ce798f874633562793a39eaf730a0ec5442b485211da2fd402b05ff97db9a9d",
-  "report": "DD-12.md",
-  "evidence": "dd-12/"
+  "report": "DD-13.md",
+  "evidence": "dd-13/",
+  "baseFixCommit": "73d34ec776db1c1f3f4b9bd952b52eafb4450414",
+  "revision": "PRODUCT FIX 2"
 }

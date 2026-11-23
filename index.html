@@ -10,7 +10,7 @@
 <body>
   <header class="masthead">
     <a class="brand" href="/" aria-label="Digital Darwin"><span aria-hidden="true">◈</span> DIGITAL DARWIN</a>
-    <span class="masthead-note">Искусственная жизнь</span><small class="build-version">0.1.0-rc.1</small><nav aria-label="Разделы"><a href="#analysis">Аналитика</a><a href="#world-saves" data-open="world-saves">Сохранения</a><a href="#experiment-lab" data-open="experiment-lab">Лаборатория</a></nav>
+    <span class="masthead-note">Искусственная жизнь</span><small class="build-version">0.1.0-rc.1</small><nav id="app-navigation" aria-label="Разделы"><a href="#analysis">Аналитика</a><a href="#world-saves" data-open="world-saves">Сохранения</a><a href="#experiment-lab" data-open="experiment-lab">Лаборатория</a></nav>
   </header>
   <main>
     <div class="console-heading">
@@ -31,7 +31,7 @@
         </form>
       </details>
     </div>
-    <div id="launch-row"><button id="quick-game" class="primary">Начать игру</button><span>Планета · дерево эволюции · экология</span></div>
+    <div id="launch-row"><button id="quick-game" class="primary">Начать игру</button><span id="launch-caption">Планета · дерево эволюции · экология</span></div>
     <div id="error" role="alert" hidden></div>
     <dl class="console-bar" aria-label="Текущее состояние">
       <div><dt>Тик / скорость</dt><dd><span id="tick">0</span> <span id="console-speed">· 1×</span></dd></div>
@@ -95,8 +95,9 @@
         </details>
           <div id="game-panel" hidden>
             <p id="game-status" role="status"></p>
-            <div id="game-choice" class="save-actions">
-              <label>Линия <select id="game-founder"></select></label><button id="game-choose">Выбрать основателя</button>
+            <div id="game-choice" class="founder-choice">
+              <h3>Выберите свою линию</h3><p>Коснитесь организма на карте или выберите его номер.</p>
+              <label>Линия <select id="game-founder"></select></label><button id="game-choose" class="primary">Играть за эту линию</button>
             </div>
             <p id="founder-preview"></p>
             <section id="game-debrief" aria-labelledby="debrief-title" hidden>
@@ -109,6 +110,8 @@
               <p class="game-stats"><span id="game-pop"></span><span id="game-energy"></span></p>
               <p id="game-ledger"></p><p id="game-next"></p>
               <p id="game-programme"></p><progress id="game-progress" aria-label="Прогресс адаптации" hidden></progress>
+              <button id="choose-adaptation" class="primary" hidden>Выбрать адаптацию</button>
+              <p id="programme-feedback" role="status" hidden></p>
               <div id="game-cards" class="game-cards"></div>
               <details id="evolution-tree" hidden><summary>Дерево эволюции</summary><p id="tree-progress"></p><ol id="tree-nodes"></ol></details>
           <ul id="game-attempts" aria-label="Итоги программ"></ul>
@@ -140,7 +143,11 @@
       </section>
       <section class="planet-panel" aria-labelledby="planet-title">
         <h2 id="planet-title">Планета</h2>
-        <div class="planet-art" aria-hidden="true"><div class="globe"></div></div>
+        <div id="planet-mini" hidden>
+          <canvas id="planet-globe" width="400" height="400" tabindex="0" aria-label="Вид игровой планеты" aria-describedby="planet-view-help"></canvas>
+          <p id="planet-view-help">Вращение — перетаскивание или стрелки. Масштаб — колесо, щипок или +/−. Сброс — Home.</p>
+        </div>
+        <p id="planet-placeholder" hidden>У этого мира нет процедурной планеты.</p>
         <p id="planet-seed">—</p>
         <p id="planet-size">—</p>
         <div id="planet-profile" hidden><dl class="planet-metrics">
@@ -242,6 +249,68 @@
     </details>
     <footer>Статистика цифровой модели. Изменение признака само по себе не доказывает естественный отбор.</footer>
   </main>
+  <dialog id="world-welcome" aria-labelledby="welcome-name">
+    <div class="welcome-shell">
+      <button id="welcome-close" class="welcome-close" aria-label="Закрыть знакомство с планетой" autofocus>✕</button>
+      <div class="welcome-visual" id="welcome-visual">
+        <canvas id="welcome-globe" width="400" height="400" tabindex="0" aria-label="Вид планеты" aria-describedby="welcome-view-help"></canvas>
+        <p id="welcome-view-help">Вращение — перетаскивание или стрелки. Масштаб — колесо, щипок или +/−. Сброс — Home.</p>
+      </div>
+      <div class="welcome-content">
+        <h2 id="welcome-name">Планета</h2>
+        <p id="welcome-character"></p>
+        <dl class="welcome-readings">
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">☀</span> Свет</dt>
+            <dd><strong id="welcome-light-band"></strong><meter id="welcome-light-meter" min="0" max="100" aria-label="Свет"></meter><p>Местный свет поддерживает плодородие.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">◈</span> Тепло</dt>
+            <dd><strong id="welcome-heat-band"></strong><meter id="welcome-heat-meter" min="0" max="100" aria-label="Тепло"></meter><p>Тепло вне оптимума снижает плодородие.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">♦</span> Влажные зоны</dt>
+            <dd><strong id="welcome-water-band"></strong><meter id="welcome-water-meter" min="0" max="100" aria-label="Влажные зоны"></meter><p>Во влажных клетках рост еды сильнее откликается на свет.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">✦</span> Плодородие</dt>
+            <dd><strong id="welcome-fertility-band"></strong><meter id="welcome-fertility-meter" min="0" max="100" aria-label="Плодородие"></meter><p>Выше плодородие — больше запас, ёмкость и рост пищи.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">◒</span> Стартовая пища</dt>
+            <dd><strong id="welcome-food-band"></strong><meter id="welcome-food-meter" min="0" max="100" aria-label="Стартовая пища"></meter><p>Дефицит уменьшает начальный запас и рост пищи.</p></dd>
+          </div>
+        </dl>
+        <form id="welcome-form">
+          <label>Сложность <select id="welcome-difficulty">
+            <option value="garden">Сад · обычные ресурсы</option>
+            <option value="scarce">Дефицит · 30% запасов и роста</option>
+          </select></label>
+          <button id="welcome-create" class="primary" type="submit">Войти в мир</button>
+          <button type="button" id="welcome-random">Случайная планета</button>
+          <details><summary>Выбрать seed</summary><label>Seed<input id="welcome-seed" maxlength="128" required></label></details>
+          <button id="welcome-advanced" type="button">Расширенные настройки</button>
+        </form>
+        <details class="welcome-raw">
+          <summary>Точные значения и шкалы</summary>
+          <p>Свет, тепло и плодородие — индексы 0–100. Влажные зоны — доля клеток с влагой от 60 из 100. Шкала пищи отсчитывается от запаса Сада на этой карте. Сфера показывает условную проекцию местных условий.</p>
+          <dl>
+            <div><dt>Свет</dt><dd id="welcome-light"></dd></div>
+            <div><dt>Тепло</dt><dd id="welcome-heat"></dd></div>
+            <div><dt>Влажные зоны</dt><dd id="welcome-water"></dd></div>
+            <div><dt>Плодородие</dt><dd id="welcome-fertility"></dd></div>
+            <div><dt>Стартовая пища</dt><dd id="welcome-food"></dd></div>
+          </dl>
+        </details>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="evolution-decision" aria-labelledby="decision-title" aria-describedby="decision-context">
+    <header><h2 id="decision-title">Выберите адаптацию</h2><p id="decision-context"></p></header>
+    <div id="decision-cards"></div>
+    <footer><button id="decision-later" autofocus>Позже</button><span>EP запускают программу. Признак может появиться у потомков, сохранение в линии не гарантировано. Игра на паузе.</span></footer>
+  </dialog>
+
   <script type="module" src="/src/app.js"></script>
   <script type="module" src="/src/lab/ui.js"></script>
 </body>
