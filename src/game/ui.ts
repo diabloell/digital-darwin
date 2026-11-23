@@ -1,3 +1,4 @@
+import { LEGACY_CARDS } from '../core/tree.ts';
 import { CARDS,TUNING } from '../core/game.ts';
 import type { Card,Habitat } from '../core/game.ts';
 import type { Command,Frame } from '../protocol.ts';
@@ -25,12 +26,15 @@ export class GamePanel {
       if(action.kind==='choose')send({kind:'game-action',epoch,action:{id,kind:'choose',founder:action.founder!}});
       else send({kind:'game-action',epoch,action:{id,kind:'buy',card:action.card!}});
     };
+    $('evolution-tree').addEventListener('toggle',()=>{
+      if(this.frame?.game?.tree && $<HTMLDetailsElement>('evolution-tree').open)this.renderTree(this.frame.game);
+    });
     $('game-analysis').addEventListener('toggle',()=>{
       if(this.frame && $<HTMLDetailsElement>('game-analysis').open)this.update(this.frame);
     });
     $('game-form').onsubmit=e=>{
       e.preventDefault();
-      if(confirmNew())send({kind:'new-game',seed:$<HTMLInputElement>('game-seed').value.trim(),habitat:$<HTMLSelectElement>('game-habitat').value as Habitat,planet:$<HTMLInputElement>('game-planet').checked});
+      if(confirmNew())send({kind:'new-game',seed:$<HTMLInputElement>('game-seed').value.trim(),habitat:$<HTMLSelectElement>('game-habitat').value as Habitat,planet:$<HTMLInputElement>('game-planet').checked,tree:$<HTMLInputElement>('game-tree-mode').checked});
     };
     $('quick-game').onclick=()=>$<HTMLFormElement>('game-form').requestSubmit();
     $('game-choose').onclick=()=>dispatch({kind:'choose',founder:Number(this.founder.value)});
@@ -45,6 +49,28 @@ export class GamePanel {
       $('game-cards').append(panel);
       this.buttons.set(key,button);
     }
+  }
+  private renderTree(game:NonNullable<Frame['game']>){
+    const rows=game.tree!.rows.map(({card,quote,reason})=>{
+      const attempt=game.attempts.find(a=>a.card===card);
+      const node=CARDS[card];
+      const li=document.createElement('li');
+      const title=document.createElement('strong');
+      title.textContent=node.title;
+      const status=document.createElement('p');
+      const observed=attempt
+        ?attempt.established===null?'Активна':attempt.carriers?`Присутствует · ${attempt.carriers} нос.`:attempt.peak?'Утрачена':'Попытка без живых носителей'
+        :reason?reason:game.tree!.offered.includes(card)?'Доступна':'Вне текущего предложения';
+      const terms=attempt?.quote??quote;
+      status.textContent=`${observed} · ${terms.price} EP · ${terms.duration} тик.${node.major?` · подготовка ${fmt(100*terms.prepared,0)}%`:''}`;
+      const detail=document.createElement('small');
+      const sample=game.samples.at(-1)?.traits?.[card];
+      const direction=(value:number)=>value>0?'+ '+fmt(value):'− '+fmt(-value);
+      detail.textContent=`${node.benefit} (${direction(node.delta)}${node.secondary?', '+direction(node.secondary[1]):''}). ${node.cost}.${sample?` Последний отсчёт носителей: энергия ${fmt(sample.energy)} ед., средний целевой ген ${fmt(sample.gene,3)}${sample.secondary!==undefined?' / '+fmt(sample.secondary,3):''}.`:''}`;
+      li.append(title,status,detail);
+      return li;
+    });
+    $('tree-nodes').replaceChildren(...rows);
   }
   update(frame:Frame){
     const previous=this.frame;
@@ -63,6 +89,7 @@ export class GamePanel {
     if(reset){
       $<HTMLDetailsElement>('evolution-game').open=false;
       $<HTMLInputElement>('game-seed').value=frame.seed;
+      $<HTMLInputElement>('game-tree-mode').checked=game.version===2;
       $<HTMLInputElement>('game-planet').checked=Boolean(frame.planet);
       $<HTMLSelectElement>('game-habitat').value=game.habitat;
     }
@@ -77,13 +104,24 @@ export class GamePanel {
     $('game-receipt').textContent=game.receipt&&!game.receipt.accepted?game.receipt.reason:'';
     for(const [key,button] of this.buttons){
       const used=game.attempts.some(a=>a.card===key);
-      button.disabled=game.lost||game.founder===null||game.active!==null||game.ep<TUNING.price||used;
-      button.textContent=used?'Использована':`${TUNING.price} EP · начать`;
+      const option=game.tree?.rows.find(row=>row.card===key);
+      const price=option?.quote.price??TUNING.price;
+      const visible=game.tree?game.tree.offered.includes(key):LEGACY_CARDS.includes(key);
+      button.closest('section')!.hidden=!visible;
+      button.disabled=game.lost||game.founder===null||game.active!==null||game.ep<price||used;
+      button.textContent=used?'Использована':`${price} EP · начать`;
+      button.title=option&&CARDS[key].major?`${option.quote.duration} тик. · подготовка ${fmt(100*option.quote.prepared,0)}%`:'';
+    }
+    const tree=$<HTMLDetailsElement>('evolution-tree');
+    tree.hidden=!game.tree;
+    if(game.tree){
+      $('tree-progress').textContent=`${Math.min(10,game.tree.completed)}/10 завершённых программ. Развилка требует 800 тиков и 10 потомков.`;
+      if(tree.open)this.renderTree(game);
     }
     const active=game.attempts.find(a=>a.card===game.active);
     const progress=$<HTMLProgressElement>('game-progress');
     progress.hidden=!active;
-    progress.max=TUNING.duration;
+    progress.max=active?active.end-active.start:TUNING.duration;
     progress.value=active?frame.metrics.tick-active.start:0;
     $('game-programme').textContent=active?`${CARDS[active.card].title} · ${progress.value}/${progress.max} тиков · носители ${active.carriers}/${line?.living??0}`
       :game.lost?'Программы остановлены':game.attempts.length?'Можно выбрать следующую карту при наличии EP':'Программа пока не начата';
@@ -91,7 +129,7 @@ export class GamePanel {
       const li=document.createElement('li');
       const share=line?.living?a.carriers/line.living*100:0;
       const result=a.established===null?'идёт':a.established?'закрепилась':a.peak&&!a.carriers?'утрачена':'не закрепилась';
-      li.textContent=`${CARDS[a.card].title} · ${a.carriers}/${line?.living??0} (${fmt(share)}%) · ${result}${a.established&&!a.carriers?' при завершении, затем утрачена':''}`;
+      li.textContent=`${a.quote?`Тики ${a.start}–${a.finished??a.end} · ${a.quote.price} EP · `:''}${CARDS[a.card].title} · ${a.carriers}/${line?.living??0} (${fmt(share)}%) · ${result}${a.established&&!a.carriers?' при завершении, затем утрачена':''}`;
       return li;
     });
     $('game-attempts').replaceChildren(...attempts);

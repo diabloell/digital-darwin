@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "tick": 890,
+      "ep": 19,
+      "attempt": {
+        "card": "explorer",
+        "start": 879,
+        "end": 1059,
+        "introduced": 1,
+        "lastIntroduction": 889,
+        "endingCount": null,
+        "established": null,
+        "peak": 1,
+        "quote": {
+          "price": 4,
+          "duration": 180,
+          "prepared": 0.8117647058823529
+        },
+        "carriers": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "tick": 890,
+      "ep": 19,
+      "attempt": {
+        "card": "explorer",
+        "start": 879,
+        "end": 1059,
+        "introduced": 1,
+        "lastIntroduction": 889,
+        "endingCount": null,
+        "established": null,
+        "peak": 1,
+        "quote": {
+          "price": 4,
+          "duration": 180,
+          "prepared": 0.8117647058823529
+        },
+        "carriers": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "tick": 890,
+      "ep": 19,
+      "attempt": {
+        "card": "explorer",
+        "start": 879,
+        "end": 1059,
+        "introduced": 1,
+        "lastIntroduction": 889,
+        "endingCount": null,
+        "established": null,
+        "peak": 1,
+        "quote": {
+          "price": 4,
+          "duration": 180,
+          "prepared": 0.8117647058823529
+        },
+        "carriers": 1
+      },
+      "status": "PASS"
+    }
+  ]
+}

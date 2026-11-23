@@ -1,0 +1,85 @@
+{
+  "seed": "amber",
+  "founder": 58,
+  "forkTick": 867,
+  "results": [
+    {
+      "regrowth": true,
+      "metrics": {
+        "tick": 1167,
+        "population": 106,
+        "food": 14168.827,
+        "births": 224,
+        "deaths": 198,
+        "meanEnergy": 21.242943396226416,
+        "maxGeneration": 6
+      },
+      "line": {
+        "founder": 58,
+        "living": 18,
+        "born": 19,
+        "deaths": 1,
+        "maxGeneration": 6,
+        "lastActivity": 1088,
+        "status": "active",
+        "age": 1167,
+        "generations": 7
+      },
+      "attempt": {
+        "card": "local",
+        "start": 867,
+        "end": 1167,
+        "introduced": 3,
+        "lastIntroduction": 1088,
+        "endingCount": 3,
+        "established": true,
+        "peak": 3,
+        "quote": {
+          "price": 7,
+          "duration": 300,
+          "prepared": 0.25333333333333335
+        },
+        "finished": 1167
+      }
+    },
+    {
+      "regrowth": false,
+      "metrics": {
+        "tick": 1142,
+        "population": 0,
+        "food": 14164.96,
+        "births": 210,
+        "deaths": 290,
+        "meanEnergy": 0,
+        "maxGeneration": 0
+      },
+      "line": {
+        "founder": 58,
+        "living": 0,
+        "born": 15,
+        "deaths": 15,
+        "maxGeneration": 5,
+        "lastActivity": 1142,
+        "status": "extinct",
+        "age": 1142,
+        "generations": 6
+      },
+      "attempt": {
+        "card": "local",
+        "start": 867,
+        "end": 1167,
+        "introduced": 0,
+        "lastIntroduction": -18,
+        "endingCount": 0,
+        "established": false,
+        "peak": 0,
+        "quote": {
+          "price": 7,
+          "duration": 300,
+          "prepared": 0.25333333333333335
+        },
+        "finished": 1142
+      }
+    }
+  ]
+}

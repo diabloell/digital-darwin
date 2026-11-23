@@ -311,3 +311,9 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
 #planet-profile dd { text-align: right; }
 #terrain-control { display: inline-flex; align-items: center; gap: 4px; }
 #terrain-layer { min-height: 30px; padding: 4px 6px; font-size: 12px; }
+
+#evolution-tree { margin-top: 8px; }
+#tree-nodes { max-height: 290px; overflow: auto; padding-inline-start: 22px; margin-block: 5px; }
+#tree-nodes li { padding: 7px 3px; border-top: 1px solid var(--line); }
+#tree-nodes p { margin: 2px 0; font-size: 12px; }
+#tree-nodes small { color: var(--muted); line-height: 1.4; }

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "tree-smoke",
+    "command": "node scripts/tree-smoke.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "tree-e2e",
+    "command": "node scripts/tree-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  }
+]

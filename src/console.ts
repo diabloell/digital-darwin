@@ -1,5 +1,5 @@
 import { PERIOD } from './core/planet.ts';
-import { CARDS, TUNING } from './core/game.ts';
+import { CARDS } from './core/game.ts';
 import { EVENT_LABELS } from './history-panel.ts';
 import type { Frame } from './protocol.ts';
 
@@ -30,7 +30,7 @@ export function updateConsole(frame: Frame, previous?: Frame): void {
   element('console-speed').textContent = `· ${frame.speed}×`;
   element('console-line').textContent = game?.line ? `#${game.line.founder} · ${format.format(game.line.living)} жив.` : '—';
   element('console-programme').textContent = active
-    ? `${CARDS[active.card].title} · ${frame.metrics.tick - active.start}/${TUNING.duration}` : '—';
+    ? `${CARDS[active.card].title} · ${frame.metrics.tick - active.start}/${active.end-active.start}` : '—';
   const event = recentEvents.find(row => row.severity === 'critical') ?? recentEvents[0];
   element('console-event').textContent = game?.lost ? 'Линия вымерла'
     : event ? EVENT_LABELS[event.kind] : 'Пока нет';
