@@ -25,6 +25,8 @@ export class PlanetGlobe {
   constructor(root:HTMLElement){
     this.canvas=root.querySelector('canvas')!;
     const canvas=this.canvas;
+    // Intro globe rotates more gently; the in-game miniature keeps a responsive feel.
+    const dragSensitivity=root.id==='welcome-visual'?3:3.5;
     const controls:Record<string,()=>void>={
       left:()=>this.rotate(.4,0),right:()=>this.rotate(-.4,0),
       up:()=>this.rotate(0,.32),down:()=>this.rotate(0,-.32),
@@ -45,7 +47,7 @@ export class PlanetGlobe {
     };
     canvas.onpointermove=event=>{
       if(this.drag?.id!==event.pointerId)return;
-      this.rotate(-4*(event.clientX-this.drag.x)/canvas.clientWidth,-4*(event.clientY-this.drag.y)/canvas.clientHeight);
+      this.rotate(-dragSensitivity*(event.clientX-this.drag.x)/canvas.clientWidth,-dragSensitivity*(event.clientY-this.drag.y)/canvas.clientHeight);
       this.drag.x=event.clientX;
       this.drag.y=event.clientY;
     };
