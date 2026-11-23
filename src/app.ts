@@ -256,6 +256,7 @@ $<HTMLSelectElement>('trait-color').onchange = e => map.setMode((e.target as HTM
 terrain.onchange = () => {
   const layer = terrain.value as PlanetLayer | 'food';
   map.setTerrain(layer);
+  $('map-layer-heading').textContent = layer === 'food' ? 'ПИЩЕВОЙ ЛАНДШАФТ' : LAYERS[layer].toUpperCase();
   $('terrain-legend').textContent = layer === 'food' ? 'Пища · яркость по запасу' : `${LAYERS[layer]} · тёмный 0 → яркий 100`;
 };
 chartMode.onchange = scheduleChart;

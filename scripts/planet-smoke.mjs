@@ -41,12 +41,14 @@ for (const seed of ['coral-42','dune','amber']) {
   const initial = engine.metrics();
   game.command({id:1,kind:'choose',founder:founders},engine,genealogy);
   const current = {engine,game,genealogy};
-  let id=1, restored;
+  let id=1, restored, checkpoint;
+  const commands=[];
   for(let i=0;i<800;i++){
     if (game.ready) {
       if(game.ep>=5&&!game.active&&game.snapshot().attempts.length<2) {
         const action={id:++id,kind:'buy',card:id===2?'nutrition':'fertility'};
         assert.equal(game.command(action,engine,genealogy).accepted,true);
+        commands.push({tick:engine.tick,action});
         if (restored) assert.equal(restored.game.command(action,restored.engine,restored.genealogy).accepted,true);
       }
       game.step(engine,genealogy);
@@ -59,6 +61,7 @@ for (const seed of ['coral-42','dune','amber']) {
       assert.ok(game.active);
       const state = {...capture(engine,genealogy),game:game.snapshot()};
       const save=await encode(state,'Planet checkpoint',time);
+      checkpoint={tick:engine.tick,checksum:save.manifest.checksum,phase:cycle(engine.tick)};
       restored=restore((await decode(save.text)).state);
       assert.deepEqual(restored.engine.planet,engine.planet);
       assert.deepEqual(canonical(restored),canonical(current));
@@ -75,9 +78,17 @@ for (const seed of ['coral-42','dune','amber']) {
     assert.equal(game.snapshot().attempts.length,2);
     assert.equal(game.ready,true);
     assert.deepEqual(canonical(restored),hashes);
+    const replay=gameWorld(seed,'garden',true);
+    assert.equal(replay.game.command({id:1,kind:'choose',founder:founders},replay.engine,replay.genealogy).accepted,true);
+    for(let tick=0;tick<800;tick++){
+      const command=commands.find(c=>c.tick===tick);
+      if(command)assert.equal(replay.game.command(command.action,replay.engine,replay.genealogy).accepted,true);
+      replay.game.step(replay.engine,replay.genealogy);
+    }
+    assert.deepEqual(canonical(replay),hashes);
   }
   cases.push({seed,founder:founders,initial,profile,statistics,final:engine.metrics(),line:game.view(genealogy).line,
-    attempts:game.snapshot().attempts,cycle:cycle(engine.tick),hashes,restoredContinuation:!!restored});
+    attempts:game.snapshot().attempts,cycle:cycle(engine.tick),hashes,commands,checkpoint,restoredContinuation:!!restored});
 }
 assert.equal(new Set(cases.map(c=>c.statistics.fertility.mean)).size,3);
 const climate = [1, PERIOD/2].map(tick=>{
