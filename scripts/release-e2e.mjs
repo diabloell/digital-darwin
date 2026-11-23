@@ -12,7 +12,7 @@ const build=await packageRelease(output);
 const second=await packageRelease(path.join(output,'.repro'));
 assert.equal(build.manifest,second.manifest);
 
-const journey=releaseWorld('dune');
+const journey=releaseWorld('dune','garden',true);
 const {game,engine,genealogy}=journey;
 game.command({id:1,kind:'choose',founder:40},engine,genealogy);
 const commands=[];
@@ -140,7 +140,7 @@ try{
       await loc('#welcome-create').click();
       await loc('#game-choose').click();
       await page.waitForFunction(()=>window.releaseFrame?.game?.founder===1);
-      assert.equal((await read()).game.version,3);
+      assert.equal((await read()).game.version,4);
       await to(70);
       await loc('#decision-cards button:enabled').first().click();
       await page.waitForFunction(()=>window.releaseFrame.game.attempts.length===1);

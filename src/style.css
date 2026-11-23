@@ -416,3 +416,7 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
   #welcome-globe { width: min(50vw,138px); }
   .welcome-readings .welcome-fact:last-child { grid-column: 1/-1; }
 }
+
+.line-key { border: 2px solid #ffe0a1; border-radius: 50%; }
+.carrier-key { background: #8bf5ff; clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%); }
+#impact-comparison { color: var(--muted); font-size: 12px; line-height: 1.5; }

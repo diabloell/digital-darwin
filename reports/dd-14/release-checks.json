@@ -1,0 +1,14 @@
+[
+  {
+    "name": "release-smoke",
+    "command": "node scripts/release-smoke.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "release-e2e",
+    "command": "node scripts/release-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  }
+]

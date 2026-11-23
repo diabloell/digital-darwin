@@ -8,13 +8,14 @@ import type { Frame } from './protocol.ts';
 export const GENE_LABELS: Record<keyof Genome, string> = { speed: 'Скорость', sensor: 'Радиус поиска', efficiency: 'Усвоение', threshold: 'Порог размножения' };
 export const GENE_UNITS: Record<keyof Genome, string> = { speed: 'кл./тик', sensor: 'клетки', efficiency: 'доля', threshold: 'ед. энергии' };
 const PALETTE = ['#badfff', '#a6c7fd', '#aaaaf9', '#c0a0fb', '#db9cf3', '#f49bdb', '#ffabc5', '#ffc0ae'];
-export type TerrainLayer=PlanetLayer|EcoLayer|'food';
+export type TerrainLayer=PlanetLayer|EcoLayer|'food'|'forage';
 const ECO_SCALE: Record<EcoLayer,number>={pressure:PRESSURE_MAX,crisis:1,demand:8};
 const TERRAIN_COLORS: Record<PlanetLayer|EcoLayer, readonly [number, number, number]> = {
   pressure:[230,137,55],crisis:[230,70,60],demand:[138,120,230],
   light: [226, 185, 84], temperature: [222, 112, 67], water: [53, 164, 232], fertility: [124, 214, 97]
 };
 const ORGANISM = '#b8fff0';
+const COMPETITOR = '#99b2ad';
 
 export class WorldMap {
   private readonly ctx: CanvasRenderingContext2D;
@@ -35,6 +36,8 @@ export class WorldMap {
   private dpr = 1;
   private highlighted: number | null = null;
   private readonly linePositions: number[] = [];
+  private readonly inspectedPositions: number[] = [];
+  private readonly carrierPositions: number[] = [];
   private mode = 'normal';
   private layer: TerrainLayer = 'food';
   private drag: { startX: number; startY: number; x: number; y: number; moved: boolean; id: number } | undefined;
@@ -210,18 +213,28 @@ export class WorldMap {
     const { frame, ctx, image } = this;
     if (!frame || !image) return;
     const ecological = Object.hasOwn(ECO_SCALE,this.layer);
-    if (this.paintedTick < 0 || ((this.layer === 'food'||ecological) && this.paintedTick !== frame.metrics.tick)) {
+    const forage=this.layer==='forage'?frame.ecology:undefined;
+    if (this.paintedTick < 0 || ((this.layer === 'food'||forage||ecological) && this.paintedTick !== frame.metrics.tick)) {
       const data = image.data;
       const layer = ecological ? frame.ecology?.[this.layer === 'crisis' ? 'collapsed' : this.layer as 'pressure'|'demand'] : frame.planet?.layers[this.layer as PlanetLayer];
       const max = ecological ? ECO_SCALE[this.layer as EcoLayer] : 100;
-      const rgb = this.layer === 'food' ? undefined : TERRAIN_COLORS[this.layer];
+      const rgb = this.layer === 'food'||this.layer==='forage' ? undefined : TERRAIN_COLORS[this.layer];
       for (let i = 0; i < frame.food.length; i++) {
         const f = frame.food[i], j = i * 4;
         if (layer && rgb) {
           const value = Math.min(1,layer[i] / max);
           data[j] = 13 + rgb[0] * value; data[j + 1] = 20 + rgb[1] * value; data[j + 2] = 24 + rgb[2] * value;
         } else {
-          data[j] = 13 + f * .11; data[j + 1] = 30 + f * .34; data[j + 2] = 29 + f * .25;
+          if(frame.game){
+            const stock=Math.sqrt(f/255);
+            const pressure=forage?forage.pressure[i]/PRESSURE_MAX:0;
+            const crisis=forage?.collapsed[i]??0;
+            data[j]=13+stock*37+pressure*154+crisis*45;
+            data[j+1]=24+stock*113*(1-pressure*.70)+pressure*(crisis?12:62);
+            data[j+2]=30+stock*56*(1-pressure);
+          }else{
+            data[j]=13+f*.11; data[j+1]=30+f*.34; data[j+2]=29+f*.25;
+          }
         }
         data[j + 3] = 255;
       }
@@ -241,6 +254,9 @@ export class WorldMap {
     const { positions, ids } = frame;
     this.groups.forEach(group => { group.length = 0; });
     this.linePositions.length = 0;
+    this.carrierPositions.length = 0;
+    this.inspectedPositions.length = 0;
+    const own=frame.game?.founder;
     const minX = -this.x / this.scale, minY = -this.y / this.scale;
     const maxX = minX + this.width / this.scale, maxY = minY + this.height / this.scale;
     for (let i = 0; i < ids.length; i++) {
@@ -250,12 +266,14 @@ export class WorldMap {
         : this.mode === 'energy' ? Math.min(7, Math.floor(positions[i * 4 + 2] * 8))
         : this.mode === 'generation' ? Math.min(7, Math.floor(frame.generations[i] / 5)) : 0;
       this.groups[bin].push(i * 4);
-      if (frame.founders[i] === this.highlighted) this.linePositions.push(i * 4);
+      if(frame.latestCarriers?.[i])this.carrierPositions.push(i*4);
+      else if(frame.founders[i]===(own??this.highlighted))this.linePositions.push(i*4);
+      else if(frame.founders[i]===this.highlighted)this.inspectedPositions.push(i*4);
     }
     const radius = Math.max(.35, 1.35 / this.scale);
     for (const [bin, group] of this.groups.entries()) {
       if (!group.length) continue;
-      ctx.fillStyle = this.mode === 'normal' ? ORGANISM : PALETTE[bin];
+      ctx.fillStyle = this.mode === 'normal' ? (own==null?ORGANISM:COMPETITOR) : PALETTE[bin];
       ctx.beginPath();
       for (const i of group) {
         const x = positions[i], y = positions[i + 1];
@@ -264,22 +282,40 @@ export class WorldMap {
       }
       ctx.fill();
     }
-    if (this.linePositions.length) {
-      ctx.strokeStyle = '#ffe0a1';
-      ctx.lineWidth = 1.25 / this.scale;
+    this.drawRings(this.linePositions,positions,radius,'#ffe0a1');
+    this.drawRings(this.inspectedPositions,positions,radius,'#c0a0fb');
+    if(this.carrierPositions.length){
       ctx.beginPath();
-      const ring = radius + 2 / this.scale;
-      for (const i of this.linePositions) {
-        ctx.moveTo(positions[i] + ring, positions[i + 1]);
-        ctx.arc(positions[i], positions[i + 1], ring, 0, 2 * Math.PI);
+      const size=radius+3/this.scale;
+      for(const i of this.carrierPositions){
+        const x=positions[i],y=positions[i+1];
+        ctx.moveTo(x,y-size);
+        ctx.lineTo(x+size,y);
+        ctx.lineTo(x,y+size);
+        ctx.lineTo(x-size,y);
+        ctx.closePath();
       }
-      ctx.stroke();
+      ctx.fillStyle='#8bf5ff'; ctx.fill();
+      ctx.strokeStyle='#14252e'; ctx.lineWidth=1/this.scale; ctx.stroke();
     }
     if (frame.selected) this.drawSelection(frame);
     ctx.restore();
     const text = `Центр ${((this.width / 2 - this.x) / this.scale).toFixed(1)}, ${((this.height / 2 - this.y) / this.scale).toFixed(1)} · ${this.scale.toFixed(2)} пикс./кл.`;
     if (this.coordinates.textContent !== text) this.coordinates.textContent = text;
     this.updateLegend(gene);
+  }
+
+  private drawRings(indices:number[],positions:Float32Array,radius:number,color:string):void {
+    if(!indices.length)return;
+    const ctx=this.ctx,ring=radius+2/this.scale;
+    ctx.strokeStyle=color;
+    ctx.lineWidth=1.25/this.scale;
+    ctx.beginPath();
+    for(const i of indices){
+      ctx.moveTo(positions[i]+ring,positions[i+1]);
+      ctx.arc(positions[i],positions[i+1],ring,0,2*Math.PI);
+    }
+    ctx.stroke();
   }
 
   private drawSelection(frame: Frame): void {

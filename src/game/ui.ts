@@ -1,3 +1,5 @@
+import { GENE_LABELS, GENE_UNITS } from '../map.ts';
+import { IMPACT_GAME_VERSION } from '../core/game.ts';
 import { CARD_COPY, cardDetails } from './card-copy.ts';
 import { WorldWelcome } from './welcome.ts';
 import { EvolutionDecision } from './decision.ts';
@@ -50,7 +52,7 @@ export class GamePanel {
       if(!retry&&!release&&!$<HTMLFormElement>('game-form').reportValidity())return;
       if(!seed){seedInput.setCustomValidity('Введите seed мира');seedInput.reportValidity();return;}
       if(!confirmNew())return false;
-      send({kind:'new-game',seed,habitat:retry?frame!.game!.habitat:selected,release,
+      send({kind:'new-game',seed,habitat:retry?frame!.game!.habitat:selected,release,impact:release&&(!retry||frame?.game?.version===IMPACT_GAME_VERSION),
         planet:retry?Boolean(frame?.planet):$<HTMLInputElement>('game-planet').checked,
         tree:retry?frame?.game?.version===2:$<HTMLInputElement>('game-tree-mode').checked,
         ecology:retry?Boolean(frame?.ecology):$<HTMLInputElement>('game-ecology').checked});
@@ -67,8 +69,8 @@ export class GamePanel {
     };
     $('quick-game').onclick=openWelcome;
     $('game-release-start').onclick=openWelcome;
-    $('retry-seed').onclick=()=>{if(this.frame?.game)start(this.frame.game.version===3,this.frame.seed,true);};
-    $('retry-random').onclick=()=>{if(this.frame?.game)start(this.frame.game.version===3,randomSeed(),true);};
+    $('retry-seed').onclick=()=>{if(this.frame?.game)start(this.frame.game.version>=3,this.frame.seed,true);};
+    $('retry-random').onclick=()=>{if(this.frame?.game)start(this.frame.game.version>=3,randomSeed(),true);};
     this.founder.onchange=()=>this.previewFounder();
     $('game-choose').onclick=()=>dispatch({kind:'choose',founder:Number(this.founder.value)});
     for(const [key,c] of Object.entries(CARDS) as [Card,typeof CARDS[Card]][]){
@@ -200,7 +202,9 @@ export class GamePanel {
     const line=game.line,sample=game.samples.at(-1);
     $('game-status').textContent=game.lost?'Линия вымерла. Начните новую игру.':line
       ?`Линия #${line.founder} · поколение ${line.maxGeneration}`:'Выберите основателя, затем запустите время.';
-    $('game-pop').textContent=line?`живых ${line.living} · рождений ${line.born-1}`:'';
+    const recent=game.samples.findLast(row=>row.tick<=frame.metrics.tick-40);
+    const trend=recent&&line?` · за ${frame.metrics.tick-recent.tick} тик.: ${line.living-recent.population>=0?'+':''}${line.living-recent.population}`:'';
+    $('game-pop').textContent=line?`живых ${line.living} · рождений ${line.born-1}${trend}`:'';
     $('game-energy').textContent=sample?.energy==null?'Энергия и поддержание · нет отсчёта':`Энергия ${fmt(sample?.energy)} ед. · поддержание ${fmt(sample?.maintenance,3)} ед./тик (последний отсчёт)`;
     $('game-ledger').textContent=`Поколения +${game.renewal} · устойчивые рождения +${game.sustained} · первые потомки +${game.achievement}${game.birthEP===undefined?'':` · ранние рождения +${game.birthEP}`} · потрачено ${game.spent}`;
     $('game-receipt').textContent=game.receipt&&!game.receipt.accepted?game.receipt.reason:'';
@@ -232,15 +236,25 @@ export class GamePanel {
     progress.value=active?frame.metrics.tick-active.start:0;
     $('game-programme').textContent=active?`${CARDS[active.card].title} · ${progress.value}/${progress.max} тиков · носители ${active.carriers}/${line?.living??0}`
       :game.lost?'Программы остановлены':game.attempts.length?'Можно выбрать следующую карту при наличии EP':'Программа пока не начата';
-    const note=$('programme-feedback');
-    if(reset){note.hidden=true;note.textContent='';}
-    const last=game.attempts.at(-1);
-    const prior=previous?.game?.attempts.at(-1);
-    if(!reset&&last&&(last.card!==prior?.card||last.established!==prior?.established)){
-      note.hidden=false;
+    const note=$('programme-feedback'), comparison=$('impact-comparison');
+    const last=game.attempts.at(-1), prior=previous?.game?.attempts.at(-1);
+    note.hidden=!last;
+    comparison.hidden=!last;
+    if(last&&(reset||last.card!==prior?.card||last.established!==prior?.established)){
       note.textContent=last.established===null
-        ?`${CARDS[last.card].title}: началась программа за ${last.quote?.price??TUNING.price} EP.${frame.running?'':' Игра на паузе.'}`
+        ?`${CARDS[last.card].title}: началась программа за ${last.quote?.price??TUNING.price} EP.`
         :`${CARDS[last.card].title}: программа завершилась. Внедрений ${last.introduced}, живых носителей на финише ${last.endingCount??0}.`;
+    }
+    if(last&&(reset||sample?.tick!==previous?.game?.samples.at(-1)?.tick||last.carriers!==prior?.carriers)){
+      const start=game.samples.findLast(row=>row.tick===last.start);
+      const end=last.established===null?sample:game.samples.find(row=>row.tick===(last.finished??last.end));
+      const gene=CARDS[last.card].gene;
+      const trait=end?.traits?.[last.card];
+      const change=start?.values&&trait
+        ?` ${GENE_LABELS[gene]}: ${fmt(start.values[gene],3)} у линии до выбора → ${fmt(trait.gene,3)} у носителей ${last.established===null?'в последнем отсчёте':'на финише'} (${GENE_UNITS[gene]}). Разные группы, малые выборки.`
+        :' Для сравнения признака пока нет двух отсчётов с живыми организмами.';
+      const text=`Сейчас носителей ${last.carriers}/${line?.living??0}.${change}`;
+      if(comparison.textContent!==text)comparison.textContent=text;
     }
     const attempts=game.attempts.map(a=>{
       const li=document.createElement('li');

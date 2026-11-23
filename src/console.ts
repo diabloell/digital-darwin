@@ -43,26 +43,34 @@ export function updateConsole(frame: Frame, previous?: Frame): void {
   const event = recentEvents.find(row => row.severity === 'critical') ?? recentEvents[0];
   element('console-event').textContent = game?.lost ? 'Линия вымерла'
     : event ? EVENT_LABELS[event.kind] : 'Пока нет';
-  if (previous?.epoch !== frame.epoch || recentEvents[0]?.id !== previous.recentEvents[0]?.id) {
-    const list = element('recent-events');
-    const rows = recentEvents.map(row => {
-      const li = document.createElement('li');
-      const value = row.from !== undefined ? `${format.format(row.from)} → ${format.format(row.to!)}` : format.format(row.count);
-      li.textContent = `Тик ${format.format(row.tick)} · ${EVENT_LABELS[row.kind]} · ${value}`;
-      return li;
+  const recent=recentEvents.map(row=>{
+    const value=row.from!==undefined?`${format.format(row.from)} → ${format.format(row.to!)}`:format.format(row.count);
+    return {tick:row.tick,text:`${EVENT_LABELS[row.kind]} · ${value}`};
+  });
+  for(const attempt of game?.attempts.slice(-2)??[]){
+    recent.push({tick:attempt.start,text:`Начата программа «${CARDS[attempt.card].title}»`});
+    if(attempt.established!==null)recent.push({tick:attempt.finished??Math.min(attempt.end,game!.tick),
+      text:`Программа «${CARDS[attempt.card].title}» завершена · носителей ${attempt.endingCount??0}`});
+  }
+  const events=recent.sort((a,b)=>b.tick-a.tick).slice(0,5);
+  const list=element('recent-events');
+  const signature=JSON.stringify(events);
+  if(list.dataset.signature!==signature){
+    list.dataset.signature=signature;
+    const rows=events.map(({tick,text})=>{
+      const row=document.createElement('li');
+      row.textContent=`Тик ${format.format(tick)} · ${text}`;
+      return row;
     });
-    if (!rows.length) {
-      const li = document.createElement('li');
-      li.textContent = 'Событий пока нет.';
-      rows.push(li);
-    }
     list.replaceChildren(...rows);
+    if(!rows.length)list.textContent='Событий пока нет.';
   }
   const [last, before] = frame.history.slice(-2).reverse();
   element('world-changes').textContent = before
     ? `За ${last.tick - before.tick} тик. · живые ${delta.format(last.population - before.population)} · пища ${delta.format(last.food - before.food)} ед.`
     : 'Изменения появятся после двух отсчётов.';
   updateEcology(frame,previous);
+  element('line-map-legend').hidden=game?.founder==null;
   element('focus-line').hidden = !game?.line?.living;
 }
 
