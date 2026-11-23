@@ -34,7 +34,7 @@ export class GamePanel {
     });
     $('game-form').onsubmit=e=>{
       e.preventDefault();
-      if(confirmNew())send({kind:'new-game',seed:$<HTMLInputElement>('game-seed').value.trim(),habitat:$<HTMLSelectElement>('game-habitat').value as Habitat,planet:$<HTMLInputElement>('game-planet').checked,tree:$<HTMLInputElement>('game-tree-mode').checked});
+      if(confirmNew())send({kind:'new-game',seed:$<HTMLInputElement>('game-seed').value.trim(),habitat:$<HTMLSelectElement>('game-habitat').value as Habitat,planet:$<HTMLInputElement>('game-planet').checked,tree:$<HTMLInputElement>('game-tree-mode').checked,ecology:$<HTMLInputElement>('game-ecology').checked});
     };
     $('quick-game').onclick=()=>$<HTMLFormElement>('game-form').requestSubmit();
     $('game-choose').onclick=()=>dispatch({kind:'choose',founder:Number(this.founder.value)});
@@ -89,6 +89,7 @@ export class GamePanel {
     if(reset){
       $<HTMLDetailsElement>('evolution-game').open=false;
       $<HTMLInputElement>('game-seed').value=frame.seed;
+      $<HTMLInputElement>('game-ecology').checked=Boolean(frame.ecology);
       $<HTMLInputElement>('game-tree-mode').checked=game.version===2;
       $<HTMLInputElement>('game-planet').checked=Boolean(frame.planet);
       $<HTMLSelectElement>('game-habitat').value=game.habitat;

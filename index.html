@@ -77,6 +77,7 @@
             <label>Среда <select id="game-habitat"><option value="garden">Сад</option><option value="scarce">Дефицит</option><option value="empty">Без ресурсов</option></select></label>
             <label class="planet-toggle"><input type="checkbox" id="game-planet"> Процедурная планета</label>
             <label class="planet-toggle"><input type="checkbox" id="game-tree-mode"> Дерево эволюции</label>
+            <label class="planet-toggle"><input type="checkbox" id="game-ecology"> Экология и кризисы</label>
             <button class="primary" type="submit">Новая игра</button>
           </form>
         </details>
@@ -96,6 +97,16 @@
             </div>
             <p id="game-receipt" role="status"></p>
           </div>
+        <section id="ecology-panel" class="recent-events" aria-labelledby="ecology-title" hidden>
+          <h3 id="ecology-title">Конкуренция за пищу</h3>
+          <p id="ecology-status"></p>
+          <p id="ecology-grants"></p>
+          <p id="ecology-competitors"></p>
+          <details id="ecology-stats"><summary>Ниши и размещение</summary>
+            <p id="ecology-local"></p><p id="ecology-roaming"></p>
+            <p id="ecology-distribution"></p><p>Последние отсчёты кризисных клеток в этом сеансе</p><ol id="ecology-trend"></ol>
+          </details>
+        </section>
         <section class="recent-events" aria-labelledby="recent-title">
           <h3 id="recent-title">Недавние события</h3>
           <p id="world-changes">Изменения появятся после двух отсчётов.</p>

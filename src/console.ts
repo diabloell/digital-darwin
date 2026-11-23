@@ -53,6 +53,7 @@ export function updateConsole(frame: Frame, previous?: Frame): void {
   element('world-changes').textContent = before
     ? `За ${last.tick - before.tick} тик. · живые ${delta.format(last.population - before.population)} · пища ${delta.format(last.food - before.food)} ед.`
     : 'Изменения появятся после двух отсчётов.';
+  updateEcology(frame,previous);
   element('focus-line').hidden = !game?.line?.living;
 }
 
@@ -97,4 +98,48 @@ export function drawTrends(frame: Frame): void {
     ctx.lineWidth = 2;
     ctx.stroke();
   });
+}
+
+const distributionLog:{tick:number;own:number;other:number;food:number}[]=[];
+function updateEcology(frame:Frame,previous?:Frame){
+  const eco=frame.ecology;
+  element('ecology-panel').hidden=!eco;
+  if(!eco)return;
+  const active=eco.collapses-eco.recoveries;
+  element('ecology-status').textContent=active?`Кризис: ${active} клеток · восстановлений ${eco.recoveries}`
+    :eco.recoveries?`Кризисных клеток нет · восстановлений ${eco.recoveries}`:'Кризисных клеток нет';
+  if(active&&!frame.game?.lost)element('console-event').textContent=`Дефицит · ${active} клеток кризиса`;
+  element('ecology-grants').textContent=`Дефицитная конкуренция: ${eco.contested} клеток · потеря прироста ${format.format(eco.withheld/1000)} ед./тик`;
+  const founder=frame.game?.founder;
+  const lines=new Map<number,number>();
+  const exposed=[0,0], alive=[0,0];
+  for(let i=0;i<frame.founders.length;i++){
+    const id=frame.founders[i],own=id===founder?0:1;
+    alive[own]++;
+    if(own)lines.set(id,(lines.get(id)??0)+1);
+    const cell=Math.floor(frame.positions[i*4+1])%frame.height*frame.width+Math.floor(frame.positions[i*4])%frame.width;
+    if(eco.collapsed[cell])exposed[own]++;
+  }
+  const top=[...lines].sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,3);
+  element('ecology-competitors').textContent=top.length
+    ?`Другие линии: ${lines.size} · крупнейшие ${top.map(([id,n])=>`#${id} (${n})`).join(', ')}`:'Других живых линий нет';
+  for(const [i,key,label] of [[0,'ecology-local','Локальный поиск'],[1,'ecology-roaming','Подвижный поиск']] as const){
+    const n=eco.niches[i];
+    element(key).textContent=n.actions?`${label}: ${n.actions} действий · двигались ${format.format(100*n.moved/n.actions)}% · пища ${format.format(n.food/1000)} · затраты ${format.format(n.upkeep/1000)} ед.`:`${label}: действий за тик нет`;
+  }
+  if(previous?.epoch!==frame.epoch)distributionLog.length=0;
+  const tick=frame.metrics.tick;
+  if(!distributionLog.length||tick-distributionLog.at(-1)!.tick>=20){
+    const food=eco.harvest.reduce((sum,v,i)=>sum+(eco.collapsed[i]?v:0),0);
+    distributionLog.push({tick,own:exposed[0],other:exposed[1],food});
+    if(distributionLog.length>5)distributionLog.shift();
+    const rows=distributionLog.map(row=>{
+      const li=document.createElement('li');
+      li.textContent=`Тик ${row.tick}: своих ${row.own}, других ${row.other} · съедено ${format.format(row.food/1000)} ед.`;
+      return li;
+    });
+    element('ecology-trend').replaceChildren(...rows);
+  }
+  const before=frame.history.at(-2);
+  element('ecology-distribution').textContent=`В кризисных клетках: моя линия ${exposed[0]}/${alive[0]}, другие ${exposed[1]}/${alive[1]}.${before?` Изменение населения мира за ${frame.metrics.tick-before.tick} тик.: ${delta.format(frame.metrics.population-before.population)}.`:''}`;
 }

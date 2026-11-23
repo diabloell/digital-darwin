@@ -1,3 +1,4 @@
+import { COLLAPSE, PRESSURE_MAX, RECOVER } from './core/ecology.ts';
 import { PLANET_MAX_CAPACITY } from './core/planet.ts';
 import { validateConfig } from './core/engine.ts';
 import type { Audit, EngineSnapshot, Organism } from './core/engine.ts';
@@ -34,8 +35,8 @@ function genome(value: unknown) {
 }
 
 export function validateEngine(value: unknown): EngineSnapshot {
-  const e = fields(value, 'config tick nextId births deaths rng food capacity growth organisms audit expectedFood lastBirths lastDeaths');
-  const c = fields(e.config, 'seed width height population mutationRate regrowth reproduction rule resourceScale mutationStrength', 'planet');
+  const e = fields(value, 'config tick nextId births deaths rng food capacity growth organisms audit expectedFood lastBirths lastDeaths', 'ecology');
+  const c = fields(e.config, 'seed width height population mutationRate regrowth reproduction rule resourceScale mutationStrength', 'planet ecology');
   requireValue(typeof c.reproduction === 'boolean' && typeof c.rule === 'string'
     && number(c.resourceScale, 0, 1) && number(c.mutationStrength, 0, 1), 'Некорректная конфигурация');
   validateConfig(c as EngineSnapshot['config']);
@@ -52,6 +53,28 @@ export function validateEngine(value: unknown): EngineSnapshot {
     (e.tick === 0 ? e.expectedFood === null : integer(e.expectedFood)), 'Несогласованный ресурсный баланс');
   const audit = fields(e.audit, 'grown consumed assimilated dissipated reproductionCost digestiveLoss transferred actions') as Audit;
   requireValue(Object.values(audit).every(v => integer(v)) && audit.consumed === audit.assimilated + audit.digestiveLoss, 'Некорректный аудит');
+  requireValue(Object.hasOwn(e,'ecology')===Boolean(c.ecology),'Несогласованная экология');
+  if(c.ecology){
+    const eco=fields(e.ecology,'pressure collapsed strained demand harvest collapses recoveries contested withheld niches');
+    for(const [key,max] of Object.entries({pressure:PRESSURE_MAX,collapsed:1,strained:1,demand:65535,harvest:PLANET_MAX_CAPACITY})){
+      const grid=array(eco[key],size);
+      requireValue(grid.length===size&&grid.every(v=>integer(v,0,max)),'Некорректная сетка экологии');
+    }
+    integers(eco,'collapses recoveries contested withheld');
+    requireValue(eco.collapses-eco.recoveries===eco.collapsed.reduce((a:number,b:number)=>a+b,0)
+      &&eco.contested<=size&&eco.collapsed.every((flag:number,i:number)=>flag?eco.pressure[i]>RECOVER:eco.pressure[i]<COLLAPSE)
+      &&eco.harvest.reduce((a:number,b:number)=>a+b,0)===audit.consumed
+      &&eco.withheld<=size*30000,'Несогласованный кризис');
+    const rows=array(eco.niches,2);
+    requireValue(rows.length===2,'Некорректные ниши');
+    for(const value of rows){
+      const row=fields(value,'actions moved food upkeep');
+      integers(row,'actions moved food upkeep');
+      requireValue(row.moved<=row.actions,'Некорректное движение ниши');
+    }
+    requireValue(rows[0].actions+rows[1].actions===audit.actions&&rows[0].food+rows[1].food===audit.consumed
+      &&rows[0].upkeep+rows[1].upkeep===audit.dissipated,'Несогласованный аудит ниш');
+  }
   const organism = (value: unknown, dead: boolean) => {
     const a = fields(value, 'id parent generation x y heading velocity energy age born lastActionTick genome') as Organism;
     requireValue(integer(a.id, 1, e.nextId - 1) && (a.parent === null || integer(a.parent, 1, a.id - 1))
