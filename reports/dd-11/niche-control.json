@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "roaming": false,
+      "genome": {
+        "speed": 0.7,
+        "sensor": 3.5,
+        "efficiency": 0.9,
+        "threshold": 44
+      },
+      "energy": 20424,
+      "cell": 0,
+      "audit": {
+        "grown": 0,
+        "consumed": 650,
+        "assimilated": 585,
+        "dissipated": 161,
+        "reproductionCost": 0,
+        "digestiveLoss": 65,
+        "transferred": 0,
+        "actions": 1
+      }
+    },
+    {
+      "roaming": true,
+      "genome": {
+        "speed": 1.1,
+        "sensor": 3.5,
+        "efficiency": 0.85,
+        "threshold": 44
+      },
+      "energy": 20373,
+      "cell": 1,
+      "audit": {
+        "grown": 0,
+        "consumed": 650,
+        "assimilated": 552,
+        "dissipated": 179,
+        "reproductionCost": 0,
+        "digestiveLoss": 98,
+        "transferred": 0,
+        "actions": 1
+      }
+    }
+  ]
+}
