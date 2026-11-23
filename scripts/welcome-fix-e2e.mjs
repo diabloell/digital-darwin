@@ -38,8 +38,6 @@ try{
       return {seed:f.seed,metrics:f.metrics,game:f.game,food:[...f.food],ids:[...f.ids],positions:[...f.positions]};
     });
     const globe=loc('#welcome-globe');
-    // The intro keeps keyboard rotation but does not display directional buttons.
-    assert.equal(await loc('#welcome-visual [data-globe-action="left"], #welcome-visual [data-globe-action="right"], #welcome-visual [data-globe-action="up"], #welcome-visual [data-globe-action="down"]').count(),0);
     const paint=()=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
     const pixels=()=>globe.evaluate(e=>e.toDataURL());
     const touch=width===390?await page.context().newCDPSession(page):null;
@@ -59,6 +57,29 @@ try{
       }
       await paint();
     };
+    const key=async(target,name)=>{
+      await target.focus();
+      await page.keyboard.press(name);
+      await paint();
+    };
+    const zoom=async(target)=>{
+      if(touch){
+        const r=await target.boundingBox();
+        const x=r.x+r.width/2,y=r.y+r.height/2;
+        const points=spread=>[{x:x-spread,y,id:1},{x:x+spread,y,id:2}];
+        await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:points(r.width*.12)});
+        await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:points(r.width*.21)});
+        await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+      }else{
+        await target.hover();
+        await page.mouse.wheel(0,-180);
+      }
+      await paint();
+    };
+    const diameter=target=>target.evaluate(e=>{
+      const alpha=e.getContext('2d').getImageData(0,e.height/2,e.width,1).data;
+      return alpha.filter((value,i)=>i%4===3&&value===255).length;
+    });
     await page.goto(origin);
     await loc('#play:enabled').waitFor();
     assert.ok(await loc('#planet-placeholder').isVisible());
@@ -66,6 +87,7 @@ try{
     const started=performance.now();
     await loc('#quick-game').click();
     await globe.waitFor();
+    assert.equal(await loc('#welcome-visual button').count(),0);
     await paint();
     const openedMs=performance.now()-started;
     await loc('#welcome-form details summary').click();
@@ -184,8 +206,12 @@ try{
     await page.keyboard.press('ArrowUp');
     await paint();
     if(width!==1366)await page.screenshot({path:`${output}/fix2-rotated-${width}x${height}.png`});
-    await loc('#globe-in').click();
-    await paint();
+    const welcomeDiameter=await diameter(globe);
+    await zoom(globe);
+    assert.ok(await diameter(globe)>welcomeDiameter);
+    await key(globe,'-');
+    await key(globe,'+');
+    assert.ok(await diameter(globe)>welcomeDiameter);
     assert.notEqual(await pixels(),rotated);
     if(!touch){
       const zoomed=await pixels();
@@ -205,22 +231,26 @@ try{
     await loc('#world-welcome').evaluate(el=>el.scrollTo(0,0));
     await page.screenshot({path:`${output}/fix2-welcome-${width}x${height}.png`});
     if(width===390){
+      const scrollHeight=await loc('#world-welcome').evaluate(e=>e.scrollHeight-e.clientHeight);
+      if(scrollHeight<=0)await page.setViewportSize({width,height:height-120});
+      const bottom=await page.evaluate(()=>innerHeight);
       const points=y=>[{x:width-12,y}];
-      await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:points(height-42)});
-      for(const y of [height-85,height-145,height-215]){
+      await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:points(bottom-42)});
+      for(const y of [bottom-85,bottom-145,bottom-215]){
         await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:points(y)});
       }
       await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
       await page.waitForFunction(()=>document.querySelector('#world-welcome').scrollTop>0);
+      await page.setViewportSize({width,height});
     }
-    await loc('#globe-reset').click();
+    await key(globe,'Home');
     await paint();
     assert.equal(await pixels(),baseline);
     assert.ok(await page.evaluate(()=>document.querySelector('#world-welcome').scrollWidth<=innerWidth));
     await loc('#welcome-create').click();
     await loc('#game-choice').waitFor();
     const mini=loc('#planet-globe');
-    assert.equal(await loc('#planet-mini [data-globe-action="left"], #planet-mini [data-globe-action="right"], #planet-mini [data-globe-action="up"], #planet-mini [data-globe-action="down"]').count(),4);
+    assert.equal(await loc('#planet-mini button').count(),0);
     await mini.waitFor();
     await paint();
     const miniPixels=()=>mini.evaluate(e=>e.toDataURL());
@@ -231,11 +261,16 @@ try{
     await drag(.12,.14,mini);
     const movedMini=await miniPixels();
     assert.notEqual(movedMini,baseline);
-    await loc('#planet-mini [data-globe-action="in"]').click();
-    await paint();
+    const miniDiameter=await diameter(mini);
+    await zoom(mini);
+    assert.ok(await diameter(mini)>miniDiameter);
     assert.notEqual(await miniPixels(),movedMini);
-    await loc('#planet-mini [data-globe-action="reset"]').click();
+    await key(mini,'Home');
     await paint();
+    assert.equal(await miniPixels(),baseline);
+    await key(mini,'ArrowLeft');
+    assert.notEqual(await miniPixels(),baseline);
+    await key(mini,'Home');
     assert.equal(await miniPixels(),baseline);
     assert.deepEqual(await state(),beforeMini);
     const paints=await page.evaluate(()=>window.miniPaints);
@@ -257,7 +292,7 @@ try{
     const paused=await state();
     assert.equal(paused.running,false);
     await drag();
-    await loc('#globe-in').click();
+    await key(globe,'=');
     await loc('#welcome-random').click();
     await loc('#welcome-difficulty').selectOption('garden');
     await page.keyboard.press('Escape');
@@ -267,7 +302,7 @@ try{
     await paint();
     assert.equal(await pixels(),baseline);
     await drag();
-    await loc('#globe-in').click();
+    await key(globe,'=');
     page.once('dialog',d=>d.accept());
     await loc('#welcome-create').click();
     await loc('#game-choice').waitFor();

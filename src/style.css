@@ -393,8 +393,6 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
 #welcome-globe, #planet-globe { touch-action: none; cursor: grab; }
 #welcome-globe:active, #planet-globe:active { cursor: grabbing; }
 .welcome-visual { aspect-ratio: auto; }
-.welcome-camera { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem; }
-.welcome-camera button { min-width: 44px; min-height: 44px; padding: 4px 8px; }
 #welcome-view-help { margin: .45rem 0 0; text-align: center; color: #bfd1ce; font-size: .8rem; }
 .welcome-readings { gap: .5rem; margin-block: .9rem; }
 .welcome-readings .welcome-fact { border: 1px solid #42615b; border-radius: 8px; padding: .5rem .65rem; }

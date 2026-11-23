@@ -27,7 +27,11 @@ try{
         await page.waitForFunction(t=>document.querySelector('#world-welcome').open&&window.painted.at(-1)>t,started);
         openMs.push(await page.evaluate(t=>window.painted.at(-1)-t,started));
         if(label==='fix'){
-          const time=await page.locator('#globe-right').evaluate(button=>{const t=performance.now();button.click();return t;});
+          const time=await page.locator('#welcome-globe').evaluate(canvas=>{
+            const start=performance.now();
+            canvas.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',cancelable:true}));
+            return start;
+          });
           await page.waitForFunction(t=>window.painted.at(-1)>t,time);
           turnMs.push(await page.evaluate(t=>window.painted.at(-1)-t,time));
         }

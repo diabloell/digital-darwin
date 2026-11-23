@@ -20,7 +20,7 @@ export class PlanetGlobe {
   private pitch=0;
   private zoom=1;
   private redraw=0;
-  private drag?:{id:number;x:number;y:number};
+  private readonly pointers=new Map<number,{x:number;y:number}>();
 
   constructor(root:HTMLElement){
     this.canvas=root.querySelector('canvas')!;
@@ -32,26 +32,35 @@ export class PlanetGlobe {
       up:()=>this.rotate(0,.32),down:()=>this.rotate(0,-.32),
       in:()=>this.adjustZoom(1.12),out:()=>this.adjustZoom(1/1.12),reset:()=>this.reset()
     };
-    root.querySelectorAll<HTMLButtonElement>('button[data-globe-action]').forEach(button=>{
-      button.onclick=controls[button.dataset.globeAction!];
-    });
     canvas.onkeydown=event=>{
       if(!Object.hasOwn(keys,event.key))return;
       event.preventDefault();
       controls[keys[event.key]]();
     };
     canvas.onpointerdown=event=>{
-      if(this.drag||event.button!==0)return;
+      if(event.button!==0||this.pointers.size>=2)return;
+      if(this.pointers.size&&event.pointerType!=='touch')return;
       canvas.setPointerCapture(event.pointerId);
-      this.drag={id:event.pointerId,x:event.clientX,y:event.clientY};
+      this.pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
     };
     canvas.onpointermove=event=>{
-      if(this.drag?.id!==event.pointerId)return;
-      this.rotate(-dragSensitivity*(event.clientX-this.drag.x)/canvas.clientWidth,-dragSensitivity*(event.clientY-this.drag.y)/canvas.clientHeight);
-      this.drag.x=event.clientX;
-      this.drag.y=event.clientY;
+      const point=this.pointers.get(event.pointerId);
+      if(!point)return;
+      const {clientX:x,clientY:y}=event;
+      if(this.pointers.size===2){
+        const other=[...this.pointers.values()].find(value=>value!==point)!;
+        const before=Math.hypot(point.x-other.x,point.y-other.y);
+        const after=Math.hypot(x-other.x,y-other.y);
+        if(before&&after)this.adjustZoom(after/before);
+      }else{
+        this.rotate(-dragSensitivity*(x-point.x)/canvas.clientWidth,-dragSensitivity*(y-point.y)/canvas.clientHeight);
+      }
+      point.x=x;
+      point.y=y;
     };
-    canvas.onlostpointercapture=()=>{this.drag=undefined;};
+    canvas.onpointerup=canvas.onpointercancel=canvas.onlostpointercapture=event=>{
+      this.pointers.delete(event.pointerId);
+    };
     canvas.addEventListener('wheel',event=>{
       event.preventDefault();
       const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?canvas.clientHeight:1);
