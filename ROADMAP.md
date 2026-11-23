@@ -17,3 +17,11 @@
 | DD-12 | Playtest, Balance & First Game Release | См. [отчёт DD-12](reports/DD-12.md) |
 
 Актуальные границы DD-07 задаёт Issue #8. Точные названия и объём DD-08–DD-12 определяет [Playable-First roadmap](https://www.notion.so/4209fe7da94081f1a33cfb14796b6069). [Спецификация исходной дорожной карты](docs/spec/06-roadmap.md) сохраняется как исторический документ. Последующий этап начинается после решения заказчика.
+
+## Digital Darwin 2.1
+
+| Этап | Объём | Доказательства |
+| --- | --- | --- |
+| DD-13 | World Welcome + Evolution Choice UX | [Issue #19](https://github.com/diabloell/digital-darwin/issues/19) · [Отчёт](reports/DD-13.md) |
+
+DD-00–DD-12 образуют предыдущую базовую версию. Для 2.1 действует [Playtest-Driven roadmap](https://www.notion.so/4209fe7da94081f1a33cfb14796b6069).

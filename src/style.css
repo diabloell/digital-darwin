@@ -334,3 +334,69 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
 #launch-row span { color: var(--muted); font-size: 12px; }
 #quick-game { flex-shrink: 0; min-height: 44px; }
 .build-version { color: var(--muted); font: 12px var(--mono); }
+
+/* DD-13 planetary preview and tactical choice */
+#world-welcome {
+  position: fixed; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none;
+  margin: 0; padding: 0; border: 0; color: var(--text,#e5eded);
+  background: radial-gradient(ellipse at 28% 40%, #133437, #081419 52%, #050a10);
+  overflow: auto;
+}
+#world-welcome::backdrop { background: #050910; }
+.welcome-shell {
+  min-height: 100%; position: relative; margin: auto; padding: clamp(2rem,6vw,6rem);
+  display: grid; grid-template-columns: minmax(0,1.15fr) minmax(300px,.85fr); align-items: center; gap: clamp(2rem,6vw,7rem);
+  max-width: 1600px;
+}
+.welcome-close { position: absolute; top: 1rem; right: 1rem; min-width: 44px; }
+.welcome-visual {
+  aspect-ratio: 1; display: grid; place-items: center; width: 100%; max-width: 650px; margin: auto;
+  background-color: transparent;
+  background-image: radial-gradient(circle at 17% 20%, #a1bfba 0 1px, transparent 2px),
+    radial-gradient(circle at 79% 76%, #97aaa3 0 1px, transparent 2px),
+    radial-gradient(circle at 90% 34%, #97aaa3 0 1px, transparent 2px),
+    radial-gradient(circle at 26% 87%, #789a99 0 1px, transparent 2px),
+    radial-gradient(circle at 71% 7%, #c0e0e0 0 1px, transparent 2px);
+}
+#welcome-globe { display: block; width: 88%; height: auto; aspect-ratio: 1; filter: drop-shadow(0 0 30px #8bd9c150); border-radius: 50%; }
+#welcome-name { font-size: clamp(2.6rem,6vw,6rem); line-height: .97; letter-spacing: -.06em; margin-block: 0 1rem; overflow-wrap: anywhere; }
+#welcome-character { max-width: 43ch; color: #bfd1ce; line-height: 1.5; }
+.welcome-readings { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .7rem; margin-block: 1.3rem; }
+.welcome-readings div { border-top: 1px solid #45615c; padding-top: .5rem; }
+.welcome-readings dt { color: #a9c0ba; font-size: .82rem; }
+.welcome-readings dd { margin: 0; font-size: clamp(1.15rem,2vw,1.65rem); color: #e2faee; font-variant-numeric: tabular-nums; }
+.welcome-caption { color: #a9c0ba; font-size: .8rem; }
+#welcome-form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .65rem; margin-top: 1.3rem; }
+#welcome-form > label, #welcome-form > details, #welcome-create, #welcome-advanced { grid-column: 1/-1; }
+#welcome-form label { display: grid; gap: .4rem; }
+#welcome-form :is(input,select,button) { min-height: 44px; max-width: 100%; }
+#welcome-form details label { margin-top: .5rem; }
+#welcome-random { grid-column: 1/-1; }
+#evolution-decision {
+  color: #e5eded; background: #102024; border: 1px solid #557b73; border-radius: 18px;
+  width: min(980px,calc(100% - 2rem)); max-height: 88dvh; padding: clamp(1rem,2.4vw,2rem);
+  overflow-y: auto; box-shadow: 0 24px 80px #0009;
+}
+#evolution-decision::backdrop { background: #050b10cc; }
+#decision-title { font-size: clamp(1.6rem,4vw,2.8rem); margin: 0; }
+#decision-context { color: #c1d0c9; margin: .2rem 0 1rem; }
+#decision-cards { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+#decision-cards article { min-width: 0; padding: 1rem; display: grid; gap: .65rem; border: 1px solid #48635e; border-radius: 12px; background: #182d30; }
+#decision-cards h3, #decision-cards p { margin: 0; }
+#decision-cards .decision-cost { color: #ffc49c; }
+#decision-cards details { font-size: .85rem; }
+#decision-cards summary { margin-bottom: .2rem; }
+#decision-cards button, #decision-later, #choose-adaptation { min-height: 44px; }
+#evolution-decision footer { display: flex; gap: .75rem; align-items: center; padding: 1rem 0 0; }
+#programme-feedback { border-inline-start: 3px solid #85cdb0; padding: .5rem .65rem; color: #cbe9db; }
+.founder-choice { background: #172d2d; border: 1px solid #5c8880; border-radius: 10px; padding: 12px; }
+.founder-choice h3 { margin: 0; font-size: 1.2rem; }
+.founder-choice label, .founder-choice button { display: block; width: 100%; margin-top: 8px; }
+.founder-choice select { width: 100%; min-height: 44px; }
+#launch-row.in-game { margin: 0; }
+#launch-row.in-game button { min-height: 36px; font-size: 12px; }
+@media (max-width: 760px) {
+  .welcome-shell { grid-template-columns: minmax(0,1fr); gap: 1rem; padding: 2.5rem 1rem 1rem; }
+  .welcome-visual { max-width: 190px; }
+  #decision-cards { grid-template-columns: minmax(0,1fr); }
+}

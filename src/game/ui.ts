@@ -1,3 +1,5 @@
+import { WorldWelcome } from './welcome.ts';
+import { EvolutionDecision } from './decision.ts';
 import { EVENT_LABELS } from '../history-panel.ts';
 import { PLANET_MAX_CAPACITY } from '../core/planet.ts';
 import { LEGACY_CARDS } from '../core/tree.ts';
@@ -15,6 +17,10 @@ function table(target:HTMLElement,labels:string[],rows:string[][]){
 }
 export class GamePanel {
   private frame:Frame|undefined;
+  private readonly decision:EvolutionDecision;
+  private readonly welcome:WorldWelcome;
+  private pendingWelcome=false;
+  get blocksPlay(){return this.pendingWelcome||this.decision.locked||$<HTMLDialogElement>('world-welcome').open;}
   private id=0;
   private readonly buttons=new Map<Card,HTMLButtonElement>();
   private readonly founder=$<HTMLSelectElement>('game-founder');
@@ -28,6 +34,7 @@ export class GamePanel {
       if(action.kind==='choose')send({kind:'game-action',epoch,action:{id,kind:'choose',founder:action.founder!}});
       else send({kind:'game-action',epoch,action:{id,kind:'buy',card:action.card!}});
     };
+    this.decision=new EvolutionDecision((pauseToken,epoch)=>send({kind:'play',value:false,pauseToken,epoch}),card=>dispatch({kind:'buy',card}));
     $('evolution-tree').addEventListener('toggle',()=>{
       if(this.frame?.game?.tree && $<HTMLDetailsElement>('evolution-tree').open)this.renderTree(this.frame.game);
     });
@@ -37,21 +44,28 @@ export class GamePanel {
     const seedInput=$<HTMLInputElement>('game-seed');
     const habitat=$<HTMLSelectElement>('game-habitat');
     const randomSeed=()=>Array.from(crypto.getRandomValues(new Uint32Array(2)),n=>n.toString(16).padStart(8,'0')).join('-');
-    const start=(release:boolean,seed=seedInput.value.trim(),retry=false)=>{
+    const start=(release:boolean,seed=seedInput.value.trim(),retry=false,selected=habitat.value as Habitat)=>{
       const frame=this.frame;
-      if(!retry&&!$<HTMLFormElement>('game-form').reportValidity())return;
+      if(!retry&&!release&&!$<HTMLFormElement>('game-form').reportValidity())return;
       if(!seed){seedInput.setCustomValidity('Введите seed мира');seedInput.reportValidity();return;}
-      if(!confirmNew())return;
-      send({kind:'new-game',seed,habitat:retry?frame!.game!.habitat:habitat.value as Habitat,release,
+      if(!confirmNew())return false;
+      send({kind:'new-game',seed,habitat:retry?frame!.game!.habitat:selected,release,
         planet:retry?Boolean(frame?.planet):$<HTMLInputElement>('game-planet').checked,
         tree:retry?frame?.game?.version===2:$<HTMLInputElement>('game-tree-mode').checked,
         ecology:retry?Boolean(frame?.ecology):$<HTMLInputElement>('game-ecology').checked});
+      return true;
     };
     seedInput.oninput=()=>seedInput.setCustomValidity('');
     $('random-seed').onclick=()=>{seedInput.value=randomSeed();seedInput.setCustomValidity('');};
     $('game-form').onsubmit=e=>{e.preventDefault();start(false);};
-    $('quick-game').onclick=()=>start(true);
-    $('game-release-start').onclick=()=>start(true);
+    this.welcome=new WorldWelcome((seed,environment)=>Boolean(start(true,seed,false,environment)));
+    const openWelcome=()=>{
+      if(!this.frame||this.blocksPlay)return;
+      this.pendingWelcome=true;
+      send({kind:'play',value:false,pauseToken:-1,epoch:this.frame.epoch});
+    };
+    $('quick-game').onclick=openWelcome;
+    $('game-release-start').onclick=openWelcome;
     $('retry-seed').onclick=()=>{if(this.frame?.game)start(this.frame.game.version===3,this.frame.seed,true);};
     $('retry-random').onclick=()=>{if(this.frame?.game)start(this.frame.game.version===3,randomSeed(),true);};
     this.founder.onchange=()=>this.previewFounder();
@@ -62,11 +76,21 @@ export class GamePanel {
       text.textContent=`${c.benefit}. ${c.cost}.`;
       button.textContent=`${TUNING.price} EP · начать`;
       button.dataset.card=key;
-      button.onclick=()=>dispatch({kind:'buy',card:key});
+      button.onclick=()=>{
+        if(this.blocksPlay)return;
+        if(this.frame?.running)this.decision.request();
+        else dispatch({kind:'buy',card:key});
+      };
       panel.append(title,text,button);
       $('game-cards').append(panel);
       this.buttons.set(key,button);
     }
+  }
+  pickFounder(id:number|null):boolean{
+    if(id===null||this.frame?.game?.founder!==null||!this.frame.ids.includes(id))return false;
+    this.founder.value=String(id);
+    this.previewFounder();
+    return true;
   }
   private previewFounder(){
     const f=this.frame;
@@ -137,9 +161,22 @@ export class GamePanel {
     if(reset){ $('game-debrief').hidden=true; this.id=game?.receipt?.id??0; }
     $('game-panel').hidden=!game;
     $('observer-note').hidden=Boolean(game);
-    $('launch-row').hidden=Boolean(game);
+    $('quick-game').textContent=game?'Новая игра':'Начать игру';
+    $('launch-caption').hidden=Boolean(game);
+    const launch=$('launch-row');
+    if(reset){
+      launch.classList.toggle('in-game',Boolean(game));
+      if(game)$('app-navigation').append(launch);
+      else $('error').before(launch);
+    }
     $('game-analysis').hidden=game?.founder==null;
     $('game-ep').textContent=game?.founder==null?'—':`${game.ep} EP`;
+    if(reset)this.pendingWelcome=false;
+    if(this.pendingWelcome&&frame.pauseToken===-1&&!frame.running){
+      this.pendingWelcome=false;
+      this.welcome.open($<HTMLInputElement>('game-seed').value,$<HTMLSelectElement>('game-habitat').value as Habitat);
+    }
+    this.decision.update(frame,this.pendingWelcome||$<HTMLDialogElement>('world-welcome').open);
     if(!game)return;
     if(reset||previous?.game?.founder!==game.founder)this.highlight(game.founder);
     if(reset){
@@ -189,6 +226,16 @@ export class GamePanel {
     progress.value=active?frame.metrics.tick-active.start:0;
     $('game-programme').textContent=active?`${CARDS[active.card].title} · ${progress.value}/${progress.max} тиков · носители ${active.carriers}/${line?.living??0}`
       :game.lost?'Программы остановлены':game.attempts.length?'Можно выбрать следующую карту при наличии EP':'Программа пока не начата';
+    const note=$('programme-feedback');
+    if(reset){note.hidden=true;note.textContent='';}
+    const last=game.attempts.at(-1);
+    const prior=previous?.game?.attempts.at(-1);
+    if(!reset&&last&&(last.card!==prior?.card||last.established!==prior?.established)){
+      note.hidden=false;
+      note.textContent=last.established===null
+        ?`${CARDS[last.card].title}: началась программа за ${last.quote?.price??TUNING.price} EP.${frame.running?'':' Игра на паузе.'}`
+        :`${CARDS[last.card].title}: программа завершилась. Внедрений ${last.introduced}, живых носителей на финише ${last.endingCount??0}.`;
+    }
     const attempts=game.attempts.map(a=>{
       const li=document.createElement('li');
       const share=line?.living?a.carriers/line.living*100:0;

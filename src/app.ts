@@ -23,8 +23,8 @@ const terrainLabels={...LAYERS,...ECO_LAYERS};
 for (const [key, label] of Object.entries(terrainLabels)) terrain.add(new Option(label, key));
 const play = $<HTMLButtonElement>('play'), step = $<HTMLButtonElement>('step');
 const speeds = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-speed]'));
-const map = new WorldMap(canvas, viewport, $('camera-readout'), $('color-legend'), id => send({ kind: 'inspect', id }));
-const gamePanel=new GamePanel(send,()=>saves.confirmReplacement('Создать новый мир?'),founder=>map.highlight(founder));
+const map = new WorldMap(canvas, viewport, $('camera-readout'), $('color-legend'), id => { if(!gamePanel.pickFounder(id))send({ kind: 'inspect', id }); });
+const gamePanel=new GamePanel(send,()=>saves.confirmReplacement('Создать новый мир?'),founder=>{map.highlight(founder);if(founder!==null&&frame?.game?.founder===null)map.focusLine(founder);});
 let focusEntity: number | null = null;
 const observerHistory = new HistoryPanel(send, id => {
   focusEntity = id;
@@ -240,8 +240,8 @@ form.addEventListener('submit', e => {
   } });
 });
 
-play.onclick = () => send({ kind: 'play', value: !frame?.running });
-step.onclick = () => send({ kind: 'step' });
+play.onclick=()=>{if(!gamePanel.blocksPlay)send({kind:'play',value:!frame?.running});};
+step.onclick=()=>{if(!gamePanel.blocksPlay)send({kind:'step'});};
 speeds.forEach(button => { button.onclick = () => send({ kind: 'speed', value: Number(button.dataset.speed) }); });
 $('inspection').addEventListener('click', e => {
   if ((e.target as HTMLElement).closest('#inspect-first') && frame?.ids.length) send({ kind: 'inspect', id: frame.ids[0] });
@@ -267,6 +267,7 @@ chartMode.onchange = scheduleChart;
 histogram.onchange = updateHistogram;
 new ResizeObserver(scheduleChart).observe(chart);
 document.addEventListener('keydown', e => {
+  if (gamePanel.blocksPlay) return;
   if ((e.target as HTMLElement).matches('input,textarea,select,button,summary,a')) return;
   if (e.code === 'Space' && !play.disabled) { e.preventDefault(); play.click(); }
   if (e.key === 'Escape') send({ kind: 'inspect', id: null });

@@ -33,7 +33,12 @@ try{
     await loc('#play:enabled').waitFor();
     await loc('[data-speed="16"]').click();
     await loc('#play').click();
-    await page.waitForFunction(()=>window.ecologyFrame.metrics.tick>=120&&window.ecologyFrame.ecology.recoveries>0);
+    await page.waitForFunction(()=>(window.ecologyFrame.metrics.tick>=120&&window.ecologyFrame.ecology.recoveries>0)||document.querySelector('#evolution-decision').open);
+    if(await loc('#evolution-decision').evaluate(el=>el.open)){
+      await loc('#decision-later').click();
+      await loc('#play').click();
+      await page.waitForFunction(()=>window.ecologyFrame.metrics.tick>=120&&window.ecologyFrame.ecology.recoveries>0);
+    }
     await loc('#play').click();
     await page.waitForFunction(()=>!window.ecologyFrame.running);
     const read=()=>page.evaluate(()=>{

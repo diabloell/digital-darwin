@@ -51,7 +51,12 @@ try {
     await page.screenshot({path:`${output}/planet-map-${width}x${height}.png`});
     await loc('[data-speed="16"]').click();
     await loc('#play').click();
-    await page.waitForFunction(()=>window.planetFrame.metrics.tick>=100);
+    await page.waitForFunction(()=>(window.planetFrame.metrics.tick>=100)||document.querySelector('#evolution-decision').open);
+    if(await loc('#evolution-decision').evaluate(el=>el.open)){
+      await loc('#decision-later').click();
+      await loc('#play').click();
+      await page.waitForFunction(()=>window.planetFrame.metrics.tick>=100);
+    }
     await loc('#play').click();
     await page.waitForFunction(()=>!window.planetFrame.running);
     const paused=await read();

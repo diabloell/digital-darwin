@@ -6,7 +6,7 @@ import type { HistoryView, WorldEvent } from './core/history.ts';
 import type { Config, Metrics, Organism } from './core/engine.ts';
 import type { Genome, Phenotype } from './core/genetics.ts';
 export type WorldSettings = Pick<Config, 'width' | 'height' | 'population' | 'mutationRate' | 'mutationStrength' | 'regrowth' | 'rule'>;
-export type Command = { kind: 'create'; seed: string; settings?: WorldSettings } | { kind: 'play'; value: boolean } | { kind: 'speed'; value: number } | { kind: 'step' } | { kind: 'inspect'; id: number | null } | { kind: 'ready'; epoch?: number }
+export type Command = { kind: 'create'; seed: string; settings?: WorldSettings } | { kind: 'play'; value: boolean; pauseToken?: number; epoch?: number } | { kind: 'speed'; value: number } | { kind: 'step' } | { kind: 'inspect'; id: number | null } | { kind: 'ready'; epoch?: number }
   | { kind: 'history'; request: number; entity: number | null; founder: number | null; depth: number }
   | { kind: 'new-game'; seed: string; habitat: Habitat; planet?: boolean; tree?: boolean; ecology?: boolean; release?: boolean }
   | { kind: 'game-action'; epoch: number; action: Action }
@@ -21,6 +21,7 @@ export type Frame = {
   game?: GameView;
   planet?: Planet & { cycle: ReturnType<typeof cycle> };
   ecology?: EcologyView;
+  pauseToken?: number;
   recentEvents: WorldEvent[];
   speedHistogram: number[]; histograms: number[][];
 };
