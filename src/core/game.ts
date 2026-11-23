@@ -1,3 +1,4 @@
+import { PLANET_VERSION } from './planet.ts';
 import { Engine } from './engine.ts';
 import type { Organism } from './engine.ts';
 import { phenotype, GENE_BOUNDS } from './genetics.ts';
@@ -23,9 +24,9 @@ export type GameState={version:1;habitat:Habitat;founder:number|null;tick:number
   renewal:number;sustained:number;achievement:number;spent:number;generation:number;windowBirths:number;
   attempts:Attempt[];markers:[number,Marker[]][];samples:Sample[]};
 
-export function gameWorld(seed:string,habitat:Habitat) {
+export function gameWorld(seed:string,habitat:Habitat, planet = false) {
   if (!['garden','scarce','empty'].includes(habitat)) throw Error('Неизвестная игровая среда');
-  const e=new Engine({seed,width:TUNING.width,height:TUNING.height,population:TUNING.founders,resourceScale:habitat==='garden'?1:habitat==='scarce'?.30:0});
+  const e=new Engine({seed,width:TUNING.width,height:TUNING.height,population:TUNING.founders,...(planet?{planet:PLANET_VERSION}:{}),resourceScale:habitat==='garden'?1:habitat==='scarce'?.30:0});
   for(const a of e.organisms) {
     const g=a.genome;
     a.genome={speed:.8+(g.speed-.8)*.12,sensor:3.5+(g.sensor-3.5)*.12,

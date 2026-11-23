@@ -1,3 +1,4 @@
+import { cycle, PLANET_MAX_CAPACITY } from './core/planet.ts';
 import { gameWorld } from './core/game.ts';
 import type { Game } from './core/game.ts';
 import { capture, decode, encode, restore } from './snapshot.ts';
@@ -53,8 +54,9 @@ function emit(force = false): void {
     }
   });
   const selected = engine.organisms.find(a => a.id === selectedId) ?? null;
-  const food = Uint8Array.from(engine.food, f => Math.min(255, Math.floor(f / 28)));
-  const frame: Frame = { kind: 'frame', recentEvents: genealogy.latestEvents(), ...(game?{game:game.view(genealogy)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
+  const foodScale = engine.planet ? PLANET_MAX_CAPACITY / 255 : 28;
+  const food = Uint8Array.from(engine.food, f => Math.min(255, Math.floor(f / foodScale)));
+  const frame: Frame = { kind: 'frame', recentEvents: genealogy.latestEvents(), ...(engine.planet ? { planet: { ...engine.planet, cycle: cycle(engine.tick) } } : {}), ...(game?{game:game.view(genealogy)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
   self.postMessage(frame, [positions.buffer, ids.buffer, food.buffer, traitBins.buffer, generations.buffer, founders.buffer]); inFlight = true; lastFrame = performance.now();
 }
 self.onmessage = e => {
@@ -65,7 +67,7 @@ self.onmessage = e => {
       case 'snapshot': case 'restore': void persist(c); break;
       case 'new-game': {
         try {
-          const candidate=gameWorld(c.seed,c.habitat);
+          const candidate=gameWorld(c.seed,c.habitat,c.planet === true);
           engine=candidate.engine;genealogy=candidate.genealogy;game=candidate.game;
         } catch(error) { self.postMessage({kind:'error',recoverable:true,message:String(error)});break; }
         epoch++;running=false;speed=1;credit=0;selectedId=null;tps=0;measured=0;

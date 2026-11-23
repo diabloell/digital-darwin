@@ -1,3 +1,4 @@
+import { PLANET_MAX_CAPACITY } from './core/planet.ts';
 import { validateConfig } from './core/engine.ts';
 import type { Audit, EngineSnapshot, Organism } from './core/engine.ts';
 import { GENES, GENE_BOUNDS } from './core/genetics.ts';
@@ -34,7 +35,7 @@ function genome(value: unknown) {
 
 export function validateEngine(value: unknown): EngineSnapshot {
   const e = fields(value, 'config tick nextId births deaths rng food capacity growth organisms audit expectedFood lastBirths lastDeaths');
-  const c = fields(e.config, 'seed width height population mutationRate regrowth reproduction rule resourceScale mutationStrength');
+  const c = fields(e.config, 'seed width height population mutationRate regrowth reproduction rule resourceScale mutationStrength', 'planet');
   requireValue(typeof c.reproduction === 'boolean' && typeof c.rule === 'string'
     && number(c.resourceScale, 0, 1) && number(c.mutationStrength, 0, 1), 'Некорректная конфигурация');
   validateConfig(c as EngineSnapshot['config']);
@@ -45,7 +46,7 @@ export function validateEngine(value: unknown): EngineSnapshot {
   const size = c.width * c.height;
   for (const key of ['food', 'capacity', 'growth']) {
     const list = array(e[key], size);
-    requireValue(list.length === size && list.every(x => integer(x, 0, 7000)), 'Недопустимая сетка ресурсов');
+    requireValue(list.length === size && list.every(x => integer(x, 0, c.planet ? PLANET_MAX_CAPACITY : 7000)), 'Недопустимая сетка ресурсов');
   }
   requireValue(e.food.every((v: number, i: number) => v <= e.capacity[i]) &&
     (e.tick === 0 ? e.expectedFood === null : integer(e.expectedFood)), 'Несогласованный ресурсный баланс');

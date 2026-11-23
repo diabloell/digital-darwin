@@ -303,3 +303,11 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
   #star-system { clear: both; }
   #game-samples table { font-size: 12px; }
 }
+
+#game-form .planet-toggle { display: flex; align-items: center; gap: 8px; }
+#game-form .planet-toggle input { width: 18px; min-height: 24px; accent-color: var(--mint); }
+#planet-cycle { color: var(--mint); font-size: 12px; line-height: 1.45; }
+.planet-help { color: var(--muted); font-size: 11px; line-height: 1.45; margin: 5px 0 10px; }
+#planet-profile dd { text-align: right; }
+#terrain-control { display: inline-flex; align-items: center; gap: 4px; }
+#terrain-layer { min-height: 30px; padding: 4px 6px; font-size: 12px; }

@@ -1,3 +1,4 @@
+import { PERIOD } from './core/planet.ts';
 import { CARDS, TUNING } from './core/game.ts';
 import { EVENT_LABELS } from './history-panel.ts';
 import type { Frame } from './protocol.ts';
@@ -15,6 +16,17 @@ export function updateConsole(frame: Frame, previous?: Frame): void {
   const active = game?.attempts.find(attempt => attempt.card === game.active);
   element('planet-seed').textContent = frame.seed;
   element('planet-size').textContent = `${frame.width} × ${frame.height} клеток · тороидальный мир`;
+  const planet = frame.planet;
+  element('planet-profile').hidden = !planet;
+  if (planet) {
+    const indices = (a: number, b: number) => `${Math.round(a * 100)} / ${Math.round(b * 100)}`;
+    element('planet-climate').textContent = indices(planet.light, planet.temperature);
+    element('planet-water').textContent = indices(planet.water, planet.geology);
+    element('planet-wet').textContent = format.format(100 * planet.wetCells / (frame.width * frame.height)) + '%';
+    element('planet-fertility').textContent = format.format(planet.meanFertility);
+    const c = planet.cycle;
+    element('planet-cycle').textContent = `Свет ${format.format(c.lightPercent)}% от базового · ${c.trend} · фаза ${c.phase}/${PERIOD}`;
+  }
   element('console-speed').textContent = `· ${frame.speed}×`;
   element('console-line').textContent = game?.line ? `#${game.line.founder} · ${format.format(game.line.living)} жив.` : '—';
   element('console-programme').textContent = active
