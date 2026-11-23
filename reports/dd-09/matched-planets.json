@@ -1,0 +1,107 @@
+{
+  "status": "PASS",
+  "founderSeed": "dd09-matched-founders",
+  "results": [
+    {
+      "seed": "coral-42",
+      "initial": {
+        "tick": 0,
+        "population": 80,
+        "food": 12380.166,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.641625,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 800,
+        "population": 77,
+        "food": 12763.67,
+        "births": 148,
+        "deaths": 151,
+        "meanEnergy": 15.443155844155845,
+        "maxGeneration": 3
+      },
+      "grown": 19516,
+      "consumed": 19132.496,
+      "wetCells": 1139,
+      "meanFertility": 31.915625
+    },
+    {
+      "seed": "dune",
+      "initial": {
+        "tick": 0,
+        "population": 80,
+        "food": 11915.897,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.641625,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 800,
+        "population": 78,
+        "food": 12234.985,
+        "births": 138,
+        "deaths": 140,
+        "meanEnergy": 20.24370512820513,
+        "maxGeneration": 4
+      },
+      "grown": 18967.704,
+      "consumed": 18648.616,
+      "wetCells": 450,
+      "meanFertility": 28.66625
+    },
+    {
+      "seed": "amber",
+      "initial": {
+        "tick": 0,
+        "population": 80,
+        "food": 13787.358,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.641625,
+        "maxGeneration": 0
+      },
+      "final": {
+        "tick": 800,
+        "population": 90,
+        "food": 14173.868,
+        "births": 188,
+        "deaths": 178,
+        "meanEnergy": 18.23982222222222,
+        "maxGeneration": 3
+      },
+      "grown": 23354.169,
+      "consumed": 22967.659,
+      "wetCells": 1083,
+      "meanFertility": 41.764375
+    }
+  ],
+  "timings": [
+    {
+      "planet": false,
+      "tps": 76970.84700433927
+    },
+    {
+      "planet": true,
+      "tps": 56123.514085533476
+    },
+    {
+      "planet": false,
+      "tps": 82417.63177759269
+    },
+    {
+      "planet": true,
+      "tps": 55344.98857714488
+    },
+    {
+      "planet": false,
+      "tps": 85913.56394412536
+    },
+    {
+      "planet": true,
+      "tps": 54697.137863596305
+    }
+  ]
+}
