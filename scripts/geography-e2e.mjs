@@ -82,9 +82,12 @@ try{
     await page.screenshot({path:`${output}/regions-${width}.png`});
     await page.evaluate(()=>new Promise(resolve=>{
       const worker=window.geographyWorker;
+      let lastRequested=window.geographyFrame.metrics.tick;
       worker.addEventListener('message',function receive({data}){
         if(data.kind!=='frame')return;
         if(data.metrics.tick>=110){worker.removeEventListener('message',receive);resolve();return;}
+        if(data.metrics.tick<=lastRequested)return;
+        lastRequested=data.metrics.tick;
         worker.postMessage({kind:'step'});
       });
       worker.postMessage({kind:'step'});
@@ -95,6 +98,8 @@ try{
     }
     await loc('#viewport').evaluate(e=>e.scrollIntoView({block:'start'}));
     assert.ok(await page.evaluate(()=>window.geographyFrame.ecology.collapsed.some(Boolean)));
+    const tickLater=await page.evaluate(()=>window.geographyFrame.metrics.tick);
+    assert.equal(tickLater,110);
     const wetLater=await inspect(targets[1]);
     assert.notEqual(wetLater,wet);
     assert.equal(await loc('#line-map-legend').isVisible(),true);
@@ -103,7 +108,7 @@ try{
     await loc('#explore-regions').click();
     assert.equal(await loc('#terrain-layer').inputValue(),'forage');
     assert.deepEqual(errors,[]);
-    result.push({width,height,input:mobile?'touch':'mouse',targets,dry,wet,wetLater});
+    result.push({width,height,input:mobile?'touch':'mouse',targets,dry,wet,tickLater,wetLater});
     await page.close();
   }
   await writeFile(output+'/geography-browser.json',JSON.stringify({browser:browser.version(),result},null,2)+'\n');
