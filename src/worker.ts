@@ -56,9 +56,10 @@ function emit(force = false, pauseToken?: number): void {
   const selected = engine.organisms.find(a => a.id === selectedId) ?? null;
   const foodScale = engine.planet ? PLANET_MAX_CAPACITY / 255 : 28;
   const food = Uint8Array.from(engine.food, f => Math.min(255, Math.floor(f / foodScale)));
+  const planetFood=engine.planet?Uint16Array.from(engine.food):undefined;
   const latestCarriers=game?.markLatestCarriers(ids);
-  const frame: Frame = { kind: 'frame', latestCarriers, ...(pauseToken===undefined?{}:{pauseToken}), recentEvents: genealogy.latestEvents(), ...(engine.ecology?{ecology:engine.ecology.view()}:{}), ...(engine.planet ? { planet: { ...engine.planet, cycle: cycle(engine.tick) } } : {}), ...(game?{game:game.view(genealogy,engine)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
-  self.postMessage(frame, [positions.buffer, ids.buffer, food.buffer, traitBins.buffer, generations.buffer, founders.buffer, ...(latestCarriers?[latestCarriers.buffer]:[])]); inFlight = true; lastFrame = performance.now();
+  const frame: Frame = { kind: 'frame', latestCarriers, planetFood, ...(pauseToken===undefined?{}:{pauseToken}), recentEvents: genealogy.latestEvents(), ...(engine.ecology?{ecology:engine.ecology.view()}:{}), ...(engine.planet ? { planet: { ...engine.planet, cycle: cycle(engine.tick) } } : {}), ...(game?{game:game.view(genealogy,engine)}:{}), epoch, seed: engine.config.seed, width: engine.config.width, height: engine.config.height, metrics: engine.metrics(), positions, ids, generations, founders, food, selected, selectedId, running, speed, tps, history, traitBins, histograms, speedHistogram: histograms[0], selectedPhenotype: selected ? phenotype(selected.genome, engine.config.rule) : null };
+  self.postMessage(frame, [positions.buffer, ids.buffer, food.buffer, traitBins.buffer, generations.buffer, founders.buffer, ...(latestCarriers?[latestCarriers.buffer]:[]), ...(planetFood?[planetFood.buffer]:[])]); inFlight = true; lastFrame = performance.now();
 }
 self.onmessage = e => {
   try {

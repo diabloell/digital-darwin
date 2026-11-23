@@ -1,0 +1,26 @@
+[
+  {
+    "name": "geography-smoke",
+    "command": "node scripts/geography-smoke.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "geography-e2e",
+    "command": "node scripts/geography-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "planet-smoke",
+    "command": "node scripts/planet-smoke.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  },
+  {
+    "name": "planet-e2e",
+    "command": "node scripts/planet-e2e.mjs",
+    "status": "PASS",
+    "exitCode": 0
+  }
+]

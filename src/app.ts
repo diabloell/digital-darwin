@@ -19,10 +19,11 @@ const viewport = $('viewport'), canvas = $<HTMLCanvasElement>('world'), chart = 
 const chartMode = $<HTMLSelectElement>('chart-metric'), histogram = $<HTMLSelectElement>('histogram-trait');
 const form = $<HTMLFormElement>('world-form');
 const terrain = $<HTMLSelectElement>('terrain-layer');
-const terrainLabels={...LAYERS,...ECO_LAYERS,forage:'Пища и давление'};
+const terrainLabels={...LAYERS,...ECO_LAYERS,forage:'Пища и давление', regions:'Регионы'};
 for (const [key, label] of Object.entries(terrainLabels)) terrain.add(new Option(label, key));
 const play = $<HTMLButtonElement>('play'), step = $<HTMLButtonElement>('step');
 const speeds = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-speed]'));
+const explore=$<HTMLButtonElement>('explore-regions');
 const map = new WorldMap(canvas, viewport, $('camera-readout'), $('color-legend'), id => { if(!gamePanel.pickFounder(id))send({ kind: 'inspect', id }); });
 const gamePanel=new GamePanel(send,()=>saves.confirmReplacement('Создать новый мир?'),founder=>{map.highlight(founder);if(founder!==null&&frame?.game?.founder===null)map.focusLine(founder);});
 let focusEntity: number | null = null;
@@ -89,6 +90,7 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
   if(newWorld)for(const option of Array.from(terrain.options))option.hidden=option.value!=='food'
     &&(option.value==='forage'?!(data.game&&data.ecology):Object.hasOwn(ECO_LAYERS,option.value)?!data.ecology:!data.planet);
   if(newWorld){terrain.value=data.game&&data.ecology?'forage':'food';terrain.onchange?.(new Event('change'));}
+  if(newWorld)explore.hidden=!data.planet;
   $('terrain-control').hidden = !data.planet&&!data.ecology;
   map.accept(data);
   if (focusEntity !== null && focusEntity === data.selectedId) {
@@ -257,11 +259,20 @@ document.querySelectorAll<HTMLElement>('[data-open]').forEach(link => {
 });
 $('fit').onclick = () => map.fit();
 $<HTMLSelectElement>('trait-color').onchange = e => map.setMode((e.target as HTMLSelectElement).value);
+explore.onclick=()=>{
+  terrain.value=terrain.value==='regions'?(frame?.game&&frame.ecology?'forage':'food'):'regions';
+  terrain.onchange?.(new Event('change'));
+};
 terrain.onchange = () => {
   const layer = terrain.value as TerrainLayer;
   map.setTerrain(layer);
+  explore.setAttribute('aria-pressed',String(layer==='regions'));
+  $('region-inspector').hidden=layer!=='regions';
+  viewport.setAttribute('aria-label',layer==='regions'
+    ?'Карта регионов. Стрелки выбирают соседнюю клетку. Плюс и минус меняют масштаб.'
+    :'Карта мира. Стрелки перемещают камеру, плюс и минус меняют масштаб. Enter выбирает ближайший к центру организм.');
   $('map-layer-heading').textContent = layer === 'food' ? 'ПИЩЕВОЙ ЛАНДШАФТ' : terrainLabels[layer].toUpperCase();
-  $('terrain-legend').textContent = layer === 'forage' ? 'Зелёный — запас пищи · оранжевый — давление · красный — кризис' : layer === 'food' ? 'Пища · яркость по запасу' : `${terrainLabels[layer]} · ${layer==='crisis'?'красный: рост снижен':layer==='pressure'?'0–16':layer==='demand'?'0–8+ заявок':'тёмный 0 → яркий 100'}`;
+  $('terrain-legend').textContent = layer === 'regions' ? 'Яркость — доля заполнения пищей · красный контур — кризис' : layer === 'forage' ? 'Зелёный — запас пищи · оранжевый — давление · красный — кризис' : layer === 'food' ? 'Пища · яркость по запасу' : `${terrainLabels[layer]} · ${layer==='crisis'?'красный: рост снижен':layer==='pressure'?'0–16':layer==='demand'?'0–8+ заявок':'тёмный 0 → яркий 100'}`;
 };
 chartMode.onchange = scheduleChart;
 histogram.onchange = updateHistogram;
@@ -273,10 +284,15 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') send({ kind: 'inspect', id: null });
   if (e.target !== viewport) return;
   const directions: Record<string, [number, number]> = { ArrowLeft: [25, 0], ArrowRight: [-25, 0], ArrowUp: [0, 25], ArrowDown: [0, -25] };
-  if (e.key in directions) { e.preventDefault(); map.pan(...directions[e.key]); }
+  if (e.key in directions) {
+    e.preventDefault();
+    const [x,y]=directions[e.key];
+    if(terrain.value==='regions')map.moveRegion(-Math.sign(x),-Math.sign(y));
+    else map.pan(x,y);
+  }
   if (e.key === '+' || e.key === '=') map.zoom(1.2);
   if (e.key === '-') map.zoom(1 / 1.2);
   if (e.key === 'Home') { e.preventDefault(); map.fit(); }
-  if (e.key === 'Enter') map.selectAt(undefined, undefined, true);
+  if (e.key === 'Enter' && terrain.value!=='regions') map.selectAt(undefined, undefined, true);
 });
 setControls();

@@ -1,0 +1,1549 @@
+{
+  "results": [
+    {
+      "seed": "dune",
+      "regionStats": [
+        {
+          "name": "Скудные земли",
+          "cells": 684,
+          "water": 38.55409356725146,
+          "heat": 75.97514619883042,
+          "fertility": 22.764619883040936,
+          "capacity": 7.3626388888889025,
+          "baseGrowth": 0.22995321637426774,
+          "growthAtMinimum": 0.16507602339181338,
+          "growthAtMaximum": 0.2535511695906429
+        },
+        {
+          "name": "Переходные земли",
+          "cells": 916,
+          "water": 60.04257641921397,
+          "heat": 75.55458515283843,
+          "fertility": 33.0731441048035,
+          "capacity": 8.341948689956327,
+          "baseGrowth": 0.28667467248908357,
+          "growthAtMinimum": 0.20601419213973818,
+          "growthAtMaximum": 0.33628930131004386
+        },
+        {
+          "name": "Влажные плодородные земли",
+          "cells": 0
+        }
+      ],
+      "samples": [
+        {
+          "tick": 40,
+          "light": 83.5,
+          "world": {
+            "tick": 40,
+            "population": 80,
+            "food": 11724.731,
+            "births": 0,
+            "deaths": 0,
+            "meanEnergy": 39.564137499999994,
+            "maxGeneration": 0
+          },
+          "regions": [
+            {
+              "stock": 4831.172000000009,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 12,
+              "meanEnergy": 40.476083333333335,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.06311695906434,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.020575548245614035
+            },
+            {
+              "stock": 6893.558999999997,
+              "pressure": 20,
+              "crisis": 1,
+              "occupants": 68,
+              "meanEnergy": 39.40320588235294,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.525719432314407,
+              "meanPressure": 0.021834061135371178,
+              "meanGrowthPerCellTick": 0.03516738537117904
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        },
+        {
+          "tick": 80,
+          "light": 95,
+          "world": {
+            "tick": 80,
+            "population": 146,
+            "food": 11586.428,
+            "births": 66,
+            "deaths": 0,
+            "meanEnergy": 29.21830821917808,
+            "maxGeneration": 1
+          },
+          "regions": [
+            {
+              "stock": 4969.558000000005,
+              "pressure": 30,
+              "crisis": 3,
+              "occupants": 6,
+              "meanEnergy": 27.871333333333336,
+              "births": 9,
+              "deaths": 0,
+              "meanStock": 7.265435672514628,
+              "meanPressure": 0.043859649122807015,
+              "meanGrowthPerCellTick": 0.011997843567251462
+            },
+            {
+              "stock": 6616.870000000008,
+              "pressure": 353,
+              "crisis": 24,
+              "occupants": 140,
+              "meanEnergy": 29.27603571428571,
+              "births": 57,
+              "deaths": 0,
+              "meanStock": 7.223657205240183,
+              "meanPressure": 0.3853711790393013,
+              "meanGrowthPerCellTick": 0.04904407751091703
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        },
+        {
+          "tick": 120,
+          "light": 106.5,
+          "world": {
+            "tick": 120,
+            "population": 170,
+            "food": 11987.317,
+            "births": 90,
+            "deaths": 0,
+            "meanEnergy": 25.75745882352941,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 5012.735000000009,
+              "pressure": 32,
+              "crisis": 2,
+              "occupants": 4,
+              "meanEnergy": 24.50825,
+              "births": 1,
+              "deaths": 0,
+              "meanStock": 7.3285599415204805,
+              "meanPressure": 0.04678362573099415,
+              "meanGrowthPerCellTick": 0.003851644736842105
+            },
+            {
+              "stock": 6974.582000000002,
+              "pressure": 433,
+              "crisis": 25,
+              "occupants": 166,
+              "meanEnergy": 25.78756024096386,
+              "births": 23,
+              "deaths": 0,
+              "meanStock": 7.614172489082971,
+              "meanPressure": 0.47270742358078605,
+              "meanGrowthPerCellTick": 0.043364765283842796
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        },
+        {
+          "tick": 160,
+          "light": 118,
+          "world": {
+            "tick": 160,
+            "population": 176,
+            "food": 12163.021,
+            "births": 96,
+            "deaths": 0,
+            "meanEnergy": 21.817704545454543,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 5020.706000000009,
+              "pressure": 32,
+              "crisis": 2,
+              "occupants": 4,
+              "meanEnergy": 18.98975,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.340213450292411,
+              "meanPressure": 0.04678362573099415,
+              "meanGrowthPerCellTick": 0.0004477704678362573
+            },
+            {
+              "stock": 7142.315000000001,
+              "pressure": 554,
+              "crisis": 37,
+              "occupants": 172,
+              "meanEnergy": 21.883470930232555,
+              "births": 6,
+              "deaths": 0,
+              "meanStock": 7.797287117903932,
+              "meanPressure": 0.6048034934497817,
+              "meanGrowthPerCellTick": 0.022692849344978165
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        },
+        {
+          "tick": 200,
+          "light": 106.5,
+          "world": {
+            "tick": 200,
+            "population": 176,
+            "food": 12221.525,
+            "births": 97,
+            "deaths": 1,
+            "meanEnergy": 17.25439772727273,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 5020.706000000009,
+              "pressure": 32,
+              "crisis": 2,
+              "occupants": 4,
+              "meanEnergy": 13.469750000000001,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.340213450292411,
+              "meanPressure": 0.04678362573099415,
+              "meanGrowthPerCellTick": 0.0001560672514619883
+            },
+            {
+              "stock": 7200.819000000003,
+              "pressure": 570,
+              "crisis": 36,
+              "occupants": 172,
+              "meanEnergy": 17.342412790697676,
+              "births": 1,
+              "deaths": 1,
+              "meanStock": 7.861156113537121,
+              "meanPressure": 0.6222707423580786,
+              "meanGrowthPerCellTick": 0.011681577510917031
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        },
+        {
+          "tick": 240,
+          "light": 95,
+          "world": {
+            "tick": 240,
+            "population": 163,
+            "food": 12275.197,
+            "births": 97,
+            "deaths": 14,
+            "meanEnergy": 13.110208588957056,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 5020.706000000009,
+              "pressure": 32,
+              "crisis": 2,
+              "occupants": 4,
+              "meanEnergy": 7.853249999999999,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.340213450292411,
+              "meanPressure": 0.04678362573099415,
+              "meanGrowthPerCellTick": 0.0001408625730994152
+            },
+            {
+              "stock": 7254.491000000001,
+              "pressure": 630,
+              "crisis": 41,
+              "occupants": 159,
+              "meanEnergy": 13.242459119496855,
+              "births": 0,
+              "deaths": 13,
+              "meanStock": 7.919750000000001,
+              "meanPressure": 0.6877729257641921,
+              "meanGrowthPerCellTick": 0.007618640829694323
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        },
+        {
+          "tick": 280,
+          "light": 83.5,
+          "world": {
+            "tick": 280,
+            "population": 132,
+            "food": 12306.122,
+            "births": 97,
+            "deaths": 45,
+            "meanEnergy": 9.9,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 5020.706000000009,
+              "pressure": 32,
+              "crisis": 2,
+              "occupants": 4,
+              "meanEnergy": 2.13725,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.340213450292411,
+              "meanPressure": 0.04678362573099415,
+              "meanGrowthPerCellTick": 0.00012558479532163741
+            },
+            {
+              "stock": 7285.415999999999,
+              "pressure": 576,
+              "crisis": 36,
+              "occupants": 128,
+              "meanEnergy": 10.142585937500005,
+              "births": 0,
+              "deaths": 31,
+              "meanStock": 7.953510917030567,
+              "meanPressure": 0.62882096069869,
+              "meanGrowthPerCellTick": 0.004039355895196507
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        },
+        {
+          "tick": 320,
+          "light": 72,
+          "world": {
+            "tick": 320,
+            "population": 83,
+            "food": 12307.733,
+            "births": 97,
+            "deaths": 94,
+            "meanEnergy": 9.605807228915662,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 5020.705000000009,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 2,
+              "meanEnergy": 1.104,
+              "births": 0,
+              "deaths": 2,
+              "meanStock": 7.340211988304107,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.00033205409356725147
+            },
+            {
+              "stock": 7287.027999999999,
+              "pressure": 437,
+              "crisis": 28,
+              "occupants": 81,
+              "meanEnergy": 9.815728395061727,
+              "births": 0,
+              "deaths": 47,
+              "meanStock": 7.955270742358078,
+              "meanPressure": 0.47707423580786024,
+              "meanGrowthPerCellTick": 0.004735343886462882
+            },
+            {
+              "stock": 0,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": null,
+              "meanPressure": null,
+              "meanGrowthPerCellTick": null
+            }
+          ]
+        }
+      ],
+      "phasePair": [
+        {
+          "strength": 0,
+          "regionalGrowth": [
+            3.1269999999999993,
+            36.730000000000004,
+            0
+          ]
+        },
+        {
+          "strength": 160,
+          "regionalGrowth": [
+            4.863000000000001,
+            60.453000000000074,
+            0
+          ]
+        }
+      ],
+      "resourcePair": [
+        {
+          "regrowth": true,
+          "start": {
+            "tick": 80,
+            "population": 146,
+            "food": 11586.428,
+            "births": 66,
+            "deaths": 0,
+            "meanEnergy": 29.21830821917808,
+            "maxGeneration": 1
+          },
+          "end": {
+            "tick": 160,
+            "population": 176,
+            "food": 12163.021,
+            "births": 96,
+            "deaths": 0,
+            "meanEnergy": 21.817704545454543,
+            "maxGeneration": 2
+          },
+          "grown": 2537.983,
+          "consumed": 1961.39
+        },
+        {
+          "regrowth": false,
+          "start": {
+            "tick": 80,
+            "population": 146,
+            "food": 11586.428,
+            "births": 66,
+            "deaths": 0,
+            "meanEnergy": 29.21830821917808,
+            "maxGeneration": 1
+          },
+          "end": {
+            "tick": 160,
+            "population": 160,
+            "food": 10694.523,
+            "births": 80,
+            "deaths": 0,
+            "meanEnergy": 19.102125,
+            "maxGeneration": 2
+          },
+          "grown": 0,
+          "consumed": 891.905
+        }
+      ],
+      "finalSha256": "7b21fa6c783f10a750bef5afdc66e65e2540cefd96208017ba242e323642c56d"
+    },
+    {
+      "seed": "amber",
+      "regionStats": [
+        {
+          "name": "Скудные земли",
+          "cells": 76,
+          "water": 34.56578947368421,
+          "heat": 59.25,
+          "fertility": 25.526315789473685,
+          "capacity": 7.625,
+          "baseGrowth": 0.24511842105263174,
+          "growthAtMinimum": 0.17610526315789485,
+          "growthAtMaximum": 0.2662894736842104
+        },
+        {
+          "name": "Переходные земли",
+          "cells": 460,
+          "water": 52.291304347826085,
+          "heat": 59.62608695652174,
+          "fertility": 34.676086956521736,
+          "capacity": 8.494228260869564,
+          "baseGrowth": 0.29545869565217425,
+          "growthAtMinimum": 0.21228913043478198,
+          "growthAtMaximum": 0.33898695652173894
+        },
+        {
+          "name": "Влажные плодородные земли",
+          "cells": 1064,
+          "water": 74.51033834586467,
+          "heat": 60.01033834586466,
+          "fertility": 45.98872180451128,
+          "capacity": 9.568928571428561,
+          "baseGrowth": 0.3576766917293234,
+          "growthAtMinimum": 0.25703195488721803,
+          "growthAtMaximum": 0.43718609022556304
+        }
+      ],
+      "samples": [
+        {
+          "tick": 40,
+          "light": 83.5,
+          "world": {
+            "tick": 40,
+            "population": 80,
+            "food": 13781.134,
+            "births": 0,
+            "deaths": 0,
+            "meanEnergy": 39.3578625,
+            "maxGeneration": 0
+          },
+          "regions": [
+            {
+              "stock": 570.333,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.504381578947368,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.02083421052631579
+            },
+            {
+              "stock": 3697.3129999999996,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 10,
+              "meanEnergy": 39.643600000000006,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.03763695652174,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.028114891304347828
+            },
+            {
+              "stock": 9513.48799999999,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 70,
+              "meanEnergy": 39.31704285714285,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.941248120300743,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.035000869360902256
+            }
+          ]
+        },
+        {
+          "tick": 80,
+          "light": 95,
+          "world": {
+            "tick": 80,
+            "population": 160,
+            "food": 13290.186,
+            "births": 80,
+            "deaths": 0,
+            "meanEnergy": 31.57755625,
+            "maxGeneration": 1
+          },
+          "regions": [
+            {
+              "stock": 579.5,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.625,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.0030154605263157893
+            },
+            {
+              "stock": 3885.8529999999996,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 6,
+              "deaths": 0,
+              "meanStock": 8.447506521739129,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.01607554347826087
+            },
+            {
+              "stock": 8824.832999999988,
+              "pressure": 89,
+              "crisis": 5,
+              "occupants": 160,
+              "meanEnergy": 31.577556250000004,
+              "births": 74,
+              "deaths": 0,
+              "meanStock": 8.294015977443598,
+              "meanPressure": 0.08364661654135339,
+              "meanGrowthPerCellTick": 0.05771416823308271
+            }
+          ]
+        },
+        {
+          "tick": 120,
+          "light": 106.5,
+          "world": {
+            "tick": 120,
+            "population": 215,
+            "food": 13563.184,
+            "births": 135,
+            "deaths": 0,
+            "meanEnergy": 29.021674418604654,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 579.5,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.625,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 3907.3449999999993,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.494228260869564,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.0011680434782608696
+            },
+            {
+              "stock": 9076.33899999999,
+              "pressure": 430,
+              "crisis": 27,
+              "occupants": 215,
+              "meanEnergy": 29.021674418604647,
+              "births": 55,
+              "deaths": 0,
+              "meanStock": 8.530393796992472,
+              "meanPressure": 0.4041353383458647,
+              "meanGrowthPerCellTick": 0.0697046287593985
+            }
+          ]
+        },
+        {
+          "tick": 160,
+          "light": 118,
+          "world": {
+            "tick": 160,
+            "population": 231,
+            "food": 13866.612,
+            "births": 151,
+            "deaths": 0,
+            "meanEnergy": 26.703402597402597,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 579.5,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.625,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 3907.3449999999993,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.494228260869564,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 9379.766999999989,
+              "pressure": 635,
+              "crisis": 42,
+              "occupants": 231,
+              "meanEnergy": 26.70340259740259,
+              "births": 16,
+              "deaths": 0,
+              "meanStock": 8.815570488721795,
+              "meanPressure": 0.5968045112781954,
+              "meanGrowthPerCellTick": 0.04466308740601504
+            }
+          ]
+        },
+        {
+          "tick": 200,
+          "light": 106.5,
+          "world": {
+            "tick": 200,
+            "population": 243,
+            "food": 13915.549,
+            "births": 164,
+            "deaths": 1,
+            "meanEnergy": 22.561432098765433,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 579.5,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.625,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 3907.3449999999993,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.494228260869564,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 9428.703999999996,
+              "pressure": 663,
+              "crisis": 45,
+              "occupants": 243,
+              "meanEnergy": 22.561432098765422,
+              "births": 13,
+              "deaths": 1,
+              "meanStock": 8.861563909774432,
+              "meanPressure": 0.6231203007518797,
+              "meanGrowthPerCellTick": 0.023765671992481203
+            }
+          ]
+        },
+        {
+          "tick": 240,
+          "light": 95,
+          "world": {
+            "tick": 240,
+            "population": 246,
+            "food": 13935.931,
+            "births": 171,
+            "deaths": 5,
+            "meanEnergy": 18.73662195121951,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 579.5,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.625,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 3907.3449999999993,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.494228260869564,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 9449.085999999996,
+              "pressure": 694,
+              "crisis": 45,
+              "occupants": 246,
+              "meanEnergy": 18.736621951219504,
+              "births": 7,
+              "deaths": 4,
+              "meanStock": 8.880719924812025,
+              "meanPressure": 0.6522556390977443,
+              "meanGrowthPerCellTick": 0.01934501879699248
+            }
+          ]
+        },
+        {
+          "tick": 280,
+          "light": 83.5,
+          "world": {
+            "tick": 280,
+            "population": 226,
+            "food": 13960.356,
+            "births": 173,
+            "deaths": 27,
+            "meanEnergy": 15.903734513274335,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 579.5,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.625,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 3907.3449999999993,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.494228260869564,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 9473.510999999993,
+              "pressure": 733,
+              "crisis": 47,
+              "occupants": 226,
+              "meanEnergy": 15.903734513274333,
+              "births": 2,
+              "deaths": 22,
+              "meanStock": 8.903675751879693,
+              "meanPressure": 0.6889097744360902,
+              "meanGrowthPerCellTick": 0.014605098684210527
+            }
+          ]
+        },
+        {
+          "tick": 320,
+          "light": 72,
+          "world": {
+            "tick": 320,
+            "population": 188,
+            "food": 13981.653,
+            "births": 173,
+            "deaths": 65,
+            "meanEnergy": 14.021952127659576,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 579.5,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.625,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 3907.3449999999993,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.494228260869564,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 9494.807999999988,
+              "pressure": 795,
+              "crisis": 50,
+              "occupants": 188,
+              "meanEnergy": 14.021952127659576,
+              "births": 0,
+              "deaths": 38,
+              "meanStock": 8.923691729323297,
+              "meanPressure": 0.7471804511278195,
+              "meanGrowthPerCellTick": 0.010187523496240601
+            }
+          ]
+        }
+      ],
+      "phasePair": [
+        {
+          "strength": 0,
+          "regionalGrowth": [
+            0,
+            2.1710000000000003,
+            63.972999999999935
+          ]
+        },
+        {
+          "strength": 160,
+          "regionalGrowth": [
+            0,
+            3.5039999999999996,
+            110.26900000000006
+          ]
+        }
+      ],
+      "resourcePair": [
+        {
+          "regrowth": true,
+          "start": {
+            "tick": 80,
+            "population": 160,
+            "food": 13290.186,
+            "births": 80,
+            "deaths": 0,
+            "meanEnergy": 31.57755625,
+            "maxGeneration": 1
+          },
+          "end": {
+            "tick": 160,
+            "population": 231,
+            "food": 13866.612,
+            "births": 151,
+            "deaths": 0,
+            "meanEnergy": 26.703402597402597,
+            "maxGeneration": 2
+          },
+          "grown": 4888.982,
+          "consumed": 4312.556
+        },
+        {
+          "regrowth": false,
+          "start": {
+            "tick": 80,
+            "population": 160,
+            "food": 13290.186,
+            "births": 80,
+            "deaths": 0,
+            "meanEnergy": 31.57755625,
+            "maxGeneration": 1
+          },
+          "end": {
+            "tick": 160,
+            "population": 185,
+            "food": 11621.89,
+            "births": 105,
+            "deaths": 0,
+            "meanEnergy": 22.92937297297297,
+            "maxGeneration": 2
+          },
+          "grown": 0,
+          "consumed": 1668.296
+        }
+      ],
+      "finalSha256": "86abb2f8e1fe8d5e3bd53659bb300fa5f31c7cd55e43887fbd0adc6ae33188c8"
+    },
+    {
+      "seed": "slate",
+      "regionStats": [
+        {
+          "name": "Скудные земли",
+          "cells": 221,
+          "water": 41.61085972850679,
+          "heat": 73.3529411764706,
+          "fertility": 24.018099547511312,
+          "capacity": 7.48171945701359,
+          "baseGrowth": 0.2368642533936649,
+          "growthAtMinimum": 0.17007239819004522,
+          "growthAtMaximum": 0.26321266968325785
+        },
+        {
+          "name": "Переходные земли",
+          "cells": 1251,
+          "water": 69.96962430055956,
+          "heat": 73.64828137490008,
+          "fertility": 35.80815347721823,
+          "capacity": 8.60177458033575,
+          "baseGrowth": 0.30170263788968843,
+          "growthAtMinimum": 0.21677298161470868,
+          "growthAtMaximum": 0.36475859312549946
+        },
+        {
+          "name": "Влажные плодородные земли",
+          "cells": 128,
+          "water": 76.9140625,
+          "heat": 71.6796875,
+          "fertility": 42.7109375,
+          "capacity": 9.257539062500001,
+          "baseGrowth": 0.3396718750000002,
+          "growthAtMinimum": 0.24403906249999985,
+          "growthAtMaximum": 0.4174453124999998
+        }
+      ],
+      "samples": [
+        {
+          "tick": 40,
+          "light": 83.5,
+          "world": {
+            "tick": 40,
+            "population": 80,
+            "food": 12671.813,
+            "births": 0,
+            "deaths": 0,
+            "meanEnergy": 39.6406875,
+            "maxGeneration": 0
+          },
+          "regions": [
+            {
+              "stock": 1591.7660000000024,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 2,
+              "meanEnergy": 42.3115,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.202561085972861,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.022034841628959276
+            },
+            {
+              "stock": 10007.22700000002,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 65,
+              "meanEnergy": 39.58426153846154,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.999382094324557,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.031158273381294965
+            },
+            {
+              "stock": 1072.8200000000002,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 13,
+              "meanEnergy": 39.511923076923075,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.381406250000001,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.03983828125
+            }
+          ]
+        },
+        {
+          "tick": 80,
+          "light": 95,
+          "world": {
+            "tick": 80,
+            "population": 156,
+            "food": 12273.263,
+            "births": 76,
+            "deaths": 0,
+            "meanEnergy": 31.28572435897436,
+            "maxGeneration": 1
+          },
+          "regions": [
+            {
+              "stock": 1653.4600000000032,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.48171945701359,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0.0074201357466063345
+            },
+            {
+              "stock": 9623.935000000005,
+              "pressure": 136,
+              "crisis": 7,
+              "occupants": 138,
+              "meanEnergy": 31.21010869565216,
+              "births": 63,
+              "deaths": 0,
+              "meanStock": 7.692993605115912,
+              "meanPressure": 0.10871302957633892,
+              "meanGrowthPerCellTick": 0.043008473221422865
+            },
+            {
+              "stock": 995.868,
+              "pressure": 2,
+              "crisis": 0,
+              "occupants": 18,
+              "meanEnergy": 31.865444444444442,
+              "births": 13,
+              "deaths": 0,
+              "meanStock": 7.78021875,
+              "meanPressure": 0.015625,
+              "meanGrowthPerCellTick": 0.07906875
+            }
+          ]
+        },
+        {
+          "tick": 120,
+          "light": 106.5,
+          "world": {
+            "tick": 120,
+            "population": 204,
+            "food": 12511.98,
+            "births": 124,
+            "deaths": 0,
+            "meanEnergy": 28.185676470588234,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 1653.4600000000032,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.48171945701359,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 9919.781000000014,
+              "pressure": 428,
+              "crisis": 29,
+              "occupants": 164,
+              "meanEnergy": 28.25753658536584,
+              "births": 34,
+              "deaths": 0,
+              "meanStock": 7.929481215027988,
+              "meanPressure": 0.34212629896083135,
+              "meanGrowthPerCellTick": 0.04103880895283773
+            },
+            {
+              "stock": 938.7389999999997,
+              "pressure": 84,
+              "crisis": 5,
+              "occupants": 40,
+              "meanEnergy": 27.89105,
+              "births": 14,
+              "deaths": 0,
+              "meanStock": 7.333898437499998,
+              "meanPressure": 0.65625,
+              "meanGrowthPerCellTick": 0.0982697265625
+            }
+          ]
+        },
+        {
+          "tick": 160,
+          "light": 118,
+          "world": {
+            "tick": 160,
+            "population": 212,
+            "food": 12781.604,
+            "births": 132,
+            "deaths": 0,
+            "meanEnergy": 26.558405660377357,
+            "maxGeneration": 2
+          },
+          "regions": [
+            {
+              "stock": 1653.4600000000032,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.48171945701359,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 10136.758000000013,
+              "pressure": 603,
+              "crisis": 38,
+              "occupants": 188,
+              "meanEnergy": 26.1905585106383,
+              "births": 6,
+              "deaths": 0,
+              "meanStock": 8.102924060751409,
+              "meanPressure": 0.48201438848920863,
+              "meanGrowthPerCellTick": 0.023975619504396483
+            },
+            {
+              "stock": 991.386,
+              "pressure": 65,
+              "crisis": 4,
+              "occupants": 24,
+              "meanEnergy": 29.439874999999997,
+              "births": 2,
+              "deaths": 0,
+              "meanStock": 7.745203125,
+              "meanPressure": 0.5078125,
+              "meanGrowthPerCellTick": 0.090809765625
+            }
+          ]
+        },
+        {
+          "tick": 200,
+          "light": 106.5,
+          "world": {
+            "tick": 200,
+            "population": 221,
+            "food": 13037.33,
+            "births": 142,
+            "deaths": 1,
+            "meanEnergy": 21.812366515837105,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 1653.4600000000032,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.48171945701359,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 10333.954000000016,
+              "pressure": 580,
+              "crisis": 36,
+              "occupants": 179,
+              "meanEnergy": 21.510921787709496,
+              "births": 3,
+              "deaths": 1,
+              "meanStock": 8.260554756195058,
+              "meanPressure": 0.4636290967226219,
+              "meanGrowthPerCellTick": 0.011653916866506795
+            },
+            {
+              "stock": 1049.916,
+              "pressure": 132,
+              "crisis": 9,
+              "occupants": 42,
+              "meanEnergy": 23.097095238095232,
+              "births": 7,
+              "deaths": 0,
+              "meanStock": 8.20246875,
+              "meanPressure": 1.03125,
+              "meanGrowthPerCellTick": 0.0712234375
+            }
+          ]
+        },
+        {
+          "tick": 240,
+          "light": 95,
+          "world": {
+            "tick": 240,
+            "population": 220,
+            "food": 13031.156,
+            "births": 144,
+            "deaths": 4,
+            "meanEnergy": 17.488986363636364,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 1653.4600000000032,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.48171945701359,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 10317.909000000012,
+              "pressure": 574,
+              "crisis": 37,
+              "occupants": 175,
+              "meanEnergy": 16.783240000000003,
+              "births": 2,
+              "deaths": 3,
+              "meanStock": 8.24772901678658,
+              "meanPressure": 0.45883293365307753,
+              "meanGrowthPerCellTick": 0.0065564348521183055
+            },
+            {
+              "stock": 1059.787,
+              "pressure": 96,
+              "crisis": 6,
+              "occupants": 45,
+              "meanEnergy": 20.23355555555555,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 8.2795859375,
+              "meanPressure": 0.75,
+              "meanGrowthPerCellTick": 0.034096875
+            }
+          ]
+        },
+        {
+          "tick": 280,
+          "light": 83.5,
+          "world": {
+            "tick": 280,
+            "population": 210,
+            "food": 13031.363,
+            "births": 147,
+            "deaths": 17,
+            "meanEnergy": 13.274966666666668,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 1653.4600000000032,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.48171945701359,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 10296.396000000017,
+              "pressure": 612,
+              "crisis": 39,
+              "occupants": 171,
+              "meanEnergy": 12.850321637426896,
+              "births": 1,
+              "deaths": 12,
+              "meanStock": 8.230532374100733,
+              "meanPressure": 0.4892086330935252,
+              "meanGrowthPerCellTick": 0.005208972821742606
+            },
+            {
+              "stock": 1081.507,
+              "pressure": 144,
+              "crisis": 9,
+              "occupants": 39,
+              "meanEnergy": 15.136871794871796,
+              "births": 2,
+              "deaths": 1,
+              "meanStock": 8.4492734375,
+              "meanPressure": 1.125,
+              "meanGrowthPerCellTick": 0.0240994140625
+            }
+          ]
+        },
+        {
+          "tick": 320,
+          "light": 72,
+          "world": {
+            "tick": 320,
+            "population": 159,
+            "food": 13074.629,
+            "births": 148,
+            "deaths": 69,
+            "meanEnergy": 11.028182389937106,
+            "maxGeneration": 3
+          },
+          "regions": [
+            {
+              "stock": 1653.4600000000032,
+              "pressure": 0,
+              "crisis": 0,
+              "occupants": 0,
+              "meanEnergy": null,
+              "births": 0,
+              "deaths": 0,
+              "meanStock": 7.48171945701359,
+              "meanPressure": 0,
+              "meanGrowthPerCellTick": 0
+            },
+            {
+              "stock": 10330.911000000015,
+              "pressure": 635,
+              "crisis": 41,
+              "occupants": 123,
+              "meanEnergy": 11.217292682926828,
+              "births": 0,
+              "deaths": 47,
+              "meanStock": 8.258122302158284,
+              "meanPressure": 0.5075939248601119,
+              "meanGrowthPerCellTick": 0.003751638689048761
+            },
+            {
+              "stock": 1090.258,
+              "pressure": 144,
+              "crisis": 9,
+              "occupants": 36,
+              "meanEnergy": 10.382055555555556,
+              "births": 1,
+              "deaths": 5,
+              "meanStock": 8.517640625,
+              "meanPressure": 1.125,
+              "meanGrowthPerCellTick": 0.0096810546875
+            }
+          ]
+        }
+      ],
+      "phasePair": [
+        {
+          "strength": 0,
+          "regionalGrowth": [
+            0,
+            50.966000000000015,
+            9.607
+          ]
+        },
+        {
+          "strength": 160,
+          "regionalGrowth": [
+            0,
+            88.2820000000001,
+            16.478
+          ]
+        }
+      ],
+      "resourcePair": [
+        {
+          "regrowth": true,
+          "start": {
+            "tick": 80,
+            "population": 156,
+            "food": 12273.263,
+            "births": 76,
+            "deaths": 0,
+            "meanEnergy": 31.28572435897436,
+            "maxGeneration": 1
+          },
+          "end": {
+            "tick": 160,
+            "population": 212,
+            "food": 12781.604,
+            "births": 132,
+            "deaths": 0,
+            "meanEnergy": 26.558405660377357,
+            "maxGeneration": 2
+          },
+          "grown": 4221.409,
+          "consumed": 3713.068
+        },
+        {
+          "regrowth": false,
+          "start": {
+            "tick": 80,
+            "population": 156,
+            "food": 12273.263,
+            "births": 76,
+            "deaths": 0,
+            "meanEnergy": 31.28572435897436,
+            "maxGeneration": 1
+          },
+          "end": {
+            "tick": 160,
+            "population": 171,
+            "food": 11069.849,
+            "births": 91,
+            "deaths": 0,
+            "meanEnergy": 22.33249707602339,
+            "maxGeneration": 2
+          },
+          "grown": 0,
+          "consumed": 1203.414
+        }
+      ],
+      "finalSha256": "5f1ef1ac17493b52532ecb5a870606db9d12f6da3841a752d40a5bda1b07d1af"
+    }
+  ],
+  "restore": {
+    "version": 4,
+    "startTick": 110,
+    "endTick": 240,
+    "checksum": "a2db68783756e68146f8537b534d4dd154818c5cf31242014cdb6d9caf02d5ac",
+    "finalSha256": "b10e7d94b53b50b9976bf538d913d5443f0b6aa564446ce19034001a23313c6e"
+  }
+}

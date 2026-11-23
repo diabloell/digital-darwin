@@ -58,10 +58,17 @@
             <button id="zoom-in" aria-label="Приблизить">+</button><button id="zoom-out" aria-label="Отдалить">−</button><button id="fit" aria-label="Показать весь мир">⌖</button>
           </div>
         </div>
-        <div class="legend"><label id="terrain-control" hidden>Слой <select id="terrain-layer"><option value="food">Пища</option></select></label><span id="terrain-legend">Пища · яркость по запасу</span><a href="#organism-inspector">Инспектор ↓</a>
+        <div class="legend"><label id="terrain-control" hidden>Слой <select id="terrain-layer"><option value="food">Пища</option></select></label><button id="explore-regions" type="button" aria-pressed="false" hidden>Исследовать</button><span id="terrain-legend">Пища · яркость по запасу</span><a href="#organism-inspector">Инспектор ↓</a>
           <span id="line-map-legend" hidden><i class="line-key"></i> Моя линия <i class="carrier-key"></i> Носители последней адаптации</span>
           <span id="color-legend"><i class="organism-key"></i> Организмы</span>
         </div>
+        <section id="region-inspector" aria-label="Условия клетки" hidden>
+          <p id="region-help">Наведите курсор или коснитесь клетки. С клавиатуры перейдите на карту и используйте стрелки.</p>
+          <p id="region-key"></p>
+          <p id="region-cell" role="status"></p>
+          <p id="region-values"></p>
+          <p id="region-cycle"></p>
+        </section>
         <div class="controls">
           <div class="play-controls"><button id="play" class="primary" disabled>▶ Запустить</button><button id="step" disabled>Шаг +1</button></div>
           <div class="speed-controls" role="group" aria-label="Скорость симуляции"><button data-speed="1" aria-pressed="true">1×</button><button data-speed="4" aria-pressed="false">4×</button><button data-speed="16" aria-pressed="false">16×</button><button data-speed="32" aria-pressed="false">32×</button></div>

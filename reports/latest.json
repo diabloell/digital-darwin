@@ -1,14 +1,13 @@
 {
-  "stage": "DD-14",
+  "stage": "DD-15",
   "technicalLocal": "PASS",
-  "product": "NEEDS PLAYTEST",
-  "baseMain": "036b82ecad15bc0860966eda1127ba2f796462c9",
-  "branch": "dd-14-game-feel-impact",
-  "issue": "https://github.com/diabloell/digital-darwin/issues/21",
-  "ci": "https://github.com/diabloell/digital-darwin/actions/workflows/verification.yml?branch=dd-14-game-feel-impact",
-  "report": "DD-14.md",
-  "evidence": "dd-14/",
-  "gameVersion": 4,
-  "comparedTrajectories": 36,
-  "verifiedLegacyLabReplicas": 42
+  "product": "NEEDS GEOGRAPHY PLAYTEST",
+  "baseMain": "52fe6b430bd85e93ef3363afef7700c3b5c119c4",
+  "branch": "dd-15-world-geography",
+  "issue": "https://github.com/diabloell/digital-darwin/issues/23",
+  "ci": "https://github.com/diabloell/digital-darwin/actions/workflows/verification.yml?branch=dd-15-world-geography",
+  "report": "DD-15.md",
+  "evidence": "dd-15/",
+  "verifiedLegacyLabReplicas": 42,
+  "seeds": ["dune", "amber", "slate"]
 }

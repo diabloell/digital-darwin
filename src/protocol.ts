@@ -20,6 +20,7 @@ export type Frame = {
   running: boolean; speed: number; tps: number; history: Sample[]; traitBins: Uint8Array;
   game?: GameView;
   latestCarriers?: Uint8Array;
+  planetFood?: Uint16Array;
   planet?: Planet & { cycle: ReturnType<typeof cycle> };
   ecology?: EcologyView;
   pauseToken?: number;

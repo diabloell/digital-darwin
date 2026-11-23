@@ -420,3 +420,10 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
 .line-key { border: 2px solid #ffe0a1; border-radius: 50%; }
 .carrier-key { background: #8bf5ff; clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%); }
 #impact-comparison { color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+#region-inspector { border-top: 1px solid var(--line); padding: 8px 14px; display: grid; gap: 4px; font-size: 12px; }
+#region-help, #region-key, #region-values, #region-cycle { color: var(--muted); }
+#region-cell { color: var(--mint); font-weight: 600; }
+
+#region-key { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+#region-key span { border-bottom: 2px solid var(--region); }

@@ -1,3 +1,5 @@
+import { categorize, REGIONS } from './core/geography.ts';
+import { PERIOD, planetCell, seasonalGrowth } from './core/planet.ts';
 import { PRESSURE_MAX } from './core/ecology.ts';
 import type { EcoLayer } from './core/ecology.ts';
 import type { PlanetLayer } from './core/planet.ts';
@@ -8,7 +10,7 @@ import type { Frame } from './protocol.ts';
 export const GENE_LABELS: Record<keyof Genome, string> = { speed: 'Скорость', sensor: 'Радиус поиска', efficiency: 'Усвоение', threshold: 'Порог размножения' };
 export const GENE_UNITS: Record<keyof Genome, string> = { speed: 'кл./тик', sensor: 'клетки', efficiency: 'доля', threshold: 'ед. энергии' };
 const PALETTE = ['#badfff', '#a6c7fd', '#aaaaf9', '#c0a0fb', '#db9cf3', '#f49bdb', '#ffabc5', '#ffc0ae'];
-export type TerrainLayer=PlanetLayer|EcoLayer|'food'|'forage';
+export type TerrainLayer=PlanetLayer|EcoLayer|'food'|'forage'|'regions';
 const ECO_SCALE: Record<EcoLayer,number>={pressure:PRESSURE_MAX,crisis:1,demand:8};
 const TERRAIN_COLORS: Record<PlanetLayer|EcoLayer, readonly [number, number, number]> = {
   pressure:[230,137,55],crisis:[230,70,60],demand:[138,120,230],
@@ -16,6 +18,8 @@ const TERRAIN_COLORS: Record<PlanetLayer|EcoLayer, readonly [number, number, num
 };
 const ORGANISM = '#b8fff0';
 const COMPETITOR = '#99b2ad';
+const units = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:3});
+const element = (id:string)=>document.getElementById(id)!;
 
 export class WorldMap {
   private readonly ctx: CanvasRenderingContext2D;
@@ -26,6 +30,10 @@ export class WorldMap {
   private readonly trail: { x: number; y: number; tick: number }[] = [];
   private image: ImageData | undefined;
   private frame: Frame | undefined;
+  private regions?:Uint8Array;
+  private regionCapacity?:Uint16Array;
+  private regionBounds?:Path2D[];
+  private examined?:number;
   private paintedTick = -1;
   private scheduled = false;
   private scale = 1;
@@ -70,6 +78,7 @@ export class WorldMap {
     });
     canvas.addEventListener('pointermove', e => {
       const d = this.drag;
+      if(!d && this.layer==='regions' && e.pointerType==='mouse')this.inspectPointer(e);
       if (!d || d.id !== e.pointerId) return;
       const dx = e.clientX - d.startX, dy = e.clientY - d.startY;
       if (Math.hypot(dx, dy) > 4) d.moved = true;
@@ -79,7 +88,10 @@ export class WorldMap {
       if (this.drag?.id !== e.pointerId) return;
       if (!this.drag.moved) {
         const rect = canvas.getBoundingClientRect();
-        this.selectAt(e.clientX - rect.left, e.clientY - rect.top);
+        if(this.layer==='regions'){
+          this.viewport.focus({preventScroll:true});
+          this.inspectPointer(e);
+        }else this.selectAt(e.clientX - rect.left, e.clientY - rect.top);
       }
       this.drag = undefined;
     });
@@ -98,6 +110,11 @@ export class WorldMap {
     this.frame = frame;
     if (reset) {
       this.drag = undefined;
+      this.regions=undefined;
+      this.regionBounds=undefined;
+      this.regionCapacity=undefined;
+      this.examined=undefined;
+      if(this.layer==='regions')this.prepareRegions();
       this.landscape.width = frame.width;
       this.landscape.height = frame.height;
       this.image = this.terrain.createImageData(frame.width, frame.height);
@@ -111,6 +128,7 @@ export class WorldMap {
       this.trail.push({ x, y, tick: frame.metrics.tick });
       if (this.trail.length > 32) this.trail.shift();
     }
+    if(this.layer==='regions')this.readCell();
     if (reset || previous?.metrics.tick !== frame.metrics.tick || previous.selectedId !== frame.selectedId) this.invalidate();
   }
 
@@ -143,8 +161,89 @@ export class WorldMap {
 
   setTerrain(layer: TerrainLayer): void {
     this.layer = layer;
+    if(layer==='regions'){
+      this.prepareRegions();
+      this.readCell();
+    }
     this.paintedTick = -1;
     this.invalidate();
+  }
+
+  private prepareRegions():void {
+    const frame=this.frame;
+    if(!frame?.planet||this.regions)return;
+    const ids=this.regions=categorize(frame.planet.layers);
+    this.regionCapacity=Uint16Array.from(frame.planet.layers.fertility,f=>planetCell(f,1).capacity);
+    const existing=new Set(ids);
+    const legend=element('region-key');
+    legend.replaceChildren(...REGIONS.filter((_,i)=>existing.has(i)).map(region=>{
+      const key=document.createElement('span');
+      key.style.setProperty('--region',`rgb(${region.color.join(' ')})`);
+      key.textContent=region.symbol+' '+region.name;
+      return key;
+    }));
+    if(existing.size===1)legend.append('На этой планете один тип условий.');
+    const {width,height}=frame;
+    const paths=this.regionBounds=REGIONS.map(()=>new Path2D());
+    for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+      const i=y*width+x,region=ids[i];
+      if(x+1<width&&region!==ids[i+1]){
+        const path=paths[Math.max(region,ids[i+1])];
+        path.moveTo(x+1,y);path.lineTo(x+1,y+1);
+      }
+      if(y+1<height&&region!==ids[i+width]){
+        const path=paths[Math.max(region,ids[i+width])];
+        path.moveTo(x,y+1);path.lineTo(x+1,y+1);
+      }
+    }
+  }
+
+  private inspectPointer(event:PointerEvent):void {
+    const rect=this.canvas.getBoundingClientRect();
+    const x=Math.floor((event.clientX-rect.left-this.x)/this.scale);
+    const y=Math.floor((event.clientY-rect.top-this.y)/this.scale);
+    const frame=this.frame;
+    if(frame&&x>=0&&y>=0&&x<frame.width&&y<frame.height)this.examine(y*frame.width+x);
+  }
+
+  moveRegion(dx:number,dy:number):void {
+    const frame=this.frame;
+    if(!frame?.planet)return;
+    const {width,height}=frame;
+    const index=this.examined??Math.floor(height/2)*width+Math.floor(width/2);
+    const x=(index%width+dx+width)%width,y=(Math.floor(index/width)+dy+height)%height;
+    const px=this.x+(x+.5)*this.scale, py=this.y+(y+.5)*this.scale;
+    if(px<0||px>this.width||py<0||py>this.height)this.centerOn(x+.5,y+.5);
+    this.examine(y*width+x);
+  }
+
+  private examine(index:number):void {
+    if(this.examined===index)return;
+    this.examined=index;
+    this.readCell();
+    this.invalidate();
+  }
+
+  private readCell():void {
+    const frame=this.frame, i=this.examined;
+    if(frame?.planet){
+      const cycle=frame.planet.cycle;
+      const light=`Свет ${units.format(cycle.lightPercent)}% базового · ${cycle.trend} · фаза ${cycle.phase}/${PERIOD}`;
+      if(element('region-cycle').textContent!==light)element('region-cycle').textContent=light;
+    }
+    if(!frame?.planet||!frame.planetFood||!this.regions||i===undefined){
+      element('region-cell').textContent='Выберите клетку';
+      element('region-values').textContent='';
+      return;
+    }
+    const region=REGIONS[this.regions[i]], {water,temperature,fertility}=frame.planet.layers;
+    const cell=planetCell(fertility[i],frame.game?.habitat==='scarce'?.30:frame.game?.habitat==='empty'?0:1);
+    const pressure=frame.ecology?.pressure[i];
+    const limit=seasonalGrowth(cell.growth,water[i],frame.planet.cycle.strength);
+    const title=`${region.symbol} ${region.name} · ${i%frame.width}, ${Math.floor(i/frame.width)}. ${region.detail}.`;
+    const values=`Пища ${units.format(frame.planetFood[i]/1000)} / ${units.format(cell.capacity/1000)} ед. · Влага ${water[i]}/100 · Тепло ${temperature[i]}/100 · Плодородие ${fertility[i]}/100 · Потенциал роста ${units.format(limit/1000)} ед./тик${pressure===undefined?'':` · Давление ${pressure}/16${frame.ecology?.collapsed[i]?' · Кризис: рост снижен':''}`}`;
+    if(element('region-cell').textContent!==title)element('region-cell').textContent=title;
+    if(element('region-values').textContent!==values)element('region-values').textContent=values;
   }
 
   setMode(mode: string): void {
@@ -214,29 +313,40 @@ export class WorldMap {
     if (!frame || !image) return;
     const ecological = Object.hasOwn(ECO_SCALE,this.layer);
     const forage=this.layer==='forage'?frame.ecology:undefined;
-    if (this.paintedTick < 0 || ((this.layer === 'food'||forage||ecological) && this.paintedTick !== frame.metrics.tick)) {
+    const regions=this.layer==='regions'?this.regions:undefined;
+    if (this.paintedTick < 0 || ((this.layer === 'food'||forage||ecological||regions) && this.paintedTick !== frame.metrics.tick)) {
       const data = image.data;
       const layer = ecological ? frame.ecology?.[this.layer === 'crisis' ? 'collapsed' : this.layer as 'pressure'|'demand'] : frame.planet?.layers[this.layer as PlanetLayer];
       const max = ecological ? ECO_SCALE[this.layer as EcoLayer] : 100;
-      const rgb = this.layer === 'food'||this.layer==='forage' ? undefined : TERRAIN_COLORS[this.layer];
-      for (let i = 0; i < frame.food.length; i++) {
-        const f = frame.food[i], j = i * 4;
-        if (layer && rgb) {
-          const value = Math.min(1,layer[i] / max);
-          data[j] = 13 + rgb[0] * value; data[j + 1] = 20 + rgb[1] * value; data[j + 2] = 24 + rgb[2] * value;
-        } else {
-          if(frame.game){
-            const stock=Math.sqrt(f/255);
-            const pressure=forage?forage.pressure[i]/PRESSURE_MAX:0;
-            const crisis=forage?.collapsed[i]??0;
-            data[j]=13+stock*37+pressure*154+crisis*45;
-            data[j+1]=24+stock*113*(1-pressure*.70)+pressure*(crisis?12:62);
-            data[j+2]=30+stock*56*(1-pressure);
-          }else{
-            data[j]=13+f*.11; data[j+1]=30+f*.34; data[j+2]=29+f*.25;
-          }
+      const rgb = this.layer === 'food'||this.layer==='forage'||this.layer==='regions' ? undefined : TERRAIN_COLORS[this.layer];
+      if(regions&&this.regionCapacity&&frame.planetFood){
+        for(let i=0;i<regions.length;i++){
+          const [r,g,b]=REGIONS[regions[i]].color;
+          const fullness=frame.planetFood[i]/this.regionCapacity[i];
+          const brightness=.38+.62*Math.sqrt(fullness);
+          const j=i*4;
+          data[j]=r*brightness;data[j+1]=g*brightness;data[j+2]=b*brightness;data[j+3]=255;
         }
-        data[j + 3] = 255;
+      }else{
+        for (let i = 0; i < frame.food.length; i++) {
+          const f = frame.food[i], j = i * 4;
+          if (layer && rgb) {
+            const value = Math.min(1,layer[i] / max);
+            data[j] = 13 + rgb[0] * value; data[j + 1] = 20 + rgb[1] * value; data[j + 2] = 24 + rgb[2] * value;
+          } else {
+            if(frame.game){
+              const stock=Math.sqrt(f/255);
+              const pressure=forage?forage.pressure[i]/PRESSURE_MAX:0;
+              const crisis=forage?.collapsed[i]??0;
+              data[j]=13+stock*37+pressure*154+crisis*45;
+              data[j+1]=24+stock*113*(1-pressure*.70)+pressure*(crisis?12:62);
+              data[j+2]=30+stock*56*(1-pressure);
+            }else{
+              data[j]=13+f*.11; data[j+1]=30+f*.34; data[j+2]=29+f*.25;
+            }
+          }
+          data[j + 3] = 255;
+        }
       }
       this.terrain.putImageData(image, 0, 0);
       this.paintedTick = frame.metrics.tick;
@@ -250,6 +360,7 @@ export class WorldMap {
     ctx.drawImage(this.landscape, 0, 0);
     ctx.strokeStyle = '#557a76'; ctx.lineWidth = 1 / this.scale;
     ctx.strokeRect(0, 0, frame.width, frame.height);
+    if(regions)this.drawRegionOverlay(frame);
     const gene = GENES.indexOf(this.mode as keyof Genome);
     const { positions, ids } = frame;
     this.groups.forEach(group => { group.length = 0; });
@@ -303,6 +414,31 @@ export class WorldMap {
     const text = `Центр ${((this.width / 2 - this.x) / this.scale).toFixed(1)}, ${((this.height / 2 - this.y) / this.scale).toFixed(1)} · ${this.scale.toFixed(2)} пикс./кл.`;
     if (this.coordinates.textContent !== text) this.coordinates.textContent = text;
     this.updateLegend(gene);
+  }
+
+  private drawRegionOverlay(frame:Frame):void {
+    const {ctx,scale}=this;
+    ctx.strokeStyle='#d9eee995';
+    ctx.lineWidth=.8/scale;
+    for(const [region,path] of (this.regionBounds??[]).entries()){
+      ctx.setLineDash(region===2?[2/scale,2/scale]:[]);
+      ctx.stroke(path);
+    }
+    ctx.setLineDash([]);
+    if(frame.ecology){
+      ctx.strokeStyle='#ff755e';
+      ctx.lineWidth=1.3/scale;
+      ctx.beginPath();
+      for(const [i,collapsed] of frame.ecology.collapsed.entries()){
+        if(collapsed)ctx.rect(i%frame.width,Math.floor(i/frame.width),1,1);
+      }
+      ctx.stroke();
+    }
+    if(this.examined!==undefined){
+      ctx.strokeStyle='#fff';
+      ctx.lineWidth=2/scale;
+      ctx.strokeRect(this.examined%frame.width,Math.floor(this.examined/frame.width),1,1);
+    }
   }
 
   private drawRings(indices:number[],positions:Float32Array,radius:number,color:string):void {
