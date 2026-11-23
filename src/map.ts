@@ -1,3 +1,4 @@
+import type { PlanetLayer } from './core/planet.ts';
 import { GENES, GENE_BOUNDS } from './core/genetics.ts';
 import type { Genome } from './core/genetics.ts';
 import type { Frame } from './protocol.ts';
@@ -5,6 +6,9 @@ import type { Frame } from './protocol.ts';
 export const GENE_LABELS: Record<keyof Genome, string> = { speed: 'Скорость', sensor: 'Радиус поиска', efficiency: 'Усвоение', threshold: 'Порог размножения' };
 export const GENE_UNITS: Record<keyof Genome, string> = { speed: 'кл./тик', sensor: 'клетки', efficiency: 'доля', threshold: 'ед. энергии' };
 const PALETTE = ['#badfff', '#a6c7fd', '#aaaaf9', '#c0a0fb', '#db9cf3', '#f49bdb', '#ffabc5', '#ffc0ae'];
+const TERRAIN_COLORS: Record<PlanetLayer, readonly [number, number, number]> = {
+  light: [226, 185, 84], temperature: [222, 112, 67], water: [53, 164, 232], fertility: [124, 214, 97]
+};
 const ORGANISM = '#b8fff0';
 
 export class WorldMap {
@@ -27,6 +31,7 @@ export class WorldMap {
   private highlighted: number | null = null;
   private readonly linePositions: number[] = [];
   private mode = 'normal';
+  private layer: PlanetLayer | 'food' = 'food';
   private drag: { startX: number; startY: number; x: number; y: number; moved: boolean; id: number } | undefined;
 
   private readonly canvas: HTMLCanvasElement;
@@ -128,6 +133,12 @@ export class WorldMap {
     this.invalidate();
   }
 
+  setTerrain(layer: PlanetLayer | 'food'): void {
+    this.layer = layer;
+    this.paintedTick = -1;
+    this.invalidate();
+  }
+
   setMode(mode: string): void {
     this.mode = mode;
     this.invalidate();
@@ -193,11 +204,19 @@ export class WorldMap {
   private draw(): void {
     const { frame, ctx, image } = this;
     if (!frame || !image) return;
-    if (this.paintedTick !== frame.metrics.tick) {
+    if (this.paintedTick < 0 || (this.layer === 'food' && this.paintedTick !== frame.metrics.tick)) {
       const data = image.data;
+      const layer = this.layer === 'food' ? undefined : frame.planet?.layers[this.layer];
+      const rgb = this.layer === 'food' ? undefined : TERRAIN_COLORS[this.layer];
       for (let i = 0; i < frame.food.length; i++) {
         const f = frame.food[i], j = i * 4;
-        data[j] = 13 + f * .11; data[j + 1] = 30 + f * .34; data[j + 2] = 29 + f * .25; data[j + 3] = 255;
+        if (layer && rgb) {
+          const value = layer[i] / 100;
+          data[j] = 13 + rgb[0] * value; data[j + 1] = 20 + rgb[1] * value; data[j + 2] = 24 + rgb[2] * value;
+        } else {
+          data[j] = 13 + f * .11; data[j + 1] = 30 + f * .34; data[j + 2] = 29 + f * .25;
+        }
+        data[j + 3] = 255;
       }
       this.terrain.putImageData(image, 0, 0);
       this.paintedTick = frame.metrics.tick;

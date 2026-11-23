@@ -51,14 +51,14 @@
         </div>
         <div id="viewport" tabindex="0" role="region" aria-label="Карта мира. Стрелки перемещают камеру, плюс и минус меняют масштаб. Enter выбирает ближайший к центру организм.">
           <canvas id="world" aria-label="Карта пищи и организмов"></canvas>
-          <div class="map-label">ПИЩЕВОЙ ЛАНДШАФТ <span id="world-size">—</span></div>
+          <div class="map-label"><b id="map-layer-heading">ПИЩЕВОЙ ЛАНДШАФТ</b> <span id="world-size">—</span></div>
           <div class="map-help" id="camera-readout">Центр — · масштаб —</div>
           <div class="camera-tools">
             <button id="zoom-in" aria-label="Приблизить">+</button><button id="zoom-out" aria-label="Отдалить">−</button><button id="fit" aria-label="Показать весь мир">⌖</button>
           </div>
         </div>
-        <div class="legend"><a href="#organism-inspector">Инспектор ↓</a>
-          <span><i class="food-key"></i> Пища · яркость по запасу</span><span id="color-legend"><i class="organism-key"></i> Организмы</span>
+        <div class="legend"><label id="terrain-control" hidden>Слой <select id="terrain-layer"><option value="food">Пища</option></select></label><span id="terrain-legend">Пища · яркость по запасу</span><a href="#organism-inspector">Инспектор ↓</a>
+          <span id="color-legend"><i class="organism-key"></i> Организмы</span>
         </div>
         <div class="controls">
           <div class="play-controls"><button id="play" class="primary" disabled>▶ Запустить</button><button id="step" disabled>Шаг +1</button></div>
@@ -75,6 +75,7 @@
           <form id="game-form" class="lab-grid">
             <label>Seed <input id="game-seed" value="coral-42" maxlength="128" required></label>
             <label>Среда <select id="game-habitat"><option value="garden">Сад</option><option value="scarce">Дефицит</option><option value="empty">Без ресурсов</option></select></label>
+            <label class="planet-toggle"><input type="checkbox" id="game-planet"> Процедурная планета</label>
             <button class="primary" type="submit">Новая игра</button>
           </form>
         </details>
@@ -110,6 +111,12 @@
         <div class="planet-art" aria-hidden="true"><div class="globe"></div></div>
         <p id="planet-seed">—</p>
         <p id="planet-size">—</p>
+        <div id="planet-profile" hidden><dl class="planet-metrics">
+          <div><dt>Свет / тепло</dt><dd id="planet-climate">—</dd></div>
+          <div><dt>Влага / геология</dt><dd id="planet-water">—</dd></div>
+          <div><dt>Влажные зоны</dt><dd id="planet-wet">—</dd></div>
+          <div><dt>Плодородие</dt><dd id="planet-fertility">—</dd></div>
+        </dl><p id="planet-cycle"></p><p class="planet-help">Шкалы 0–100. Больше света облегчает рост пищи, особенно во влажных зонах.</p></div>
         <dl class="planet-metrics">
           <div><dt><i class="resource-dot"></i> Пища, ед.</dt><dd id="food">—</dd></div>
           <div><dt><i class="life-dot"></i> Рождения</dt><dd id="births">0</dd></div>

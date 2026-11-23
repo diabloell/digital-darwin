@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "width": 1366,
+      "height": 768,
+      "status": "PASS",
+      "seed": "coral-42",
+      "founder": 73,
+      "tick": 111,
+      "cycle": {
+        "phase": 111,
+        "strength": 111,
+        "lightPercent": 103.9125,
+        "trend": "растёт"
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "seed": "coral-42",
+      "founder": 73,
+      "tick": 111,
+      "cycle": {
+        "phase": 111,
+        "strength": 111,
+        "lightPercent": 103.9125,
+        "trend": "растёт"
+      }
+    }
+  ]
+}

@@ -31,6 +31,8 @@ const commands = [
   ['history-benchmark', ['scripts/history-benchmark.mjs']],
   ['dd02-regression', ['scripts/check-dd02-regression.mjs', `${output}/experiments.json`]],
   ['dd02-state', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, 'reports/dd-02/long-run-a.json', '10000']],
+  ['planet-smoke', ['scripts/planet-smoke.mjs']],
+  ['planet-e2e', ['scripts/planet-e2e.mjs']],
   ['game-replay', ['scripts/game-replay.mjs']],
   ['game-e2e', ['scripts/game-e2e.mjs']],
   ['determinism', ['scripts/check-determinism.mjs', `${output}/long-run-a.json`, `${output}/long-run-b.json`, '10000']]
@@ -39,7 +41,8 @@ const dependencies = { determinism: ['long-run-a', 'long-run-b'], 'dd02-regressi
 const groups = {
   browser: ['e2e','lineage-e2e','persistence-e2e','save-benchmark','browser-benchmark'],
   stress: ['lab-stress'],
-  game: ['game-replay']
+  game: ['game-replay'],
+  planet: ['planet-smoke','planet-e2e']
 };
 const group = process.env.DD_VERIFY_GROUP;
 const labScenario = /^LAB-E0[1-4]$/.test(group ?? '');

@@ -11,7 +11,7 @@
 | DD-06 | Paired experiments and analysis | See reports/DD-06.md for verification and review status |
 | DD-07 | First Playable Evolution Loop | См. [Issue #8](https://github.com/diabloell/digital-darwin/issues/8) и [отчёт](reports/DD-07.md) |
 | DD-08 | Interface as Evolution Console | См. [отчёт DD-08](reports/DD-08.md) |
-| DD-09 | Playable-First | Запланирован |
+| DD-09 | World & Resource Depth I | См. [Issue #11](https://github.com/diabloell/digital-darwin/issues/11) и [отчёт DD-09](reports/DD-09.md) |
 | DD-10 | Playable-First | Запланирован |
 | DD-11 | Playable-First | Запланирован |
 | DD-12 | Playable-First | Запланирован |

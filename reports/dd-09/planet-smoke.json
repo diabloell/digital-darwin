@@ -1,0 +1,424 @@
+{
+  "status": "PASS",
+  "fixedSaves": [
+    {
+      "name": "dd05-v1",
+      "checksum": "d5b2543e4289c169221417cb2a50994c18663a5f77ff96b76c62c82325003aa0",
+      "tick": 0
+    },
+    {
+      "name": "dd07-game-v1",
+      "checksum": "2e3bb474e46f925d62e2da43bc4150dfb898611174a4c4fec5fccde016914f4e",
+      "tick": 140
+    }
+  ],
+  "cases": [
+    {
+      "seed": "coral-42",
+      "founder": 73,
+      "initial": {
+        "tick": 0,
+        "population": 80,
+        "food": 12380.166,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 23.030137500000002,
+        "maxGeneration": 0
+      },
+      "profile": {
+        "light": 0.654587770276703,
+        "temperature": 0.5796609067604876,
+        "water": 0.6649559661068023,
+        "geology": 0.620489970301278,
+        "wetCells": 1139,
+        "meanFertility": 31.915625
+      },
+      "statistics": {
+        "light": {
+          "min": 41,
+          "max": 65,
+          "mean": 55.024375
+        },
+        "temperature": {
+          "min": 53,
+          "max": 63,
+          "mean": 57.19625
+        },
+        "water": {
+          "min": 25,
+          "max": 100,
+          "mean": 67.6775
+        },
+        "fertility": {
+          "min": 15,
+          "max": 45,
+          "mean": 31.915625
+        },
+        "capacity": {
+          "min": 6625,
+          "max": 9475,
+          "mean": 8231.984375
+        },
+        "baseGrowth": {
+          "min": 187,
+          "max": 352,
+          "mean": 280.285
+        }
+      },
+      "final": {
+        "tick": 800,
+        "population": 63,
+        "food": 12817.519,
+        "births": 128,
+        "deaths": 145,
+        "meanEnergy": 16.46226984126984,
+        "maxGeneration": 3
+      },
+      "line": {
+        "founder": 73,
+        "living": 3,
+        "born": 9,
+        "deaths": 6,
+        "maxGeneration": 4,
+        "lastActivity": 544,
+        "status": "active",
+        "age": 800,
+        "generations": 5
+      },
+      "attempts": [
+        {
+          "card": "nutrition",
+          "start": 51,
+          "end": 291,
+          "introduced": 3,
+          "lastIntroduction": 261,
+          "endingCount": 4,
+          "established": true,
+          "peak": 4
+        },
+        {
+          "card": "fertility",
+          "start": 291,
+          "end": 531,
+          "introduced": 0,
+          "lastIntroduction": -18,
+          "endingCount": 0,
+          "established": false,
+          "peak": 0
+        }
+      ],
+      "cycle": {
+        "phase": 160,
+        "strength": 160,
+        "lightPercent": 118,
+        "trend": "снижается"
+      },
+      "hashes": [
+        "7d92d8a791edd217f5d45a02ef60094cb8914158a1f24ad76482447a72b3ed88",
+        "0bfac8983e338debd22013fefb00875d4a88093f20bb3abba1b06f10361bb468",
+        "4d7961dbea76c47e802b813b5159f3dc821cdadfa59f5726a42a26b4b0ce00a3"
+      ],
+      "commands": [
+        {
+          "tick": 51,
+          "action": {
+            "id": 2,
+            "kind": "buy",
+            "card": "nutrition"
+          }
+        },
+        {
+          "tick": 291,
+          "action": {
+            "id": 3,
+            "kind": "buy",
+            "card": "fertility"
+          }
+        }
+      ],
+      "checkpoint": {
+        "tick": 103,
+        "checksum": "a43014eb31b849b1b601b7df57f426fbb082afb97c75e9625ceb8f472d942761",
+        "phase": {
+          "phase": 103,
+          "strength": 103,
+          "lightPercent": 101.6125,
+          "trend": "растёт"
+        }
+      },
+      "restoredContinuation": true
+    },
+    {
+      "seed": "dune",
+      "founder": 73,
+      "initial": {
+        "tick": 0,
+        "population": 80,
+        "food": 11915.897,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 23.438375,
+        "maxGeneration": 0
+      },
+      "profile": {
+        "light": 0.9562099353293889,
+        "temperature": 0.7546017624910455,
+        "water": 0.4685652768191416,
+        "geology": 0.6793696422688663,
+        "wetCells": 450,
+        "meanFertility": 28.66625
+      },
+      "statistics": {
+        "light": {
+          "min": 60,
+          "max": 95,
+          "mean": 75.601875
+        },
+        "temperature": {
+          "min": 73,
+          "max": 78,
+          "mean": 75.734375
+        },
+        "water": {
+          "min": 10,
+          "max": 84,
+          "mean": 50.85625
+        },
+        "fertility": {
+          "min": 12,
+          "max": 43,
+          "mean": 28.66625
+        },
+        "capacity": {
+          "min": 6340,
+          "max": 9285,
+          "mean": 7923.29375
+        },
+        "baseGrowth": {
+          "min": 171,
+          "max": 341,
+          "mean": 262.42625
+        }
+      },
+      "final": {
+        "tick": 800,
+        "population": 71,
+        "food": 12265.801,
+        "births": 120,
+        "deaths": 129,
+        "meanEnergy": 21.060577464788732,
+        "maxGeneration": 3
+      },
+      "line": {
+        "founder": 73,
+        "living": 0,
+        "born": 1,
+        "deaths": 1,
+        "maxGeneration": 0,
+        "lastActivity": 336,
+        "status": "extinct",
+        "age": 336,
+        "generations": 1
+      },
+      "attempts": [],
+      "cycle": {
+        "phase": 160,
+        "strength": 160,
+        "lightPercent": 118,
+        "trend": "снижается"
+      },
+      "hashes": [
+        "220e03ced8b8fc5042439865f4730f3c5c91bafcf5db44d4d02d1f88b6d9a9b1",
+        "9f2e7798cf9c3a9c8440f0c79edf026330bd967b5d87fdeb82a6cdc1882e67f9",
+        "a7e4a845abafb7bbfc2204476ea0d93e120d89df1e758f1843ce7a96d24f51ce"
+      ],
+      "commands": [],
+      "restoredContinuation": false
+    },
+    {
+      "seed": "amber",
+      "founder": 73,
+      "initial": {
+        "tick": 0,
+        "population": 80,
+        "food": 13787.358,
+        "births": 0,
+        "deaths": 0,
+        "meanEnergy": 22.8401375,
+        "maxGeneration": 0
+      },
+      "profile": {
+        "light": 0.676755254645832,
+        "temperature": 0.5925180476945826,
+        "water": 0.6218442245997489,
+        "geology": 0.8282161410758272,
+        "wetCells": 1083,
+        "meanFertility": 41.764375
+      },
+      "statistics": {
+        "light": {
+          "min": 42,
+          "max": 66,
+          "mean": 53.10625
+        },
+        "temperature": {
+          "min": 55,
+          "max": 64,
+          "mean": 59.86375
+        },
+        "water": {
+          "min": 24,
+          "max": 98,
+          "mean": 66.225
+        },
+        "fertility": {
+          "min": 21,
+          "max": 59,
+          "mean": 41.764375
+        },
+        "capacity": {
+          "min": 7195,
+          "max": 10805,
+          "mean": 9167.615625
+        },
+        "baseGrowth": {
+          "min": 220,
+          "max": 429,
+          "mean": 334.4425
+        }
+      },
+      "final": {
+        "tick": 800,
+        "population": 91,
+        "food": 14182.219,
+        "births": 198,
+        "deaths": 187,
+        "meanEnergy": 18.853241758241758,
+        "maxGeneration": 4
+      },
+      "line": {
+        "founder": 73,
+        "living": 2,
+        "born": 4,
+        "deaths": 2,
+        "maxGeneration": 2,
+        "lastActivity": 396,
+        "status": "active",
+        "age": 800,
+        "generations": 3
+      },
+      "attempts": [
+        {
+          "card": "nutrition",
+          "start": 53,
+          "end": 293,
+          "introduced": 1,
+          "lastIntroduction": 155,
+          "endingCount": 1,
+          "established": false,
+          "peak": 1
+        }
+      ],
+      "cycle": {
+        "phase": 160,
+        "strength": 160,
+        "lightPercent": 118,
+        "trend": "снижается"
+      },
+      "hashes": [
+        "111db25db69c0d19439c6d4ef3b43a2f7dc12320334e12aae90f4075a7b5e48c",
+        "7ac2a88ecaa6185643420f3244d1e8649625abffd751477475f62bb2751a5e94",
+        "f60da82f16eb7081f2e37740196da80348fa6ea96f5dabafb3a55b278a136488"
+      ],
+      "commands": [
+        {
+          "tick": 53,
+          "action": {
+            "id": 2,
+            "kind": "buy",
+            "card": "nutrition"
+          }
+        }
+      ],
+      "restoredContinuation": false
+    }
+  ],
+  "climate": [
+    {
+      "cycle": {
+        "phase": 1,
+        "strength": 1,
+        "lightPercent": 72.2875,
+        "trend": "растёт"
+      },
+      "grown": 323460
+    },
+    {
+      "cycle": {
+        "phase": 160,
+        "strength": 160,
+        "lightPercent": 118,
+        "trend": "снижается"
+      },
+      "grown": 539635
+    }
+  ],
+  "timing": [
+    {
+      "planet": false,
+      "tps": 3538.381203054705,
+      "rssBytes": 89710592,
+      "final": {
+        "tick": 580,
+        "population": 434,
+        "food": 5951.832,
+        "births": 398,
+        "deaths": 44,
+        "meanEnergy": 22.26683410138249,
+        "maxGeneration": 5
+      }
+    },
+    {
+      "planet": true,
+      "tps": 8253.67764066843,
+      "rssBytes": 89841664,
+      "final": {
+        "tick": 580,
+        "population": 75,
+        "food": 12815.804,
+        "births": 126,
+        "deaths": 131,
+        "meanEnergy": 13.018600000000001,
+        "maxGeneration": 3
+      }
+    },
+    {
+      "planet": false,
+      "tps": 3442.859342057321,
+      "rssBytes": 89972736,
+      "final": {
+        "tick": 580,
+        "population": 434,
+        "food": 5951.832,
+        "births": 398,
+        "deaths": 44,
+        "meanEnergy": 22.26683410138249,
+        "maxGeneration": 5
+      }
+    },
+    {
+      "planet": true,
+      "tps": 6768.256206978254,
+      "rssBytes": 90103808,
+      "final": {
+        "tick": 580,
+        "population": 75,
+        "food": 12815.804,
+        "births": 126,
+        "deaths": 131,
+        "meanEnergy": 13.018600000000001,
+        "maxGeneration": 3
+      }
+    }
+  ]
+}

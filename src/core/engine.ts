@@ -1,3 +1,5 @@
+import { cycle, generatePlanet, planetCell, PLANET_VERSION, seasonalGrowth } from './planet.ts';
+import type { Planet } from './planet.ts';
 import { Rng } from './rng.ts';
 import { EVOLUTION_VERSION, GENOME_VERSION, GENES, GENE_BOUNDS, mutate, phenotype } from './genetics.ts';
 import type { Genome, Phenotype, Rule } from './genetics.ts';
@@ -6,7 +8,7 @@ export type { Genome } from './genetics.ts';
 
 export const ENGINE_VERSION = '0.3.0';
 export type Organism = { id: number; parent: number | null; generation: number; x: number; y: number; heading: number; velocity: number; energy: number; age: number; born: number; lastActionTick: number; genome: Genome };
-export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean; reproduction?: boolean; rule?: Rule; resourceScale?: number; mutationStrength?: number };
+export type Config = { seed: string; width: number; height: number; population: number; mutationRate: number; regrowth: boolean; reproduction?: boolean; rule?: Rule; resourceScale?: number; mutationStrength?: number; planet?: typeof PLANET_VERSION };
 export type Metrics = { tick: number; population: number; food: number; births: number; deaths: number; meanEnergy: number; maxGeneration: number };
 export type Audit = { grown: number; consumed: number; assimilated: number; dissipated: number; reproductionCost: number; digestiveLoss: number; transferred: number; actions: number };
 export const TICK_PHASES = ['environment', 'observations', 'intents', 'movement', 'competition', 'metabolism', 'death', 'reproduction', 'audit'] as const;
@@ -37,6 +39,7 @@ export function validateConfig(c: Config): void {
   for (const value of [c.mutationStrength, c.resourceScale]) {
     if (value !== undefined && !(Number.isFinite(value) && value >= 0 && value <= 1)) throw Error('Evolution scale: 0..1');
   }
+  if (c.planet !== undefined && c.planet !== PLANET_VERSION) throw Error('Неподдерживаемая версия планеты');
   if (typeof c.regrowth !== 'boolean') throw Error('Некорректный рост ресурсов');
 }
 export class Engine {
@@ -44,6 +47,7 @@ export class Engine {
   lastBirths: Birth[] = [];
   lastDeaths: Organism[] = [];
   rng: Rng;
+  readonly planet?: Planet;
   food: Int32Array;
   capacity: Int32Array;
   growth: Int32Array;
@@ -58,7 +62,9 @@ export class Engine {
   constructor(options: Partial<Config> = {}, snapshot?: EngineSnapshot) {
     if (snapshot) {
       this.config = { ...snapshot.config };
-      this.rng = new Rng(this.config.seed, snapshot.rng);
+      const { seed, width, height } = this.config;
+      if (this.config.planet) this.planet = generatePlanet(seed, width, height);
+      this.rng = new Rng(seed, snapshot.rng);
       this.food = Int32Array.from(snapshot.food);
       this.capacity = Int32Array.from(snapshot.capacity);
       this.growth = Int32Array.from(snapshot.growth);
@@ -79,18 +85,28 @@ export class Engine {
     this.rng = new Rng(this.config.seed);
     const { width: w, height: h } = this.config;
     this.food = new Int32Array(w * h); this.capacity = new Int32Array(w * h); this.growth = new Int32Array(w * h);
-    const patches = Array.from({ length: 18 }, () => ({ x: this.rng.next() * w, y: this.rng.next() * h, r: 10 + this.rng.next() * Math.min(w, h) * 0.18 }));
-    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-      let fertility = 0.08;
-      for (const p of patches) {
-        const dx = Math.min(Math.abs(x - p.x), w - Math.abs(x - p.x));
-        const dy = Math.min(Math.abs(y - p.y), h - Math.abs(y - p.y));
-        fertility += Math.max(0, 1 - (dx * dx + dy * dy) / (p.r * p.r)) * 0.6;
+    if (this.config.planet) {
+      this.planet = generatePlanet(this.config.seed, w, h);
+      for (let i = 0; i < this.food.length; i++) {
+        const cell = planetCell(this.planet.layers.fertility[i], this.config.resourceScale);
+        this.capacity[i] = cell.capacity;
+        this.food[i] = cell.food;
+        this.growth[i] = cell.growth;
       }
-      const i = y * w + x;
-      this.capacity[i] = Math.floor(500 + Math.min(1, fertility) * 6500);
-      this.food[i] = Math.floor(this.capacity[i] * (0.3 + this.rng.next() * 0.7) * this.config.resourceScale);
-      this.growth[i] = Math.floor(Math.max(2, Math.floor(fertility * 28)) * this.config.resourceScale);
+    } else {
+      const patches = Array.from({ length: 18 }, () => ({ x: this.rng.next() * w, y: this.rng.next() * h, r: 10 + this.rng.next() * Math.min(w, h) * 0.18 }));
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        let fertility = 0.08;
+        for (const p of patches) {
+          const dx = Math.min(Math.abs(x - p.x), w - Math.abs(x - p.x));
+          const dy = Math.min(Math.abs(y - p.y), h - Math.abs(y - p.y));
+          fertility += Math.max(0, 1 - (dx * dx + dy * dy) / (p.r * p.r)) * 0.6;
+        }
+        const i = y * w + x;
+        this.capacity[i] = Math.floor(500 + Math.min(1, fertility) * 6500);
+        this.food[i] = Math.floor(this.capacity[i] * (0.3 + this.rng.next() * 0.7) * this.config.resourceScale);
+        this.growth[i] = Math.floor(Math.max(2, Math.floor(fertility * 28)) * this.config.resourceScale);
+      }
     }
     for (let i = 0; i < this.config.population; i++) this.organisms.push(this.spawn());
   }
@@ -166,6 +182,8 @@ export class Engine {
 
   private updateEnvironment(audit: Audit): number {
     let startingFood = 0;
+    const moisture = this.planet?.layers.water;
+    const strength = moisture ? cycle(this.tick).strength : 0;
     for (let i = 0; i < this.food.length; i++) {
       const before = this.food[i];
       const capacity = this.capacity[i];
@@ -173,7 +191,7 @@ export class Engine {
       if (before < 0 || before > capacity || growth < 0) throw Error(`Invalid resource cell ${i}`);
       startingFood += before;
       if (this.config.regrowth) {
-        const added = Math.min(growth, capacity - before);
+        const added = Math.min(moisture ? seasonalGrowth(growth, moisture[i], strength) : growth, capacity - before);
         this.food[i] = before + added;
         audit.grown += added;
       }
@@ -283,6 +301,11 @@ export class Engine {
     if (this.food.length !== cells || this.capacity.length !== cells || this.growth.length !== cells) throw Error('Invalid grid size');
     let totalFood = 0;
     for (let i = 0; i < cells; i++) {
+      if (this.planet) {
+        const expected = planetCell(this.planet.layers.fertility[i], this.config.resourceScale);
+        if (expected.capacity !== this.capacity[i] || expected.growth !== this.growth[i])
+          throw Error(`Invalid planet resource cell ${i}`);
+      }
       if (this.food[i] < 0 || this.food[i] > this.capacity[i] || this.growth[i] < 0) throw Error(`Invalid resource cell ${i}`);
       totalFood += this.food[i];
     }

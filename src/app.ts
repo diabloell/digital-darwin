@@ -1,3 +1,5 @@
+import { LAYERS } from './core/planet.ts';
+import type { PlanetLayer } from './core/planet.ts';
 import { drawTrends, updateConsole } from './console.ts';
 import { GamePanel } from './game/ui.ts';
 import { SavesPanel } from './saves-panel.ts';
@@ -15,6 +17,8 @@ const saves = new SavesPanel(send);
 const viewport = $('viewport'), canvas = $<HTMLCanvasElement>('world'), chart = $<HTMLCanvasElement>('chart');
 const chartMode = $<HTMLSelectElement>('chart-metric'), histogram = $<HTMLSelectElement>('histogram-trait');
 const form = $<HTMLFormElement>('world-form');
+const terrain = $<HTMLSelectElement>('terrain-layer');
+for (const [key, label] of Object.entries(LAYERS)) terrain.add(new Option(label, key));
 const play = $<HTMLButtonElement>('play'), step = $<HTMLButtonElement>('step');
 const speeds = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-speed]'));
 const map = new WorldMap(canvas, viewport, $('camera-readout'), $('color-legend'), id => send({ kind: 'inspect', id }));
@@ -80,6 +84,8 @@ worker.onmessage = ({ data }: MessageEvent<Event>) => {
   speeds.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.speed) === data.speed)));
   if (previous?.selectedId !== data.selectedId || (tickChanged && data.selected) || (previous?.selected && !data.selected)) inspect(data);
   $<HTMLButtonElement>('inspect-first')?.toggleAttribute('disabled', !data.metrics.population);
+  if (newWorld) { terrain.value = 'food'; terrain.onchange?.(new Event('change')); }
+  $('terrain-control').hidden = !data.planet;
   map.accept(data);
   if (focusEntity !== null && focusEntity === data.selectedId) {
     if (data.selected) map.centerOn(data.selected.x, data.selected.y);
@@ -247,6 +253,12 @@ document.querySelectorAll<HTMLElement>('[data-open]').forEach(link => {
 });
 $('fit').onclick = () => map.fit();
 $<HTMLSelectElement>('trait-color').onchange = e => map.setMode((e.target as HTMLSelectElement).value);
+terrain.onchange = () => {
+  const layer = terrain.value as PlanetLayer | 'food';
+  map.setTerrain(layer);
+  $('map-layer-heading').textContent = layer === 'food' ? 'ПИЩЕВОЙ ЛАНДШАФТ' : LAYERS[layer].toUpperCase();
+  $('terrain-legend').textContent = layer === 'food' ? 'Пища · яркость по запасу' : `${LAYERS[layer]} · тёмный 0 → яркий 100`;
+};
 chartMode.onchange = scheduleChart;
 histogram.onchange = updateHistogram;
 new ResizeObserver(scheduleChart).observe(chart);
