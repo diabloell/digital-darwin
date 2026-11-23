@@ -38,6 +38,8 @@ try{
       return {seed:f.seed,metrics:f.metrics,game:f.game,food:[...f.food],ids:[...f.ids],positions:[...f.positions]};
     });
     const globe=loc('#welcome-globe');
+    // The intro keeps keyboard rotation but does not display directional buttons.
+    assert.equal(await loc('#welcome-visual [data-globe-action="left"], #welcome-visual [data-globe-action="right"], #welcome-visual [data-globe-action="up"], #welcome-visual [data-globe-action="down"]').count(),0);
     const paint=()=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
     const pixels=()=>globe.evaluate(e=>e.toDataURL());
     const touch=width===390?await page.context().newCDPSession(page):null;
@@ -128,7 +130,7 @@ try{
           }
           return Math.round(168*Math.sin(best.angle));
         },base);
-        assert.ok(shift*sign>=35&&shift*sign<=63,JSON.stringify({seed,shift,sign,width}));
+        assert.ok(shift*sign>=35&&shift*sign<=50,JSON.stringify({seed,shift,sign,width}));
         shifts.push(shift);
         await globe.focus();
         await page.keyboard.press('Home');
@@ -218,6 +220,7 @@ try{
     await loc('#welcome-create').click();
     await loc('#game-choice').waitFor();
     const mini=loc('#planet-globe');
+    assert.equal(await loc('#planet-mini [data-globe-action="left"], #planet-mini [data-globe-action="right"], #planet-mini [data-globe-action="up"], #planet-mini [data-globe-action="down"]').count(),4);
     await mini.waitFor();
     await paint();
     const miniPixels=()=>mini.evaluate(e=>e.toDataURL());
