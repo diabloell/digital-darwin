@@ -1,0 +1,98 @@
+{
+  "browser": "156.0.8078.79",
+  "node": "v24.22.3",
+  "results": [
+    {
+      "version": 12,
+      "integrated": false,
+      "node": {
+        "tick": 240,
+        "alive": 5069,
+        "tps": 120.45268256141702,
+        "p95Ms": 16.990346000000045,
+        "rssMiB": 461.1875
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 1095,
+        "tps": 273.73631318439175,
+        "actualPaintsPerSecond": 7.499625018750459,
+        "p95Ms": 3.199999999254942,
+        "heapMiB": 11.279838562011719
+      },
+      "initial": {
+        "fcp": 200,
+        "firstMap": 360.5
+      }
+    },
+    {
+      "version": 12,
+      "integrated": true,
+      "node": {
+        "tick": 240,
+        "alive": 163,
+        "tps": 4714.7685823609645,
+        "p95Ms": 0.3290479999996023,
+        "rssMiB": 471.67578125
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 19,
+        "tps": 4.749643776715861,
+        "actualPaintsPerSecond": 4.749643776715861,
+        "p95Ms": 0.6999999992549419,
+        "heapMiB": 5.61522102355957
+      },
+      "initial": {
+        "fcp": 120,
+        "firstMap": 231.89999999850988
+      }
+    },
+    {
+      "version": 13,
+      "integrated": false,
+      "node": {
+        "tick": 240,
+        "alive": 5069,
+        "tps": 175.061708404253,
+        "p95Ms": 7.202844000001278,
+        "rssMiB": 471.66796875
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 1087,
+        "tps": 271.7228277170764,
+        "actualPaintsPerSecond": 7.49925007498831,
+        "p95Ms": 24.5,
+        "heapMiB": 11.664068222045898
+      },
+      "initial": {
+        "fcp": 116,
+        "firstMap": 250.79999999701977
+      }
+    },
+    {
+      "version": 13,
+      "integrated": true,
+      "node": {
+        "tick": 240,
+        "alive": 163,
+        "tps": 3532.859601885525,
+        "p95Ms": 0.43025499999930616,
+        "rssMiB": 474.16796875
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 19,
+        "tps": 4.749762511870868,
+        "actualPaintsPerSecond": 4.749762511870868,
+        "p95Ms": 0.4000000022351742,
+        "heapMiB": 6.602909088134766
+      },
+      "initial": {
+        "fcp": 316,
+        "firstMap": 541.9000000022352
+      }
+    }
+  ]
+}
