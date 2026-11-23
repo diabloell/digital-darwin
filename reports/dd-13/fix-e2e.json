@@ -1,0 +1,182 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "openedMs": 224.4988089999997,
+      "dragMs": 200.10580900000014,
+      "pausedTick": 3,
+      "touch": false,
+      "readings": [
+        {
+          "seed": "dune",
+          "habitat": "garden",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 100
+          },
+          "food": 11915.897
+        },
+        {
+          "seed": "dune",
+          "habitat": "scarce",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 29.995148497842838
+          },
+          "food": 3574.191
+        },
+        {
+          "seed": "amber",
+          "habitat": "garden",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 100
+          },
+          "food": 13787.358
+        },
+        {
+          "seed": "amber",
+          "habitat": "scarce",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 29.996065961295848
+          },
+          "food": 4135.665
+        }
+      ]
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "status": "PASS",
+      "openedMs": 96.88637900000049,
+      "dragMs": 161.03687600000012,
+      "pausedTick": 3,
+      "touch": false,
+      "readings": [
+        {
+          "seed": "dune",
+          "habitat": "garden",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 100
+          },
+          "food": 11915.897
+        },
+        {
+          "seed": "dune",
+          "habitat": "scarce",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 29.995148497842838
+          },
+          "food": 3574.191
+        },
+        {
+          "seed": "amber",
+          "habitat": "garden",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 100
+          },
+          "food": 13787.358
+        },
+        {
+          "seed": "amber",
+          "habitat": "scarce",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 29.996065961295848
+          },
+          "food": 4135.665
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "openedMs": 116.70866100000057,
+      "dragMs": 92.57431600000018,
+      "pausedTick": 3,
+      "touch": true,
+      "readings": [
+        {
+          "seed": "dune",
+          "habitat": "garden",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 100
+          },
+          "food": 11915.897
+        },
+        {
+          "seed": "dune",
+          "habitat": "scarce",
+          "properties": {
+            "light": 95.6209935329389,
+            "heat": 75.46017624910455,
+            "water": 28.125,
+            "fertility": 28.66625,
+            "food": 29.995148497842838
+          },
+          "food": 3574.191
+        },
+        {
+          "seed": "amber",
+          "habitat": "garden",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 100
+          },
+          "food": 13787.358
+        },
+        {
+          "seed": "amber",
+          "habitat": "scarce",
+          "properties": {
+            "light": 67.6755254645832,
+            "heat": 59.25180476945826,
+            "water": 67.6875,
+            "fertility": 41.764375,
+            "food": 29.996065961295848
+          },
+          "food": 4135.665
+        }
+      ]
+    }
+  ]
+}

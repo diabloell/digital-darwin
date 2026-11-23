@@ -69,12 +69,12 @@ try{
     const seed=width===1366?'amber':'dune';
     await loc('#welcome-form details summary').click();
     await loc('#welcome-seed').fill(seed);
-    const garden=await loc('#welcome-food').innerText();
+    const garden=await loc('#welcome-food').textContent();
     await loc('#welcome-difficulty').selectOption('scarce');
-    assert.notEqual(await loc('#welcome-food').innerText(),garden);
+    assert.notEqual(await loc('#welcome-food').textContent(),garden);
     await photo('difficulty','#welcome-difficulty');
     await loc('#welcome-difficulty').selectOption('garden');
-    assert.equal(await loc('#welcome-food').innerText(),garden);
+    assert.equal(await loc('#welcome-food').textContent(),garden);
     await loc('#world-welcome').evaluate(e=>e.scrollTo(0,0));
     await photo('welcome');
     const expectedFood=Number(garden.replace(/[\s\u00a0]/g,'').replace(',','.').replace('ед.',''));

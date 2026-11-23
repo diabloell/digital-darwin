@@ -248,18 +248,42 @@
   <dialog id="world-welcome" aria-labelledby="welcome-name">
     <div class="welcome-shell">
       <button id="welcome-close" class="welcome-close" aria-label="Закрыть знакомство с планетой" autofocus>✕</button>
-      <div class="welcome-visual"><canvas id="welcome-globe" width="400" height="400" aria-hidden="true"></canvas></div>
+      <div class="welcome-visual">
+        <canvas id="welcome-globe" width="400" height="400" tabindex="0" aria-label="Вид планеты" aria-describedby="welcome-view-help"></canvas>
+        <div class="welcome-camera" role="group" aria-label="Управление видом планеты">
+          <button id="globe-left" aria-label="Повернуть влево">←</button>
+          <button id="globe-right" aria-label="Повернуть вправо">→</button>
+          <button id="globe-out" aria-label="Отдалить планету">−</button>
+          <button id="globe-in" aria-label="Приблизить планету">+</button>
+          <button id="globe-reset" aria-label="Сбросить вид планеты">Сброс</button>
+        </div>
+        <p id="welcome-view-help">Перетащите планету для вращения.</p>
+      </div>
       <div class="welcome-content">
         <h2 id="welcome-name">Планета</h2>
         <p id="welcome-character"></p>
         <dl class="welcome-readings">
-          <div><dt>Свет</dt><dd id="welcome-light"></dd></div>
-          <div><dt>Тепло</dt><dd id="welcome-heat"></dd></div>
-          <div><dt>Влажные клетки</dt><dd id="welcome-water"></dd></div>
-          <div><dt>Плодородие</dt><dd id="welcome-fertility"></dd></div>
-          <div><dt>Стартовая пища</dt><dd id="welcome-food"></dd></div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">☀</span> Свет</dt>
+            <dd><strong id="welcome-light-band"></strong><meter id="welcome-light-meter" min="0" max="100" aria-label="Свет"></meter><p>Местный свет поддерживает плодородие.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">◈</span> Тепло</dt>
+            <dd><strong id="welcome-heat-band"></strong><meter id="welcome-heat-meter" min="0" max="100" aria-label="Тепло"></meter><p>Тепло вне оптимума снижает плодородие.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">♦</span> Влажные зоны</dt>
+            <dd><strong id="welcome-water-band"></strong><meter id="welcome-water-meter" min="0" max="100" aria-label="Влажные зоны"></meter><p>Во влажных клетках рост еды сильнее откликается на свет.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">✦</span> Плодородие</dt>
+            <dd><strong id="welcome-fertility-band"></strong><meter id="welcome-fertility-meter" min="0" max="100" aria-label="Плодородие"></meter><p>Выше плодородие — больше запас, ёмкость и рост пищи.</p></dd>
+          </div>
+          <div class="welcome-fact">
+            <dt><span aria-hidden="true">◒</span> Стартовая пища</dt>
+            <dd><strong id="welcome-food-band"></strong><meter id="welcome-food-meter" min="0" max="100" aria-label="Стартовая пища"></meter><p>Дефицит уменьшает начальный запас и рост пищи.</p></dd>
+          </div>
         </dl>
-        <p class="welcome-caption">Свет, тепло и плодородие — индексы 0–100. Сфера — условное изображение той же карты.</p>
         <form id="welcome-form">
           <label>Сложность <select id="welcome-difficulty">
             <option value="garden">Сад · обычные ресурсы</option>
@@ -270,6 +294,17 @@
           <details><summary>Выбрать seed</summary><label>Seed<input id="welcome-seed" maxlength="128" required></label></details>
           <button id="welcome-advanced" type="button">Расширенные настройки</button>
         </form>
+        <details class="welcome-raw">
+          <summary>Точные значения и шкалы</summary>
+          <p>Свет, тепло и плодородие — индексы 0–100. Влажные зоны — доля клеток с влагой от 60 из 100. Шкала пищи отсчитывается от запаса Сада на этой карте. Сфера показывает условную проекцию местных условий.</p>
+          <dl>
+            <div><dt>Свет</dt><dd id="welcome-light"></dd></div>
+            <div><dt>Тепло</dt><dd id="welcome-heat"></dd></div>
+            <div><dt>Влажные зоны</dt><dd id="welcome-water"></dd></div>
+            <div><dt>Плодородие</dt><dd id="welcome-fertility"></dd></div>
+            <div><dt>Стартовая пища</dt><dd id="welcome-food"></dd></div>
+          </dl>
+        </details>
       </div>
     </div>
   </dialog>
