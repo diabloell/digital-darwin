@@ -76,6 +76,7 @@
             <label>Seed <input id="game-seed" value="coral-42" maxlength="128" required></label>
             <label>Среда <select id="game-habitat"><option value="garden">Сад</option><option value="scarce">Дефицит</option><option value="empty">Без ресурсов</option></select></label>
             <label class="planet-toggle"><input type="checkbox" id="game-planet"> Процедурная планета</label>
+            <label class="planet-toggle"><input type="checkbox" id="game-tree-mode"> Дерево эволюции</label>
             <button class="primary" type="submit">Новая игра</button>
           </form>
         </details>
@@ -89,7 +90,8 @@
               <p id="game-ledger"></p>
               <p id="game-programme"></p><progress id="game-progress" aria-label="Прогресс адаптации" hidden></progress>
               <div id="game-cards" class="game-cards"></div>
-              <ul id="game-attempts" aria-label="Итоги программ"></ul>
+              <details id="evolution-tree" hidden><summary>Дерево эволюции</summary><p id="tree-progress"></p><ol id="tree-nodes"></ol></details>
+          <ul id="game-attempts" aria-label="Итоги программ"></ul>
 
             </div>
             <p id="game-receipt" role="status"></p>
