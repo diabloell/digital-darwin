@@ -1,0 +1,8 @@
+{"seed":"coral-42","founder":73,"policy":"first","tick":1700,"lost":false,"ep":0,"born":8,"first":51,"small":7,"fork":null,"variants":3,"recovery":138}
+{"seed":"coral-42","founder":1,"policy":"first","tick":249,"lost":true,"ep":2,"born":2,"first":61,"small":3,"fork":null,"variants":0,"recovery":21}
+{"seed":"amber","founder":58,"policy":"first","tick":397,"lost":true,"ep":0,"born":2,"first":69,"small":5,"fork":null,"variants":0,"recovery":69}
+{"seed":"dune","founder":40,"policy":"first","tick":1700,"lost":false,"ep":0,"born":7,"first":45,"small":11,"fork":null,"variants":3,"recovery":171}
+{"seed":"fern","founder":1,"policy":"none","tick":1700,"lost":false,"ep":5,"born":5,"first":null,"small":0,"fork":null,"variants":0,"recovery":164}
+{"seed":"amber","founder":1,"policy":"first","tick":284,"lost":true,"ep":2,"born":2,"first":60,"small":3,"fork":null,"variants":0,"recovery":47}
+{"seed":"slate","founder":1,"policy":"first","tick":1700,"lost":false,"ep":0,"born":6,"first":45,"small":7,"fork":null,"variants":1,"recovery":190}
+{"seed":"dune","founder":2,"policy":"first","tick":1700,"lost":false,"ep":0,"born":6,"first":45,"small":5,"fork":null,"variants":0,"recovery":173}

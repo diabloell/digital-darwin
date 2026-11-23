@@ -1,21 +1,24 @@
 {
-  "stage": "DD-11",
+  "stage": "DD-12",
   "status": "PARTIAL",
-  "issue": "https://github.com/diabloell/digital-darwin/issues/15",
-  "sourceCommit": "680874d26030e144eedb3221333641f84a33e7fa",
-  "baseMain": "40c5c0fb3dae1c8e185ccd649167bce81f63827f",
-  "branch": "dd-11-ecology-crises",
+  "readiness": "READY",
+  "releaseCandidate": "0.1.0-rc.1",
+  "publication": "LOCAL_ONLY",
+  "issue": "https://github.com/diabloell/digital-darwin/issues/17",
+  "branch": "dd-12-first-game-release",
+  "sourceCommit": "a02a694928530b3bbdda8b8045437c85586f64f6",
+  "baseMain": "f7e5f43fde94c6a78bb62c73912fd83e481a3b02",
   "pullRequest": {
     "status": "BLOCKED",
     "url": null,
     "error": "Post \"https://api.github.com/graphql\": Forbidden",
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-11-ecology-crises"
+    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-12-first-game-release"
   },
   "ci": {
     "status": "PASS",
     "event": "push",
     "pullRequestEvent": "NOT RUN",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45168581280",
+    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45171994222",
     "groups": [
       "LAB-E01",
       "LAB-E02",
@@ -32,20 +35,21 @@
       "lab-1920",
       "lab-390",
       "planet",
+      "release",
       "stress",
       "tree"
     ]
   },
   "checks": [
     {
-      "name": "ecology-smoke",
-      "command": "node scripts/ecology-smoke.mjs",
+      "name": "release-smoke",
+      "command": "node scripts/release-smoke.mjs",
       "status": "PASS",
       "exitCode": 0
     },
     {
-      "name": "ecology-e2e",
-      "command": "node scripts/ecology-e2e.mjs",
+      "name": "release-e2e",
+      "command": "node scripts/release-e2e.mjs",
       "status": "PASS",
       "exitCode": 0
     }
@@ -55,6 +59,7 @@
     "ticks": 10000,
     "hash": "0fd747ced08eead16b2db5355e0a27206f35443333607f2eddd48798aeff1505"
   },
-  "report": "DD-11.md",
-  "evidence": "dd-11/"
+  "packageManifestSha256": "1ce798f874633562793a39eaf730a0ec5442b485211da2fd402b05ff97db9a9d",
+  "report": "DD-12.md",
+  "evidence": "dd-12/"
 }
