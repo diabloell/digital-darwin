@@ -1,0 +1,82 @@
+{
+  "browser": "156.0.8078.79",
+  "node": "v24.22.3",
+  "results": [
+    {
+      "version": 11,
+      "integrated": false,
+      "node": {
+        "tick": 240,
+        "alive": 5069,
+        "tps": 139.36100441364044,
+        "p95Ms": 21.77804799999967,
+        "rssMiB": 257.21484375
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 1006,
+        "tps": 251.48742562864828,
+        "actualPaintsPerSecond": 7.499625018746967,
+        "p95Ms": 3.200000001117587,
+        "heapMiB": 10.694123268127441
+      }
+    },
+    {
+      "version": 11,
+      "integrated": true,
+      "node": {
+        "tick": 240,
+        "alive": 163,
+        "tps": 3578.7553540699914,
+        "p95Ms": 0.4499230000001262,
+        "rssMiB": 265.0390625
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 317,
+        "tps": 79.22227220472097,
+        "actualPaintsPerSecond": 9.496676163341947,
+        "p95Ms": 4,
+        "heapMiB": 5.661316871643066
+      }
+    },
+    {
+      "version": 12,
+      "integrated": false,
+      "node": {
+        "tick": 240,
+        "alive": 5069,
+        "tps": 137.2324236093311,
+        "p95Ms": 14.415619000001243,
+        "rssMiB": 265.49609375
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 975,
+        "tps": 243.7317201209455,
+        "actualPaintsPerSecond": 7.499437542182939,
+        "p95Ms": 8.599999999627471,
+        "heapMiB": 11.262938499450684
+      }
+    },
+    {
+      "version": 12,
+      "integrated": true,
+      "node": {
+        "tick": 240,
+        "alive": 163,
+        "tps": 5115.84920458732,
+        "p95Ms": 0.2517069999994419,
+        "rssMiB": 266.62109375
+      },
+      "chromium": {
+        "started": 0,
+        "ended": 317,
+        "tps": 79.24405669573305,
+        "actualPaintsPerSecond": 9.499287553431722,
+        "p95Ms": 0.5,
+        "heapMiB": 5.358604431152344
+      }
+    }
+  ]
+}

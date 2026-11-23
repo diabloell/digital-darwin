@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "packageReproducible": true,
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "status": "PASS",
+      "clock": {
+        "tick": 16,
+        "elapsedMs": 901.7277079999999,
+        "speed": 4
+      },
+      "commands": [
+        {
+          "tick": 45,
+          "card": "nutrition"
+        },
+        {
+          "tick": 125,
+          "card": "fertility"
+        },
+        {
+          "tick": 205,
+          "card": "mobility"
+        },
+        {
+          "tick": 285,
+          "card": "patrol"
+        },
+        {
+          "tick": 365,
+          "card": "perception"
+        },
+        {
+          "tick": 445,
+          "card": "patches"
+        },
+        {
+          "tick": 525,
+          "card": "thrift"
+        },
+        {
+          "tick": 605,
+          "card": "scavenging"
+        },
+        {
+          "tick": 685,
+          "card": "retention"
+        },
+        {
+          "tick": 765,
+          "card": "brood"
+        },
+        {
+          "tick": 845,
+          "card": "local"
+        }
+      ]
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "status": "PASS"
+    }
+  ]
+}

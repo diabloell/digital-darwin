@@ -10,7 +10,7 @@
 <body>
   <header class="masthead">
     <a class="brand" href="/" aria-label="Digital Darwin"><span aria-hidden="true">◈</span> DIGITAL DARWIN</a>
-    <span class="masthead-note">Искусственная жизнь</span><nav aria-label="Разделы"><a href="#analysis">Аналитика</a><a href="#world-saves" data-open="world-saves">Сохранения</a><a href="#experiment-lab" data-open="experiment-lab">Лаборатория</a></nav>
+    <span class="masthead-note">Искусственная жизнь</span><small class="build-version">0.1.0-rc.1</small><nav aria-label="Разделы"><a href="#analysis">Аналитика</a><a href="#world-saves" data-open="world-saves">Сохранения</a><a href="#experiment-lab" data-open="experiment-lab">Лаборатория</a></nav>
   </header>
   <main>
     <div class="console-heading">
@@ -31,6 +31,7 @@
         </form>
       </details>
     </div>
+    <div id="launch-row"><button id="quick-game" class="primary">Начать игру</button><span>Планета · дерево эволюции · экология</span></div>
     <div id="error" role="alert" hidden></div>
     <dl class="console-bar" aria-label="Текущее состояние">
       <div><dt>Тик / скорость</dt><dd><span id="tick">0</span> <span id="console-speed">· 1×</span></dd></div>
@@ -69,16 +70,27 @@
       <section class="situation" aria-labelledby="situation-title">
         <h2 id="situation-title">Текущая ситуация</h2>
         <p id="observer-note">Режим наблюдения. Начните игру, чтобы управлять линией.</p>
-        <button id="quick-game" class="primary">Начать игру</button>
+        <details id="game-guide"><summary>Как играть</summary>
+          <ol>
+            <li>Выберите основателя. На карте его линия отмечена кольцами. Остальные линии развиваются самостоятельно.</li>
+            <li>Запустите время под картой. 4× ускоряет ожидание, пауза даёт время прочитать решения.</li>
+            <li>Рождения и поколения приносят EP. Когда хватает EP, выберите адаптацию и дождитесь её окончания.</li>
+            <li>Признак может появиться у новорождённых и позже исчезнуть. Смотрите на живых носителей, цену и компромисс карты.</li>
+            <li>В рекомендуемом режиме после десяти малых программ и шести потомков откроется развилка. Если линия вымрет, можно начать с тем же или новым seed.</li>
+          </ol>
+          <p>Направленная вариация — игровая абстракция. Исход зависит от ресурсов, размножения и выживания.</p>
+        </details>
         <details id="evolution-game">
           <summary>Настроить новую игру</summary>
           <form id="game-form" class="lab-grid">
             <label>Seed <input id="game-seed" value="coral-42" maxlength="128" required></label>
+            <input type="button" id="random-seed" value="Случайный seed">
             <label>Среда <select id="game-habitat"><option value="garden">Сад</option><option value="scarce">Дефицит</option><option value="empty">Без ресурсов</option></select></label>
             <label class="planet-toggle"><input type="checkbox" id="game-planet"> Процедурная планета</label>
             <label class="planet-toggle"><input type="checkbox" id="game-tree-mode"> Дерево эволюции</label>
             <label class="planet-toggle"><input type="checkbox" id="game-ecology"> Экология и кризисы</label>
-            <button class="primary" type="submit">Новая игра</button>
+            <button class="primary" type="submit">Новая игра с флажками</button>
+            <input type="button" id="game-release-start" value="Начать рекомендуемый режим">
           </form>
         </details>
           <div id="game-panel" hidden>
@@ -86,9 +98,16 @@
             <div id="game-choice" class="save-actions">
               <label>Линия <select id="game-founder"></select></label><button id="game-choose">Выбрать основателя</button>
             </div>
+            <p id="founder-preview"></p>
+            <section id="game-debrief" aria-labelledby="debrief-title" hidden>
+              <h3 id="debrief-title">Прохождение завершено</h3>
+              <dl id="debrief-results"></dl>
+              <button id="retry-seed" class="primary">Повторить тот же seed</button>
+              <button id="retry-random">Новый случайный seed</button>
+            </section>
             <div id="game-dashboard" hidden>
               <p class="game-stats"><span id="game-pop"></span><span id="game-energy"></span></p>
-              <p id="game-ledger"></p>
+              <p id="game-ledger"></p><p id="game-next"></p>
               <p id="game-programme"></p><progress id="game-progress" aria-label="Прогресс адаптации" hidden></progress>
               <div id="game-cards" class="game-cards"></div>
               <details id="evolution-tree" hidden><summary>Дерево эволюции</summary><p id="tree-progress"></p><ol id="tree-nodes"></ol></details>

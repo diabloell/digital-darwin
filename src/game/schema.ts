@@ -1,5 +1,5 @@
 import { FORK_AFTER, LEGACY_CARDS, MINOR_PRICE, MINOR_TICKS } from '../core/tree.ts';
-import { CARDS,GAME_VERSION,TUNING,Game,hasTrait } from '../core/game.ts';
+import { CARDS,GAME_VERSION,TUNING,Game,hasTrait,RELEASE_BALANCE } from '../core/game.ts';
 import type { GameState,Card } from '../core/game.ts';
 import { GENE_BOUNDS } from '../core/genetics.ts';
 import type { Engine } from '../core/engine.ts';
@@ -10,16 +10,20 @@ const int=(v:unknown,min=0,max=Number.MAX_SAFE_INTEGER)=>typeof v==='number'&&Nu
 const finite=(v:unknown,min:number,max:number)=>typeof v==='number'&&Number.isFinite(v)&&v>=min&&v<=max;
 const card=(v:unknown):v is Card=>typeof v==='string'&&Object.hasOwn(CARDS,v);
 export function restoreGame(raw:unknown,e:Engine,h:PopulationHistory) {
-  const s=fields(raw,'version habitat founder tick lost receipt renewal sustained achievement spent generation windowBirths attempts markers samples') as GameState;
-  requireValue((s.version===GAME_VERSION||s.version===2)&&['garden','scarce','empty'].includes(s.habitat)&&s.tick===e.tick
+  const s=fields(raw,'version habitat founder tick lost receipt renewal sustained achievement spent generation windowBirths attempts markers samples','birthEP') as GameState;
+  requireValue((s.version===GAME_VERSION||s.version===2||s.version===3)&&['garden','scarce','empty'].includes(s.habitat)&&s.tick===e.tick
     && e.config.width===TUNING.width&&e.config.height===TUNING.height&&e.config.population===TUNING.founders
     && e.config.resourceScale===(s.habitat==='garden'?1:s.habitat==='scarce'?.30:0)
     && (s.founder===null?s.tick===0&&!s.lost:int(s.founder,1,e.config.population)&&s.lost===!h.summary(s.founder).living)
     && typeof s.lost==='boolean','Некорректный игровой мир');
   requireValue(int(s.renewal,0,TUNING.maxRenewals*TUNING.renewalEP)&&s.renewal%TUNING.renewalEP===0
     &&int(s.sustained,0,TUNING.maxWindows*TUNING.windowEP)&&s.sustained%TUNING.windowEP===0
-    &&[0,TUNING.achievementEP].includes(s.achievement)&&int(s.spent,0,s.renewal+s.sustained+s.achievement)
+    &&[0,TUNING.achievementEP].includes(s.achievement)&&int(s.spent,0,s.renewal+s.sustained+s.achievement+(s.birthEP??0))
     &&int(s.generation,0,e.tick)&&int(s.windowBirths,0,e.births),'Некорректный баланс EP');
+  const release=s.version===3;
+  requireValue(release?e.planet&&e.ecology
+    &&s.birthEP===Math.min(RELEASE_BALANCE.birthEP,s.founder===null?0:h.summary(s.founder).born-1)
+    :!Object.hasOwn(s,'birthEP'),'Некорректная версия баланса');
   if(s.founder!==null){
     const line=h.summary(s.founder);
     requireValue(s.generation===line.maxGeneration&&s.achievement===(line.born>1?TUNING.achievementEP:0)
@@ -29,8 +33,8 @@ export function restoreGame(raw:unknown,e:Engine,h:PopulationHistory) {
     const r=fields(s.receipt,'id tick accepted reason');
     requireValue(int(r.id,1)&&int(r.tick,0,e.tick)&&typeof r.accepted==='boolean'&&typeof r.reason==='string'&&r.reason.length<=200,'Некорректная квитанция');
   }
-  const tree=s.version===2;
-  requireValue(Array.isArray(s.attempts)&&s.attempts.length<=(tree?13:3),'Некорректные покупки');
+  const tree=s.version>=2;
+  requireValue(Array.isArray(s.attempts)&&s.attempts.length<=(release?11:tree?13:3),'Некорректные покупки');
   const keys=new Set<Card>();
   let prev=0,spent=0,majors=0;
   for(const [i,a] of s.attempts.entries()){
@@ -44,10 +48,10 @@ export function restoreGame(raw:unknown,e:Engine,h:PopulationHistory) {
         'Некорректный тик окончания');
       requireValue(finite(quote.prepared,0,1),'Некорректная подготовка');
       if(node.major){
-        requireValue(++majors===1&&i>=FORK_AFTER&&a.start>=FORK_AFTER*MINOR_TICKS&&i===s.attempts.length-1&&(s.founder!==null&&h.summary(s.founder).born>FORK_AFTER),
+        requireValue(++majors===1&&i>=FORK_AFTER&&a.start>=FORK_AFTER*MINOR_TICKS&&i===s.attempts.length-1&&(s.founder!==null&&h.summary(s.founder).born>(release?RELEASE_BALANCE.forkBirths:FORK_AFTER)),
           'Некорректная развилка');
         requireValue(quote.price===(quote.prepared>=.4?4:7)&&quote.duration===(quote.prepared>=.4?180:300),'Некорректная стоимость развилки');
-      }else requireValue(quote.prepared===0&&quote.price===MINOR_PRICE&&quote.duration===MINOR_TICKS
+      }else requireValue((!release||i<FORK_AFTER)&&quote.prepared===0&&quote.price===MINOR_PRICE&&quote.duration===MINOR_TICKS
         &&(!node.requires||keys.has(node.requires as Card)),'Некорректная малая программа');
     }
     spent+=a.quote?.price??TUNING.price;

@@ -1,5 +1,5 @@
 import { cycle, PLANET_MAX_CAPACITY } from './core/planet.ts';
-import { gameWorld } from './core/game.ts';
+import { gameWorld, releaseWorld } from './core/game.ts';
 import type { Game } from './core/game.ts';
 import { capture, decode, encode, restore } from './snapshot.ts';
 import { PopulationHistory } from './core/history.ts';
@@ -67,7 +67,7 @@ self.onmessage = e => {
       case 'snapshot': case 'restore': void persist(c); break;
       case 'new-game': {
         try {
-          const candidate=gameWorld(c.seed,c.habitat,c.planet === true,c.tree === true,c.ecology === true);
+          const candidate=c.release?releaseWorld(c.seed,c.habitat):gameWorld(c.seed,c.habitat,c.planet === true,c.tree === true,c.ecology === true);
           engine=candidate.engine;genealogy=candidate.genealogy;game=candidate.game;
         } catch(error) { self.postMessage({kind:'error',recoverable:true,message:String(error)});break; }
         epoch++;running=false;speed=1;credit=0;selectedId=null;tps=0;measured=0;
