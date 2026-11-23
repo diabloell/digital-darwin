@@ -1,3 +1,4 @@
+import { CARD_COPY, cardDetails } from './card-copy.ts';
 import { WorldWelcome } from './welcome.ts';
 import { EvolutionDecision } from './decision.ts';
 import { EVENT_LABELS } from '../history-panel.ts';
@@ -73,7 +74,8 @@ export class GamePanel {
     for(const [key,c] of Object.entries(CARDS) as [Card,typeof CARDS[Card]][]){
       const panel=document.createElement('section'),title=document.createElement('h3'),text=document.createElement('p'),button=document.createElement('button');
       title.textContent=c.title;
-      text.textContent=`${c.benefit}. ${c.cost}.`;
+      const copy=CARD_COPY[key];
+      text.textContent=`${copy.benefit} ${copy.cost}`;
       button.textContent=`${TUNING.price} EP · начать`;
       button.dataset.card=key;
       button.onclick=()=>{
@@ -81,7 +83,7 @@ export class GamePanel {
         if(this.frame?.running)this.decision.request();
         else dispatch({kind:'buy',card:key});
       };
-      panel.append(title,text,button);
+      panel.append(title,text,cardDetails(copy),button);
       $('game-cards').append(panel);
       this.buttons.set(key,button);
     }
@@ -132,10 +134,13 @@ export class GamePanel {
 
   }
   private renderTree(game:NonNullable<Frame['game']>){
+    const tree=$('tree-nodes');
+    const expanded=new Set(Array.from(tree.querySelectorAll<HTMLElement>('li:has(details[open])'),li=>li.dataset.card));
     const rows=game.tree!.rows.map(({card,quote,reason})=>{
       const attempt=game.attempts.find(a=>a.card===card);
-      const node=CARDS[card];
+      const node=CARDS[card], copy=CARD_COPY[card];
       const li=document.createElement('li');
+      li.dataset.card=card;
       const title=document.createElement('strong');
       title.textContent=node.title;
       const status=document.createElement('p');
@@ -146,12 +151,13 @@ export class GamePanel {
       status.textContent=`${observed} · ${terms.price} EP · ${terms.duration} тик.${node.major?` · подготовка ${fmt(100*terms.prepared,0)}%`:''}`;
       const detail=document.createElement('small');
       const sample=game.samples.at(-1)?.traits?.[card];
-      const direction=(value:number)=>value>0?'+ '+fmt(value):'− '+fmt(-value);
-      detail.textContent=`${node.benefit} (${direction(node.delta)}${node.secondary?', '+direction(node.secondary[1]):''}). ${node.cost}.${sample?` Последний отсчёт носителей: энергия ${fmt(sample.energy)} ед., средний целевой ген ${fmt(sample.gene,3)}${sample.secondary!==undefined?' / '+fmt(sample.secondary,3):''}.`:''}`;
-      li.append(title,status,detail);
+      detail.textContent=`${copy.benefit} ${copy.cost}${sample?` Последний отсчёт носителей: энергия ${fmt(sample.energy)} ед., средний целевой ген ${fmt(sample.gene,3)}${sample.secondary!==undefined?' / '+fmt(sample.secondary,3):''}.`:''}`;
+      const explanation=cardDetails(copy);
+      explanation.open=expanded.has(card);
+      li.append(title,status,detail,explanation);
       return li;
     });
-    $('tree-nodes').replaceChildren(...rows);
+    tree.replaceChildren(...rows);
   }
   update(frame:Frame){
     const previous=this.frame;

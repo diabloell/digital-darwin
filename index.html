@@ -143,7 +143,20 @@
       </section>
       <section class="planet-panel" aria-labelledby="planet-title">
         <h2 id="planet-title">Планета</h2>
-        <div class="planet-art" aria-hidden="true"><div class="globe"></div></div>
+        <div id="planet-mini" hidden>
+          <canvas id="planet-globe" width="400" height="400" tabindex="0" aria-label="Вид игровой планеты" aria-describedby="planet-view-help"></canvas>
+          <div class="welcome-camera" role="group" aria-label="Управление видом планеты">
+            <button data-globe-action="left" aria-label="Повернуть влево">←</button>
+            <button data-globe-action="right" aria-label="Повернуть вправо">→</button>
+            <button data-globe-action="up" aria-label="Наклонить вверх">↑</button>
+            <button data-globe-action="down" aria-label="Наклонить вниз">↓</button>
+            <button data-globe-action="out" aria-label="Отдалить планету">−</button>
+            <button data-globe-action="in" aria-label="Приблизить планету">+</button>
+            <button data-globe-action="reset" aria-label="Сбросить вид планеты">Сброс</button>
+          </div>
+          <p id="planet-view-help">Перетащите планету или используйте стрелки.</p>
+        </div>
+        <p id="planet-placeholder" hidden>У этого мира нет процедурной планеты.</p>
         <p id="planet-seed">—</p>
         <p id="planet-size">—</p>
         <div id="planet-profile" hidden><dl class="planet-metrics">
@@ -248,16 +261,18 @@
   <dialog id="world-welcome" aria-labelledby="welcome-name">
     <div class="welcome-shell">
       <button id="welcome-close" class="welcome-close" aria-label="Закрыть знакомство с планетой" autofocus>✕</button>
-      <div class="welcome-visual">
+      <div class="welcome-visual" id="welcome-visual">
         <canvas id="welcome-globe" width="400" height="400" tabindex="0" aria-label="Вид планеты" aria-describedby="welcome-view-help"></canvas>
         <div class="welcome-camera" role="group" aria-label="Управление видом планеты">
-          <button id="globe-left" aria-label="Повернуть влево">←</button>
-          <button id="globe-right" aria-label="Повернуть вправо">→</button>
-          <button id="globe-out" aria-label="Отдалить планету">−</button>
-          <button id="globe-in" aria-label="Приблизить планету">+</button>
-          <button id="globe-reset" aria-label="Сбросить вид планеты">Сброс</button>
+          <button id="globe-left" data-globe-action="left" aria-label="Повернуть влево">←</button>
+          <button id="globe-right" data-globe-action="right" aria-label="Повернуть вправо">→</button>
+          <button data-globe-action="up" aria-label="Наклонить вверх">↑</button>
+          <button data-globe-action="down" aria-label="Наклонить вниз">↓</button>
+          <button id="globe-out" data-globe-action="out" aria-label="Отдалить планету">−</button>
+          <button id="globe-in" data-globe-action="in" aria-label="Приблизить планету">+</button>
+          <button id="globe-reset" data-globe-action="reset" aria-label="Сбросить вид планеты">Сброс</button>
         </div>
-        <p id="welcome-view-help">Перетащите планету для вращения.</p>
+        <p id="welcome-view-help">Перетащите планету или используйте стрелки. Масштаб: колесо или +/−. Сброс: Home.</p>
       </div>
       <div class="welcome-content">
         <h2 id="welcome-name">Планета</h2>
@@ -311,7 +326,7 @@
   <dialog id="evolution-decision" aria-labelledby="decision-title" aria-describedby="decision-context">
     <header><h2 id="decision-title">Выберите адаптацию</h2><p id="decision-context"></p></header>
     <div id="decision-cards"></div>
-    <footer><button id="decision-later" autofocus>Позже</button><span>Игра на паузе. Чтобы продолжить, запустите время под картой.</span></footer>
+    <footer><button id="decision-later" autofocus>Позже</button><span>EP запускают программу. Признак может появиться у потомков, сохранение в линии не гарантировано. Игра на паузе.</span></footer>
   </dialog>
 
   <script type="module" src="/src/app.js"></script>

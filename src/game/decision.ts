@@ -1,3 +1,4 @@
+import { CARD_COPY, cardDetails } from './card-copy.ts';
 import { CARDS, TUNING } from '../core/game.ts';
 import type { Card } from '../core/game.ts';
 import type { Frame } from '../protocol.ts';
@@ -73,15 +74,12 @@ export class EvolutionDecision {
     document.getElementById('decision-context')!.textContent=
       `${frame.game!.ep} EP · тик ${frame.metrics.tick} · ${Math.round(frame.metrics.food).toLocaleString('ru-RU')} ед. пищи в мире`;
     const rows=this.offers(frame).map(({card,quote})=>{
-      const node=CARDS[card];
+      const node=CARDS[card], copy=CARD_COPY[card];
       const article=document.createElement('article');
       const title=document.createElement('h3');
       title.textContent=`${node.major?'◇':({efficiency:'◒',speed:'➜',sensor:'⊙',threshold:'✦'}[node.gene])}  ${node.title}`;
-      const benefit=document.createElement('p');benefit.textContent=node.benefit;
-      const cost=document.createElement('p');cost.className='decision-cost';cost.textContent=node.cost;
-      const details=document.createElement('details'),summary=document.createElement('summary');
-      summary.textContent='Как действует';
-      details.append(summary,document.createTextNode('Изменение проявляется у части новорождённых. Живые носители могут исчезнуть.'));
+      const benefit=document.createElement('p');benefit.textContent=copy.benefit;
+      const cost=document.createElement('p');cost.className='decision-cost';cost.textContent=copy.cost;
       const button=document.createElement('button');
       button.className='primary';
       button.dataset.decisionCard=card;
@@ -92,7 +90,7 @@ export class EvolutionDecision {
         this.cards.querySelectorAll('button').forEach(b=>b.disabled=true);
         this.buy(card);
       };
-      article.append(title,benefit,cost,details,button);
+      article.append(title,benefit,cost,cardDetails(copy),button);
       return article;
     });
     this.cards.replaceChildren(...rows);

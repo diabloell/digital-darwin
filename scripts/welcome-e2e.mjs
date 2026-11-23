@@ -34,7 +34,9 @@ try{
       if(!await loc('#world-saves').evaluate(e=>e.open))await loc('#world-saves summary').click();
       await loc('#save-list option').first().waitFor({state:'attached'});
     };
+    const globe=()=>loc('#planet-globe').evaluate(e=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve(e.toDataURL())))));
     const saveReload=async name=>{
+      const savedPlanet=await globe();
       const before=await read();
       await openSaves();
       await loc('#save-name').fill(name);
@@ -42,12 +44,16 @@ try{
       await page.getByText('Сохранено в браузере',{exact:false}).waitFor();
       const slot=await loc('#save-list').inputValue();
       await page.reload();
+      await loc('#play:enabled').waitFor();
       await openSaves();
       await loc('#save-list').selectOption(slot);
       await loc('#load-world').click();
-      await page.getByText('Мир восстановлен на паузе',{exact:false}).waitFor();
+      await page.getByText('Мир восстановлен на паузе',{exact:false}).waitFor().catch(async error=>{
+        throw new Error(await loc('#save-status').textContent()+' | '+errors.join(' | '),{cause:error});
+      });
       const {epoch,...world}=await read(),{epoch:old,...expected}=before;
       assert.deepEqual(world,expected);
+      assert.equal(await globe(),savedPlanet);
       assert.equal(await loc('dialog[open]').count(),0);
     };
     await page.goto(origin);
@@ -77,11 +83,13 @@ try{
     assert.equal(await loc('#welcome-food').textContent(),garden);
     await loc('#world-welcome').evaluate(e=>e.scrollTo(0,0));
     await photo('welcome');
+    const previewPixels=await loc('#welcome-globe').evaluate(e=>e.toDataURL());
     const expectedFood=Number(garden.replace(/[\s\u00a0]/g,'').replace(',','.').replace('ед.',''));
     if(width===390)await loc('#welcome-create').tap();
     else await loc('#welcome-create').click();
     await loc('#game-choice').waitFor();
-    let spawned=await read();
+    assert.equal(await globe(),previewPixels);
+    const spawned=await read();
     assert.equal(spawned.metrics.tick,0);
     assert.equal(spawned.game.founder,null);
     assert.equal(spawned.running,false);
@@ -104,7 +112,26 @@ try{
     assert.ok(await page.evaluate(()=>document.querySelector('#evolution-decision').contains(document.activeElement)));
     await page.keyboard.press('Tab');
     assert.ok(await page.evaluate(()=>document.querySelector('#evolution-decision').contains(document.activeElement)));
-    await photo('decision');
+    await loc('#evolution-tree').evaluate(e=>{e.open=true;});
+    await loc('#tree-nodes li').first().waitFor({state:'attached'});
+    const descriptions=await loc('#game-cards section').all();
+    assert.equal(descriptions.length,14);
+    const copy=await import('../src/game/card-copy.ts');
+    const tree=await loc('#tree-nodes li').allTextContents();
+    for(const [card,description] of Object.entries(copy.CARD_COPY)){
+      const panel=loc(`#game-cards section:has([data-card="${card}"])`);
+      const text=await panel.textContent();
+      for(const field of Object.values(description))assert.ok(text.includes(field));
+      assert.ok(tree.some(row=>Object.values(description).every(field=>row.includes(field))));
+    }
+    for(const button of await loc('#decision-cards button').all()){
+      const card=await button.getAttribute('data-decision-card');
+      const text=await button.locator('..').textContent();
+      for(const field of Object.values(copy.CARD_COPY[card]))assert.ok(text.includes(field));
+    }
+    await loc('#evolution-tree').evaluate(e=>{e.open=false;});
+    await loc('#decision-cards summary').first().click();
+    await photo('fix2-decision');
     await page.keyboard.press('Escape');
     await loc('#evolution-decision').waitFor({state:'hidden'});
     await page.waitForFunction(()=>document.activeElement.id==='choose-adaptation');

@@ -2,22 +2,17 @@
   "stage": "DD-13",
   "status": "PARTIAL",
   "technical": "PASS",
-  "product": "NEEDS PLAYTEST",
+  "product": "NEEDS RE-PLAYTEST",
   "issue": "https://github.com/diabloell/digital-darwin/issues/19",
-  "sourceCommit": "6f106000dd8de6eb1cf4f087e55e53445185f862",
   "baseMain": "38eb1ad4dbee09628e50d0e22e0f5c03c0da5036",
   "branch": "dd-13-world-welcome-choice-ux",
   "pullRequest": {
-    "status": "BLOCKED",
-    "url": null,
-    "error": "Post \"https://api.github.com/graphql\": Forbidden",
-    "creationUrl": "https://github.com/diabloell/digital-darwin/pull/new/dd-13-world-welcome-choice-ux"
+    "status": "DRAFT",
+    "url": "https://github.com/diabloell/digital-darwin/pull/20"
   },
   "ci": {
-    "status": "PASS",
-    "event": "push",
-    "pullRequestEvent": "NOT RUN",
-    "runUrl": "https://github.com/diabloell/digital-darwin/actions/runs/45206001998",
+    "url": "https://github.com/diabloell/digital-darwin/pull/20/checks",
+    "scope": "Exact draft PR head",
     "groups": [
       "LAB-E01",
       "LAB-E02",
@@ -42,6 +37,12 @@
   },
   "checks": [
     {
+      "name": "welcome-fix-e2e",
+      "command": "node scripts/welcome-fix-e2e.mjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
       "name": "welcome-e2e",
       "command": "node scripts/welcome-e2e.mjs",
       "status": "PASS",
@@ -51,8 +52,10 @@
   "legacyLab": {
     "status": "PASS",
     "replicas": 42,
-    "evidence": "dd-13/legacy-lab.json"
+    "evidence": "dd-13/fix2-legacy-lab.json"
   },
   "report": "DD-13.md",
-  "evidence": "dd-13/"
+  "evidence": "dd-13/",
+  "baseFixCommit": "73d34ec776db1c1f3f4b9bd952b52eafb4450414",
+  "revision": "PRODUCT FIX 2"
 }
