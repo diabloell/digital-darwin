@@ -21,5 +21,6 @@ export async function build() {
   await mkdir(path.join(root, 'dist'), { recursive: true }); await walk('src');
   await copyFile(path.join(root, 'index.html'), path.join(root, 'dist/index.html'));
   console.log(`BUILD PASS: ${files.length + 1} files emitted to dist/`);
+  return [...files,path.join(root,'dist/index.html')];
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await build();

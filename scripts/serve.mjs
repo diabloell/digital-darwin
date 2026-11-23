@@ -1,26 +1,11 @@
-import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build, root } from './build.mjs';
-const base = path.join(root, 'dist');
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8' };
+import { startStaticServer } from './local-server.mjs';
+
 export async function startServer(port) {
   await build();
-  const server = createServer(async (req, res) => {
-    try {
-      const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-      const target = path.resolve(base, '.' + (pathname === '/' ? '/index.html' : pathname));
-      if (!target.startsWith(base + path.sep)) { res.writeHead(403); res.end(); return; }
-      const body = await readFile(target);
-      res.writeHead(200, { 'Content-Type': types[path.extname(target)] ?? 'application/octet-stream', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }); res.end(body);
-    } catch { res.writeHead(404); res.end('Not found'); }
-  });
-  await new Promise((resolve, reject) => {
-    server.once('error', reject);
-    server.listen(port, '127.0.0.1', resolve);
-  });
-  return server;
+  return startStaticServer(port,path.join(root,'dist'));
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -11,6 +11,7 @@ import type { Genome } from './genetics.ts';
 import { PopulationHistory } from './history.ts';
 
 export const GAME_VERSION = 1;
+export const RELEASE_BALANCE = { birthEP:8, forkBirths:6 };
 export const TUNING = { founders:80,width:40,height:40,duration:240,gap:18,introductions:8,windowTicks:80,maxRenewals:6,maxWindows:12,
   renewalEP:2,windowEP:2,achievementEP:3,price:5,establishedFraction:.10,establishedMinimum:2 };
 export type Habitat='garden'|'scarce'|'empty';
@@ -19,36 +20,37 @@ export type Receipt={id:number;tick:number;accepted:boolean;reason:string};
 type Marker=[Card,number,number?];
 export type Attempt={card:Card;start:number;end:number;introduced:number;lastIntroduction:number;endingCount:number|null;established:boolean|null;peak:number;quote?:Quote;finished?:number};
 type Sample={tick:number;population:number;energy:number|null;values:Genome|null;maintenance:number|null;carriers:number;traits?:Partial<Record<Card,{count:number;energy:number;gene:number;secondary?:number}>>};
-export type GameState={version:1|2;habitat:Habitat;founder:number|null;tick:number;lost:boolean;receipt:Receipt|null;
-  renewal:number;sustained:number;achievement:number;spent:number;generation:number;windowBirths:number;
+export type GameState={version:1|2|3;habitat:Habitat;founder:number|null;tick:number;lost:boolean;receipt:Receipt|null;
+  renewal:number;sustained:number;achievement:number;birthEP?:number;spent:number;generation:number;windowBirths:number;
   attempts:Attempt[];markers:[number,Marker[]][];samples:Sample[]};
 
-export function gameWorld(seed:string,habitat:Habitat, planet = false, tree = false, ecology = false) {
+export function gameWorld(seed:string,habitat:Habitat, planet = false, tree = false, ecology = false, release = false) {
   if (!['garden','scarce','empty'].includes(habitat)) throw Error('Неизвестная игровая среда');
+  if(release)planet=tree=ecology=true;
   const e=new Engine({seed,width:TUNING.width,height:TUNING.height,population:TUNING.founders,...(ecology?{ecology:ECOLOGY_VERSION}:{}),...(planet?{planet:PLANET_VERSION}:{}),resourceScale:habitat==='garden'?1:habitat==='scarce'?.30:0});
   for(const a of e.organisms) {
     const g=a.genome;
     a.genome={speed:.8+(g.speed-.8)*.12,sensor:3.5+(g.sensor-3.5)*.12,
       efficiency:.85+(g.efficiency-.85)*.12,threshold:44+(g.threshold-44)*.12};
   }
-  return {engine:e,genealogy:new PopulationHistory(e),game:new Game(habitat,undefined,tree)};
+  return {engine:e,genealogy:new PopulationHistory(e),game:new Game(habitat,undefined,release?3:tree?2:1)};
 }
 
 export class Game {
   private state: Omit<GameState,'markers'>;
   private readonly markers:Map<number,Marker[]>;
-  constructor(habitat:Habitat,snapshot?:GameState, tree = false) {
+  constructor(habitat:Habitat,snapshot?:GameState, version:GameState['version'] = 1) {
     if(snapshot) {
       const {markers,...state}=structuredClone(snapshot);
       this.state=state;this.markers=new Map(markers);
     } else {
-      this.state={version:tree?2:1,habitat,founder:null,tick:0,lost:false,receipt:null,renewal:0,sustained:0,achievement:0,spent:0,
+      this.state={version,habitat,founder:null,tick:0,lost:false,receipt:null,renewal:0,sustained:0,achievement:0,...(version===3?{birthEP:0}:{}),spent:0,
         generation:0,windowBirths:0,attempts:[],samples:[]};
       this.markers=new Map();
     }
   }
   get active(){const attempt=this.state.attempts.at(-1);return attempt?.established===null?attempt:undefined;}
-  get ep(){const s=this.state;return s.renewal+s.sustained+s.achievement-s.spent;}
+  get ep(){const s=this.state;return s.renewal+s.sustained+s.achievement+(s.birthEP??0)-s.spent;}
   get ready(){return this.state.founder!==null&&!this.state.lost;}
   snapshot():GameState{return structuredClone({...this.state,markers:[...this.markers]});}
   private options(e:Engine,h:PopulationHistory) {
@@ -56,7 +58,8 @@ export class Game {
     const attempted=new Set(s.attempts.map(a=>a.card));
     const completed=s.attempts.filter(a=>a.established!==null&&!CARDS[a.card].major).length;
     const line=s.founder===null?null:h.summary(s.founder);
-    const forkReady=completed>=FORK_AFTER && e.tick>=FORK_AFTER*MINOR_TICKS && (line?.born??0)>FORK_AFTER;
+    const requiredBirths=s.version===3?RELEASE_BALANCE.forkBirths:FORK_AFTER;
+    const forkReady=completed>=FORK_AFTER && e.tick>=FORK_AFTER*MINOR_TICKS && (line?.born??0)>requiredBirths;
     const living=e.organisms.filter(a=>h.founder(a.id)===s.founder);
     const supported=(key:Card)=>{
       const hit = living.filter(({genome:g})=>key==='local' ? g.efficiency>=.88 || g.threshold<=41 : g.speed>=.90 || g.sensor>=4).length;
@@ -69,8 +72,8 @@ export class Game {
       const quote=node.major?{price:prepared>=.4?4:7,duration:prepared>=.4?180:300,prepared}
         :{price:MINOR_PRICE,duration:MINOR_TICKS,prepared};
       const reason=attempted.has(card)?'Попытка проведена'
-        :node.major?(s.attempts.some(a=>CARDS[a.card].major)?'Развилка уже выбрана':!forkReady?'Нужно 10 программ и 10 потомков':'')
-        :forkReady?'Доступна крупная развилка':node.requires&&!attempted.has(node.requires as Card)?'После попытки: '+CARDS[node.requires as Card].title:'';
+        :node.major?(s.attempts.some(a=>CARDS[a.card].major)?'Развилка уже выбрана':!forkReady?(s.version===3?`Нужно 10 программ, 800 тиков и ${requiredBirths} потомков`:'Нужно 10 программ и 10 потомков'):'')
+        :forkReady?'Доступна крупная развилка':s.version===3&&completed>=FORK_AFTER?'Дождитесь размножения для развилки':node.requires&&!attempted.has(node.requires as Card)?'После попытки: '+CARDS[node.requires as Card].title:'';
       return {card,quote,reason};
     });
     // The ordering is advisory. Unfavorable major routes remain purchasable.
@@ -84,7 +87,7 @@ export class Game {
       return Math.min(1,headroom/Math.abs(n.delta)) + (n.track===(foodDensity<4?'explorer':'local')?.15:0);
     };
     const offered=rows.filter(row=>!row.reason).sort((a,b)=>score(b.card)-score(a.card)).slice(0,4).map(row=>row.card);
-    return {completed,rows,offered};
+    return {completed,rows,offered,...(s.version===3?{requiredBirths}:{})};
   }
   command(action:Action,e:Engine,h:PopulationHistory):Receipt {
     const s=this.state;
@@ -97,7 +100,7 @@ export class Game {
         reason='Основатель выбирается один раз на тике 0';
       else s.founder=action.founder;
     } else if(action.kind==='buy') {
-      const tree=s.version===2?this.options(e,h):null;
+      const tree=s.version>=2?this.options(e,h):null;
       const option=tree?.rows.find(row=>row.card===action.card);
       const quote=option?.quote;
       const price=quote?.price??TUNING.price;
@@ -132,7 +135,7 @@ export class Game {
       }
     }
     // A programme can move a gene across a previously inherited marker boundary.
-    if(this.state.version===2)for(let i=markers.length-1;i>=0;i--)if(!hasTrait(markers[i],child.genome))markers.splice(i,1);
+    if(this.state.version>=2)for(let i=markers.length-1;i>=0;i--)if(!hasTrait(markers[i],child.genome))markers.splice(i,1);
     if(markers.length)this.markers.set(child.id,markers);
   }
   step(e:Engine,h:PopulationHistory) {
@@ -151,6 +154,7 @@ export class Game {
       }
     }
     const line=h.summary(s.founder!);
+    if(s.version===3)s.birthEP=Math.min(RELEASE_BALANCE.birthEP,line.born-1);
     if(!line.living)s.lost=true;
     if(e.tick%TUNING.windowTicks===0) {
       if(!s.lost&&s.windowBirths>=2&&s.sustained<TUNING.maxWindows*TUNING.windowEP)s.sustained+=TUNING.windowEP;
@@ -181,7 +185,7 @@ export class Game {
       population++;energy+=a.energy;
       for(const gene of Object.keys(values) as (keyof Genome)[])values[gene]+=a.genome[gene];
       maintenance+=phenotype(a.genome,e.config.rule).maintenance;
-      if(s.version===2)for(const [key] of this.markers.get(a.id)??[]){
+      if(s.version>=2)for(const [key] of this.markers.get(a.id)??[]){
         const v=traits[key]??={count:0,energy:0,gene:0};
         const node=CARDS[key];
         v.count++;v.energy+=a.energy/1000;v.gene+=a.genome[node.gene];
@@ -194,12 +198,12 @@ export class Game {
       if(v.secondary!==undefined)v.secondary/=v.count;
     }
     s.samples.push({tick:e.tick,population,energy:population?energy/population/1000:null,values:population?values:null,
-      maintenance:population?maintenance/population/1000:null,carriers:this.markers.size,...(s.version===2?{traits}:{})});
+      maintenance:population?maintenance/population/1000:null,carriers:this.markers.size,...(s.version>=2?{traits}:{})});
     if(s.samples.length>100)s.samples.shift();
   }
   view(h:PopulationHistory,e?:Engine) {
     const {samples,attempts,...state}=this.state;
-    return {...state,...(state.version===2&&e?{tree:this.options(e,h)}:{}),ep:this.ep,active:this.active?.card??null,
+    return {...state,...(state.version>=2&&e?{tree:this.options(e,h)}:{}),ep:this.ep,active:this.active?.card??null,
       line:state.founder===null?null:h.summary(state.founder),
       attempts:attempts.map(a=>({...a,carriers:this.count(a.card)})),samples};
   }
@@ -216,4 +220,8 @@ export function hasTrait([key,cutoff,other]:Marker,genome:Genome) {
   const node=CARDS[key];
   const passes=(gene:keyof Genome,delta:number,limit:number)=>delta>0?genome[gene]>=limit:genome[gene]<=limit;
   return passes(node.gene,node.delta,cutoff)&&(!node.secondary||(other!==undefined&&passes(...node.secondary,other)));
+}
+
+export function releaseWorld(seed:string,habitat:Habitat='garden') {
+  return gameWorld(seed,habitat,false,false,false,true);
 }

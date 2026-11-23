@@ -320,3 +320,17 @@ main { max-width: 1840px; padding: 14px clamp(12px, 2.4vw, 42px) 0; }
 
 #ecology-stats summary { font-size: 12px; padding: 7px 8px; }
 #ecology-trend { margin: 6px 0; padding-inline-start: 20px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+#game-guide { margin-top: 8px; }
+#game-guide ol { padding-inline-start: 20px; margin-block: 8px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+#game-guide li + li { margin-top: 4px; }
+#game-release-start, #random-seed { width: 100%; cursor: pointer; }
+#game-debrief { padding: 12px; border: 1px solid #8a5b4b; border-radius: 8px; background: #2c211c; }
+#debrief-results { margin-block: 8px; display: grid; gap: 4px 8px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); font-size: 12px; }
+#debrief-results dt { color: var(--muted); }
+#debrief-results dd { overflow-wrap: anywhere; }
+#game-debrief button { margin: 3px 0; min-height: 44px; }
+#launch-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+#launch-row span { color: var(--muted); font-size: 12px; }
+#quick-game { flex-shrink: 0; min-height: 44px; }
+.build-version { color: var(--muted); font: 12px var(--mono); }
